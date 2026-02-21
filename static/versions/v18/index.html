@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동아·동서 글로컬 연합대학 v18 (White Expand)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['SUIT', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#4132CC', 
+                            mint: '#00BEB5',
+                            dark: '#1d1d1f', 
+                            gray: '#86868b',
+                            point: '#FDB927',
+                        }
+                    },
+                    animation: {
+                        'count-up': 'countUp 2s ease-out forwards',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .bg-slide { transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1); }
+        .text-block { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0, 0, 0.2, 1); }
+        .text-block.active { opacity: 1; transform: translateY(0); }
+        .snap-x-mandatory { scroll-snap-type: x mandatory; }
+        .snap-center { scroll-snap-align: center; }
+
+        #network-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.3;
+        }
+        
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            right: 14px;
+            width: 8px;
+            height: 8px;
+            background: #161617;
+            transform: rotate(45deg);
+        }
+
+        /* Hero Expand Animation */
+        .hero-section {
+            height: 150vh; /* Scroll space */
+            position: relative;
+        }
+        .hero-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .hero-text {
+            text-align: center;
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            z-index: 20;
+            margin-bottom: 2rem;
+        }
+        .hero-text.fade-out {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+        
+        /* Video Box Initial State */
+        .video-wrapper {
+            width: 60%; /* Initial small width */
+            height: 50vh;
+            border-radius: 40px;
+            overflow: hidden;
+            transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1), height 0.8s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.8s;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+        
+        /* Expanded State (Added via JS scroll) */
+        .video-wrapper.expanded {
+            width: 95%; /* Expand to near full width */
+            height: 90vh; /* Expand height */
+            border-radius: 24px;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .video-wrapper {
+                width: 85%;
+                height: 40vh;
+            }
+            .video-wrapper.expanded {
+                width: 100%;
+                height: 100vh;
+                border-radius: 0;
+            }
+            /* Portrait aspect ratio for mobile video content */
+            .video-content {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+                /* If using object-fit: contain, ensure bg is nice */
+            }
+        }
+    </style>
+</head>
+<body class="bg-white text-[#1d1d1f] font-sans antialiased overflow-x-hidden">
+
+    <!-- Header (White & Clean) -->
+    <header id="header" class="fixed top-0 left-0 w-full h-[80px] z-50 flex items-center justify-center transition-all duration-500 bg-white/80 backdrop-blur-md border-b border-[#e5e7eb]">
+        <div class="w-full max-w-[1600px] px-8 flex items-center justify-between">
+            <div class="flex flex-col items-start cursor-pointer">
+                <p class="text-[20px] font-extrabold leading-none text-[#1d1d1f]">동아·동서 글로컬</p>
+            </div>
+            <nav class="hidden lg:flex items-center gap-12 absolute left-1/2 -translate-x-1/2">
+                <a href="#" class="text-[15px] font-semibold text-[#1d1d1f] hover:text-brand-blue transition-colors">혁신방향</a>
+                <a href="#" class="text-[15px] font-semibold text-[#1d1d1f] hover:text-brand-blue transition-colors">통합산단</a>
+                <a href="#" class="text-[15px] font-semibold text-[#1d1d1f] hover:text-brand-blue transition-colors">연합전공</a>
+                <a href="#" class="text-[15px] font-semibold text-[#1d1d1f] hover:text-brand-blue transition-colors">Field캠퍼스</a>
+            </nav>
+            <div class="flex items-center gap-8">
+                <a href="#dinsight" class="flex flex-col items-end leading-none group/dinsight">
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-brand-mint mb-[2px]">NEWSLETTER</span>
+                    <span class="text-[18px] font-black font-serif italic text-[#1d1d1f] group-hover/dinsight:text-brand-blue transition-colors tracking-tight relative">
+                        D-insight<span class="text-brand-point text-2xl leading-none ml-[1px]">.</span>
+                    </span>
+                </a>
+                <div class="w-[1px] h-[20px] bg-gray-300"></div>
+                <a href="#" class="text-[14px] font-bold tracking-tight text-[#1d1d1f] hover:text-brand-blue transition-colors flex items-center gap-1 group/ssc">
+                    학생성공센터
+                    <svg class="w-3 h-3 group-hover/ssc:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </a>
+                <button class="p-2 text-[#1d1d1f] hover:text-brand-blue transition-colors"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16m-7 6h7"></path></svg></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section (White Expand) -->
+    <section class="hero-section bg-white">
+        <div class="hero-sticky">
+            
+            <!-- Text (Disappears on Scroll) -->
+            <div id="hero-text" class="hero-text px-6">
+                <span class="text-brand-blue font-bold tracking-widest uppercase text-sm mb-4 block animate-bounce">Scroll Down</span>
+                <h1 class="text-5xl md:text-8xl font-black text-[#1d1d1f] leading-tight mb-6">
+                    대학의 미래,<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-mint">여기서 시작되다.</span>
+                </h1>
+                <p class="text-xl text-gray-500 font-medium">동아·동서 글로컬 연합대학의 새로운 도약</p>
+            </div>
+
+            <!-- Video Box (Expands on Scroll) -->
+            <div id="video-wrapper" class="video-wrapper">
+                <div id="slideshow" class="absolute inset-0">
+                    <div class="absolute inset-0 transition-opacity duration-[2000ms] opacity-100 slide-item">
+                        <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132237.721.jpg" class="video-content w-full h-full object-cover" alt="Hero 1">
+                    </div>
+                    <div class="absolute inset-0 transition-opacity duration-[2000ms] opacity-0 slide-item">
+                        <img src="../../pictures/DJI_0985 복사.jpg" class="video-content w-full h-full object-cover" alt="Hero 2">
+                    </div>
+                </div>
+                <!-- Gradient Overlay -->
+                <div class="absolute inset-0 bg-black/10"></div>
+                
+                <!-- Text inside video (Appears later) -->
+                <div class="absolute bottom-10 left-10 text-white z-20 opacity-0 transition-opacity duration-500 delay-500" id="video-inner-text">
+                    <h2 class="text-3xl font-bold mb-2">현장이 곧 강의실</h2>
+                    <p class="text-lg opacity-90">16개 산업 거점 Field 캠퍼스</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Strategy Section (White Bg + Sticky Text) -->
+    <!-- Same structure as v8/v16 but with White Background -->
+    <section class="relative bg-white text-[#1d1d1f]">
+        <div class="sticky top-0 h-[100vh] w-full overflow-hidden">
+            <div class="absolute inset-0 bg-slide opacity-100" id="bg-1"><img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132226.682.jpg" class="w-full h-full object-cover opacity-20"></div>
+            <div class="absolute inset-0 bg-slide opacity-0" id="bg-2"><img src="../../pictures/464A4461.jpg" class="w-full h-full object-cover opacity-20"></div>
+            <div class="absolute inset-0 bg-slide opacity-0" id="bg-3"><img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132211.153.jpg" class="w-full h-full object-cover opacity-20"></div>
+            <!-- White Gradient for Text Readability -->
+            <div class="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 -mt-[100vh]">
+            <div class="h-[100vh] flex items-center justify-center text-center px-6 trigger-section" data-index="1">
+                <div class="text-block max-w-4xl">
+                    <p class="text-brand-mint font-bold tracking-widest uppercase mb-4">Governance</p>
+                    <h2 class="text-5xl md:text-7xl font-bold mb-8 leading-tight">경계를 허무는<br>통합 거버넌스.</h2>
+                    <p class="text-xl md:text-2xl text-gray-500 font-medium leading-relaxed">부산시와 대학이 하나되는 시스템 오피스.</p>
+                </div>
+            </div>
+            <div class="h-[100vh] flex items-center justify-center text-center px-6 trigger-section" data-index="2">
+                <div class="text-block max-w-4xl">
+                    <p class="text-brand-blue font-bold tracking-widest uppercase mb-4">Field Campus</p>
+                    <h2 class="text-5xl md:text-7xl font-bold mb-8 leading-tight">강의실을 넘어<br>현장 속으로.</h2>
+                    <p class="text-xl md:text-2xl text-gray-500 font-medium leading-relaxed">16개 산업 거점에 세워진 현장 캠퍼스.</p>
+                </div>
+            </div>
+            <div class="h-[100vh] flex items-center justify-center text-center px-6 trigger-section" data-index="3">
+                <div class="text-block max-w-4xl">
+                    <p class="text-indigo-500 font-bold tracking-widest uppercase mb-4">Union Major</p>
+                    <h2 class="text-5xl md:text-7xl font-bold mb-8 leading-tight">무한한 가능성,<br>연합 전공.</h2>
+                    <p class="text-xl md:text-2xl text-gray-500 font-medium leading-relaxed">대학 간 장벽을 없앤 무한한 선택권.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dinsight Section (White Bg) -->
+    <section id="dinsight" class="bg-[#f5f5f7] py-32 overflow-hidden border-t border-gray-200">
+        <div class="max-w-[1600px] mx-auto px-8 mb-12 flex justify-between items-end">
+            <div>
+                <h2 class="text-5xl font-black text-[#1d1d1f] mb-2 flex items-baseline">D-insight<span class="text-brand-point text-6xl leading-none">.</span></h2>
+                <p class="text-[#86868b] text-xl font-medium">글로컬 대학의 새로운 소식.</p>
+            </div>
+            <a href="#" class="text-brand-blue font-semibold hover:underline flex items-center gap-1">전체보기 <span class="text-lg">›</span></a>
+        </div>
+        <div class="horizontal-scroll-container flex gap-8 overflow-x-auto snap-x-mandatory no-scrollbar px-8 pb-12 md:px-[calc((100vw-1600px)/2+2rem)]">
+            <!-- Cards (Same as v16) -->
+            <div class="snap-center shrink-0 w-[380px] md:w-[440px] group cursor-pointer flex flex-col gap-6">
+                <div class="overflow-hidden rounded-[24px] shadow-sm group-hover:shadow-xl transition-shadow duration-300 aspect-[4/3] bg-white">
+                    <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132250.472.jpg" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" alt="News 1">
+                </div>
+                <div class="px-2">
+                    <span class="text-xs font-bold text-brand-blue uppercase tracking-wider mb-2 block">New Program</span>
+                    <h3 class="text-2xl font-bold text-[#1d1d1f] mb-3 leading-snug group-hover:text-brand-blue transition-colors">2026학년도 신입생<br>모집 요강 발표</h3>
+                    <span class="text-xs text-[#86868b] mt-4 block">2026.02.02</span>
+                </div>
+            </div>
+            <div class="snap-center shrink-0 w-[380px] md:w-[440px] group cursor-pointer flex flex-col gap-6">
+                <div class="overflow-hidden rounded-[24px] shadow-sm group-hover:shadow-xl transition-shadow duration-300 aspect-[4/3] bg-white">
+                    <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132240.683.jpg" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" alt="News 2">
+                </div>
+                <div class="px-2">
+                    <span class="text-xs font-bold text-brand-mint uppercase tracking-wider mb-2 block">Tech & Lab</span>
+                    <h3 class="text-2xl font-bold text-[#1d1d1f] mb-3 leading-snug group-hover:text-brand-blue transition-colors">구글 협력 AI 연구소<br>개소식 현장</h3>
+                    <span class="text-xs text-[#86868b] mt-4 block">2026.01.28</span>
+                </div>
+            </div>
+            <div class="snap-center shrink-0 w-[380px] md:w-[440px] group cursor-pointer flex flex-col gap-6">
+                <div class="overflow-hidden rounded-[24px] shadow-sm group-hover:shadow-xl transition-shadow duration-300 aspect-[4/3] bg-white">
+                    <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132234.075.jpg" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" alt="News 3">
+                </div>
+                <div class="px-2">
+                    <span class="text-xs font-bold text-indigo-500 uppercase tracking-wider mb-2 block">Interview</span>
+                    <h3 class="text-2xl font-bold text-[#1d1d1f] mb-3 leading-snug group-hover:text-brand-blue transition-colors">"현장이 곧 강의실"<br>재학생 인터뷰</h3>
+                    <span class="text-xs text-[#86868b] mt-4 block">2026.01.15</span>
+                </div>
+            </div>
+            <div class="snap-center shrink-0 w-[300px] group cursor-pointer flex items-center justify-center">
+                <div class="w-full h-[300px] rounded-[32px] bg-white border border-gray-200 flex flex-col items-center justify-center text-center gap-4 hover:bg-gray-50 transition-colors shadow-sm hover:shadow-lg"><div class="w-16 h-16 rounded-full bg-brand-dark text-white flex items-center justify-center text-2xl font-bold group-hover:scale-110 transition-transform">→</div><span class="font-bold text-lg text-brand-dark">View More<br>Stories</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white text-[#86868b] py-20 border-t border-[#d2d2d7]">
+        <div class="max-w-[1600px] mx-auto px-8 flex flex-col md:flex-row justify-between items-start gap-8">
+            <div><h2 class="text-xl font-bold text-[#1d1d1f] mb-2">동아·동서 글로컬 연합대학</h2><p class="text-xs">Dong-A · DongSeo Glocal University</p></div>
+            <div class="flex gap-6 text-xs font-medium"><a href="#" class="hover:text-[#1d1d1f]">개인정보처리방침</a><a href="#" class="hover:text-[#1d1d1f]">이용약관</a></div>
+        </div>
+    </footer>
+
+    <script>
+        // Slideshow
+        const slides = document.querySelectorAll('.slide-item');
+        let currentSlide = 0;
+        setInterval(() => {
+            slides[currentSlide].classList.replace('opacity-100', 'opacity-0');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.replace('opacity-0', 'opacity-100');
+        }, 4000);
+
+        // Expand Interaction Logic
+        const heroSection = document.querySelector('.hero-section');
+        const heroText = document.getElementById('hero-text');
+        const videoWrapper = document.getElementById('video-wrapper');
+        const videoInnerText = document.getElementById('video-inner-text');
+
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const threshold = 100; // Pixel value to start expand
+
+            if (scrollY > threshold) {
+                heroText.classList.add('fade-out');
+                videoWrapper.classList.add('expanded');
+                videoInnerText.classList.remove('opacity-0');
+            } else {
+                heroText.classList.remove('fade-out');
+                videoWrapper.classList.remove('expanded');
+                videoInnerText.classList.add('opacity-0');
+            }
+        });
+
+        // Strategy Sticky Logic
+        const triggers = document.querySelectorAll('.trigger-section');
+        const bgs = [document.getElementById('bg-1'), document.getElementById('bg-2'), document.getElementById('bg-3')];
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const index = parseInt(entry.target.getAttribute('data-index')) - 1;
+                const textBlock = entry.target.querySelector('.text-block');
+                if (entry.isIntersecting) {
+                    textBlock.classList.add('active');
+                    bgs.forEach((bg, i) => {
+                        if (i === index) bg.classList.replace('opacity-0', 'opacity-100');
+                        else bg.classList.replace('opacity-100', 'opacity-0');
+                    });
+                } else {
+                    textBlock.classList.remove('active');
+                }
+            });
+        }, { root: null, rootMargin: '-40% 0px -40% 0px', threshold: 0 });
+        triggers.forEach(t => observer.observe(t));
+        
+        // Canvas (Same as before but with dark lines for white bg)
+        // ... (Canvas logic omitted for brevity, assuming similar to v17 but strokeStyle rgba(0,0,0,0.1))
+    </script>
+</body>
+</html>

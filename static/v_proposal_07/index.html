@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D-insight | Proposal 07 (Advanced Layouts)</title>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #1B3B5F;
+            --color-point: #56CFC9;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'SUIT', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-sans); }
+        
+        body { 
+            background: #fff; 
+            overflow: hidden; 
+            height: 100vh; 
+        }
+
+        /* --- LOGO (Shared) --- */
+        .brand-logo {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .brand-logo .sub {
+            font-size: 10px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.8);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .brand-logo .main {
+            font-family: var(--font-serif);
+            font-weight: 700;
+            font-style: italic;
+            font-size: 24px;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+
+        /* Logo Color Toggles */
+        .dark-logo .sub { color: #999 !important; }
+        .dark-logo .main { color: #111 !important; }
+
+
+        /* --- LAYOUT CONTAINERS --- */
+        .layout-container {
+            width: 100%;
+            height: 100%;
+            display: none;
+            position: relative;
+        }
+        .layout-container.active { display: flex; }
+
+
+        /* === TYPE D: FRAME (Art Gallery) === */
+        #layout-d {
+            background: #fff;
+            padding: 60px; /* The Frame */
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .frame-inner {
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .frame-text {
+            position: absolute;
+            bottom: -30px; /* Overlap the frame */
+            right: 40px;
+            background: #fff;
+            padding: 40px;
+            box-shadow: -10px -10px 0 var(--color-point);
+            max-width: 500px;
+        }
+
+        .frame-h1 {
+            font-family: var(--font-serif);
+            font-size: 60px;
+            font-weight: 700;
+            line-height: 0.9;
+            margin-bottom: 20px;
+            color: #111;
+        }
+        .frame-desc { font-size: 16px; color: #666; line-height: 1.6; }
+
+
+        /* === TYPE E: VERTICAL (Architectural) === */
+        #layout-e {
+            background: #f4f4f4;
+        }
+
+        .vert-stripe {
+            flex: 0.2; /* 20% Text Stripe */
+            background: #1B3B5F;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 40px;
+            position: relative;
+        }
+
+        .vert-img {
+            flex: 0.8;
+            background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .vert-title-wrap {
+            transform: rotate(-90deg);
+            transform-origin: left bottom;
+            position: absolute;
+            bottom: 40px;
+            left: 80px;
+            white-space: nowrap;
+        }
+
+        .vert-h1 {
+            font-family: var(--font-serif);
+            font-size: 100px;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1;
+            color: rgba(255,255,255,0.2); /* Faint large text */
+        }
+        
+        .vert-real-text {
+            margin-top: 100px;
+        }
+        .vert-sub { font-size: 14px; font-weight: 700; color: var(--color-point); margin-bottom: 20px; display:block;}
+        .vert-msg { font-size: 24px; line-height: 1.4; font-weight: 700; }
+
+
+        /* === TYPE F: FLOATING CARD (Invitation) === */
+        #layout-f {
+            background-image: url('https://images.unsplash.com/photo-1590402494587-44b71d87e394?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            justify-content: center;
+            align-items: center;
+        }
+        #layout-f::before {
+            content: ''; position: absolute; inset: 0;
+            background: rgba(27, 59, 95, 0.7); /* Navy Tint */
+            backdrop-filter: blur(10px);
+        }
+
+        .float-card {
+            position: relative; z-index: 10;
+            background: white;
+            padding: 80px;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .float-h1 {
+            font-family: var(--font-serif);
+            font-size: 70px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 30px;
+            color: #111;
+        }
+        .float-h1 span { color: var(--color-point); font-style: italic; }
+        
+        .float-divider {
+            width: 2px; height: 40px; background: #ddd; margin: 0 auto 30px auto;
+        }
+        
+        .float-btn {
+            display: inline-block;
+            border: 2px solid #111;
+            padding: 12px 30px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 13px;
+            color: #111;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .float-btn:hover { background: #111; color: white; }
+
+
+        /* --- CONTROLS --- */
+        .control-panel {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 8px;
+            border-radius: 100px;
+            display: flex;
+            gap: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 200;
+        }
+        
+        .btn {
+            border: none;
+            background: transparent;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            color: #888;
+            transition: all 0.2s;
+        }
+        .btn:hover { background: #f0f0f0; color: #333; }
+        .btn.active { background: #1B3B5F; color: white; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Logo (Changes color) -->
+    <a href="#" class="brand-logo dark-logo" id="mainLogo">
+        <span class="sub">GLOCAL WEBZINE</span>
+        <span class="main">D-insight</span>
+    </a>
+
+    <!-- LAYOUT D: Frame -->
+    <div id="layout-d" class="layout-container active">
+        <div class="frame-inner"></div>
+        <div class="frame-text">
+            <h1 class="frame-h1">Bridging<br>Local to Global</h1>
+            <p class="frame-desc">
+                여백의 미학을 살린 액자형 레이아웃입니다.<br>
+                텍스트 박스가 그림을 살짝 침범하여 입체감을 줍니다.
+            </p>
+        </div>
+    </div>
+
+    <!-- LAYOUT E: Vertical -->
+    <div id="layout-e" class="layout-container">
+        <div class="vert-stripe">
+            <div class="vert-title-wrap">
+                <h1 class="vert-h1">INSIGHT</h1>
+            </div>
+            <div class="vert-real-text">
+                <span class="vert-sub">VOL.03 EDITION</span>
+                <p class="vert-msg">동아·동서<br>글로컬 연합</p>
+            </div>
+        </div>
+        <div class="vert-img"></div>
+    </div>
+
+    <!-- LAYOUT F: Floating -->
+    <div id="layout-f" class="layout-container">
+        <div class="float-card">
+            <span style="font-size:12px; font-weight:700; color:#999; display:block; margin-bottom:20px;">COVER STORY</span>
+            <h1 class="float-h1">Bridging<br><span>Local</span> to Global</h1>
+            <div class="float-divider"></div>
+            <p style="margin-bottom:30px; line-height:1.6; color:#555;">
+                지역의 한계를 넘어 세계로 나아가는<br>
+                새로운 교육의 패러다임을 제안합니다.
+            </p>
+            <a href="#" class="float-btn">Read Magazine</a>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="control-panel">
+        <button class="btn active" onclick="switchLayout('layout-d', this)">D. Frame</button>
+        <button class="btn" onclick="switchLayout('layout-e', this)">E. Vertical</button>
+        <button class="btn" onclick="switchLayout('layout-f', this)">F. Floating</button>
+    </div>
+
+    <script>
+        function switchLayout(id, btn) {
+            document.querySelectorAll('.layout-container').forEach(el => el.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            
+            // Logo Color Handling
+            const logo = document.getElementById('mainLogo');
+            
+            if(id === 'layout-e') {
+                logo.classList.remove('dark-logo'); // White text on dark blue stripe
+            } else if (id === 'layout-f') {
+                logo.classList.remove('dark-logo'); // White text on dark overlay
+            } else {
+                logo.classList.add('dark-logo'); // Black text on white frame
+            }
+
+            document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+    </script>
+
+</body>
+</html>

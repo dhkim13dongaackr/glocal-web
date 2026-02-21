@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동아·동서 글로컬 연합대학 v58 (Frameless HUD)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['SUIT', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#4132CC', 
+                            mint: '#00BEB5',
+                            dark: '#1d1d1f', 
+                            bg: '#EBECFA',
+                        }
+                    },
+                    animation: {
+                        'strong-pulse': 'strong-pulse 2s infinite',
+                    },
+                    keyframes: {
+                        'strong-pulse': {
+                            '0%': { transform: 'scale(1)', boxShadow: '0 0 0 0 rgba(65, 50, 204, 0.7)' },
+                            '70%': { transform: 'scale(1)', boxShadow: '0 0 0 20px rgba(65, 50, 204, 0)' },
+                            '100%': { transform: 'scale(1)', boxShadow: '0 0 0 0 rgba(65, 50, 204, 0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #E5E7EB; color: #1d1d1f; font-family: 'SUIT', sans-serif; }
+        
+        .map-container {
+            position: relative; width: 100%; max-width: 1400px; aspect-ratio: 16/9; max-height: 80vh;
+            background: #fff; border-radius: 40px; overflow: hidden;
+            box-shadow: 0 40px 100px -20px rgba(65, 50, 204, 0.1);
+            border: 1px solid rgba(65, 50, 204, 0.1);
+            margin: 40px auto;
+        }
+        @media (max-width: 768px) {
+            .map-container { aspect-ratio: 9/16; border-radius: 0; margin: 0; max-height: none; height: 100vh; }
+        }
+
+        /* --- Node System (Frameless) --- */
+        .node-wrapper {
+            position: absolute; z-index: 10; cursor: pointer;
+        }
+
+        /* 1. Pulse Dot (Stronger) */
+        .node-dot {
+            width: 16px; height: 16px;
+            background: #4132CC; border-radius: 50%;
+            position: relative; z-index: 20;
+            border: 2px solid white;
+            /* Use tailwind utility or custom keyframe */
+            animation: strong-pulse 2s infinite; 
+        }
+        /* Make sure animation is visible */
+        @keyframes strong-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(65, 50, 204, 0.8); }
+            70% { box-shadow: 0 0 0 30px rgba(65, 50, 204, 0); } /* Bigger range */
+            100% { box-shadow: 0 0 0 0 rgba(65, 50, 204, 0); }
+        }
+
+        /* Stop Pulse on Hover */
+        .node-wrapper:hover .node-dot, .node-wrapper.active .node-dot {
+            animation: none;
+            transform: scale(1.3);
+            background: white; border: 4px solid #4132CC;
+            box-shadow: 0 0 30px rgba(65, 50, 204, 0.5); /* Static Glow */
+        }
+
+        /* 2. Connection Line */
+        .node-line {
+            position: absolute; top: 50%; left: 50%; height: 2px; background: #4132CC;
+            width: 0; transform-origin: left center;
+            transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            pointer-events: none; z-index: 15;
+        }
+        .node-wrapper:hover .node-line, .node-wrapper.active .node-line { width: 60px; }
+
+        /* 3. Info Content (Frameless) */
+        .node-content {
+            position: absolute; top: 50%; left: calc(50% + 60px); /* Start after line */
+            transform: translateY(-50%) translateX(-10px);
+            opacity: 0; pointer-events: none;
+            transition: all 0.3s 0.1s;
+            z-index: 30;
+            display: flex; flex-direction: column; justify-content: center;
+            min-width: 150px;
+        }
+        .node-wrapper:hover .node-content, .node-wrapper.active .node-content {
+            opacity: 1; transform: translateY(-50%) translateX(0); pointer-events: auto;
+        }
+
+        /* Typography for Frameless */
+        .node-title {
+            font-size: 20px; font-weight: 900; color: #1d1d1f; line-height: 1.1;
+            /* White Stroke for readability on map */
+            text-shadow: 2px 2px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+        }
+        .node-sub {
+            font-size: 12px; font-weight: 700; color: #4132CC; text-transform: uppercase; letter-spacing: 1px;
+            background: rgba(255,255,255,0.8); backdrop-filter: blur(4px);
+            padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 4px; width: fit-content;
+        }
+        .node-loc {
+            font-size: 12px; color: #555; margin-top: 4px; font-weight: 600;
+            background: rgba(255,255,255,0.8); padding: 2px 6px; border-radius: 4px; width: fit-content;
+        }
+
+        /* Image Bubble (Optional) */
+        .node-bubble {
+            width: 60px; height: 60px; border-radius: 50%; overflow: hidden;
+            border: 3px solid #4132CC; background: white;
+            position: absolute; bottom: 100%; left: 0; margin-bottom: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            opacity: 0; transform: translateY(10px) scale(0.8); transition: 0.3s 0.2s;
+        }
+        .node-wrapper:hover .node-bubble { opacity: 1; transform: translateY(0) scale(1); }
+        .node-bubble img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Left Expand */
+        .node-wrapper.left .node-line { left: auto; right: 50%; transform-origin: right center; }
+        .node-wrapper.left .node-content { left: auto; right: calc(50% + 60px); transform: translateY(-50%) translateX(10px); text-align: right; align-items: flex-end; }
+        .node-wrapper.left:hover .node-content { transform: translateY(-50%) translateX(0); }
+        .node-wrapper.left .node-bubble { left: auto; right: 0; }
+
+        @media (max-width: 768px) {
+            .node-line { display: none; }
+            .node-content {
+                top: auto; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(10px);
+                align-items: center; text-align: center;
+                background: rgba(255,255,255,0.9); padding: 12px; border-radius: 16px;
+                border: 1px solid #EBECFA; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            }
+            .node-wrapper.active .node-content { transform: translateX(-50%) translateY(0); }
+            .node-bubble { position: relative; bottom: auto; left: auto; margin-bottom: 8px; }
+            .node-title { text-shadow: none; font-size: 16px; }
+        }
+
+    </style>
+</head>
+<body class="bg-[#f5f5f7] text-[#1d1d1f] font-sans antialiased overflow-x-hidden">
+
+    <div class="max-w-[1400px] mx-auto pt-10 px-6 md:px-10 text-center md:text-left">
+        <h1 class="text-3xl md:text-4xl font-extrabold mb-2 text-brand-blue">Frameless HUD Nodes</h1>
+        <p class="text-gray-500 text-sm md:text-base">No box, just data. Stronger pulse. Modern UI.</p>
+    </div>
+
+    <div class="map-container relative">
+        <img src="../../pictures/DJI_0938 복사.jpg" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-multiply grayscale">
+        
+        <!-- Node 1: Text Only (Right) -->
+        <div class="node-wrapper right" style="top: 30%; left: 35%;" onclick="toggleNode(this)">
+            <div class="node-dot"></div>
+            <div class="node-line"></div>
+            <div class="node-content">
+                <span class="node-sub">전력반도체</span>
+                <div class="node-title">부산테크노파크</div>
+                <span class="node-loc">남구 감만동</span>
+            </div>
+        </div>
+
+        <!-- Node 2: With Circle Bubble (Left) -->
+        <div class="node-wrapper left" style="top: 55%; left: 65%;" onclick="toggleNode(this)">
+            <div class="node-dot"></div>
+            <div class="node-line"></div>
+            <div class="node-bubble"><img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132211.153.jpg"></div>
+            <div class="node-content">
+                <span class="node-sub text-brand-mint">디지털 콘텐츠</span>
+                <div class="node-title">콘텐츠코리아랩</div>
+                <span class="node-loc">해운대구 우동</span>
+            </div>
+        </div>
+
+        <!-- Node 3: Text Only (Right) -->
+        <div class="node-wrapper right" style="top: 70%; left: 40%;" onclick="toggleNode(this)">
+            <div class="node-dot"></div>
+            <div class="node-line"></div>
+            <div class="node-content">
+                <span class="node-sub text-indigo-500">스마트 해양</span>
+                <div class="node-title">해양플랜트연구소</div>
+                <span class="node-loc">강서구 지사동</span>
+            </div>
+        </div>
+
+        <!-- Node 4: With Circle Bubble (Left) -->
+        <div class="node-wrapper left" style="top: 25%; left: 70%;" onclick="toggleNode(this)">
+            <div class="node-dot"></div>
+            <div class="node-line"></div>
+            <div class="node-bubble"><img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132234.075.jpg"></div>
+            <div class="node-content">
+                <span class="node-sub text-pink-500">바이오 헬스</span>
+                <div class="node-title">대학병원 암센터</div>
+                <span class="node-loc">서구 암남동</span>
+            </div>
+        </div>
+
+        <!-- Mobile Hint -->
+        <div class="absolute bottom-6 w-full text-center md:hidden pointer-events-none">
+            <span class="bg-white/80 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-brand-blue">Tap the pulsing dots</span>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleNode(el) {
+            const isActive = el.classList.contains('active');
+            document.querySelectorAll('.node-wrapper').forEach(node => {
+                node.classList.remove('active');
+            });
+            if (!isActive) {
+                el.classList.add('active');
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전력반도체 (Integrated Header) - 동아·동서 글로컬 연합대학</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['SUIT', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#4132CC', // Alliance Indigo
+                            mint: '#00BEB5', // Future Mint
+                            dark: '#1d1d1f', 
+                            bg: '#EBECFA',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #fff; color: #1d1d1f; }
+        
+        /* 1. Integrated Floating Header (Main Logic) */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; height: 80px; z-index: 100;
+            background: rgba(255,255,255,0.9); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex; align-items: center; justify-content: space-between; padding: 0 40px;
+        }
+        header.hidden-header { transform: translateY(-100%); } /* Hide on scroll down */
+        
+        .logo { font-weight: 900; font-size: 20px; letter-spacing: -1px; }
+        .nav-item { margin: 0 20px; font-weight: 700; color: #555; cursor: pointer; transition: 0.2s; }
+        .nav-item:hover, .nav-item.active { color: #4132CC; }
+
+        /* 2. Sub Hero */
+        .sub-hero {
+            height: 400px; background: #111; position: relative; overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+            margin-top: 80px; /* Header Space */
+        }
+        .hero-img {
+            position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5;
+        }
+        .hero-txt {
+            position: relative; z-index: 10; text-align: center; color: white;
+        }
+
+        /* 3. Smart LNB (Sticky Logic) */
+        .lnb-wrap {
+            height: 60px; background: white; border-bottom: 1px solid #eee;
+            position: sticky; top: 80px; /* Attach below Header */
+            z-index: 90; transition: top 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        /* When header hides, LNB sticks to top */
+        body.header-hidden .lnb-wrap { top: 0; }
+
+        .lnb-inner {
+            max-width: 1200px; margin: 0 auto; height: 100%; display: flex;
+        }
+        .lnb-item {
+            flex: 1; display: flex; align-items: center; justify-content: center;
+            font-weight: 700; color: #888; cursor: pointer; border-bottom: 3px solid transparent;
+            transition: 0.3s;
+        }
+        .lnb-item:hover, .lnb-item.active { color: #4132CC; border-bottom: 3px solid #4132CC; background: #F5F7FA; }
+
+        /* Content */
+        .content-sec { padding: 100px 0; max-width: 1200px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
+        
+        .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .info-card {
+            background: white; border-radius: 24px; padding: 32px; border: 1px solid #eee;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02); transition: 0.3s;
+        }
+        .info-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(65, 50, 204, 0.1); border-color: #4132CC; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header { height: 60px; padding: 0 20px; }
+            .sub-hero { height: 300px; margin-top: 60px; }
+            .lnb-wrap { top: 60px; overflow-x: auto; }
+            .lnb-inner { width: max-content; }
+            .lnb-item { padding: 0 20px; }
+            .card-grid { grid-template-columns: 1fr; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Global Header (Context Aware) -->
+    <header id="main-header">
+        <div class="logo">GLOCAL</div>
+        <nav class="hidden md:flex">
+            <a href="#" class="nav-item">대학소개</a>
+            <a href="#" class="nav-item active">Field 캠퍼스</a>
+            <a href="#" class="nav-item">입학안내</a>
+            <a href="#" class="nav-item">학생성공</a>
+        </nav>
+        <div class="w-8 h-8 rounded-full bg-gray-200"></div>
+    </header>
+
+    <!-- Sub Hero -->
+    <div class="sub-hero">
+        <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132226.682.jpg" class="hero-img" id="hero-img">
+        <div class="hero-txt">
+            <p class="text-brand-mint font-bold tracking-widest text-sm mb-2">FIELD CAMPUS</p>
+            <h1 class="text-4xl md:text-5xl font-black mb-4">전력반도체</h1>
+            <p class="opacity-70">부산테크노파크 거점, 국내 유일 파워반도체 클러스터</p>
+        </div>
+    </div>
+
+    <!-- Smart Sticky LNB -->
+    <div class="lnb-wrap" id="lnb-bar">
+        <div class="lnb-inner">
+            <div class="lnb-item active" onclick="scrollToSec('intro')">개요</div>
+            <div class="lnb-item" onclick="scrollToSec('curriculum')">교육과정</div>
+            <div class="lnb-item" onclick="scrollToSec('facility')">시설안내</div>
+            <div class="lnb-item" onclick="scrollToSec('partners')">협력기업</div>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <section id="intro" class="content-sec">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-3xl font-black mb-6 leading-tight">
+                    현장이 곧 강의실,<br>
+                    <span class="text-brand-blue">실무형 인재</span>의 요람
+                </h2>
+                <p class="text-gray-500 leading-relaxed mb-8">
+                    전력반도체 필드캠퍼스는 강의실을 벗어나 산업 현장(부산테크노파크) 속에 위치합니다.
+                    학생들은 이곳에서 이론 교육과 실습을 병행하며,
+                    졸업 후 즉시 투입 가능한 실전형 엔지니어로 성장합니다.
+                </p>
+                <div class="flex gap-8 border-t border-gray-100 pt-8">
+                    <div>
+                        <div class="text-3xl font-black text-brand-dark mb-1">Top 1</div>
+                        <div class="text-xs font-bold text-gray-400">국내 유일 특화</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-black text-brand-dark mb-1">98%</div>
+                        <div class="text-xs font-bold text-gray-400">취업률 성과</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <img src="../../pictures/464A4461.jpg" class="rounded-[32px] shadow-2xl w-full">
+            </div>
+        </div>
+    </section>
+
+    <section id="curriculum" class="content-sec bg-gray-50 rounded-[40px]">
+        <div class="text-center mb-12">
+            <span class="text-brand-blue font-bold text-xs tracking-widest mb-2 block">ROADMAP</span>
+            <h2 class="text-3xl font-black">현장 맞춤형 커리큘럼</h2>
+        </div>
+        <div class="card-grid">
+            <div class="info-card">
+                <div class="text-4xl font-black text-gray-200 mb-4">01</div>
+                <h3 class="text-xl font-bold mb-2">기초 이론</h3>
+                <p class="text-sm text-gray-500">반도체 물성 및 소자 원리 이해.<br>진공 및 플라즈마 공학 기초.</p>
+            </div>
+            <div class="info-card border-brand-blue border-2">
+                <div class="text-4xl font-black text-brand-blue mb-4">02</div>
+                <h3 class="text-xl font-bold mb-2 text-brand-blue">공정 실습</h3>
+                <p class="text-sm text-gray-600 font-medium">8대 핵심 공정 장비 직접 운용.<br>클린룸 내 현장 실습 진행.</p>
+            </div>
+            <div class="info-card">
+                <div class="text-4xl font-black text-gray-200 mb-4">03</div>
+                <h3 class="text-xl font-bold mb-2">캡스톤 디자인</h3>
+                <p class="text-sm text-gray-500">기업 연계 프로젝트 수행.<br>실제 소자 제작 및 특성 분석.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="facility" class="content-sec">
+        <h2 class="text-3xl font-black mb-12">첨단 실습 환경</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 h-[400px]">
+            <div class="col-span-2 row-span-2 rounded-2xl overflow-hidden relative group">
+                <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132226.682.jpg" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                <div class="absolute bottom-0 w-full p-6 bg-gradient-to-t from-black/80 to-transparent text-white font-bold">클린룸</div>
+            </div>
+            <div class="rounded-2xl overflow-hidden relative group">
+                <img src="../../pictures/MZU00838.ARW" class="w-full h-full object-cover bg-gray-200 transition duration-500 group-hover:scale-110">
+                <div class="absolute bottom-0 w-full p-4 bg-gradient-to-t from-black/80 to-transparent text-white text-sm font-bold">노광 장비</div>
+            </div>
+            <div class="rounded-2xl overflow-hidden relative group">
+                <img src="../../pictures/MZU00847.ARW" class="w-full h-full object-cover bg-gray-200 transition duration-500 group-hover:scale-110">
+                <div class="absolute bottom-0 w-full p-4 bg-gradient-to-t from-black/80 to-transparent text-white text-sm font-bold">증착 장비</div>
+            </div>
+            <div class="col-span-2 rounded-2xl overflow-hidden relative group">
+                <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132254.177.jpg" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                <div class="absolute bottom-0 w-full p-6 bg-gradient-to-t from-black/80 to-transparent text-white font-bold">측정 분석실</div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-100 py-20 text-center">
+        <p class="text-xs font-bold text-gray-400">COPYRIGHT © GLOCAL UNIVERSITY. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 1. Floating Header Logic
+        let lastScroll = 0;
+        const header = document.getElementById('main-header');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            // Scroll Down -> Hide Header
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                header.classList.add('hidden-header');
+                document.body.classList.add('header-hidden');
+            } 
+            // Scroll Up -> Show Header
+            else {
+                header.classList.remove('hidden-header');
+                document.body.classList.remove('header-hidden');
+            }
+            lastScroll = currentScroll;
+        });
+
+        // 2. Parallax
+        gsap.to("#hero-img", {
+            y: 100,
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".sub-hero",
+                start: "top top",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+
+        // 3. Scroll to Section
+        function scrollToSec(id) {
+            const el = document.getElementById(id);
+            // Height of LNB (60) + Buffer
+            // If Header visible: 80 + 60 = 140
+            // If Header hidden: 60
+            // Default to safe 140 or calculate dynamically.
+            // For stability, let's use fixed offset assuming header might show up
+            const offset = 140; 
+            const y = el.getBoundingClientRect().top + window.pageYOffset - offset;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+
+        // 4. Active LNB Spy
+        const sections = ['intro', 'curriculum', 'facility', 'partners'];
+        const items = document.querySelectorAll('.lnb-item');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(sec => {
+                const el = document.getElementById(sec);
+                if (el && window.scrollY >= (el.offsetTop - 200)) {
+                    current = sec;
+                }
+            });
+            items.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('onclick').includes(current)) item.classList.add('active');
+            });
+        });
+
+    </script>
+
+</body>
+</html>

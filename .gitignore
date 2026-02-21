@@ -1,0 +1,24 @@
+# Large video files (too big for GitHub)
+*.mov
+*.mp4
+*.avi
+*.mkv
+static/v_proposal_11/videos/
+
+# Raw camera files
+*.ARW
+
+# Go binaries
+server
+tmp/
+*.exe
+
+# IDE
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Air (Go live reload)
+.air.toml

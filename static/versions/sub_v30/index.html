@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glocal Design System - Final Refined</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        /* --- VISUAL TOKENS --- */
+        :root {
+            --primary: #3e31d5;       /* Glocal Violet */
+            --primary-dark: #3025a8;  /* Darker Violet for hover */
+            --primary-light: #f1f2ff; /* Pale Violet Tint */
+            
+            --text-title: #111111;    /* Almost Black */
+            --text-body: #333336;     /* Dark Gray (Readable) */
+            --text-cap: #66666e;      /* Caption Gray */
+            
+            --bg-page: #f5f7fa;       /* Cool Gray Background */
+            --card-bg: #ffffff;
+            
+            --card-radius: 28px;      /* Slightly tighter than 30px for structure */
+        }
+
+        body { 
+            background-color: var(--bg-page); 
+            color: var(--text-body); 
+            font-family: 'SUIT', sans-serif; 
+            overflow-x: hidden;
+        }
+
+        /* --- LAYOUT UTILITIES --- */
+        .main-container {
+            max-width: 1280px; /* Constrained width */
+            margin: 0 auto;
+            padding-left: 40px; /* Safe Area Side Margins */
+            padding-right: 40px;
+        }
+
+        /* --- COMPONENT STYLES --- */
+        
+        /* 1. Cards (Refined Shadow) */
+        .glocal-card {
+            background: var(--card-bg);
+            border-radius: var(--card-radius);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.08); /* Stronger Shadow */
+            border: 1px solid rgba(255,255,255,0.6); /* Subtle highlight border */
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .glocal-card.interactive:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 60px rgba(62, 49, 213, 0.15); /* Violet shadow */
+            border-color: rgba(62, 49, 213, 0.1);
+        }
+
+        /* 2. Header (Fixed & Centered) */
+        .header-wrapper {
+            position: fixed; top: 20px; left: 0; width: 100%; z-index: 1000;
+            padding: 0 40px; /* Match main container padding */
+            pointer-events: none;
+        }
+        .capsule-header {
+            pointer-events: auto;
+            max-width: 1280px; margin: 0 auto; /* Align with content */
+            background: rgba(255, 255, 255, 0.92); 
+            backdrop-filter: saturate(180%) blur(24px);
+            border-radius: 100px;
+            padding: 14px 32px;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+        .nav-item { font-size: 15px; font-weight: 600; color: var(--text-cap); cursor: pointer; transition: 0.2s; }
+        .nav-item:hover, .nav-item.active { color: var(--primary); }
+        .logo { font-weight: 900; font-size: 18px; letter-spacing: -0.5px; color: var(--text-title); }
+
+        /* 3. Typography (Heavier) */
+        .h1-display { font-size: 56px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.2; color: var(--text-title); }
+        .h2-section { font-size: 36px; font-weight: 800; letter-spacing: -0.02em; color: var(--text-title); margin-bottom: 16px; }
+        .h3-title { font-size: 22px; font-weight: 800; letter-spacing: -0.01em; color: var(--text-title); }
+        .body-text { font-size: 17px; font-weight: 500; color: var(--text-body); line-height: 1.6; } /* Font weight 500 */
+        .caption { font-size: 13px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; display: block; }
+
+        /* 4. Buttons */
+        .btn-primary {
+            background: var(--primary); color: white; border-radius: 100px; padding: 14px 32px; font-size: 16px; font-weight: 700;
+            transition: 0.3s; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+            box-shadow: 0 8px 24px rgba(62, 49, 213, 0.25); /* Stronger shadow */
+        }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(62, 49, 213, 0.35); }
+        
+        .btn-secondary {
+            background: white; color: var(--primary); border-radius: 100px; padding: 14px 32px; font-size: 16px; font-weight: 700;
+            transition: 0.3s; border: 1px solid #e5e7eb; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+        .btn-secondary:hover { background: #fcfcff; border-color: var(--primary-light); transform: translateY(-2px); }
+
+        .btn-link {
+            color: var(--primary); font-weight: 700; font-size: 15px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;
+        }
+        .btn-link:hover { text-decoration: underline; }
+
+        /* 5. Board / List (Enhanced) */
+        .board-list { width: 100%; }
+        .board-row { 
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 26px 32px; border-bottom: 1px solid #f0f0f5; 
+            transition: 0.2s; cursor: pointer; background: white;
+        }
+        .board-row:first-child { border-top-left-radius: var(--card-radius); border-top-right-radius: var(--card-radius); }
+        .board-row:last-child { border-bottom: none; border-bottom-left-radius: var(--card-radius); border-bottom-right-radius: var(--card-radius); }
+        .board-row:hover { background: #fbfbfc; transform: scale(1.005); z-index: 1; box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+        
+        .badge { display: inline-block; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 800; }
+        .badge.new { background: var(--primary-light); color: var(--primary); }
+        .badge.gray { background: #f0f0f5; color: #666; }
+
+        /* 6. Accordion (Enhanced) */
+        .accordion-item { background: white; border-radius: 20px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); overflow: hidden; border: 1px solid transparent; }
+        .accordion-item:hover { border-color: var(--primary-light); }
+        .accordion-header { 
+            padding: 24px 32px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; 
+            font-size: 17px; font-weight: 700; color: var(--text-title);
+        }
+        .accordion-icon { transition: 0.3s; color: var(--text-cap); width: 28px; height: 28px; background: #f5f7fa; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; }
+        .accordion-content { 
+            max-height: 0; overflow: hidden; transition: 0.4s ease; 
+            color: var(--text-body); line-height: 1.6; font-size: 16px; font-weight: 500; padding: 0 32px;
+        }
+        .accordion-item.active .accordion-content { padding-bottom: 32px; max-height: 200px; }
+        .accordion-item.active .accordion-icon { transform: rotate(180deg); background: var(--primary); color: white; }
+
+        /* 7. Gallery Grid (Spacing) */
+        .gallery-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+        }
+        .gallery-item {
+            border-radius: 24px; overflow: hidden; position: relative; cursor: pointer;
+            height: 280px; box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+        }
+        .gallery-item img {
+            width: 100%; height: 100%; object-fit: cover; transition: 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .gallery-item:hover img { transform: scale(1.08); }
+        .g-span-2 { grid-column: span 2; }
+
+        /* 8. Tabs (Enhanced) */
+        .tab-nav {
+            display: inline-flex; background: #eaeaef; padding: 4px; border-radius: 100px;
+            position: relative; margin-bottom: 30px;
+        }
+        .tab-btn {
+            padding: 10px 28px; font-size: 14px; font-weight: 700; color: var(--text-cap); 
+            border-radius: 100px; cursor: pointer; transition: 0.2s; position: relative; z-index: 2;
+        }
+        .tab-btn.active { color: var(--primary); background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+        /* Layout Utilities */
+        .section-gap { margin-bottom: 120px; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-container { padding-left: 24px; padding-right: 24px; }
+            .h1-display { font-size: 40px; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .g-span-2 { grid-column: span 1; }
+            .capsule-header { gap: 20px; padding: 12px 24px; }
+            .nav-list { display: none; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header-wrapper">
+        <header class="capsule-header">
+            <div class="logo">GLOCAL</div>
+            <nav class="nav-list hidden md:flex gap-10">
+                <a class="nav-item active">Components</a>
+                <a class="nav-item">Foundation</a>
+                <a class="nav-item">Patterns</a>
+            </nav>
+            <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center cursor-pointer hover:bg-indigo-50 transition">
+                <span class="text-sm font-bold text-gray-700">≡</span>
+            </div>
+        </header>
+    </div>
+
+    <div class="main-container pt-40 pb-20">
+        
+        <!-- Intro -->
+        <div class="mb-24 text-center">
+            <span class="caption mb-4 inline-block bg-white px-4 py-1.5 rounded-full shadow-sm border border-gray-100">Design System v1.1 Refined</span>
+            <h1 class="h1-display mb-6">
+                Structured & Bold.<br>
+                <span style="color: var(--primary);">The Glocal Standard.</span>
+            </h1>
+            <p class="body-text max-w-2xl mx-auto text-lg text-gray-500">
+                Improved contrast, clearer spacing, and refined shadows.<br>
+                A production-ready design system for Glocal University.
+            </p>
+        </div>
+
+        <!-- 1. Stats & Motion -->
+        <section class="section-gap">
+            <span class="caption">01. Data Visualization</span>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Stat Card 1 -->
+                <div class="glocal-card p-10 text-center interactive relative border-t-4 border-indigo-500">
+                    <p class="text-gray-500 font-bold mb-3 uppercase tracking-wider text-xs">Employment</p>
+                    <div class="text-7xl font-black text-[#171719] mb-3 font-tnum tracking-tight">
+                        <span class="counter" data-target="98.5">0</span>%
+                    </div>
+                    <p class="text-sm font-medium text-gray-500">졸업생 전공 분야 취업률</p>
+                </div>
+                <!-- Stat Card 2 -->
+                <div class="glocal-card p-10 text-center interactive border-t-4 border-blue-500">
+                    <p class="text-gray-500 font-bold mb-3 uppercase tracking-wider text-xs">Students</p>
+                    <div class="text-7xl font-black text-[#3e31d5] mb-3 font-tnum tracking-tight">
+                        <span class="counter" data-target="1250">0</span>
+                    </div>
+                    <p class="text-sm font-medium text-gray-500">2026학년도 신입생 수</p>
+                </div>
+                <!-- Stat Card 3 -->
+                <div class="glocal-card p-10 text-center interactive border-t-4 border-purple-500">
+                    <p class="text-gray-500 font-bold mb-3 uppercase tracking-wider text-xs">Partners</p>
+                    <div class="text-7xl font-black text-[#171719] mb-3 font-tnum tracking-tight">
+                        <span class="counter" data-target="45">0</span>+
+                    </div>
+                    <p class="text-sm font-medium text-gray-500">산학 협력 기업 네트워크</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Board System -->
+        <section class="section-gap">
+            <span class="caption">02. Board & Information</span>
+            
+            <div class="glocal-card p-10 mb-12">
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="h3-title">공지사항 (Notice)</h3>
+                    <div class="tab-nav mb-0">
+                        <div class="tab-btn active">전체</div>
+                        <div class="tab-btn">학사</div>
+                        <div class="tab-btn">장학</div>
+                    </div>
+                </div>
+                <div class="board-list">
+                    <!-- Row 1 -->
+                    <div class="board-row">
+                        <div class="flex items-center gap-6">
+                            <span class="badge new">NEW</span>
+                            <span class="text-[16px] font-bold text-[#111111]">2026학년도 1학기 수강신청 안내</span>
+                        </div>
+                        <span class="text-sm font-bold text-gray-400 font-mono">2026.02.08</span>
+                    </div>
+                    <!-- Row 2 -->
+                    <div class="board-row">
+                        <div class="flex items-center gap-6">
+                            <span class="badge gray">학사</span>
+                            <span class="text-[16px] font-bold text-[#111111]">졸업요건 변경 사항 공지 (필독)</span>
+                        </div>
+                        <span class="text-sm font-bold text-gray-400 font-mono">2026.02.01</span>
+                    </div>
+                    <!-- Row 3 -->
+                    <div class="board-row">
+                        <div class="flex items-center gap-6">
+                            <span class="badge gray">행사</span>
+                            <span class="text-[16px] font-bold text-[#111111]">제5회 글로컬 연합 해커톤 참가자 모집</span>
+                        </div>
+                        <span class="text-sm font-bold text-gray-400 font-mono">2026.01.28</span>
+                    </div>
+                </div>
+                <div class="mt-8 text-center">
+                    <button class="btn-link">더보기 +</button>
+                </div>
+            </div>
+
+            <!-- Accordion -->
+            <div class="max-w-4xl mx-auto">
+                <h3 class="h3-title mb-6 text-center">자주 묻는 질문 (FAQ)</h3>
+                <div class="accordion-item active">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        Q. 연합전공 신청 자격은 어떻게 되나요?
+                        <span class="accordion-icon">↓</span>
+                    </div>
+                    <div class="accordion-content" style="padding-bottom: 32px; max-height: 200px;">
+                        4학기 이상 이수한 재학생이라면 누구나 신청 가능합니다. 단, 졸업예정자 및 초과학기자는 신청이 제한될 수 있습니다.
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        Q. 마이크로디그리는 몇 학점을 이수해야 하나요?
+                        <span class="accordion-icon">↓</span>
+                    </div>
+                    <div class="accordion-content">
+                        최소 9학점 이상을 이수해야 하며, 반드시 Field 교과목 1개 이상을 포함해야 이수증이 발급됩니다.
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        Q. 장학금 혜택은 언제 지급되나요?
+                        <span class="accordion-icon">↓</span>
+                    </div>
+                    <div class="accordion-content">
+                        학위(또는 MD) 이수가 완료된 후, 다음 학기 초에 일괄 지급됩니다.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Gallery System -->
+        <section class="section-gap">
+            <span class="caption">03. Gallery Grid</span>
+            <div class="gallery-grid">
+                <div class="gallery-item g-span-2">
+                    <img src="../../pictures/464A9473 복사.jpg">
+                    <div class="absolute top-4 left-4">
+                        <span class="badge new bg-white text-[#3e31d5] shadow-md">Campus View</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="../../pictures/MZU00838.ARW" class="grayscale opacity-60"> <!-- Fallback -->
+                    <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132211.153.jpg" class="absolute inset-0 w-full h-full object-cover">
+                </div>
+                <div class="gallery-item">
+                    <img src="../../pictures/464A4461.jpg">
+                </div>
+                <div class="gallery-item g-span-2">
+                     <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132236.355.jpg">
+                     <div class="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-black/80 to-transparent">
+                         <p class="text-white text-xl font-bold">Lab Activity & Research</p>
+                         <p class="text-white/80 text-sm mt-1">첨단 실습 장비 활용 수업</p>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Interactive Elements -->
+        <section class="section-gap">
+            <span class="caption">04. Interactions</span>
+            <div class="glocal-card p-12">
+                <h3 class="h3-title mb-8">Buttons & Inputs</h3>
+                <div class="flex flex-wrap gap-6 mb-12 items-center">
+                    <button class="btn-primary">입학 상담 신청</button>
+                    <button class="btn-secondary">브로슈어 다운로드</button>
+                    <button class="btn-link text-lg">자세히 보기 →</button>
+                </div>
+                
+                <h3 class="h3-title mb-6">Input Fields</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-500 mb-2 uppercase tracking-wide">Email Address</label>
+                        <input type="text" placeholder="example@glocal.ac.kr" class="w-full p-4 bg-gray-50 rounded-xl border border-transparent focus:bg-white focus:border-[#3e31d5] focus:ring-4 focus:ring-indigo-100 outline-none transition font-medium text-[#333]">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-500 mb-2 uppercase tracking-wide">Department</label>
+                        <select class="w-full p-4 bg-gray-50 rounded-xl border border-transparent focus:bg-white focus:border-[#3e31d5] focus:ring-4 focus:ring-indigo-100 outline-none transition appearance-none font-medium text-[#333]">
+                            <option>학과를 선택하세요</option>
+                            <option>바이오 헬스</option>
+                            <option>융합 디자인</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-20 bg-white border-t border-gray-200 text-center">
+        <p class="text-xs font-bold text-gray-400">Glocal Design System v1.1 • Final Refined</p>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 1. Counter Animation
+        const counters = document.querySelectorAll('.counter');
+        counters.forEach(counter => {
+            const target = parseFloat(counter.getAttribute('data-target'));
+            gsap.to(counter, {
+                innerText: target,
+                duration: 2,
+                snap: { innerText: target % 1 === 0 ? 1 : 0.1 },
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: counter,
+                    start: "top 85%"
+                }
+            });
+        });
+
+        // 2. Accordion Logic
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const isActive = item.classList.contains('active');
+            
+            // Close others if needed
+            document.querySelectorAll('.accordion-item').forEach(i => {
+                if(i !== item) i.classList.remove('active');
+            });
+
+            if (!isActive) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        }
+
+        // 3. Intro Stagger
+        gsap.from(".glocal-card", {
+            y: 40, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power2.out",
+            scrollTrigger: {
+                trigger: ".glocal-card",
+                start: "top 95%"
+            }
+        });
+    </script>
+</body>
+</html>

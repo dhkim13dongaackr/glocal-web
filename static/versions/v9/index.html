@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동아·동서 글로컬 연합대학 v9 (Color Variation)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['SUIT', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            base: '#0B0E2B', // Deep Space Navy
+                            primary: '#4F46E5', // Electric Indigo
+                            secondary: '#00F0FF', // Neon Mint
+                            accent: '#FFD600', // Solar Beam
+                            surface: 'rgba(255, 255, 255, 0.05)',
+                        }
+                    },
+                    backgroundImage: {
+                        'neon-gradient': 'linear-gradient(135deg, #4F46E5 0%, #00F0FF 100%)',
+                        'glow-conic': 'conic-gradient(from 180deg at 50% 50%, #2a8af6 0deg, #a853ba 180deg, #e92a67 360deg)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        
+        body { background-color: #0B0E2B; color: white; }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Neon Text */
+        .text-neon {
+            background: linear-gradient(to right, #4F46E5, #00F0FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Animated Border */
+        .gradient-border {
+            position: relative;
+            background: #0B0E2B;
+            border-radius: 9999px;
+        }
+        .gradient-border::before {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background: linear-gradient(45deg, #4F46E5, #00F0FF, #FFD600);
+            z-index: -1;
+            filter: blur(2px);
+            animation: spin 3s linear infinite; 
+        }
+        
+        .nav-dot { width: 8px; height: 8px; background: rgba(255,255,255,0.2); border-radius: 50%; transition: all 0.3s; }
+        .nav-dot.active { width: 24px; background: #00F0FF; box-shadow: 0 0 10px #00F0FF; }
+
+        .horizontal-scroll-container {
+            display: flex; gap: 2rem; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 2rem;
+        }
+        .horizontal-card { scroll-snap-align: center; flex-shrink: 0; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 w-full h-[80px] z-50 flex items-center justify-center bg-[#0B0E2B]/80 backdrop-blur-md border-b border-white/5">
+        <div class="w-full max-w-[1600px] px-8 flex items-center justify-between">
+            <div class="flex flex-col items-start cursor-pointer">
+                <p class="text-[20px] font-extrabold leading-none text-white tracking-tight">
+                    GLOCAL <span class="text-brand-secondary">UNION</span>
+                </p>
+            </div>
+            
+            <nav class="hidden lg:flex items-center gap-12">
+                <a href="#" class="text-[15px] font-bold text-gray-300 hover:text-white transition-colors">혁신방향</a>
+                <a href="#" class="text-[15px] font-bold text-gray-300 hover:text-white transition-colors">통합산단</a>
+                <a href="#" class="text-[15px] font-bold text-gray-300 hover:text-white transition-colors">연합전공</a>
+                <a href="#" class="text-[15px] font-bold text-gray-300 hover:text-white transition-colors">Field캠퍼스</a>
+            </nav>
+
+            <div class="flex items-center gap-6">
+                <div class="gradient-border p-[1px]">
+                    <a href="#" class="block bg-[#0B0E2B] px-4 py-2 rounded-full text-sm font-bold text-white hover:bg-white/10 transition">
+                        D-insight
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative w-full h-[100vh] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="../../pictures/DJI_0985 복사.jpg" class="w-full h-full object-cover opacity-40">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0B0E2B] via-[#0B0E2B]/50 to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 text-center flex flex-col items-center">
+            <span class="px-4 py-1 rounded-full border border-brand-secondary/50 bg-brand-secondary/10 text-brand-secondary text-xs font-bold tracking-[0.2em] mb-8 animate-pulse">
+                FUTURE EDUCATION
+            </span>
+            <h1 class="text-7xl md:text-[100px] font-black leading-none mb-6 tracking-tighter">
+                <span class="block text-white">BEYOND</span>
+                <span class="block text-neon">BOUNDARIES</span>
+            </h1>
+            <p class="text-xl text-gray-400 font-light max-w-2xl mt-4">
+                대학의 한계를 넘어, 무한한 가능성의 우주로.<br>
+                <strong class="text-white">동아·동서 글로컬 연합대학</strong>
+            </p>
+        </div>
+    </section>
+
+    <!-- Strategy (Glassmorphism) -->
+    <section class="py-32 px-8 max-w-[1600px] mx-auto">
+        <div class="flex flex-col md:flex-row gap-16">
+            <!-- Left Sticky -->
+            <div class="md:w-1/3">
+                <div class="sticky top-32">
+                    <span class="text-brand-primary font-bold tracking-widest text-sm mb-4 block">CORE STRATEGY</span>
+                    <h2 class="text-5xl font-bold leading-tight mb-8">
+                        혁신을 위한<br><span class="text-brand-secondary">3가지 에너지</span>
+                    </h2>
+                    <div class="flex gap-2">
+                        <div class="nav-dot active"></div>
+                        <div class="nav-dot"></div>
+                        <div class="nav-dot"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Content -->
+            <div class="md:w-2/3 flex flex-col gap-8">
+                <!-- Card 1 -->
+                <div class="glass-card rounded-[32px] p-10 hover:border-brand-secondary/50 transition-colors duration-500 group">
+                    <div class="flex justify-between items-start mb-8">
+                        <h3 class="text-3xl font-bold text-white">Governance</h3>
+                        <span class="text-brand-secondary text-4xl font-black opacity-20 group-hover:opacity-100 transition-opacity">01</span>
+                    </div>
+                    <p class="text-gray-400 text-lg leading-relaxed mb-8">
+                        통합 거버넌스 구축을 통해 행정의 비효율을 제거하고,<br>오직 교육과 연구에 집중하는 환경을 만듭니다.
+                    </p>
+                    <div class="h-[300px] rounded-2xl overflow-hidden relative">
+                        <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132237.721.jpg" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-card rounded-[32px] p-10 hover:border-brand-primary/50 transition-colors duration-500 group">
+                    <div class="flex justify-between items-start mb-8">
+                        <h3 class="text-3xl font-bold text-white">Field Campus</h3>
+                        <span class="text-brand-primary text-4xl font-black opacity-20 group-hover:opacity-100 transition-opacity">02</span>
+                    </div>
+                    <p class="text-gray-400 text-lg leading-relaxed mb-8">
+                        16개 산업 거점이 곧 강의실이 됩니다.<br>현장의 문제를 해결하며 배우는 실전형 인재 양성.
+                    </p>
+                    <div class="h-[300px] rounded-2xl overflow-hidden relative">
+                        <img src="../../pictures/464A4461.jpg" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dinsight (Neon Dark) -->
+    <section class="py-32 border-t border-white/5">
+        <div class="max-w-[1600px] mx-auto px-8 mb-12 flex justify-between items-end">
+            <div>
+                <h2 class="text-5xl font-black mb-2 flex items-center gap-3">
+                    D-insight <div class="w-3 h-3 rounded-full bg-brand-accent animate-ping"></div>
+                </h2>
+                <p class="text-gray-400">데이터로 보는 미래의 통찰.</p>
+            </div>
+        </div>
+
+        <div class="horizontal-scroll-container no-scrollbar px-8">
+            <div class="horizontal-card w-[400px] group cursor-pointer">
+                <div class="h-[500px] rounded-[24px] overflow-hidden relative border border-white/10 group-hover:border-brand-secondary transition-colors">
+                    <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132250.472.jpg" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-8">
+                        <span class="text-brand-accent font-bold text-xs uppercase tracking-wider mb-2 block">Exclusive</span>
+                        <h3 class="text-2xl font-bold leading-snug">AI 연구소의 하루,<br>그 현장을 가다</h3>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="horizontal-card w-[400px] group cursor-pointer">
+                <div class="h-[500px] rounded-[24px] overflow-hidden relative border border-white/10 group-hover:border-brand-primary transition-colors">
+                    <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132240.683.jpg" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-8">
+                        <span class="text-brand-secondary font-bold text-xs uppercase tracking-wider mb-2 block">Tech</span>
+                        <h3 class="text-2xl font-bold leading-snug">2026 글로컬 해커톤<br>우승팀 인터뷰</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동아·동서 글로컬 연합대학 v62 (Living Glow Node)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['SUIT', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#4132CC', 
+                            mint: '#00BEB5',
+                            dark: '#1d1d1f', 
+                            bg: '#EBECFA',
+                        }
+                    },
+                    animation: {
+                        'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        'glow-pulse': {
+                            '0%, 100%': { boxShadow: '0 0 0 0 rgba(65, 50, 204, 0.4), 0 0 0 0 rgba(65, 50, 204, 0.4)' },
+                            '50%': { boxShadow: '0 0 0 8px rgba(65, 50, 204, 0.2), 0 0 20px 10px rgba(65, 50, 204, 0.4)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #E5E7EB; color: #1d1d1f; font-family: 'SUIT', sans-serif; }
+        
+        .map-container {
+            position: relative; width: 100%; max-width: 1400px; aspect-ratio: 16/9; max-height: 80vh;
+            background: #fff; border-radius: 40px; overflow: hidden;
+            box-shadow: 0 40px 100px -20px rgba(65, 50, 204, 0.1);
+            border: 1px solid rgba(65, 50, 204, 0.1);
+            margin: 40px auto;
+        }
+        @media (max-width: 768px) {
+            .map-container { aspect-ratio: 9/16; border-radius: 0; margin: 0; max-height: none; height: 100vh; }
+        }
+
+        /* --- Node System --- */
+        .node-wrapper {
+            position: absolute; z-index: 10; cursor: pointer;
+            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+            transform: translate(-50%, -50%);
+        }
+
+        /* 1. Core Dot with Glow Pulse */
+        .node-dot {
+            width: 16px; height: 16px;
+            background: #4132CC; border-radius: 50%;
+            position: relative; z-index: 20;
+            border: 2px solid white;
+            transition: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            
+            /* Initial State: Breathing Glow */
+            animation: glow-pulse 2s ease-in-out infinite;
+        }
+
+        /* Active/Hover State */
+        .node-wrapper:hover .node-dot, .node-wrapper.active .node-dot {
+            animation: none; /* Stop Pulse */
+            background: white; border: 4px solid #4132CC; transform: scale(1.2);
+            box-shadow: 0 0 30px rgba(65, 50, 204, 0.6); /* Static Strong Glow */
+        }
+
+        /* 2. Connection Line (Desktop) */
+        .node-line {
+            position: absolute; top: 50%; left: 50%; height: 2px; background: #4132CC;
+            width: 0; transform-origin: left center;
+            transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            pointer-events: none; z-index: 15;
+        }
+        .node-wrapper:hover .node-line, .node-wrapper.active .node-line { width: 50px; }
+
+        /* 3. Info Card (v54 Style) */
+        .node-card {
+            position: absolute; top: 50%; left: calc(50% + 50px);
+            transform: translateY(-50%) translateX(-10px);
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px);
+            padding: 10px; border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.5);
+            display: flex; gap: 12px; align-items: center; min-width: 200px;
+            opacity: 0; pointer-events: none;
+            transition: all 0.3s 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 30;
+        }
+        .node-wrapper:hover .node-card, .node-wrapper.active .node-card {
+            opacity: 1; transform: translateY(-50%) translateX(0); pointer-events: auto;
+        }
+
+        /* Content */
+        .node-thumb {
+            width: 48px; height: 48px; border-radius: 10px; overflow: hidden; flex-shrink: 0;
+            background: #eee; border: 1px solid #EBECFA;
+        }
+        .node-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .node-text h3 { font-size: 15px; font-weight: 800; color: #1d1d1f; line-height: 1.2; margin-bottom: 2px; white-space: nowrap; }
+        .node-text p { font-size: 10px; font-weight: 700; color: #4132CC; text-transform: uppercase; letter-spacing: 0.5px; }
+        .node-text .loc { font-size: 11px; color: #86868b; display: block; font-weight: 500; }
+
+        /* Left Direction */
+        .node-wrapper.left .node-line { left: auto; right: 50%; transform-origin: right center; }
+        .node-wrapper.left .node-card { left: auto; right: calc(50% + 50px); transform: translateY(-50%) translateX(10px); flex-direction: row-reverse; text-align: right; }
+        .node-wrapper.left:hover .node-card, .node-wrapper.left.active .node-card { transform: translateY(-50%) translateX(0); }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .node-line { display: none; }
+            .node-card {
+                top: auto; bottom: 30px; left: 50%;
+                transform: translateX(-50%) translateY(10px);
+                flex-direction: column; text-align: center;
+                min-width: 160px; padding: 16px;
+            }
+            .node-wrapper.active .node-card { transform: translateX(-50%) translateY(0); }
+            .node-thumb { width: 100%; height: 100px; margin-bottom: 8px; }
+            .node-wrapper.left .node-card { right: auto; left: 50%; flex-direction: column; text-align: center; }
+        }
+
+    </style>
+</head>
+<body class="bg-[#f5f5f7] text-[#1d1d1f] font-sans antialiased overflow-x-hidden">
+
+    <div class="max-w-[1400px] mx-auto pt-10 px-6 md:px-10 text-center md:text-left">
+        <h1 class="text-3xl md:text-4xl font-extrabold mb-2 text-brand-blue">Living Glow Nodes</h1>
+        <p class="text-gray-500 text-sm md:text-base">Initial Breathing Glow -> Active Static Glow + Line Expand</p>
+    </div>
+
+    <div class="map-container relative">
+        <img src="../../pictures/DJI_0938 복사.jpg" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-multiply grayscale">
+        
+        <!-- Node 1: Power Semi (Right) -->
+        <div class="node-wrapper right" style="top: 30%; left: 35%;" onclick="toggleNode(this)">
+            <div class="node-dot"></div>
+            <div class="node-line"></div>
+            <div class="node-card">
+                <div class="node-thumb"><img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132226.682.jpg"></div>
+                <div class="node-text">
+                    <p>전력반도체</p>
+                    <h3>부산테크노파크</h3>
+                    <span class="loc">남구 감만동</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Node 2: Digital Content (Left) -->
+        <div class="node-wrapper left" style="top: 55%; left: 65%;" onclick="toggleNode(this)">
+            <div class="node-dot"></div>
+            <div class="node-line"></div>
+            <div class="node-card">
+                <div class="node-thumb"><img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132211.153.jpg"></div>
+                <div class="node-text">
+                    <p class="text-brand-mint">디지털 콘텐츠</p>
+                    <h3>콘텐츠코리아랩</h3>
+                    <span class="loc">해운대구 우동</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Node 3: Smart Ocean (Right) -->
+        <div class="node-wrapper right" style="top: 70%; left: 40%;" onclick="toggleNode(this)">
+            <div class="node-dot"></div>
+            <div class="node-line"></div>
+            <div class="node-card">
+                <div class="node-thumb"><img src="../../pictures/464A4461.jpg"></div>
+                <div class="node-text">
+                    <p class="text-indigo-500">스마트 해양</p>
+                    <h3>해양플랜트연구소</h3>
+                    <span class="loc">강서구 지사동</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Node 4: Bio Health (Left) -->
+        <div class="node-wrapper left" style="top: 25%; left: 70%;" onclick="toggleNode(this)">
+            <div class="node-dot"></div>
+            <div class="node-line"></div>
+            <div class="node-card">
+                <div class="node-thumb"><img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132234.075.jpg"></div>
+                <div class="node-text">
+                    <p class="text-pink-500">바이오 헬스</p>
+                    <h3>대학병원 암센터</h3>
+                    <span class="loc">서구 암남동</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Hint -->
+        <div class="absolute bottom-6 w-full text-center md:hidden pointer-events-none">
+            <span class="bg-white/80 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-brand-blue">지도의 점을 눌러보세요</span>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleNode(el) {
+            const isActive = el.classList.contains('active');
+            document.querySelectorAll('.node-wrapper').forEach(node => {
+                node.classList.remove('active');
+            });
+            if (!isActive) {
+                el.classList.add('active');
+            }
+        }
+    </script>
+
+</body>
+</html>

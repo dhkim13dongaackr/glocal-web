@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D-insight | Proposal 03</title>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #1B3B5F; /* Navy */
+            --color-point: #56CFC9;   /* Mint */
+            --color-text: #171719;
+            --color-text-light: #74747e;
+            --bg-color: #ffffff;
+            --border-color: #dfe0e9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'SUIT', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--color-text);
+            overflow: hidden; /* Prevent body scroll, handle inside panels */
+            height: 100vh;
+        }
+
+        /* --- Main Layout: Split Screen --- */
+        .container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* --- LEFT PANEL: Cover Story --- */
+        .left-panel {
+            flex: 0.7; /* 70% Width */
+            position: relative;
+            background-image: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* Content at bottom */
+            padding: 60px;
+            color: white;
+        }
+
+        /* Gradient Overlay */
+        .left-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent 50%);
+            z-index: 1;
+        }
+
+        /* Logo inside Image (Absolute Top-Left) */
+        .brand-logo {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+        }
+
+        .brand-logo .sub {
+            font-size: 11px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.8);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .brand-logo .main {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-style: italic;
+            font-size: 28px;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+
+        /* Main Content */
+        .cover-content {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+            margin-bottom: 20px;
+        }
+
+        .vol-tag {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(4px);
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .headline {
+            font-family: 'Playfair Display', serif;
+            font-size: 90px;
+            font-weight: 700;
+            line-height: 0.95;
+            margin-bottom: 30px;
+            letter-spacing: -2px;
+        }
+        
+        .headline span {
+            font-family: inherit;
+            color: var(--color-point);
+            font-style: italic;
+        }
+
+        .description {
+            font-size: 18px;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.85);
+            max-width: 500px;
+        }
+
+
+        /* --- RIGHT PANEL: Content List --- */
+        .right-panel {
+            flex: 0.3; /* 30% Width */
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* Category Nav (Right Top) */
+        .category-nav {
+            padding: 30px 30px 20px 30px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        .nav-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #999;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scrollbar-width: none; /* Hide scrollbar */
+        }
+        
+        .nav-link {
+            font-size: 15px;
+            font-weight: 700;
+            color: #999;
+            text-decoration: none;
+            white-space: nowrap;
+            padding-bottom: 8px;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .nav-link.active {
+            color: var(--color-primary);
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--color-primary);
+        }
+
+        .nav-link:hover {
+            color: var(--color-text);
+        }
+
+        /* Scrollable List */
+        .article-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0;
+        }
+
+        .article-item {
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .article-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .article-thumb {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+        
+        .article-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .article-item:hover .article-thumb img {
+            transform: scale(1.05);
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .category-badge {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--color-point);
+            text-transform: uppercase;
+        }
+
+        .date {
+            font-size: 11px;
+            color: #bbb;
+        }
+
+        .article-title {
+            font-size: 17px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--color-text);
+            margin-bottom: 8px;
+            word-break: keep-all;
+        }
+
+        .article-excerpt {
+            font-size: 13px;
+            color: var(--color-text-light);
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Subscribe Button Fixed Bottom Right (Optional) */
+        .subscribe-fab {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            background: var(--color-primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.2s;
+            z-index: 30;
+        }
+        .subscribe-fab:hover {
+            transform: scale(1.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+                overflow-y: auto;
+            }
+            .left-panel {
+                height: 80vh;
+                padding: 30px;
+            }
+            .headline {
+                font-size: 50px;
+            }
+            .right-panel {
+                flex: auto;
+                height: auto;
+            }
+            .article-item {
+                flex-direction: row;
+                gap: 20px;
+                padding: 20px;
+            }
+            .article-thumb {
+                width: 100px;
+                aspect-ratio: 1/1;
+                margin-bottom: 0;
+            }
+            .article-info {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- LEFT: Cover Story -->
+        <div class="left-panel">
+            <!-- Logo Inside -->
+            <a href="#" class="brand-logo">
+                <span class="sub">GLOCAL WEBZINE</span>
+                <span class="main">D-insight</span>
+            </a>
+
+            <div class="cover-content">
+                <span class="vol-tag">THE JOURNAL VOL.03</span>
+                <h1 class="headline">
+                    Bridging<br>
+                    <span>Local</span> to Global
+                </h1>
+                <p class="description">
+                    지역의 한계를 넘어 세계로 나아갑니다.<br>
+                    동아·동서 글로컬 연합대학이 제안하는 미래 교육의 청사진.
+                </p>
+            </div>
+        </div>
+
+        <!-- RIGHT: Content List -->
+        <div class="right-panel">
+            <!-- Top Nav (Category) -->
+            <div class="category-nav">
+                <span class="nav-title">Select Category</span>
+                <div class="nav-links">
+                    <a href="#" class="nav-link active">ALL</a>
+                    <a href="#" class="nav-link">BRIEFING</a>
+                    <a href="#" class="nav-link">FIELD</a>
+                    <a href="#" class="nav-link">INTERVIEW</a>
+                    <a href="#" class="nav-link">PRESS</a>
+                </div>
+            </div>
+
+            <!-- Scrollable Articles -->
+            <div class="article-list">
+                
+                <a href="#" class="article-item">
+                    <div class="article-thumb">
+                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop" alt="">
+                    </div>
+                    <div class="article-info">
+                        <div class="article-meta">
+                            <span class="category-badge">FIELD</span>
+                            <span class="date">Feb 10</span>
+                        </div>
+                        <h3 class="article-title">부산에서 세계로 — 글로벌 현장학습 프로그램 르포</h3>
+                        <p class="article-excerpt">학생들이 직접 경험하는 글로벌 현장. 해외 파트너 대학과의 교류 프로그램을 밀착 취재했습니다.</p>
+                    </div>
+                </a>
+
+                <a href="#" class="article-item">
+                    <div class="article-thumb">
+                        <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop" alt="">
+                    </div>
+                    <div class="article-info">
+                        <div class="article-meta">
+                            <span class="category-badge">BRIEFING</span>
+                            <span class="date">Feb 08</span>
+                        </div>
+                        <h3 class="article-title">글로컬 대학의 미래 - 지역혁신을 위한 새로운 패러다임</h3>
+                        <p class="article-excerpt">지역 소멸 위기 속에서 대학이 나아갈 길을 모색하다. 동아·동서 연합의 혁신 모델.</p>
+                    </div>
+                </a>
+
+                <a href="#" class="article-item">
+                    <div class="article-thumb">
+                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=2070&auto=format&fit=crop" alt="">
+                    </div>
+                    <div class="article-info">
+                        <div class="article-meta">
+                            <span class="category-badge">INTERVIEW</span>
+                            <span class="date">Feb 05</span>
+                        </div>
+                        <h3 class="article-title">「연결이 곧 혁신이다」 총장에게 듣는 대학의 비전</h3>
+                        <p class="article-excerpt">두 대학의 연합이 가져올 시너지와 지역사회에 대한 비전을 총장에게 직접 들어봅니다.</p>
+                    </div>
+                </a>
+
+                <a href="#" class="article-item">
+                    <div class="article-thumb">
+                        <img src="https://images.unsplash.com/photo-1590402494587-44b71d87e394?q=80&w=2070&auto=format&fit=crop" alt="">
+                    </div>
+                    <div class="article-info">
+                        <div class="article-meta">
+                            <span class="category-badge">PRESS</span>
+                            <span class="date">Feb 01</span>
+                        </div>
+                        <h3 class="article-title">산학협력 플랫폼 '글로컬 랩' 공식 출범</h3>
+                        <p class="article-excerpt">지역 산업과 대학 연구를 잇는 새로운 플랫폼이 부산 센텀시티에서 문을 열었습니다.</p>
+                    </div>
+                </a>
+
+            </div>
+            
+            <!-- Floating Subscribe Button (Icon) -->
+            <div class="subscribe-fab">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

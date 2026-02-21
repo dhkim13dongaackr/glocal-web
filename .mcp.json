@@ -1,0 +1,28 @@
+{
+  "mcpServers": {
+    "jiphyeonjeon": {
+      "type": "stdio",
+      "command": "/home/danny/projects/gyujanggak/.claude/bin/jiphyeonjeon-mcp",
+      "args": [],
+      "env": {
+        "PATH": "/home/danny/.local/bin:/usr/local/bin:/usr/bin:/bin"
+      }
+    },
+    "chrome-devtools": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "chrome-devtools-mcp"
+      ],
+      "env": {}
+    },
+    "puppeteer": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "/home/danny/.npm/_npx/18b9ac6ecf823310/node_modules/puppeteer-mcp-claude/dist/index.js"
+      ],
+      "env": {}
+    }
+  }
+}

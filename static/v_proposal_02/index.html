@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D-insight | Proposal 02</title>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #1B3B5F; /* Navy */
+            --color-point: #56CFC9;   /* Mint */
+            --color-text: #171719;
+            --color-text-light: #74747e;
+            --bg-color: #ffffff;
+            --border-color: #dfe0e9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'SUIT', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--color-text);
+            overflow-x: hidden;
+        }
+
+        /* --- Header (Shared from Proposal 01) --- */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 1px solid var(--border-color);
+            height: 70px; /* Slightly taller */
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .header-container {
+            width: 100%;
+            max-width: 1600px; /* Wider Container */
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .menu-icon {
+            width: 24px;
+            height: 18px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .menu-icon span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: #000;
+        }
+
+        .logo {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            line-height: 1.1;
+        }
+
+        .logo .top-text {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--color-text-light);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+
+        .logo .main-text {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-style: italic;
+            font-size: 24px;
+            letter-spacing: -0.5px;
+            color: var(--color-primary);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-icon {
+            cursor: pointer;
+        }
+
+        .subscribe-btn {
+            background-color: var(--color-primary);
+            color: white;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 100px; /* Pill Shape */
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .subscribe-btn:hover {
+            background-color: #142d4a;
+        }
+
+        /* --- Cover Story Section (New Design) --- */
+        .cover-story {
+            display: flex;
+            height: calc(100vh - 70px); /* Fill remaining height */
+            min-height: 700px;
+            overflow: hidden;
+        }
+
+        /* Left: Main Visual (Hero) - 65% width */
+        .cover-main {
+            flex: 0.65;
+            position: relative;
+            background-image: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 60px;
+            color: white;
+        }
+
+        /* Dark Gradient Overlay for readability */
+        .cover-main::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 60%);
+        }
+
+        .cover-main-content {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+        }
+
+        .vol-badge {
+            display: inline-block;
+            font-family: 'SUIT', sans-serif;
+            font-weight: 800;
+            font-size: 16px;
+            color: var(--color-point);
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .main-headline {
+            font-family: 'Playfair Display', serif;
+            font-size: 80px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 24px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .main-headline span {
+            font-family: inherit;
+            color: var(--color-point);
+            font-style: italic;
+        }
+
+        .main-desc {
+            font-size: 20px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .read-more-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 0;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            border-bottom: 2px solid var(--color-point);
+            transition: opacity 0.3s;
+        }
+        .read-more-btn:hover {
+            opacity: 0.8;
+        }
+
+
+        /* Right: Side Stories (List) - 35% width */
+        .cover-side {
+            flex: 0.35;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid var(--border-color);
+        }
+
+        .side-header {
+            padding: 30px 40px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .side-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--color-text-light);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .side-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .side-item {
+            display: flex;
+            gap: 20px;
+            padding: 30px 40px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .side-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .side-thumb {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .side-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .side-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .side-cat {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--color-primary);
+            text-transform: uppercase;
+        }
+
+        .side-head {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--color-text);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .side-date {
+            font-size: 12px;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .cover-story {
+                flex-direction: column;
+                height: auto;
+            }
+            .cover-main {
+                min-height: 500px;
+                padding: 40px;
+            }
+            .main-headline {
+                font-size: 50px;
+            }
+            .cover-side {
+                border-left: none;
+                border-top: 1px solid var(--border-color);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="header-left">
+                <div class="menu-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <a href="#" class="logo">
+                    <span class="top-text">GLOCAL WEBZINE</span>
+                    <span class="main-text">D-insight</span>
+                </a>
+            </div>
+            <div class="header-right">
+                <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <a href="#" class="subscribe-btn">구독하기</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Cover Story Section -->
+    <section class="cover-story">
+        
+        <!-- Main Visual -->
+        <article class="cover-main">
+            <div class="cover-main-content">
+                <span class="vol-badge">Vol. 03</span>
+                <h1 class="main-headline">
+                    Bridging <span>Local</span><br>
+                    to Global
+                </h1>
+                <p class="main-desc">
+                    지역의 가능성을 세계로 연결합니다. 동아·동서 글로컬 연합대학이<br>
+                    만들어가는 새로운 교육의 지평을 지금 만나보세요.
+                </p>
+                <a href="#" class="read-more-btn">COVER STORY &nbsp;→</a>
+            </div>
+        </article>
+
+        <!-- Side Stories -->
+        <aside class="cover-side">
+            <div class="side-header">
+                <span class="side-title">Top Stories</span>
+                <a href="#" style="font-size: 12px; text-decoration: none; color: #999;">VIEW ALL</a>
+            </div>
+            <div class="side-list">
+                
+                <!-- Story 1 -->
+                <a href="#" class="side-item">
+                    <div class="side-thumb">
+                        <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop" alt="Thumb">
+                    </div>
+                    <div class="side-text">
+                        <span class="side-cat">SO Briefing</span>
+                        <h3 class="side-head">글로컬 대학의 미래, 지역 혁신을 위한 새로운 패러다임</h3>
+                        <span class="side-date">2026.02.10</span>
+                    </div>
+                </a>
+
+                <!-- Story 2 -->
+                <a href="#" class="side-item">
+                    <div class="side-thumb">
+                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop" alt="Thumb">
+                    </div>
+                    <div class="side-text">
+                        <span class="side-cat">Field Report</span>
+                        <h3 class="side-head">부산에서 세계로, 글로벌 현장학습 프로그램 르포</h3>
+                        <span class="side-date">2026.02.08</span>
+                    </div>
+                </a>
+
+                <!-- Story 3 -->
+                <a href="#" class="side-item">
+                    <div class="side-thumb">
+                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=2070&auto=format&fit=crop" alt="Thumb">
+                    </div>
+                    <div class="side-text">
+                        <span class="side-cat">Interview</span>
+                        <h3 class="side-head">「연결이 곧 혁신이다」 총장이 말하는 대학의 비전</h3>
+                        <span class="side-date">2026.02.05</span>
+                    </div>
+                </a>
+                
+                 <!-- Story 4 -->
+                 <a href="#" class="side-item">
+                    <div class="side-thumb">
+                        <img src="https://images.unsplash.com/photo-1590402494587-44b71d87e394?q=80&w=2070&auto=format&fit=crop" alt="Thumb">
+                    </div>
+                    <div class="side-text">
+                        <span class="side-cat">Press Release</span>
+                        <h3 class="side-head">산학협력 플랫폼 '글로컬 랩' 부산 센텀에 공식 출범</h3>
+                        <span class="side-date">2026.02.01</span>
+                    </div>
+                </a>
+
+            </div>
+        </aside>
+
+    </section>
+
+</body>
+</html>

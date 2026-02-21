@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>연구/산학 (Research Insight) - 동아·동서 글로컬 연합대학</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['SUIT', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#4132CC', // Alliance Indigo
+                            mint: '#00BEB5', // Future Mint
+                            dark: '#171719',
+                            gray: '#F5F7FA',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #F5F7FA; color: #171719; }
+        
+        /* Header (Solid) */
+        .g-header {
+            position: sticky; top: 0; width: 100%; height: 70px; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 40px;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* 1. Key Metrics Hero */
+        .stat-hero {
+            padding: 100px 40px; background: white; border-bottom: 1px solid #eee;
+            text-align: center;
+        }
+        .stat-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px;
+            max-width: 1400px; margin: 60px auto 0;
+        }
+        .stat-item {
+            padding: 40px 20px; border-right: 1px solid #eee;
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-num {
+            font-size: 60px; font-weight: 900; color: #171719; line-height: 1; margin-bottom: 10px;
+            background: linear-gradient(to bottom, #171719, #555); -webkit-background-clip: text; color: transparent;
+        }
+        .stat-label { font-size: 16px; font-weight: 700; color: #888; }
+
+        /* 2. Research Cluster (Grid) */
+        .cluster-sec { padding: 120px 40px; max-width: 1400px; margin: 0 auto; }
+        .cluster-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;
+        }
+        .cluster-card {
+            background: white; border-radius: 24px; padding: 40px;
+            border: 1px solid #eee; transition: 0.3s; cursor: pointer;
+            display: flex; flex-direction: column; height: 320px; justify-content: space-between;
+        }
+        .cluster-card:hover {
+            transform: translateY(-10px); box-shadow: 0 20px 50px rgba(65, 50, 204, 0.1);
+            border-color: #4132CC;
+        }
+        .icon-box {
+            width: 60px; height: 60px; background: #EBECFA; border-radius: 16px;
+            display: flex; align-items: center; justify-content: center; color: #4132CC; font-size: 24px;
+        }
+        .cluster-card:hover .icon-box { background: #4132CC; color: white; }
+
+        /* 3. Featured Projects (Slider Style) */
+        .project-sec { padding: 100px 0; background: #171719; color: white; overflow: hidden; }
+        .project-track { display: flex; gap: 40px; padding-left: 10vw; width: max-content; }
+        .project-card {
+            width: 500px; flex-shrink: 0;
+            border-top: 1px solid rgba(255,255,255,0.2); padding-top: 30px;
+        }
+        .p-cat { font-size: 12px; font-weight: 700; color: #00BEB5; margin-bottom: 10px; }
+        .p-title { font-size: 28px; font-weight: 800; margin-bottom: 20px; line-height: 1.3; }
+        .p-desc { font-size: 16px; color: #888; line-height: 1.6; }
+
+        /* 4. Notice Timeline */
+        .notice-sec { padding: 120px 40px; max-width: 1000px; margin: 0 auto; }
+        .notice-item {
+            display: flex; gap: 40px; padding: 30px 0; border-bottom: 1px solid #eee;
+            transition: 0.3s; cursor: pointer;
+        }
+        .notice-item:hover { transform: translateX(10px); }
+        .n-date { font-size: 14px; font-weight: 700; color: #4132CC; width: 100px; flex-shrink: 0; }
+        .n-title { font-size: 20px; font-weight: 700; color: #171719; margin-bottom: 8px; }
+        .n-info { font-size: 14px; color: #888; }
+
+        /* Animation */
+        .fade-up { opacity: 0; transform: translateY(30px); }
+
+        @media (max-width: 1024px) {
+            .stat-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+            .cluster-grid { grid-template-columns: 1fr; }
+            .notice-item { flex-direction: column; gap: 10px; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="g-header">
+        <div class="font-black text-xl tracking-tighter">GLOCAL</div>
+        <nav class="hidden md:flex gap-8 text-sm font-bold text-gray-500">
+            <a href="#" class="hover:text-black">연구개요</a>
+            <a href="#" class="hover:text-black">연구성과</a>
+            <a href="#" class="text-brand-blue">산학협력</a>
+            <a href="#" class="hover:text-black">자료실</a>
+        </nav>
+    </header>
+
+    <!-- 1. Stat Hero -->
+    <section class="stat-hero">
+        <span class="text-brand-blue font-bold tracking-widest text-xs mb-4 block fade-up">RESEARCH & BUSINESS</span>
+        <h1 class="text-5xl md:text-6xl font-black mb-6 fade-up" style="line-height: 1.2;">
+            경계를 넘는 융합 연구,<br>
+            지역 산업의 내일을 만듭니다.
+        </h1>
+        <p class="text-gray-500 text-lg mb-16 fade-up">
+            동아·동서 글로컬 연합대학 산학협력단
+        </p>
+
+        <div class="stat-grid fade-up">
+            <div class="stat-item">
+                <div class="stat-num counter" data-target="1500">0</div>
+                <div class="stat-label">연구 과제 수 (건)</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num counter" data-target="850">0</div>
+                <div class="stat-label">산학 협력 기업 (개)</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num counter" data-target="320">0</div>
+                <div class="stat-label">기술 이전 (건)</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num text-brand-blue counter" data-target="1200">0</div>
+                <div class="stat-label text-brand-blue">연구비 수주 (억원)</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Research Cluster -->
+    <section class="cluster-sec">
+        <div class="flex justify-between items-end mb-12 fade-up">
+            <h2 class="text-4xl font-black">4대 특화 분야</h2>
+            <a href="#" class="text-sm font-bold text-gray-400 hover:text-black">전체 분야 보기 -></a>
+        </div>
+        
+        <div class="cluster-grid">
+            <!-- Card 1 -->
+            <div class="cluster-card fade-up">
+                <div class="icon-box">⚡️</div>
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">에너지 테크</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        차세대 전력반도체, 수소 에너지 등<br>
+                        친환경 에너지 솔루션 개발.
+                    </p>
+                </div>
+                <div class="mt-auto pt-6 border-t border-gray-100 flex justify-between items-center">
+                    <span class="text-xs font-bold text-gray-400">관련 연구소 5개</span>
+                    <span class="text-brand-blue">↗</span>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="cluster-card fade-up" style="transition-delay: 0.1s;">
+                <div class="icon-box">🧬</div>
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">바이오 헬스</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        디지털 헬스케어, 신약 개발,<br>
+                        고령 친화 의료 기기 연구.
+                    </p>
+                </div>
+                <div class="mt-auto pt-6 border-t border-gray-100 flex justify-between items-center">
+                    <span class="text-xs font-bold text-gray-400">관련 연구소 8개</span>
+                    <span class="text-brand-blue">↗</span>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="cluster-card fade-up" style="transition-delay: 0.2s;">
+                <div class="icon-box">🎬</div>
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">문화 콘텐츠</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        영화/영상, 게임, 웹툰 등<br>
+                        K-콘텐츠 글로벌화 전략.
+                    </p>
+                </div>
+                <div class="mt-auto pt-6 border-t border-gray-100 flex justify-between items-center">
+                    <span class="text-xs font-bold text-gray-400">관련 연구소 4개</span>
+                    <span class="text-brand-blue">↗</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Featured Projects (Dark) -->
+    <section class="project-sec">
+        <div class="max-w-[1400px] mx-auto px-10 mb-12">
+            <h2 class="text-4xl font-black">주요 연구 성과</h2>
+        </div>
+        <div class="project-track" id="project-track">
+            <!-- Project 1 -->
+            <div class="project-card">
+                <div class="p-cat">NATIONAL PROJECT</div>
+                <h3 class="p-title">SiC 전력반도체<br>소자 상용화 기술 개발</h3>
+                <p class="p-desc">산업통상자원부 주관, 총 사업비 200억원 규모.<br>고전압용 전력반도체 국산화 성공.</p>
+            </div>
+            <!-- Project 2 -->
+            <div class="project-card">
+                <div class="p-cat">GLOBAL R&D</div>
+                <h3 class="p-title">해양 스마트 물류<br>자동화 시스템 구축</h3>
+                <p class="p-desc">부산항만공사 협력, AI 기반 물동량 예측.<br>항만 운영 효율 30% 개선.</p>
+            </div>
+            <!-- Project 3 -->
+            <div class="project-card">
+                <div class="p-cat">STARTUP</div>
+                <h3 class="p-title">교원 창업 벤처<br>시리즈 A 투자 유치</h3>
+                <p class="p-desc">바이오 헬스케어 플랫폼 '닥터 스마트'.<br>시장 가치 1,000억원 인정.</p>
+            </div>
+            <!-- Project 4 -->
+            <div class="project-card">
+                <div class="p-cat">COMMUNITY</div>
+                <h3 class="p-title">지역 사회 문제 해결<br>리빙랩 프로젝트</h3>
+                <p class="p-desc">도시 재생 및 노인 복지 솔루션 적용.<br>부산시 표창 수상.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Notice Timeline -->
+    <section class="notice-sec">
+        <h2 class="text-2xl font-black mb-10 border-b-2 border-black pb-4">산학협력 공지사항</h2>
+        
+        <div class="notice-item fade-up">
+            <div class="n-date">2026.02.05</div>
+            <div>
+                <h3 class="n-title">2026년도 산학공동기술개발과제 수요조사 공고</h3>
+                <p class="n-info">산학협력단 | 조회수 450</p>
+            </div>
+        </div>
+        <div class="notice-item fade-up">
+            <div class="n-date">2026.02.01</div>
+            <div>
+                <h3 class="n-title">국가연구개발사업 연구비 관리 매뉴얼 개정 안내</h3>
+                <p class="n-info">연구지원팀 | 조회수 320</p>
+            </div>
+        </div>
+        <div class="notice-item fade-up">
+            <div class="n-date">2026.01.28</div>
+            <div>
+                <h3 class="n-title">[세미나] AI 기반 신약 개발 동향 및 전망</h3>
+                <p class="n-info">바이오헬스연구소 | 조회수 210</p>
+            </div>
+        </div>
+        <div class="notice-item fade-up">
+            <div class="n-date">2026.01.15</div>
+            <div>
+                <h3 class="n-title">가족회사 가입 및 혜택 안내 브로슈어</h3>
+                <p class="n-info">기업지원센터 | 조회수 580</p>
+            </div>
+        </div>
+        
+        <div class="text-center mt-12">
+            <button class="px-8 py-3 border border-gray-300 rounded-full font-bold hover:bg-gray-100 transition">더 보기 +</button>
+        </div>
+    </section>
+
+    <footer class="bg-gray-100 py-20 text-center">
+        <p class="text-sm font-bold text-gray-400">DONG-A UNIVERSITY RESEARCH FOUNDATION</p>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Fade Up Animation
+        gsap.utils.toArray('.fade-up').forEach(element => {
+            gsap.to(element, {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 80%",
+                }
+            });
+        });
+
+        // Horizontal Scroll
+        const track = document.getElementById("project-track");
+        
+        // Simple horizontal drift on scroll
+        gsap.to(track, {
+            x: -500, // Move left slightly
+            scrollTrigger: {
+                trigger: ".project-sec",
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1
+            }
+        });
+
+        // Number Counter
+        const counters = document.querySelectorAll('.counter');
+        counters.forEach(counter => {
+            const target = +counter.getAttribute('data-target');
+            gsap.to(counter, {
+                innerHTML: target,
+                duration: 2,
+                snap: { innerHTML: 1 },
+                scrollTrigger: {
+                    trigger: counter,
+                    start: "top 80%"
+                }
+            });
+        });
+
+    </script>
+
+</body>
+</html>

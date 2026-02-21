@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동아·동서 글로컬 연합대학 v46 (Interactive Widgets)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['SUIT', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#3E31D5', 
+                            mint: '#00BEB5',
+                            dark: '#1d1d1f', 
+                            gray: '#86868b',
+                            point: '#FDB927',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #E5E7EB; color: #1d1d1f; font-family: 'SUIT', sans-serif; }
+        
+        .map-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background-image: url('../../pictures/DJI_0938 복사.jpg');
+            background-size: cover; background-position: center;
+            opacity: 0.15; pointer-events: none;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+            padding: 80px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        @media (max-width: 1024px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+
+        /* 1. iOS Widget */
+        .widget-ios {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            height: 300px;
+            display: flex; flex-direction: column;
+        }
+        .widget-ios:hover {
+            transform: scale(1.03);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+        .widget-ios .img-area { height: 180px; width: 100%; overflow: hidden; }
+        .widget-ios img { width: 100%; height: 100%; object-fit: cover; }
+        .widget-ios .content { padding: 20px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .widget-ios h3 { font-size: 20px; font-weight: 800; }
+        .widget-ios .btn { background: #E5E7EB; color: #1d1d1f; padding: 8px 16px; border-radius: 99px; font-size: 13px; font-weight: 700; align-self: flex-start; transition: 0.2s; }
+        .widget-ios:hover .btn { background: #3E31D5; color: white; }
+
+        /* 2. Dynamic Island (Expand) */
+        .widget-dynamic {
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            cursor: pointer;
+            height: 80px; /* Initial Height */
+            transition: height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
+            display: flex; flex-direction: column;
+            padding: 0 20px;
+        }
+        .widget-dynamic:hover {
+            height: 300px; /* Expanded Height */
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        .widget-dynamic .header { height: 80px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+        .widget-dynamic .icon { width: 48px; height: 48px; background: #3E31D5; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 900; }
+        .widget-dynamic .info { opacity: 0; transform: translateY(20px); transition: 0.3s 0.1s; }
+        .widget-dynamic:hover .info { opacity: 1; transform: translateY(0); }
+        .widget-dynamic .img-preview { height: 160px; border-radius: 16px; overflow: hidden; margin-top: 10px; }
+        .widget-dynamic img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* 3. The Drawer (Slide Up) */
+        .widget-drawer {
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            height: 300px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        .widget-drawer img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .widget-drawer:hover img { transform: scale(1.1); }
+        .widget-drawer .drawer {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            background: white;
+            padding: 24px;
+            transform: translateY(60px); /* Partially hidden */
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .widget-drawer:hover .drawer { transform: translateY(0); }
+        .widget-drawer .meta { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; opacity: 0; transition: 0.3s; }
+        .widget-drawer:hover .meta { opacity: 1; transition-delay: 0.1s; }
+        .widget-drawer .arrow-btn { width: 40px; height: 40px; background: #1d1d1f; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; }
+
+        /* 4. Glass Overlay (Button Emphasis) */
+        .widget-glass-btn {
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            height: 300px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        .widget-glass-btn img { width: 100%; height: 100%; object-fit: cover; }
+        .widget-glass-btn .overlay {
+            position: absolute; inset: 0;
+            background: rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+        .widget-glass-btn:hover .overlay { background: rgba(0,0,0,0.4); }
+        .widget-glass-btn .content-box {
+            position: absolute; bottom: 20px; left: 20px; right: 20px;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 20px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .widget-glass-btn .btn-go {
+            background: #3E31D5; color: white;
+            padding: 10px 20px; border-radius: 12px;
+            font-size: 14px; font-weight: 700;
+            display: flex; align-items: center; gap: 6px;
+            transform: translateX(10px); opacity: 0;
+            transition: 0.3s;
+        }
+        .widget-glass-btn:hover .btn-go { transform: translateX(0); opacity: 1; }
+
+        /* 5. The Folder */
+        .widget-folder-wrap { position: relative; cursor: pointer; height: 300px; width: 100%; }
+        .widget-folder-back {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: #3E31D5; border-radius: 24px;
+            transform: rotate(-3deg);
+            transition: 0.3s;
+        }
+        .widget-folder-front {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+        .widget-folder-wrap:hover .widget-folder-back { transform: rotate(-6deg) translate(-5px, -5px); }
+        .widget-folder-wrap:hover .widget-folder-front { transform: translate(5px, 5px); }
+        .widget-folder-front img { width: 100%; height: 200px; object-fit: cover; }
+        .widget-folder-front .content { padding: 20px; }
+
+        /* 6. Neon Border */
+        .widget-neon {
+            background: #111113;
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            height: 300px;
+            border: 2px solid transparent;
+            transition: 0.3s;
+        }
+        .widget-neon:hover { border-color: #00BEB5; box-shadow: 0 0 30px rgba(0, 190, 181, 0.3); }
+        .widget-neon img { width: 100%; height: 180px; object-fit: cover; opacity: 0.7; transition: 0.3s; }
+        .widget-neon:hover img { opacity: 1; }
+        .widget-neon .content { padding: 20px; color: white; }
+        .widget-neon h3 { font-size: 22px; font-weight: 800; }
+        .widget-neon .action { 
+            position: absolute; bottom: 20px; right: 20px;
+            width: 40px; height: 40px; border-radius: 50%; border: 2px solid #00BEB5;
+            display: flex; align-items: center; justify-content: center; color: #00BEB5;
+            transition: 0.3s;
+        }
+        .widget-neon:hover .action { background: #00BEB5; color: black; }
+
+    </style>
+</head>
+<body>
+
+    <div class="map-bg"></div>
+
+    <div class="max-w-[1400px] mx-auto pt-16 px-10 text-center relative z-10">
+        <h1 class="text-4xl font-extrabold mb-2 text-[#1d1d1f]">Interactive Widget Collection</h1>
+        <p class="text-gray-500">"클릭하고 싶은" 기능성 중심의 카드 디자인 6선</p>
+    </div>
+
+    <div class="gallery-grid">
+
+        <!-- 1. iOS Widget -->
+        <div class="widget-ios group">
+            <div class="img-area">
+                <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132226.682.jpg">
+            </div>
+            <div class="content">
+                <div>
+                    <span class="text-xs font-bold text-gray-400 uppercase">System</span>
+                    <h3 class="mt-1 text-[#1d1d1f]">전력반도체 센터</h3>
+                </div>
+                <div class="btn">View Detail</div>
+            </div>
+        </div>
+
+        <!-- 2. Dynamic Island -->
+        <div class="widget-dynamic group">
+            <div class="header">
+                <div class="flex items-center gap-4">
+                    <div class="icon">M</div>
+                    <h3 class="text-xl font-bold text-[#1d1d1f]">디지털 콘텐츠</h3>
+                </div>
+                <span class="text-xs font-bold text-brand-blue group-hover:hidden">EXPAND</span>
+            </div>
+            <div class="info">
+                <div class="img-preview">
+                    <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132211.153.jpg">
+                </div>
+                <div class="mt-4 flex justify-between items-center">
+                    <span class="text-sm font-medium text-gray-500">부산 콘텐츠 코리아 랩</span>
+                    <button class="bg-brand-blue text-white px-4 py-2 rounded-full text-xs font-bold">이동하기</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. The Drawer -->
+        <div class="widget-drawer group">
+            <img src="../../pictures/464A4461.jpg">
+            <div class="drawer">
+                <span class="text-xs font-bold text-brand-blue uppercase">Lab</span>
+                <h3 class="text-2xl font-black text-[#1d1d1f] mt-1">스마트 해양</h3>
+                <div class="meta">
+                    <span class="text-sm text-gray-500">항만 물류 시스템 연구</span>
+                    <div class="arrow-btn">↗</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Glass Overlay -->
+        <div class="widget-glass-btn group">
+            <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132234.075.jpg">
+            <div class="overlay"></div>
+            <div class="content-box">
+                <div>
+                    <h3 class="text-lg font-bold text-[#1d1d1f]">바이오 헬스</h3>
+                    <p class="text-xs text-gray-500">스마트 헬스케어 센터</p>
+                </div>
+                <div class="btn-go">GO <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg></div>
+            </div>
+        </div>
+
+        <!-- 5. The Folder -->
+        <div class="widget-folder-wrap group">
+            <div class="widget-folder-back"></div>
+            <div class="widget-folder-front">
+                <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132240.683.jpg">
+                <div class="content">
+                    <h3 class="text-xl font-bold text-[#1d1d1f]">AI 로봇 공학</h3>
+                    <div class="mt-3 flex justify-between items-center border-t pt-3 border-gray-100">
+                        <span class="text-xs font-bold text-gray-400">File 05</span>
+                        <span class="text-xs font-bold text-brand-blue">OPEN ></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Neon Border -->
+        <div class="widget-neon group">
+            <img src="../../pictures/DJI_0465 복사.jpg">
+            <div class="content">
+                <span class="text-xs font-bold text-[#00BEB5] tracking-widest">FUTURE</span>
+                <h3 class="mt-1">에너지 신산업</h3>
+                <div class="action">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

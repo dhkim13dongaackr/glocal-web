@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D-insight Webzine - Glocal University</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --primary: #3e31d5; --text-title: #111; --text-body: #333;
+            --bg-page: #f5f7fa; --card-radius: 30px;
+        }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: 'SUIT', sans-serif; overflow-x: hidden; }
+        
+        /* Header */
+        .header-container { position: fixed; top: 24px; left: 0; width: 100%; z-index: 1000; display: flex; justify-content: center; pointer-events: none; }
+        .capsule-header {
+            pointer-events: auto; background: rgba(255, 255, 255, 0.85); backdrop-filter: saturate(180%) blur(20px);
+            border-radius: 100px; padding: 12px 36px; display: flex; align-items: center; gap: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid rgba(255,255,255,0.5);
+        }
+        .nav-item { font-size: 15px; font-weight: 700; color: #666; cursor: pointer; transition: 0.2s; }
+        .nav-item:hover, .nav-item.active { color: var(--primary); }
+        .logo { font-weight: 900; font-size: 18px; color: var(--text-title); }
+
+        /* Cover Section */
+        .cover-section { height: 100vh; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .cover-bg { position: absolute; inset: 0; z-index: 0; }
+        .cover-img { width: 100%; height: 120%; object-fit: cover; object-position: center; }
+        .cover-title-wrap { position: relative; z-index: 10; text-align: center; mix-blend-mode: exclusion; color: white; }
+        .cover-display { font-size: 12vw; font-weight: 900; line-height: 0.9; letter-spacing: -0.04em; }
+        .cover-sub { font-size: 24px; font-weight: 500; letter-spacing: 0.2em; margin-bottom: 20px; display: block; }
+
+        /* Intro Section */
+        .intro-section { padding: 160px 40px; position: relative; }
+        .floating-orb { 
+            position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; z-index: -1;
+            background: linear-gradient(135deg, #3e31d5, #0acaff);
+        }
+
+        /* Horizontal Scroll */
+        .h-scroll-wrap { height: 400vh; position: relative; } /* Scroll distance */
+        .h-scroll-container { 
+            height: 100vh; position: sticky; top: 0; overflow: hidden; 
+            display: flex; align-items: center; background: #111; color: white;
+        }
+        .h-track { display: flex; gap: 80px; padding: 0 10vw; width: max-content; }
+        .h-item { 
+            width: 70vw; height: 70vh; flex-shrink: 0; position: relative;
+            display: flex; align-items: center; gap: 60px;
+        }
+        .h-img-box { width: 50%; height: 100%; overflow: hidden; border-radius: 30px; position: relative; }
+        .h-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .h-content { width: 40%; }
+        .h-num { font-size: 100px; font-weight: 900; color: transparent; -webkit-text-stroke: 2px rgba(255,255,255,0.2); line-height: 1; }
+        .h-title { font-size: 48px; font-weight: 800; margin: 20px 0; line-height: 1.2; }
+        .h-desc { font-size: 18px; color: #aaa; line-height: 1.7; margin-bottom: 40px; }
+        .h-btn { 
+            padding: 16px 32px; border: 1px solid white; border-radius: 100px; 
+            font-weight: 700; transition: 0.3s; display: inline-block;
+        }
+        .h-btn:hover { background: white; color: black; }
+
+        /* Article Grid (Standard) */
+        .grid-section { padding: 160px 40px; max-width: 1400px; margin: 0 auto; }
+        .article-card { 
+            background: white; border-radius: 30px; overflow: hidden; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05); transition: 0.4s;
+        }
+        .article-card:hover { transform: translateY(-10px); box-shadow: 0 20px 60px rgba(62, 49, 213, 0.15); }
+        .ac-img-wrap { height: 300px; overflow: hidden; }
+        .ac-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .article-card:hover .ac-img { transform: scale(1.1); }
+        .ac-body { padding: 40px; }
+        .ac-tag { color: var(--primary); font-weight: 800; font-size: 13px; margin-bottom: 12px; display: block; }
+        .ac-title { font-size: 24px; font-weight: 800; margin-bottom: 16px; line-height: 1.4; color: #111; }
+        .ac-date { color: #999; font-size: 14px; font-family: monospace; }
+
+        /* Quote Section */
+        .quote-section { padding: 160px 40px; text-align: center; background: white; }
+        .big-quote { font-size: 40px; font-weight: 800; line-height: 1.4; color: #111; max-width: 1000px; margin: 0 auto; }
+        .quote-author { margin-top: 40px; font-size: 18px; color: #666; font-weight: 500; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header-container">
+        <header class="capsule-header">
+            <div class="logo">D-insight</div>
+            <nav class="nav-list hidden md:flex gap-10">
+                <a class="nav-item active">Cover Story</a>
+                <a class="nav-item">Features</a>
+                <a class="nav-item">Interview</a>
+                <a class="nav-item">News</a>
+            </nav>
+            <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center cursor-pointer hover:bg-indigo-50 transition border border-gray-200">
+                <span class="text-sm font-bold text-gray-700">≡</span>
+            </div>
+        </header>
+    </div>
+
+    <!-- 1. Parallax Cover -->
+    <section class="cover-section">
+        <div class="cover-bg">
+            <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132226.682.jpg" class="cover-img" id="hero-img">
+        </div>
+        <div class="cover-title-wrap">
+            <span class="cover-sub">GLOCAL WEBZINE VOL.01</span>
+            <h1 class="cover-display">The Next<br>Chapter.</h1>
+        </div>
+    </section>
+
+    <!-- 2. Editor's Intro (Fade Up) -->
+    <section class="intro-section">
+        <div class="floating-orb w-[600px] h-[600px] top-0 left-[-200px]"></div>
+        <div class="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+            <div>
+                <span class="text-primary font-bold tracking-widest text-sm mb-6 block reveal-text">EDITOR'S NOTE</span>
+                <h2 class="text-5xl font-black mb-8 leading-tight reveal-text text-[#111]">
+                    경계를 허물고<br>새로운 내일을<br>이야기하다.
+                </h2>
+                <div class="space-y-6 text-lg text-gray-600 leading-relaxed">
+                    <p class="reveal-text">기술과 인문, 대학과 지역, 이론과 실무. 우리는 수많은 경계 속에 살고 있습니다. D-insight는 이 경계선 위에서 피어나는 새로운 혁신의 이야기를 담습니다.</p>
+                    <p class="reveal-text">창간호에서는 'FIELD 캠퍼스'를 주제로, 강의실 밖에서 미래를 배우는 학생들과 기업의 생생한 목소리를 전합니다.</p>
+                </div>
+                <img src="../../pictures/sig.png" class="mt-10 h-12 opacity-50 reveal-text" alt="Signature"> <!-- Placeholder for sig -->
+            </div>
+            <div class="relative">
+                <div class="aspect-[4/5] rounded-[40px] overflow-hidden shadow-2xl rotate-3 hover:rotate-0 transition duration-700">
+                    <img src="../../pictures/464A9473 복사.jpg" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Horizontal Story (Scrollytelling) -->
+    <div class="h-scroll-wrap">
+        <div class="h-scroll-container">
+            <div class="h-track">
+                
+                <!-- Story 1 -->
+                <div class="h-item">
+                    <div class="h-img-box">
+                        <img src="../../pictures/MZU00838.ARW" class="h-img grayscale hover:grayscale-0"> <!-- Fallback -->
+                        <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132211.153.jpg" class="absolute inset-0 w-full h-full object-cover">
+                    </div>
+                    <div class="h-content">
+                        <div class="h-num">01</div>
+                        <h3 class="h-title">반도체, <br>클린룸에 서다.</h3>
+                        <p class="h-desc">이론으로 배우던 공정을 내 손으로 직접. Class 1000 클린룸에서 펼쳐지는 예비 엔지니어들의 치열한 하루를 담았습니다.</p>
+                        <a href="#" class="h-btn">Read Story</a>
+                    </div>
+                </div>
+
+                <!-- Story 2 -->
+                <div class="h-item">
+                    <div class="h-img-box">
+                        <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132236.355.jpg" class="h-img">
+                    </div>
+                    <div class="h-content">
+                        <div class="h-num">02</div>
+                        <h3 class="h-title">수소에너지,<br>미래를 달리다.</h3>
+                        <p class="h-desc">탄소 중립 시대를 이끌어갈 청정 에너지. 르노코리아와 함께하는 수소차 R&D 현장 실습 리포트.</p>
+                        <a href="#" class="h-btn">Read Story</a>
+                    </div>
+                </div>
+
+                <!-- Story 3 -->
+                <div class="h-item">
+                    <div class="h-img-box">
+                        <img src="../../pictures/464A4461.jpg" class="h-img">
+                    </div>
+                    <div class="h-content">
+                        <div class="h-num">03</div>
+                        <h3 class="h-title">AI가 그리는<br>디자인의 미래.</h3>
+                        <p class="h-desc">생성형 AI와 디자이너의 협업. 동서대 융합디자인 전공 학생들이 제시하는 새로운 크리에이티브 프로세스.</p>
+                        <a href="#" class="h-btn">Read Story</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Quote -->
+    <section class="quote-section">
+        <div class="floating-orb w-[400px] h-[400px] bottom-0 right-0 !bg-purple-200"></div>
+        <p class="big-quote">
+            "현장은 더 이상 졸업 후에 만나는 곳이 아닙니다.<br>
+            지금, 여기서 시작되는 미래입니다."
+        </p>
+        <p class="quote-author">글로컬 대학 사업단장 김철수</p>
+    </section>
+
+    <!-- 5. Latest News Grid -->
+    <section class="grid-section">
+        <div class="flex justify-between items-end mb-12">
+            <h3 class="text-4xl font-bold text-[#111]">Latest News</h3>
+            <button class="text-primary font-bold hover:underline">View Archive</button>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="article-card group cursor-pointer">
+                <div class="ac-img-wrap">
+                    <img src="../../pictures/DJI_0971 복사.jpg" class="ac-img">
+                </div>
+                <div class="ac-body">
+                    <span class="ac-tag">EVENT</span>
+                    <h4 class="ac-title group-hover:text-primary transition">2026 글로컬 해커톤<br>최종 우승팀 인터뷰</h4>
+                    <span class="ac-date">2026.02.08</span>
+                </div>
+            </div>
+            <div class="article-card group cursor-pointer">
+                <div class="ac-img-wrap">
+                    <img src="../../pictures/MZU00847.ARW" class="ac-img grayscale">
+                    <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132250.472.jpg" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <div class="ac-body">
+                    <span class="ac-tag">PEOPLE</span>
+                    <h4 class="ac-title group-hover:text-primary transition">삼성전자 입사<br>졸업생 선배 멘토링</h4>
+                    <span class="ac-date">2026.02.01</span>
+                </div>
+            </div>
+            <div class="article-card group cursor-pointer">
+                <div class="ac-img-wrap">
+                    <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132254.177.jpg" class="ac-img">
+                </div>
+                <div class="ac-body">
+                    <span class="ac-tag">TECH</span>
+                    <h4 class="ac-title group-hover:text-primary transition">바이오 헬스<br>최신 연구 동향</h4>
+                    <span class="ac-date">2026.01.28</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 bg-white border-t border-gray-200 text-center">
+        <p class="text-xs font-bold text-gray-400">D-insight Webzine • Glocal University</p>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 1. Cover Parallax
+        gsap.to("#hero-img", {
+            yPercent: 30,
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".cover-section",
+                start: "top top",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+
+        // 2. Intro Reveal
+        gsap.utils.toArray(".reveal-text").forEach((text, i) => {
+            gsap.from(text, {
+                y: 30, opacity: 0, duration: 1, delay: i * 0.1, ease: "power3.out",
+                scrollTrigger: {
+                    trigger: ".intro-section",
+                    start: "top 70%"
+                }
+            });
+        });
+
+        // 3. Horizontal Scroll
+        const track = document.querySelector(".h-track");
+        gsap.to(track, {
+            x: () => -(track.scrollWidth - window.innerWidth),
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".h-scroll-wrap",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1,
+                pin: ".h-scroll-container",
+                invalidateOnRefresh: true
+            }
+        });
+
+        // 4. Quote Scale
+        gsap.from(".big-quote", {
+            scale: 0.9, opacity: 0, duration: 1, ease: "power2.out",
+            scrollTrigger: {
+                trigger: ".quote-section",
+                start: "top 70%"
+            }
+        });
+
+    </script>
+</body>
+</html>

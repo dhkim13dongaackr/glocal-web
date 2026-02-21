@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glocal Vision (Final Smooth) - Glocal University</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <style>
+        :root {
+            --primary: #3e31d5; 
+            --text-main: #111; 
+            --text-sub: #444;
+            --bg-gray: #f8f9fa;
+        }
+        
+        /* Removed CSS Scroll Snap to prevent conflict with Pinning */
+        body { font-family: 'SUIT', sans-serif; overflow-x: hidden; color: var(--text-main); margin: 0; }
+
+        /* Header (Capsule) */
+        .header-container { position: fixed; top: 20px; left: 0; width: 100%; z-index: 2000; display: flex; justify-content: center; transition: transform 0.3s; }
+        .header-container.hide { transform: translateY(-100px); }
+        .capsule-header {
+            pointer-events: auto; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
+            border-radius: 100px; padding: 12px 32px; display: flex; justify-content: space-between; align-items: center; width: 90%; max-width: 1600px;
+            box-shadow: 0 4px 20px 0px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.05);
+        }
+        .logo { font-weight: 900; font-size: 18px; color: var(--text-main); }
+        
+        /* Navigation (Right Dots) */
+        .dot-nav {
+            position: fixed; right: 40px; top: 50%; transform: translateY(-50%); z-index: 1000;
+            display: flex; flex-direction: column; gap: 16px;
+        }
+        .dot {
+            width: 10px; height: 10px; border-radius: 50%; background: #ddd; cursor: pointer; transition: 0.3s; position: relative;
+        }
+        .dot.active { background: var(--primary); transform: scale(1.4); }
+        .dot-tooltip {
+            position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+            white-space: nowrap; font-size: 12px; font-weight: 700; opacity: 0; transition: 0.3s; color: var(--primary); pointer-events: none;
+        }
+        .dot:hover .dot-tooltip { opacity: 1; right: 25px; }
+
+        /* Sections */
+        .snap-section {
+            height: 100vh; width: 100%;
+            position: relative; display: flex; flex-direction: column; justify-content: center;
+            padding: 80px 40px; box-sizing: border-box; background: white;
+        }
+        .snap-section:nth-child(even) { background: var(--bg-gray); }
+
+        /* Horizontal Scroll Section */
+        .h-scroll-container {
+            height: 100vh; width: 100%; background: #111; color: white; overflow: hidden;
+            display: flex; align-items: center;
+        }
+        .h-wrapper {
+            display: flex; height: 100%; width: 400%; align-items: center; padding-left: 10vw;
+        }
+        .h-item {
+            width: 70vw; height: 70vh; margin-right: 5vw;
+            background: white; color: black;
+            padding: 60px; border-radius: 30px;
+            display: flex; flex-direction: column; justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        /* Typography */
+        .sec-label { color: var(--primary); font-weight: 800; font-size: 14px; margin-bottom: 20px; display: block; }
+        .sec-title { font-size: 56px; font-weight: 800; line-height: 1.2; margin-bottom: 24px; letter-spacing: -0.02em; word-break: keep-all; }
+        .sec-desc { font-size: 18px; color: #555; line-height: 1.7; max-width: 600px; word-break: keep-all; }
+        .breadcrumb { font-size: 13px; color: #888; font-weight: 500; margin-bottom: 40px; display: block; }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--primary); color: white; padding: 16px 40px; border-radius: 100px; font-size: 18px; font-weight: 700;
+            transition: 0.3s; box-shadow: 0 10px 30px rgba(62, 49, 213, 0.3); display: inline-flex; align-items: center; gap: 8px;
+        }
+        .btn-primary:hover { transform: translateY(-4px); box-shadow: 0 15px 40px rgba(62, 49, 213, 0.4); }
+        
+        .btn-outline {
+            background: white; color: var(--primary); padding: 16px 40px; border-radius: 100px; font-size: 18px; font-weight: 700;
+            border: 2px solid var(--primary); transition: 0.3s;
+        }
+        .btn-outline:hover { background: #f0efff; transform: translateY(-4px); }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .dot-nav { display: none; }
+            .sec-title { font-size: 36px; }
+            .h-item { width: 85vw; height: 60vh; padding: 30px; }
+            .snap-section { padding: 40px 20px; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header-container" id="gnb">
+        <header class="capsule-header">
+            <div class="logo">GLOCAL VISION</div>
+            <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">≡</div>
+        </header>
+    </div>
+
+    <!-- Desktop Dot Nav -->
+    <div class="dot-nav">
+        <div class="dot active" onclick="scrollToSec('#sec1')"><span class="dot-tooltip">소개</span></div>
+        <div class="dot" onclick="scrollToSec('#sec2')"><span class="dot-tooltip">비전</span></div>
+        <div class="dot" onclick="scrollToSec('#sec3')"><span class="dot-tooltip">이야기</span></div>
+        <div class="dot" onclick="scrollToSec('#sec4')"><span class="dot-tooltip">성과</span></div>
+        <div class="dot" onclick="scrollToSec('#sec5')"><span class="dot-tooltip">참여</span></div>
+    </div>
+
+    <!-- 1. Intro -->
+    <section class="snap-section" id="sec1">
+        <div class="max-w-[1200px] w-full mx-auto">
+            <span class="breadcrumb">HOME > 대학소개 > 비전 및 목표</span>
+            <span class="sec-label">01. 소개</span>
+            <h1 class="sec-title">교육의 새로운 표준,<br>글로컬 연합대학.</h1>
+            <p class="sec-desc">우리는 대학의 경계를 허물고, Field 캠퍼스에서 시작되는 실무 중심의 혁신을 만들어갑니다.</p>
+            <div class="mt-10 h-[360px] bg-gray-200 rounded-[24px] overflow-hidden">
+                <img src="../../pictures/464A4461.jpg" class="w-full h-full object-cover">
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Vision (Split Layout) -->
+    <section class="snap-section" id="sec2">
+        <div class="max-w-[1200px] w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+            <img src="../../pictures/464A9473 복사.jpg" class="w-full h-[500px] object-cover rounded-[24px] shadow-lg">
+            <div>
+                <span class="sec-label">02. 비전</span>
+                <h2 class="sec-title">미래를 위한<br>구체적인 약속.</h2>
+                <p class="sec-desc mb-8">단순한 지식 전달을 넘어섭니다. 산업체와 함께 문제를 해결하고 실질적인 가치를 창출합니다.</p>
+                <ul class="space-y-4 text-lg font-bold text-[#333]">
+                    <li class="flex items-center gap-3">
+                        <span class="w-2 h-2 bg-primary rounded-full"></span> 현장 중심 커리큘럼 운영
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="w-2 h-2 bg-primary rounded-full"></span> 기업 연계 실무 프로젝트
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="w-2 h-2 bg-primary rounded-full"></span> 글로벌 인재 교류 확대
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Horizontal Scroll (Pinned & Scrubbed) -->
+    <section class="h-scroll-container" id="sec3">
+        <div class="h-wrapper">
+            <div class="h-item !bg-transparent !text-white !shadow-none justify-center !w-[40vw]">
+                <span class="sec-label text-blue-400">03. 이야기</span>
+                <h2 class="sec-title">학생들이 만드는<br>변화의 기록들.</h2>
+                <p class="sec-desc text-gray-400">강의실 밖에서 펼쳐지는 생생한 도전.</p>
+            </div>
+            <div class="h-item">
+                <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132211.153.jpg" class="w-full h-[300px] object-cover rounded-xl mb-6">
+                <div>
+                    <h3 class="text-2xl font-bold mb-2">반도체 공정 실습</h3>
+                    <p class="text-gray-500">Class 1000 클린룸 현장 리포트</p>
+                </div>
+            </div>
+            <div class="h-item">
+                <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132236.355.jpg" class="w-full h-[300px] object-cover rounded-xl mb-6">
+                <div>
+                    <h3 class="text-2xl font-bold mb-2">수소 에너지 R&D</h3>
+                    <p class="text-gray-500">미래 에너지를 향한 열정</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Impact (Grid) -->
+    <section class="snap-section" id="sec4">
+        <div class="max-w-[1200px] w-full mx-auto">
+            <span class="sec-label">04. 성과</span>
+            <h2 class="sec-title mb-16 text-center md:text-left">증명된 성과.</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-10 rounded-[24px] shadow-sm border border-gray-100 text-center hover:-translate-y-2 transition duration-300">
+                    <span class="text-6xl font-black text-primary block mb-2">98%</span>
+                    <span class="font-bold text-gray-500">전공 취업률</span>
+                </div>
+                <div class="bg-white p-10 rounded-[24px] shadow-sm border border-gray-100 text-center hover:-translate-y-2 transition duration-300">
+                    <span class="text-6xl font-black text-primary block mb-2">50+</span>
+                    <span class="font-bold text-gray-500">기업 파트너</span>
+                </div>
+                <div class="bg-white p-10 rounded-[24px] shadow-sm border border-gray-100 text-center hover:-translate-y-2 transition duration-300">
+                    <span class="text-6xl font-black text-primary block mb-2">1st</span>
+                    <span class="font-bold text-gray-500">글로컬 대학 선정</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Join -->
+    <section class="snap-section text-center" id="sec5">
+        <div class="max-w-4xl mx-auto">
+            <span class="sec-label">05. 참여하기</span>
+            <h2 class="sec-title mb-10">지금 바로<br>시작하세요.</h2>
+            <p class="sec-desc mx-auto mb-12">글로컬 연합대학의 새로운 여정에 동참할 당신을 기다립니다.</p>
+            <div class="flex justify-center gap-6">
+                <button class="btn-primary">
+                    입학 상담 신청 <span>→</span>
+                </button>
+                <button class="btn-outline">
+                    브로슈어 보기
+                </button>
+            </div>
+        </div>
+        <footer class="absolute bottom-0 w-full py-10 border-t border-gray-200 text-sm text-gray-400">
+            Copyright © 2026 Glocal University.
+        </footer>
+    </section>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+        // 1. JS Snap Logic (Replaces CSS Snap)
+        const sections = gsap.utils.toArray("section");
+        
+        // Setup Horizontal Scroll Trigger first
+        const track = document.querySelector('.h-wrapper');
+        const hScroll = gsap.to(track, {
+            x: () => -(track.scrollWidth - window.innerWidth),
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".h-scroll-container",
+                pin: true,
+                scrub: 1, // Smooth scrubbing needed for nice feel
+                end: "+=" + track.scrollWidth, // Scroll amount matches width
+                invalidateOnRefresh: true
+            }
+        });
+
+        // 2. Active Dot Update
+        sections.forEach((sec, i) => {
+            ScrollTrigger.create({
+                trigger: sec,
+                start: "top center",
+                end: "bottom center",
+                onEnter: () => updateNav(i),
+                onEnterBack: () => updateNav(i)
+            });
+        });
+
+        function updateNav(index) {
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach(d => d.classList.remove('active'));
+            if(dots[index]) dots[index].classList.add('active');
+        }
+
+        // 3. Smooth Scroll to Section
+        function scrollToSec(id) {
+            gsap.to(window, {scrollTo: id, duration: 1, ease: "power2.inOut"});
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동아·동서 글로컬 연합대학 v53 (Living Node System)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['SUIT', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#4132CC', 
+                            mint: '#00BEB5',
+                            dark: '#1d1d1f', 
+                            bg: '#EBECFA',
+                        }
+                    },
+                    animation: {
+                        'pulse-ring': 'pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite',
+                    },
+                    keyframes: {
+                        'pulse-ring': {
+                            '0%': { transform: 'scale(0.8)', opacity: '0.8' },
+                            '80%, 100%': { transform: 'scale(2.5)', opacity: '0' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #E5E7EB; color: #1d1d1f; font-family: 'SUIT', sans-serif; }
+        
+        .container-wrapper {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            height: 100vh;
+        }
+        @media (max-width: 1024px) {
+            .container-wrapper { grid-template-columns: 1fr; height: auto; }
+        }
+
+        /* Common Node Styles */
+        .node-dot {
+            width: 16px; height: 16px;
+            background: #4132CC; border-radius: 50%;
+            position: relative; z-index: 20; cursor: pointer;
+            box-shadow: 0 0 0 4px rgba(255,255,255,0.8);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        /* Pulse Animation (Initial State) */
+        .node-dot::before {
+            content: ''; position: absolute; inset: 0;
+            background: #4132CC; border-radius: 50%; z-index: -1;
+            animation: pulse-ring 2s infinite;
+        }
+        /* Hover/Active State */
+        .node-group:hover .node-dot, .node-group.active .node-dot {
+            transform: scale(1.2);
+            background: white; border: 4px solid #4132CC;
+            box-shadow: none;
+        }
+        .node-group:hover .node-dot::before, .node-group.active .node-dot::before {
+            animation: none; opacity: 0;
+        }
+
+        /* --- Desktop Style (Long Line) --- */
+        .desktop-map {
+            background: #fff; border-radius: 32px; position: relative; overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1); border: 1px solid white;
+            min-height: 600px;
+        }
+        .desktop-node .node-content {
+            position: absolute; top: 50%; left: 50%; transform: translateY(-50%);
+            display: flex; align-items: center; pointer-events: none;
+        }
+        .desktop-node .line {
+            width: 0; height: 2px; background: #4132CC; transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .desktop-node .info {
+            opacity: 0; transform: translateX(-10px); transition: 0.4s 0.1s; padding-left: 16px; white-space: nowrap;
+        }
+        .desktop-node:hover .line { width: 80px; }
+        .desktop-node:hover .info { opacity: 1; transform: translateX(0); }
+        
+        .desktop-node.left .node-content { flex-direction: row-reverse; left: auto; right: 50%; }
+        .desktop-node.left .info { padding-left: 0; padding-right: 16px; text-align: right; transform: translateX(10px); }
+
+        /* --- Mobile Style (Morphing / Compact) --- */
+        .mobile-frame {
+            background: #fff; border-radius: 32px; border: 8px solid #1d1d1f;
+            position: relative; overflow: hidden; height: 640px; width: 320px;
+            margin: 0 auto; box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+        
+        /* Mobile Type 1: Morphing (Dot -> Pill) */
+        .mobile-node-1 {
+            position: absolute; display: flex; align-items: center;
+            background: #4132CC; border-radius: 20px;
+            width: 16px; height: 16px; /* Start as dot */
+            overflow: hidden; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 0 0 4px rgba(255,255,255,0.5);
+            cursor: pointer;
+        }
+        /* Pulse for Mobile Dot */
+        .mobile-node-1::after {
+            content: ''; position: absolute; inset: -10px; border-radius: 50%;
+            background: #4132CC; opacity: 0.4; z-index: -1;
+            animation: pulse-ring 2s infinite;
+        }
+        .mobile-node-1.active {
+            width: auto; height: auto; padding: 8px 16px;
+            background: #4132CC; box-shadow: 0 10px 30px rgba(65, 50, 204, 0.4);
+            z-index: 50; animation: none;
+        }
+        .mobile-node-1.active::after { display: none; }
+        
+        .mobile-node-1 .content {
+            opacity: 0; width: 0; white-space: nowrap; transition: 0.2s; color: white;
+        }
+        .mobile-node-1.active .content { opacity: 1; width: auto; margin-left: 0; }
+        .mobile-node-1 .icon { display: none; } /* Hide icon initially if needed */
+
+        /* Mobile Type 2: Compact Pop (Dot + Bubble) */
+        .mobile-node-2 { position: absolute; }
+        .mobile-node-2 .bubble {
+            position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%) scale(0.8);
+            background: white; padding: 10px 14px; border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid #EBECFA;
+            opacity: 0; pointer-events: none; transition: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            white-space: nowrap; text-align: center; z-index: 50;
+        }
+        .mobile-node-2 .bubble::after {
+            content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
+            border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 6px solid white;
+        }
+        .mobile-node-2.active .bubble { opacity: 1; transform: translateX(-50%) scale(1); pointer-events: auto; bottom: 30px; }
+
+        /* Typography */
+        h2 { font-family: 'SUIT'; font-weight: 900; line-height: 1.1; }
+        .label-cat { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+        .label-title { font-size: 16px; font-weight: 800; }
+
+    </style>
+</head>
+<body>
+
+    <div class="container-wrapper">
+        
+        <!-- Desktop View -->
+        <div class="flex flex-col gap-4">
+            <h3 class="text-2xl font-black text-brand-dark flex items-center gap-2">
+                <span class="w-2 h-8 bg-brand-blue rounded-full"></span> Desktop: Hover & Connect
+            </h3>
+            <div class="desktop-map">
+                <img src="../../pictures/DJI_0938 복사.jpg" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-multiply grayscale">
+                
+                <!-- Node 1: Power Semi -->
+                <div class="desktop-node node-group right" style="position: absolute; top: 30%; left: 30%;">
+                    <div class="node-dot"></div>
+                    <div class="node-content">
+                        <div class="line"></div>
+                        <div class="info">
+                            <span class="label-cat text-brand-blue block">Tech</span>
+                            <span class="label-title text-brand-dark block text-2xl">전력반도체 센터</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Node 2: Digital Content -->
+                <div class="desktop-node node-group left" style="position: absolute; top: 60%; left: 70%;">
+                    <div class="node-dot"></div>
+                    <div class="node-content">
+                        <div class="line"></div>
+                        <div class="info">
+                            <span class="label-cat text-brand-mint block">Media</span>
+                            <span class="label-title text-brand-dark block text-2xl">디지털 콘텐츠</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Node 3: Smart Ocean -->
+                <div class="desktop-node node-group right" style="position: absolute; top: 70%; left: 40%;">
+                    <div class="node-dot"></div>
+                    <div class="node-content">
+                        <div class="line"></div>
+                        <div class="info">
+                            <span class="label-cat text-indigo-500 block">Ocean</span>
+                            <span class="label-title text-brand-dark block text-2xl">스마트 해양 랩</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="absolute bottom-6 left-6 text-gray-400 font-bold text-sm">Mouse over the dots</div>
+            </div>
+        </div>
+
+        <!-- Mobile View -->
+        <div class="flex flex-col gap-4 items-center">
+            <h3 class="text-2xl font-black text-brand-dark flex items-center gap-2">
+                <span class="w-2 h-8 bg-brand-mint rounded-full"></span> Mobile: Tap & Morph
+            </h3>
+            <div class="phone-frame">
+                <div class="notch"></div>
+                <img src="../../pictures/DJI_0938 복사.jpg" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-multiply grayscale">
+                
+                <div class="absolute top-10 left-0 w-full text-center text-brand-blue font-black text-xl">Tap the dots!</div>
+
+                <!-- Mobile Type 1: Morphing (Replaces Dot) -->
+                <div class="mobile-node-1" style="top: 30%; left: 30%;" onclick="toggleMobileNode(this)">
+                    <div class="content">
+                        <span class="text-[9px] font-bold text-brand-mint block leading-none">TECH</span>
+                        <span class="text-sm font-bold block">전력반도체</span>
+                    </div>
+                </div>
+
+                <!-- Mobile Type 2: Bubble Pop (Above Dot) -->
+                <div class="mobile-node-2 node-group" style="top: 60%; left: 70%;" onclick="this.classList.toggle('active')">
+                    <div class="node-dot"></div>
+                    <div class="bubble">
+                        <span class="text-[9px] font-bold text-brand-mint block">MEDIA</span>
+                        <span class="text-sm font-bold text-brand-dark block">디지털 콘텐츠</span>
+                        <button class="text-[10px] text-brand-blue underline mt-1">이동 ></button>
+                    </div>
+                </div>
+
+                <!-- Mobile Type 1 Variant -->
+                <div class="mobile-node-1" style="top: 70%; left: 40%;" onclick="toggleMobileNode(this)">
+                    <div class="content">
+                        <span class="text-[9px] font-bold text-indigo-200 block leading-none">OCEAN</span>
+                        <span class="text-sm font-bold block">스마트 해양</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleMobileNode(el) {
+            // Close others
+            document.querySelectorAll('.mobile-node-1').forEach(node => {
+                if(node !== el) node.classList.remove('active');
+            });
+            el.classList.toggle('active');
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전력반도체 (Scrollytelling) - 동아·동서 글로컬 연합대학</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['SUIT', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#4132CC',
+                            mint: '#00BEB5',
+                            dark: '#111',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #fff; color: #111; overflow-x: hidden; }
+        
+        /* Sticky Header */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; height: 80px; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 40px;
+            mix-blend-mode: difference; color: white; /* Auto contrast */
+        }
+
+        /* Hero */
+        .hero { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; }
+        .hero-text { font-size: 8vw; font-weight: 900; line-height: 0.9; text-align: center; z-index: 10; opacity: 0; transform: translateY(50px); }
+        .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.2; }
+
+        /* Intro Text */
+        .intro-sec { padding: 150px 20px; text-align: center; }
+        .big-text { font-size: 3rem; font-weight: 800; line-height: 1.4; background: linear-gradient(to right, #111 50%, #999 100%); -webkit-background-clip: text; color: transparent; }
+        
+        /* Horizontal Scroll Section */
+        .h-scroll-wrap { height: 400vh; position: relative; } /* Scroll space */
+        .h-scroll-sticky {
+            position: sticky; top: 0; height: 100vh; overflow: hidden;
+            display: flex; align-items: center; background: #111; color: white;
+        }
+        .h-track { display: flex; padding-left: 100px; gap: 100px; }
+        .h-card {
+            width: 600px; height: 70vh; flex-shrink: 0;
+            display: flex; flex-direction: column; justify-content: center;
+            border-left: 1px solid rgba(255,255,255,0.2); padding-left: 60px;
+        }
+        .h-num { font-size: 100px; font-weight: 900; -webkit-text-stroke: 2px #4132CC; color: transparent; opacity: 0.5; }
+        .h-title { font-size: 40px; font-weight: 800; margin-bottom: 20px; }
+        .h-desc { font-size: 18px; color: #999; line-height: 1.6; }
+
+        /* Image Reveal */
+        .reveal-sec { height: 100vh; display: flex; position: relative; }
+        .reveal-left { width: 50%; display: flex; align-items: center; justify-content: center; padding: 60px; background: white; z-index: 10; }
+        .reveal-right { width: 50%; height: 100%; position: relative; overflow: hidden; }
+        .reveal-img { width: 100%; height: 100%; object-fit: cover; position: absolute; }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-text { font-size: 15vw; }
+            .big-text { font-size: 2rem; }
+            .h-card { width: 80vw; }
+            .reveal-sec { flex-direction: column; }
+            .reveal-left, .reveal-right { width: 100%; height: 50vh; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="font-black text-2xl">GLOCAL</div>
+        <div class="font-bold text-sm">MENU</div>
+    </header>
+
+    <!-- 1. Hero: Typography Motion -->
+    <section class="hero">
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-circuit-board-technology-217-large.mp4" type="video/mp4"> <!-- Placeholder Video -->
+        </video>
+        <h1 class="hero-text">
+            POWER<br>SEMICONDUCTOR
+        </h1>
+        <div class="absolute bottom-10 animate-bounce">↓</div>
+    </section>
+
+    <!-- 2. Intro: Gradient Text -->
+    <section class="intro-sec">
+        <div class="max-w-4xl mx-auto">
+            <p class="text-brand-blue font-bold tracking-widest mb-6">VISION</p>
+            <h2 class="big-text">
+                부산의 미래를 이끄는 힘,<br>
+                반도체 소부장 산업의<br>
+                혁신적 리더를 양성합니다.
+            </h2>
+        </div>
+    </section>
+
+    <!-- 3. Horizontal Scroll: Curriculum -->
+    <section class="h-scroll-wrap" id="h-wrap">
+        <div class="h-scroll-sticky">
+            <div class="absolute top-10 left-10 text-brand-mint font-bold">CURRICULUM FLOW</div>
+            <div class="h-track" id="h-track">
+                
+                <!-- Card 1 -->
+                <div class="h-card">
+                    <div class="h-num">01</div>
+                    <h3 class="h-title">기초 공정 이론</h3>
+                    <p class="h-desc">
+                        반도체 물성 및 소자 원리를 이해하고<br>
+                        진공 기술 및 플라즈마 기초를 학습합니다.<br>
+                        이론과 실제의 간극을 줄이는 첫 걸음입니다.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="h-card">
+                    <div class="h-num">02</div>
+                    <h3 class="h-title">단위 공정 실습</h3>
+                    <p class="h-desc">
+                        Photo, Etch, Thin Film 등<br>
+                        8대 핵심 공정 장비를 직접 다룹니다.<br>
+                        클린룸 내에서 진행되는 현장 밀착형 수업.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="h-card">
+                    <div class="h-num">03</div>
+                    <h3 class="h-title">캡스톤 디자인</h3>
+                    <p class="h-desc">
+                        기업이 제시한 문제를 해결하는<br>
+                        프로젝트 기반 학습(PBL)을 수행합니다.<br>
+                        실패를 두려워하지 않는 도전적 실험.
+                    </p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="h-card">
+                    <div class="h-num">04</div>
+                    <h3 class="h-title">인턴십 & 취업</h3>
+                    <p class="h-desc">
+                        협력 기업에서의 인턴십을 통해<br>
+                        실무 경험을 완성하고,<br>
+                        전문 엔지니어로서 커리어를 시작합니다.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Image Reveal: Facility -->
+    <section class="reveal-sec">
+        <div class="reveal-left">
+            <div>
+                <span class="text-brand-blue font-bold block mb-4">FACILITIES</span>
+                <h2 class="text-4xl font-black mb-6">Class 1000<br>Clean Room</h2>
+                <p class="text-gray-600 leading-relaxed mb-8">
+                    대학 내에 구축된 것이 아닙니다.<br>
+                    부산테크노파크의 실제 생산 라인입니다.<br>
+                    학생들은 이곳에서 방진복을 입고<br>
+                    미래의 엔지니어가 됩니다.
+                </p>
+                <a href="#" class="inline-block border-b-2 border-black pb-1 font-bold">시설 자세히 보기</a>
+            </div>
+        </div>
+        <div class="reveal-right">
+            <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132226.682.jpg" class="reveal-img">
+        </div>
+    </section>
+
+    <footer class="bg-black text-white py-20 text-center">
+        <p class="opacity-50 text-sm">GLOCAL UNIVERSITY 30</p>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 1. Hero Text Reveal
+        gsap.to(".hero-text", {
+            opacity: 1,
+            y: 0,
+            duration: 1.5,
+            ease: "power4.out",
+            delay: 0.5
+        });
+
+        // 2. Horizontal Scroll
+        const track = document.getElementById("h-track");
+        const wrap = document.getElementById("h-wrap");
+        
+        // Calculate scroll amount: Total width - Viewport width
+        // We need to wait for layout, but for prototype we approximate or use function
+        
+        function initScroll() {
+            let scrollAmount = track.scrollWidth - window.innerWidth + 200; // + padding
+            
+            gsap.to(track, {
+                x: -scrollAmount,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: wrap,
+                    start: "top top",
+                    end: "bottom bottom",
+                    scrub: 1, // Smooth scrubbing
+                    invalidateOnRefresh: true
+                }
+            });
+        }
+
+        // 3. Image Parallax
+        gsap.fromTo(".reveal-img", 
+            { scale: 1.2 },
+            { 
+                scale: 1,
+                scrollTrigger: {
+                    trigger: ".reveal-sec",
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true
+                }
+            }
+        );
+
+        // Init after load
+        window.onload = initScroll;
+        window.onresize = ScrollTrigger.refresh;
+
+    </script>
+
+</body>
+</html>

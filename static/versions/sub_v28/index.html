@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glocal Union (Figma Theme) - Glocal University</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        body { 
+            background-color: #ffffff; 
+            color: #171719; 
+            font-family: 'SUIT', sans-serif; 
+            overflow-x: hidden;
+        }
+
+        /* Figma Color Tokens */
+        :root {
+            --primary: #3e31d5;
+            --primary-light: #f1f2ff;
+            --bg-gray: #f5f7fa;
+            --text-title: #171719;
+            --text-body: #3f3f44;
+            --text-cap: #74747e;
+        }
+
+        /* Soft Card Style (No Border, Soft Shadow) */
+        .soft-card {
+            background: #ffffff;
+            border-radius: 30px; /* Figma Radius */
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .soft-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(62, 49, 213, 0.15); /* Primary Color Shadow */
+        }
+
+        /* Typography */
+        .f-label { font-size: 14px; font-weight: 700; color: var(--primary); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 12px; display: block; }
+        .f-display { font-size: 64px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.2; color: var(--text-title); }
+        .f-h2 { font-size: 40px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.3; color: var(--text-title); }
+        .f-body { font-size: 18px; font-weight: 400; color: var(--text-body); line-height: 1.6; }
+
+        /* Header (Capsule - Clean White) */
+        .header-container {
+            position: fixed; top: 24px; left: 0; width: 100%; z-index: 1000;
+            display: flex; justify-content: center; pointer-events: none;
+        }
+        .capsule-header {
+            pointer-events: auto;
+            background: rgba(255, 255, 255, 0.9); 
+            backdrop-filter: saturate(180%) blur(20px);
+            border-radius: 100px;
+            padding: 14px 40px;
+            display: flex; align-items: center; gap: 48px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        .nav-item { font-size: 16px; font-weight: 600; color: #3f3f44; cursor: pointer; transition: 0.2s; }
+        .nav-item:hover, .nav-item.active { color: var(--primary); }
+        .logo { font-weight: 900; font-size: 18px; letter-spacing: -0.5px; color: var(--text-title); }
+
+        /* Gradient Text */
+        .grad-text {
+            background: linear-gradient(90deg, #3e31d5 0%, #0acaff 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .f-display { font-size: 42px; }
+            .f-h2 { font-size: 32px; }
+            .capsule-header { padding: 12px 24px; gap: 24px; width: 90%; justify-content: space-between; }
+            .nav-list { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header-container">
+        <header class="capsule-header">
+            <div class="logo">GLOCAL</div>
+            <nav class="nav-list hidden md:flex gap-10">
+                <a class="nav-item">대학소개</a>
+                <a class="nav-item active">FIELD 캠퍼스</a>
+                <a class="nav-item">입학안내</a>
+                <a class="nav-item">학생성공</a>
+            </nav>
+            <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center cursor-pointer hover:bg-indigo-50 transition">
+                <span class="text-sm font-bold text-gray-700">≡</span>
+            </div>
+        </header>
+    </div>
+
+    <!-- 1. Hero: Pale Violet Bg (Figma Style) -->
+    <section class="bg-[#f1f2ff] min-h-[90vh] flex items-center pt-32 pb-20 relative overflow-hidden rounded-b-[60px]">
+        <div class="max-w-[1400px] mx-auto px-6 w-full flex flex-col md:flex-row items-center gap-20">
+            <!-- Text -->
+            <div class="md:w-1/2 z-10">
+                <span class="f-label text-[#3e31d5]">NOW STREAMING</span>
+                <h1 class="f-display mb-8">
+                    경계를 넘어,<br>
+                    <span class="grad-text">내일을 잇다.</span>
+                </h1>
+                <p class="f-body mb-10 max-w-lg">
+                    대학의 벽을 허물고 지역과 함께 성장하는<br>
+                    글로컬 연합대학의 새로운 도약.
+                </p>
+                <div class="flex gap-4">
+                    <button class="bg-[#3e31d5] text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-indigo-500/30 hover:scale-105 transition">입학 상담 신청</button>
+                    <button class="bg-white text-[#3e31d5] px-8 py-4 rounded-full font-bold text-lg shadow-md hover:bg-gray-50 transition">브로슈어</button>
+                </div>
+            </div>
+            <!-- Image -->
+            <div class="md:w-1/2 relative">
+                <div class="relative rounded-[40px] overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition duration-700 bg-white p-4">
+                    <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132226.682.jpg" class="w-full h-auto rounded-[30px]">
+                    <div class="absolute bottom-10 left-10 flex gap-2">
+                        <span class="w-3 h-3 bg-white rounded-full"></span>
+                        <span class="w-3 h-3 bg-white/50 rounded-full"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Abstract BG Shape -->
+        <div class="absolute -bottom-20 -left-20 w-[600px] h-[600px] bg-white opacity-40 blur-[100px] rounded-full pointer-events-none"></div>
+    </section>
+
+    <!-- 2. Section: Innovation Strategy (Soft Cards) -->
+    <section class="py-32 bg-[#f5f7fa]">
+        <div class="max-w-[1400px] mx-auto px-6">
+            <div class="text-center mb-20">
+                <span class="f-label">INNOVATION STRATEGY</span>
+                <h2 class="f-h2 mb-4">새로운 방향, 새로운 내일.</h2>
+                <p class="f-body text-gray-500">글로컬 기준의 개방형 사학연합 모델을 제시합니다.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="soft-card p-0 group">
+                    <div class="h-[240px] overflow-hidden relative">
+                        <img src="../../pictures/464A9473 복사.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    </div>
+                    <div class="p-8">
+                        <span class="text-sm font-bold text-[#3e31d5] mb-2 block">Global Standard</span>
+                        <h3 class="text-2xl font-bold mb-4 text-[#171719]">통합 거버넌스 구축</h3>
+                        <p class="text-gray-500 leading-relaxed">
+                            시스템 오피스 기반의 행정 통합.<br>
+                            효율적이고 투명한 대학 운영.
+                        </p>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="soft-card p-0 group">
+                    <div class="h-[240px] overflow-hidden relative">
+                        <img src="../../pictures/MZU00838.ARW" class="w-full h-full object-cover group-hover:scale-110 transition duration-700 grayscale"> <!-- Placeholder fix -->
+                        <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132211.153.jpg" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    </div>
+                    <div class="p-8">
+                        <span class="text-sm font-bold text-[#3e31d5] mb-2 block">Field Campus</span>
+                        <h3 class="text-2xl font-bold mb-4 text-[#171719]">현장 중심 교육</h3>
+                        <p class="text-gray-500 leading-relaxed">
+                            산업 현장이 곧 강의실이 되는<br>
+                            실무형 인재 양성 시스템.
+                        </p>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="soft-card p-0 group">
+                    <div class="h-[240px] overflow-hidden relative">
+                        <img src="../../pictures/464A4461.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    </div>
+                    <div class="p-8">
+                        <span class="text-sm font-bold text-[#3e31d5] mb-2 block">Life Care</span>
+                        <h3 class="text-2xl font-bold mb-4 text-[#171719]">지역 정주형 인재</h3>
+                        <p class="text-gray-500 leading-relaxed">
+                            지역 사회와 상생하며<br>
+                            지속 가능한 미래를 만듭니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Deep Contrast Section (Achievements) -->
+    <section class="py-32 bg-gradient-to-r from-[#3e31d5] to-[#5d4ae8] text-white relative overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+        
+        <div class="max-w-[1400px] mx-auto px-6 relative z-10">
+            <div class="text-center mb-20">
+                <span class="f-label text-blue-200">CORE ACHIEVEMENTS</span>
+                <h2 class="f-h2 text-white">혁신, 미래를 앞당기는 중.</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="bg-white/10 backdrop-blur-md rounded-[30px] p-10 border border-white/10 flex items-center justify-between">
+                    <div>
+                        <p class="text-lg font-bold text-blue-200 mb-2">외국인 유학생 유치</p>
+                        <p class="text-6xl font-black font-tnum">7,000<span class="text-3xl font-bold">+</span></p>
+                    </div>
+                    <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center text-4xl">🌏</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md rounded-[30px] p-10 border border-white/10 flex items-center justify-between">
+                    <div>
+                        <p class="text-lg font-bold text-blue-200 mb-2">산학협력 수주액</p>
+                        <p class="text-6xl font-black font-tnum">930<span class="text-3xl font-bold">억</span></p>
+                    </div>
+                    <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center text-4xl">💰</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Insight (News) -->
+    <section class="py-32 bg-white">
+        <div class="max-w-[1400px] mx-auto px-6">
+            <div class="flex items-end justify-between mb-16">
+                <div>
+                    <span class="f-label">GLOCAL INSIGHT</span>
+                    <h2 class="f-h2">연합대학은 지금</h2>
+                </div>
+                <button class="flex items-center gap-2 font-bold text-[#3e31d5] hover:underline">
+                    전체 보기 <span>→</span>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- News 1 -->
+                <div class="group cursor-pointer">
+                    <div class="rounded-[20px] overflow-hidden mb-4 h-[200px]">
+                        <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132236.355.jpg" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <span class="text-xs font-bold text-[#3e31d5] mb-1 block">NOTICE</span>
+                    <h4 class="text-lg font-bold leading-tight group-hover:text-[#3e31d5] transition">2026학년도 '수소 Field' 트랙 신설</h4>
+                    <p class="text-sm text-gray-400 mt-2">2026.02.08</p>
+                </div>
+                <!-- News 2 -->
+                <div class="group cursor-pointer">
+                    <div class="rounded-[20px] overflow-hidden mb-4 h-[200px]">
+                        <img src="../../pictures/464A9473 복사.jpg" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <span class="text-xs font-bold text-[#3e31d5] mb-1 block">NEWS</span>
+                    <h4 class="text-lg font-bold leading-tight group-hover:text-[#3e31d5] transition">글로컬 연합대학 300억 투자 유치 확정</h4>
+                    <p class="text-sm text-gray-400 mt-2">2026.02.05</p>
+                </div>
+                <!-- News 3 -->
+                <div class="group cursor-pointer">
+                    <div class="rounded-[20px] overflow-hidden mb-4 h-[200px]">
+                        <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132250.472.jpg" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <span class="text-xs font-bold text-[#3e31d5] mb-1 block">INTERVIEW</span>
+                    <h4 class="text-lg font-bold leading-tight group-hover:text-[#3e31d5] transition">"현장이 곧 대학" 총장 인터뷰</h4>
+                    <p class="text-sm text-gray-400 mt-2">2026.01.20</p>
+                </div>
+                <!-- News 4 -->
+                <div class="group cursor-pointer">
+                    <div class="rounded-[20px] overflow-hidden mb-4 h-[200px]">
+                        <img src="../../pictures/MZU00847.ARW" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 grayscale">
+                        <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132254.177.jpg" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <span class="text-xs font-bold text-[#3e31d5] mb-1 block">EVENT</span>
+                    <h4 class="text-lg font-bold leading-tight group-hover:text-[#3e31d5] transition">제 1회 연합 해커톤 성료</h4>
+                    <p class="text-sm text-gray-400 mt-2">2026.01.15</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#efeff4] py-20 border-t border-[#cbccd8]">
+        <div class="max-w-[1400px] mx-auto px-6 text-center">
+            <h2 class="text-2xl font-bold text-[#74747e] mb-10">동아·동서 글로컬 연합대학</h2>
+            <div class="flex justify-center gap-10 text-sm font-medium text-[#3f3f44] mb-8">
+                <a href="#">개인정보처리방침</a>
+                <a href="#">대학소개</a>
+                <a href="#">오시는길</a>
+            </div>
+            <p class="text-xs text-[#74747e]">Copyright © 2026 Glocal Union University. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Intro Reveal
+        gsap.from(".f-display, .f-body, .f-label", {
+            y: 30, opacity: 0, duration: 1, stagger: 0.2, ease: "power3.out"
+        });
+
+        // Cards Stagger
+        gsap.utils.toArray(".soft-card").forEach((card, i) => {
+            gsap.from(card, {
+                y: 50, opacity: 0, duration: 0.8, ease: "power2.out", delay: i * 0.1,
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 90%"
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동아·동서 글로컬 연합대학 v4</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['SUIT', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#4132CC', 
+                            mint: '#00BEB5',
+                            dark: '#1e1e1e', // Kakao style dark gray
+                        }
+                    },
+                    keyframes: {
+                        zoom: {
+                            '0%': { transform: 'scale(1)' },
+                            '100%': { transform: 'scale(1.05)' },
+                        }
+                    },
+                    animation: {
+                        'slow-zoom': 'zoom 10s ease-out forwards',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        
+        /* Slide Show Styles */
+        .slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            z-index: 0;
+        }
+        .slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+        
+        /* Header Transition */
+        #header {
+            transition: background-color 0.3s ease, border-bottom 0.3s ease, color 0.3s ease;
+        }
+        #header.scrolled {
+            background-color: rgba(255, 255, 255, 1);
+            border-bottom: 1px solid #e5e7eb;
+            color: #1e1e1e;
+        }
+        #header.transparent {
+            background-color: transparent;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-white text-[#1e1e1e] font-sans antialiased">
+
+    <!-- Header (Kakao Style) -->
+    <header id="header" class="fixed top-0 left-0 w-full h-[80px] z-50 flex items-center justify-center transparent group hover:bg-white hover:text-[#1e1e1e] transition-colors duration-300">
+        <div class="w-full max-w-[1600px] px-8 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex flex-col items-start cursor-pointer">
+                <p class="text-[20px] font-extrabold leading-none tracking-tight">
+                    동아·동서 글로컬
+                </p>
+                <p class="text-[10px] opacity-70 tracking-[0.1em] mt-1 font-medium">
+                    Dong-A · DongSeo Glocal
+                </p>
+            </div>
+            
+            <!-- GNB (Center) -->
+            <nav class="hidden lg:flex items-center gap-10">
+                <a href="#" class="text-[17px] font-bold hover:text-brand-blue transition-colors py-6 border-b-2 border-transparent hover:border-brand-blue">혁신방향</a>
+                <a href="#" class="text-[17px] font-bold hover:text-brand-blue transition-colors py-6 border-b-2 border-transparent hover:border-brand-blue">통합산단</a>
+                <a href="#" class="text-[17px] font-bold hover:text-brand-blue transition-colors py-6 border-b-2 border-transparent hover:border-brand-blue">연합전공</a>
+                <a href="#" class="text-[17px] font-bold hover:text-brand-blue transition-colors py-6 border-b-2 border-transparent hover:border-brand-blue">Field캠퍼스</a>
+            </nav>
+
+            <!-- Right Utility (Redesigned) -->
+            <div class="flex items-center gap-8">
+                <!-- 학생성공센터 -->
+                <a href="#" class="text-[15px] font-medium opacity-80 hover:opacity-100 flex items-center gap-1 hover:text-brand-blue transition-colors">
+                    학생성공센터
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                </a>
+
+                <!-- Dinsight (Typographic Icon) -->
+                <a href="#" class="flex flex-col items-end leading-none group/dinsight">
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-brand-mint mb-[2px]">News Letter</span>
+                    <div class="flex items-center gap-1">
+                        <span class="text-[22px] font-black font-serif italic group-hover/dinsight:text-brand-blue transition-colors">Dinsight</span>
+                        <div class="w-2 h-2 rounded-full bg-brand-blue mt-1 group-hover/dinsight:animate-ping"></div>
+                    </div>
+                </a>
+                
+                <!-- Menu Icon -->
+                <button class="ml-2 p-2">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Visual (Slideshow) -->
+    <section class="relative w-full h-[100vh] bg-black overflow-hidden">
+        <!-- Slides -->
+        <div id="slideshow" class="absolute inset-0">
+            <!-- Slide 1 -->
+            <div class="slide active">
+                <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132237.721.jpg" class="w-full h-full object-cover animate-slow-zoom" alt="Interview">
+            </div>
+            <!-- Slide 2 -->
+            <div class="slide">
+                <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132226.682.jpg" class="w-full h-full object-cover animate-slow-zoom" alt="Classroom">
+            </div>
+            <!-- Slide 3 -->
+            <div class="slide">
+                <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132211.153.jpg" class="w-full h-full object-cover animate-slow-zoom" alt="Student">
+            </div>
+        </div>
+        
+        <div class="absolute inset-0 bg-black/30"></div>
+
+        <!-- Hero Content -->
+        <div class="relative z-10 h-full flex flex-col justify-center items-start px-8 max-w-[1600px] mx-auto text-white">
+            <div class="overflow-hidden mb-6">
+                <p class="text-xl md:text-2xl font-bold tracking-widest text-brand-mint animate-fade-in-up opacity-0" style="animation: fadeInUp 0.8s forwards 0.2s;">
+                    New Education Paradigm
+                </p>
+            </div>
+            <h1 class="text-6xl md:text-[90px] font-black leading-tight mb-8">
+                <span class="block opacity-0" style="animation: fadeInUp 0.8s forwards 0.4s;">경계를 넘어,</span>
+                <span class="block opacity-0 text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/50" style="animation: fadeInUp 0.8s forwards 0.6s;">미래를 잇다.</span>
+            </h1>
+            <p class="text-lg md:text-xl text-white/80 max-w-xl leading-relaxed opacity-0" style="animation: fadeInUp 0.8s forwards 0.8s;">
+                동아·동서 글로컬 연합대학은 학생들의 잠재력을<br>현장의 경쟁력으로 연결하는 새로운 기준입니다.
+            </p>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 text-white animate-bounce">
+            <span class="text-xs uppercase tracking-widest mb-2 block text-center">Scroll</span>
+            <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        </div>
+    </section>
+
+    <!-- Content Placeholder (To enable scrolling) -->
+    <section class="py-32 px-8 max-w-[1600px] mx-auto">
+        <h2 class="text-4xl font-bold mb-12 text-[#1e1e1e]">혁신 방향</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="h-[400px] bg-gray-100 rounded-2xl flex items-center justify-center text-gray-400">Content Area</div>
+            <div class="h-[400px] bg-gray-100 rounded-2xl flex items-center justify-center text-gray-400">Content Area</div>
+        </div>
+    </section>
+
+    <script>
+        // 1. Slideshow Logic
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 4000); // Change every 4 seconds
+
+        // 2. Sticky Header Logic (Kakao Style)
+        const header = document.getElementById('header');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+                header.classList.add('scrolled');
+                header.classList.remove('transparent');
+            } else {
+                header.classList.remove('scrolled');
+                header.classList.add('transparent');
+            }
+        });
+
+        // 3. Animation Keyframes injection
+        const styleSheet = document.createElement("style");
+        styleSheet.innerText = `
+            @keyframes fadeInUp {
+                from { opacity: 0; transform: translateY(30px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(styleSheet);
+    </script>
+</body>
+</html>

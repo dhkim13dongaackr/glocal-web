@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curriculum (macOS Style) - Glocal University</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <style>
+        body { 
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%); /* Sequoia Abstract Vibe */
+            color: #1d1d1f; 
+            font-family: 'SUIT', sans-serif; 
+            overflow: hidden; /* App-like feel */
+            height: 100vh;
+        }
+
+        /* macOS Window Style */
+        .mac-window {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.4);
+            display: flex;
+            width: 100%; height: 100%;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .mac-sidebar {
+            width: 260px;
+            background: rgba(235, 235, 235, 0.5);
+            backdrop-filter: blur(30px);
+            border-right: 1px solid rgba(0,0,0,0.05);
+            padding: 20px 10px;
+            display: flex; flex-direction: column;
+            flex-shrink: 0;
+        }
+        
+        .sidebar-item {
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px; font-weight: 600;
+            color: #424245;
+            cursor: pointer;
+            display: flex; align-items: center; gap: 10px;
+            transition: 0.1s;
+        }
+        .sidebar-item:hover { background: rgba(0,0,0,0.05); }
+        .sidebar-item.active { background: #007aff; color: white; }
+        .sidebar-item.active .s-icon { color: white; }
+        .s-group { font-size: 11px; font-weight: 700; color: #86868b; margin: 16px 12px 6px; }
+
+        /* Content Area */
+        .mac-content {
+            flex: 1;
+            background: #fff;
+            display: flex; flex-direction: column;
+            overflow: hidden;
+        }
+        
+        /* Toolbar */
+        .mac-toolbar {
+            height: 52px;
+            border-bottom: 1px solid #e5e5e5;
+            display: flex; align-items: center; padding: 0 20px;
+            background: #fff;
+            flex-shrink: 0;
+        }
+        
+        /* Scrollable Area */
+        .content-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px;
+            scroll-behavior: smooth;
+        }
+
+        /* Curriculum Table */
+        .curr-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+        .curr-table th { 
+            text-align: left; padding: 12px 8px; 
+            font-size: 12px; font-weight: 500; color: #86868b; 
+            border-bottom: 1px solid #e5e5e5; 
+        }
+        .curr-table td { 
+            padding: 16px 8px; 
+            font-size: 14px; color: #1d1d1f; 
+            border-bottom: 1px solid #f2f2f2; 
+        }
+        .curr-row:hover td { background: #f5f5f7; }
+        .curr-row:last-child td { border-bottom: none; }
+
+        .grade-badge {
+            display: inline-block; padding: 4px 8px; border-radius: 6px;
+            font-size: 11px; font-weight: 700; background: #e5e5ea; color: #8e8e93;
+        }
+        .grade-badge.core { background: #e8f2ff; color: #007aff; }
+        .grade-badge.basic { background: #e5e5ea; color: #8e8e93; }
+        .grade-badge.project { background: #eafbf3; color: #34c759; }
+
+        /* Traffic Lights */
+        .traffic-lights { display: flex; gap: 8px; margin-bottom: 20px; padding-left: 8px; }
+        .tl { width: 12px; height: 12px; border-radius: 50%; }
+        .tl.red { background: #ff5f57; border: 1px solid #e0443e; }
+        .tl.yellow { background: #febc2e; border: 1px solid #dba536; }
+        .tl.green { background: #28c840; border: 1px solid #1aab29; }
+
+        /* Capsule Header Override */
+        .header-container {
+            position: fixed; top: 15px; left: 0; width: 100%; z-index: 2000;
+            display: flex; justify-content: center; pointer-events: none;
+        }
+        .capsule-header {
+            pointer-events: auto;
+            background: rgba(255, 255, 255, 0.7); 
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 999px;
+            padding: 10px 24px;
+            display: flex; align-items: center; gap: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .nav-item { font-size: 13px; font-weight: 600; color: #666; cursor: pointer; }
+        .nav-item:hover, .nav-item.active { color: #000; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .mac-sidebar { display: none; }
+            body { overflow: auto; height: auto; padding-top: 80px; }
+            .mac-window { height: auto; border-radius: 0; box-shadow: none; border: none; background: transparent; backdrop-filter: none; }
+            .mac-content { background: transparent; }
+            .content-scroll { padding: 20px; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Global Nav -->
+    <div class="header-container">
+        <header class="capsule-header">
+            <div class="logo font-black text-sm text-black">GLOCAL</div>
+            <nav class="nav-list hidden md:flex gap-6">
+                <a class="nav-item">대학소개</a>
+                <a class="nav-item active">FIELD 캠퍼스</a>
+                <a class="nav-item">입학안내</a>
+                <a class="nav-item">학생성공</a>
+            </nav>
+            <div class="w-6 h-6 rounded-full bg-black/5 flex items-center justify-center cursor-pointer">
+                <span class="text-xs font-bold text-black">≡</span>
+            </div>
+        </header>
+    </div>
+
+    <!-- App Container (Centered Window) -->
+    <div class="w-full h-full p-0 md:p-10 md:pt-24 flex justify-center items-center">
+        
+        <div class="mac-window max-w-[1400px]">
+            
+            <!-- Sidebar -->
+            <aside class="mac-sidebar">
+                <div class="traffic-lights">
+                    <div class="tl red"></div>
+                    <div class="tl yellow"></div>
+                    <div class="tl green"></div>
+                </div>
+
+                <div class="s-group">MODULES</div>
+                <div class="sidebar-item active">
+                    <span class="text-lg">⚡️</span> 수소에너지
+                </div>
+                <div class="sidebar-item">
+                    <span class="text-lg">💾</span> 전력반도체
+                </div>
+                <div class="sidebar-item">
+                    <span class="text-lg">🎮</span> 첨단콘텐츠
+                </div>
+                <div class="sidebar-item">
+                    <span class="text-lg">🎨</span> 융합디자인
+                </div>
+                
+                <div class="s-group">RESOURCES</div>
+                <div class="sidebar-item">
+                    <span class="text-lg">📂</span> 자료실
+                </div>
+                <div class="sidebar-item">
+                    <span class="text-lg">📅</span> 학사일정
+                </div>
+                <div class="sidebar-item">
+                    <span class="text-lg">⚙️</span> 설정
+                </div>
+
+                <div class="mt-auto p-4 bg-white/40 rounded-xl">
+                    <p class="text-xs font-bold text-gray-500 mb-1">Storage</p>
+                    <div class="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="w-[75%] h-full bg-blue-500 rounded-full"></div>
+                    </div>
+                    <p class="text-[10px] text-gray-400 mt-1">9 MD Earned</p>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="mac-content">
+                
+                <!-- Toolbar -->
+                <div class="mac-toolbar justify-between">
+                    <div class="flex items-center gap-4">
+                        <button class="text-gray-400 hover:text-gray-600 transition">❮</button>
+                        <button class="text-gray-400 hover:text-gray-600 transition">❯</button>
+                        <h1 class="text-lg font-bold ml-2">수소에너지 커리큘럼</h1>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="flex bg-gray-100 rounded-lg p-0.5">
+                            <button class="px-3 py-1 bg-white shadow-sm rounded-md text-xs font-bold">List</button>
+                            <button class="px-3 py-1 text-gray-500 text-xs font-bold hover:bg-gray-200 rounded-md transition">Grid</button>
+                        </div>
+                        <div class="relative">
+                            <input type="text" placeholder="Search" class="bg-gray-100 border-none rounded-lg py-1.5 px-3 pl-8 text-sm focus:outline-none w-48">
+                            <span class="absolute left-2.5 top-1.5 text-gray-400 text-xs">🔍</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scroll Area -->
+                <div class="content-scroll">
+                    
+                    <!-- Intro Banner -->
+                    <div class="bg-gradient-to-r from-blue-500 to-cyan-400 rounded-xl p-8 mb-10 text-white relative overflow-hidden shadow-lg">
+                        <div class="relative z-10">
+                            <h2 class="text-3xl font-bold mb-2">New Energy Frontier.</h2>
+                            <p class="text-blue-50 max-w-lg">
+                                수소 생산부터 저장, 활용까지.<br>
+                                미래 에너지 산업을 주도할 전주기 전문가를 양성합니다.
+                            </p>
+                        </div>
+                        <img src="../../pictures/464A4461.jpg" class="absolute right-0 top-0 w-1/2 h-full object-cover opacity-20 mix-blend-overlay">
+                    </div>
+
+                    <!-- Curriculum Table -->
+                    <h3 class="text-lg font-bold mb-4 px-2">Course Roadmap</h3>
+                    
+                    <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+                        <table class="curr-table">
+                            <thead>
+                                <tr>
+                                    <th class="pl-6 w-24">학년</th>
+                                    <th class="w-32">구분</th>
+                                    <th>교과목명</th>
+                                    <th class="w-40">관련 기업</th>
+                                    <th class="w-24 text-center">학점</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Year 1 -->
+                                <tr class="curr-row group cursor-pointer">
+                                    <td class="pl-6 text-gray-500 font-mono">1학년</td>
+                                    <td><span class="grade-badge basic">기초</span></td>
+                                    <td class="font-bold group-hover:text-blue-600 transition">수소에너지개론</td>
+                                    <td class="text-gray-500 text-xs">한국수소협회</td>
+                                    <td class="text-center font-mono text-gray-400">3</td>
+                                </tr>
+                                <tr class="curr-row group cursor-pointer">
+                                    <td class="pl-6 text-gray-500 font-mono"></td>
+                                    <td><span class="grade-badge basic">기초</span></td>
+                                    <td class="font-bold group-hover:text-blue-600 transition">에너지화학기초</td>
+                                    <td class="text-gray-500 text-xs">-</td>
+                                    <td class="text-center font-mono text-gray-400">3</td>
+                                </tr>
+
+                                <!-- Year 2 -->
+                                <tr class="curr-row group cursor-pointer">
+                                    <td class="pl-6 text-gray-500 font-mono">2학년</td>
+                                    <td><span class="grade-badge core">전공필수</span></td>
+                                    <td class="font-bold group-hover:text-blue-600 transition">수소저장재료공학</td>
+                                    <td class="text-gray-500 text-xs">롯데케미칼</td>
+                                    <td class="text-center font-mono text-gray-400">3</td>
+                                </tr>
+                                <tr class="curr-row group cursor-pointer">
+                                    <td class="pl-6 text-gray-500 font-mono"></td>
+                                    <td><span class="grade-badge core">전공선택</span></td>
+                                    <td class="font-bold group-hover:text-blue-600 transition">연료전지시스템</td>
+                                    <td class="text-gray-500 text-xs">현대자동차</td>
+                                    <td class="text-center font-mono text-gray-400">3</td>
+                                </tr>
+
+                                <!-- Year 3 -->
+                                <tr class="curr-row group cursor-pointer">
+                                    <td class="pl-6 text-gray-500 font-mono">3학년</td>
+                                    <td><span class="grade-badge core">전공심화</span></td>
+                                    <td class="font-bold group-hover:text-blue-600 transition">수소안전공학</td>
+                                    <td class="text-gray-500 text-xs">가스안전공사</td>
+                                    <td class="text-center font-mono text-gray-400">3</td>
+                                </tr>
+                                <tr class="curr-row group cursor-pointer">
+                                    <td class="pl-6 text-gray-500 font-mono"></td>
+                                    <td><span class="grade-badge core">전공심화</span></td>
+                                    <td class="font-bold group-hover:text-blue-600 transition">수소모빌리티설계</td>
+                                    <td class="text-gray-500 text-xs">르노코리아</td>
+                                    <td class="text-center font-mono text-gray-400">3</td>
+                                </tr>
+
+                                <!-- Year 4 -->
+                                <tr class="curr-row group cursor-pointer">
+                                    <td class="pl-6 text-gray-500 font-mono">4학년</td>
+                                    <td><span class="grade-badge project">Field</span></td>
+                                    <td class="font-bold group-hover:text-blue-600 transition">캡스톤디자인(수소)</td>
+                                    <td class="text-gray-500 text-xs">산학연계</td>
+                                    <td class="text-center font-mono text-gray-400">3</td>
+                                </tr>
+                                <tr class="curr-row group cursor-pointer">
+                                    <td class="pl-6 text-gray-500 font-mono"></td>
+                                    <td><span class="grade-badge project">Field</span></td>
+                                    <td class="font-bold group-hover:text-blue-600 transition">현장실습 (인턴십)</td>
+                                    <td class="text-gray-500 text-xs">부산테크노파크</td>
+                                    <td class="text-center font-mono text-gray-400">15</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Footer Info -->
+                    <div class="mt-8 flex justify-between text-xs text-gray-400 px-2">
+                        <span>Total 8 Courses</span>
+                        <span>Updated Yesterday at 2:30 PM</span>
+                    </div>
+
+                </div>
+            </main>
+
+        </div>
+
+    </div>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Intro
+        gsap.from(".mac-window", {
+            scale: 0.95, opacity: 0, duration: 0.6, ease: "power2.out"
+        });
+        
+        // List Stagger
+        gsap.from(".curr-row", {
+            y: 10, opacity: 0, duration: 0.4, stagger: 0.05, delay: 0.3, ease: "power1.out"
+        });
+
+    </script>
+</body>
+</html>

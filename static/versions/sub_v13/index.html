@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전력반도체 (Free-Flow Grid) - 동아·동서 글로컬 연합대학</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['SUIT', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#4132CC', 
+                            mint: '#00BEB5',
+                            dark: '#111111', 
+                            bg: '#F5F7FA',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #F5F7FA; color: #1d1d1f; overflow-x: hidden; }
+        
+        /* 1. Always Floating Header (Capsule) */
+        .header-container {
+            position: fixed; top: 20px; left: 0; width: 100%; z-index: 100;
+            display: flex; justify-content: center; pointer-events: none;
+        }
+        .capsule-header {
+            pointer-events: auto;
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.6);
+            border-radius: 999px;
+            padding: 14px 32px;
+            display: flex; align-items: center; gap: 40px;
+            box-shadow: 0 10px 30px -5px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+        .nav-item { font-size: 14px; font-weight: 700; color: #555; cursor: pointer; transition: 0.2s; }
+        .nav-item:hover, .nav-item.active { color: #4132CC; }
+        .logo { font-weight: 900; font-size: 18px; letter-spacing: -0.5px; }
+
+        /* 2. Hero: Typography Art */
+        .hero-sec {
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 5vw;
+            position: relative;
+        }
+        .hero-big-text {
+            font-size: 9vw; font-weight: 900; line-height: 0.9; color: #1d1d1f;
+            mix-blend-mode: multiply; opacity: 0; transform: translateY(50px);
+        }
+        .hero-img {
+            position: absolute; right: 5vw; top: 30%; width: 35vw; height: 50vh;
+            border-radius: 200px; overflow: hidden; transform: translateY(100px); opacity: 0;
+        }
+        .hero-img img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* 3. Zigzag Content */
+        .zigzag-sec { padding: 150px 5vw; }
+        .zigzag-row {
+            display: flex; align-items: center; justify-content: space-between; margin-bottom: 150px;
+        }
+        .zigzag-row.reverse { flex-direction: row-reverse; }
+        
+        .z-content { width: 40%; }
+        .z-visual { width: 50%; height: 600px; position: relative; }
+        
+        .z-img-card {
+            width: 100%; height: 100%; border-radius: 40px; overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+        .z-img-card img { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* Floating Element Parallax */
+        .float-el {
+            position: absolute; padding: 20px; background: white; border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); font-weight: 800; font-size: 14px;
+            display: flex; gap: 10px; align-items: center;
+        }
+
+        .z-title { font-size: 60px; font-weight: 900; line-height: 1.1; margin-bottom: 30px; }
+        .z-desc { font-size: 18px; color: #666; line-height: 1.6; }
+
+        /* 4. Dark Mode Transition */
+        .dark-sec {
+            background: #111; color: white; padding: 150px 5vw; border-radius: 60px 60px 0 0;
+            position: relative; z-index: 10;
+        }
+        .grid-stats {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px;
+        }
+        .stat-card {
+            border-top: 1px solid rgba(255,255,255,0.2); padding-top: 40px;
+        }
+        .stat-num { font-size: 80px; font-weight: 900; color: #4132CC; margin-bottom: 10px; }
+        .stat-txt { font-size: 24px; font-weight: 700; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-big-text { font-size: 15vw; }
+            .hero-img { width: 80vw; height: 40vh; right: 10vw; top: 50%; opacity: 0.5; z-index: -1; }
+            .zigzag-row, .zigzag-row.reverse { flex-direction: column; gap: 40px; margin-bottom: 100px; }
+            .z-content, .z-visual { width: 100%; height: auto; }
+            .z-visual { height: 400px; }
+            .z-title { font-size: 40px; }
+            .grid-stats { grid-template-columns: 1fr; }
+            .capsule-header { padding: 12px 20px; gap: 20px; width: 90%; justify-content: space-between; }
+            .nav-list { display: none; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- 1. Always Floating Header -->
+    <div class="header-container">
+        <header class="capsule-header">
+            <div class="logo">GLOCAL</div>
+            <nav class="nav-list hidden md:flex gap-8">
+                <a class="nav-item">대학소개</a>
+                <a class="nav-item active">Field 캠퍼스</a>
+                <a class="nav-item">입학안내</a>
+                <a class="nav-item">학생성공</a>
+            </nav>
+            <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center cursor-pointer">
+                <span class="text-xs font-bold">≡</span>
+            </div>
+        </header>
+    </div>
+
+    <!-- 2. Hero: Typography & Parallax Image -->
+    <section class="hero-sec">
+        <div class="hero-big-text">
+            POWER<br>
+            SEMICONDUCTOR<br>
+            <span class="text-brand-blue">FIELD CAMPUS</span>
+        </div>
+        <div class="hero-img">
+            <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132226.682.jpg">
+        </div>
+        <div class="mt-12 md:w-1/3 opacity-0 hero-desc-anim">
+            <p class="text-lg font-medium text-gray-500">
+                부산테크노파크 거점, 국내 유일 파워반도체 클러스터.<br>
+                이론을 넘어 현장의 기술을 직접 다루는 실무형 인재 양성 메카.
+            </p>
+        </div>
+    </section>
+
+    <!-- 3. Free-Flow Content (Zigzag) -->
+    <section class="zigzag-sec">
+        
+        <!-- Row 1: Left Text, Right Image -->
+        <div class="zigzag-row">
+            <div class="z-content" data-speed="0.9">
+                <span class="text-brand-mint font-bold tracking-widest text-sm mb-4 block">01. INFRASTRUCTURE</span>
+                <h2 class="z-title">
+                    현장이 곧<br>최고의 강의실.
+                </h2>
+                <p class="z-desc">
+                    학교 랩실에서는 경험할 수 없는 스케일.<br>
+                    부산테크노파크 내 실제 생산 라인(Fab)에서<br>
+                    반도체 제조의 전 과정을 직접 수행합니다.
+                </p>
+            </div>
+            <div class="z-visual">
+                <div class="z-img-card" data-speed="1.1">
+                    <img src="../../pictures/464A4461.jpg">
+                </div>
+                <!-- Floating Badge -->
+                <div class="float-el" style="bottom: 40px; left: -40px;" data-speed="1.2">
+                    <span class="w-3 h-3 bg-brand-blue rounded-full"></span>
+                    Class 1000 Cleanroom
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 2: Right Text, Left Image (Reverse) -->
+        <div class="zigzag-row reverse">
+            <div class="z-content" data-speed="0.9">
+                <span class="text-brand-blue font-bold tracking-widest text-sm mb-4 block">02. CURRICULUM</span>
+                <h2 class="z-title">
+                    실무 중심의<br>엔지니어링.
+                </h2>
+                <p class="z-desc">
+                    8대 핵심 공정 장비를 직접 다루는 실습 중심 커리큘럼.<br>
+                    기업이 요구하는 직무 역량을 완벽하게 갖춘<br>
+                    준비된 인재로 성장합니다.
+                </p>
+            </div>
+            <div class="z-visual">
+                <div class="z-img-card" data-speed="1.1">
+                    <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132211.153.jpg">
+                </div>
+                <!-- Floating Badge -->
+                <div class="float-el" style="top: 40px; right: -40px;" data-speed="1.3">
+                    <span class="w-3 h-3 bg-brand-mint rounded-full"></span>
+                    Equipment Operation
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- 4. Dark Mode Transition (Impact Stats) -->
+    <section class="dark-sec">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-20">
+                <h2 class="text-5xl font-black leading-tight">
+                    숫자로 증명하는<br>압도적 경쟁력.
+                </h2>
+                <p class="text-gray-400 mt-4 md:mt-0">2025년 기준 성과 지표</p>
+            </div>
+
+            <div class="grid-stats">
+                <div class="stat-card">
+                    <div class="stat-num counter" data-target="98">0%</div>
+                    <p class="stat-txt">전공 관련 기업 취업률</p>
+                    <p class="text-gray-500 text-sm mt-2">졸업생 기준, 파워반도체 관련 기업</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num counter" data-target="15">0+</div>
+                    <p class="stat-txt">산학 협력 파트너</p>
+                    <p class="text-gray-500 text-sm mt-2">SK Powertech, DB HiTek 등 주요 기업</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num counter" data-target="300">0억</div>
+                    <p class="stat-txt">장비 구축 규모</p>
+                    <p class="text-gray-500 text-sm mt-2">최첨단 공정 및 분석 장비</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num counter" data-target="6">0개</div>
+                    <p class="stat-txt">특화 교육 트랙</p>
+                    <p class="text-gray-500 text-sm mt-2">공정, 소자, 설계, 패키징 등</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black text-white py-20 text-center border-t border-white/10">
+        <p class="text-xs font-bold text-gray-500">DONG-A & DONGSEO GLOBAL ALLIANCE</p>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 1. Hero Reveal
+        const tl = gsap.timeline();
+        tl.to(".hero-big-text", { opacity: 1, y: 0, duration: 1, ease: "power3.out" })
+          .to(".hero-img", { opacity: 1, y: 0, duration: 1, ease: "power3.out" }, "-=0.5")
+          .to(".hero-desc-anim", { opacity: 1, duration: 1 }, "-=0.5");
+
+        // 2. Parallax Effects (Data-speed)
+        gsap.utils.toArray("[data-speed]").forEach(el => {
+            gsap.to(el, {
+                y: (i, target) => ScrollTrigger.maxScroll(window) * target.dataset.speed * 0.05,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: 0
+                }
+            });
+        });
+
+        // 3. Background Color Transition
+        ScrollTrigger.create({
+            trigger: ".dark-sec",
+            start: "top 50%",
+            end: "bottom 50%",
+            onEnter: () => gsap.to("body", { backgroundColor: "#111", color: "#fff" }),
+            onLeaveBack: () => gsap.to("body", { backgroundColor: "#F5F7FA", color: "#1d1d1f" })
+        });
+
+        // 4. Counter Animation
+        const counters = document.querySelectorAll('.counter');
+        counters.forEach(counter => {
+            const target = +counter.getAttribute('data-target');
+            gsap.to(counter, {
+                innerHTML: target,
+                duration: 2,
+                snap: { innerHTML: 1 },
+                scrollTrigger: {
+                    trigger: counter,
+                    start: "top 85%"
+                }
+            });
+        });
+
+    </script>
+
+</body>
+</html>

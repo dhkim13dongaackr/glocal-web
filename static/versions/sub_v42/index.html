@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>혁신방향 - 동아·동서 글로컬 연합대학</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3e31d5',
+                        dark: '#111111',
+                        surface: '#f5f7fa',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-snap-type: y proximity; }
+        body { font-family: 'SUIT', sans-serif; overflow-x: hidden; margin: 0; background: #fff; color: #111; }
+
+        /* ── Capsule Header (v40 style, refined) ── */
+        .header-container {
+            position: fixed; top: 20px; left: 0; width: 100%; z-index: 1000;
+            display: flex; justify-content: center; pointer-events: none;
+        }
+        .capsule-header {
+            pointer-events: auto;
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-radius: 100px; padding: 10px 28px;
+            display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            border: 1px solid rgba(255,255,255,0.5);
+            max-width: 90vw;
+            transition: all 0.4s ease;
+        }
+        .capsule-header.dark-mode {
+            background: rgba(0,0,0,0.65);
+            border-color: rgba(255,255,255,0.08);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+        }
+        .capsule-header .logo {
+            font-weight: 900; font-size: 16px; white-space: nowrap;
+            margin-right: 16px; transition: color 0.3s;
+        }
+        .capsule-header .logo span { color: #3e31d5; transition: color 0.3s; }
+        .capsule-header.dark-mode .logo { color: #fff; }
+        .capsule-header.dark-mode .logo span { color: #8b83ff; }
+
+        .nav-pill {
+            font-size: 13px; font-weight: 600; color: #888;
+            padding: 6px 14px; border-radius: 100px;
+            cursor: pointer; transition: all 0.3s; white-space: nowrap;
+            text-decoration: none;
+        }
+        .nav-pill:hover { color: #333; }
+        .nav-pill.active { background: #3e31d5; color: white; }
+        .capsule-header.dark-mode .nav-pill { color: #999; }
+        .capsule-header.dark-mode .nav-pill:hover { color: #ccc; }
+        .capsule-header.dark-mode .nav-pill.active { background: #3e31d5; color: white; }
+
+        /* ── Section dots (desktop) ── */
+        .section-dots {
+            position: fixed; right: 28px; top: 50%; transform: translateY(-50%);
+            z-index: 999; display: flex; flex-direction: column; gap: 10px;
+        }
+        .section-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: rgba(0,0,0,0.15); cursor: pointer; transition: all 0.3s;
+        }
+        .section-dot.active { background: #3e31d5; transform: scale(1.6); }
+        .section-dot.light { background: rgba(255,255,255,0.25); }
+        .section-dot.light.active { background: #fff; }
+
+        /* ── Stacking sections ── */
+        .stack-wrapper { scroll-snap-align: start; }
+        .stack-section {
+            width: 100%;
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 100px 40px 80px;
+            box-sizing: border-box;
+            position: relative;
+        }
+        /* Stacking top radius (v40 style, 24px compromise) */
+        .stack-section:not(:first-child) {
+            border-top-left-radius: 24px;
+            border-top-right-radius: 24px;
+            box-shadow: 0 -8px 40px rgba(0,0,0,0.12);
+        }
+
+        /* ── Section Colors (v40 mood) ── */
+        #sec-glocal30 { background: #ffffff; color: #111; }
+        #sec-vision   { background: #111111; color: #fff; }
+        #sec-task1    { background: #3e31d5; color: #fff; }
+        #sec-task2    { background: #0d1b2a; color: #fff; }
+        #sec-task3    { background: #1a3a2a; color: #fff; }
+        #sec-org      { background: #f5f7fa; color: #111; }
+
+        /* ── Section layout (v41 clean structure) ── */
+        .section-inner { max-width: 1200px; width: 100%; }
+        .section-header { margin-bottom: 44px; }
+        .section-header.center { text-align: center; }
+
+        .section-eng {
+            font-size: 13px; font-weight: 700; letter-spacing: 0.12em;
+            text-transform: uppercase; margin-bottom: 12px;
+        }
+        /* Light sections */
+        #sec-glocal30 .section-eng { color: #3e31d5; }
+        #sec-org .section-eng { color: #888; }
+        /* Dark/colored sections */
+        #sec-vision .section-eng,
+        #sec-task1 .section-eng,
+        #sec-task2 .section-eng,
+        #sec-task3 .section-eng { color: rgba(255,255,255,0.45); }
+
+        .section-title {
+            font-size: clamp(28px, 4.5vw, 56px);
+            font-weight: 900; line-height: 1.2;
+            letter-spacing: -0.03em; margin-bottom: 16px;
+        }
+        .section-desc {
+            font-size: clamp(15px, 1.5vw, 19px);
+            line-height: 1.7; max-width: 700px;
+        }
+        #sec-glocal30 .section-desc { color: #666; }
+        #sec-org .section-desc { color: #666; }
+        .section-header.center .section-desc { margin: 0 auto; }
+        #sec-vision .section-desc,
+        #sec-task1 .section-desc,
+        #sec-task2 .section-desc,
+        #sec-task3 .section-desc { color: rgba(255,255,255,0.6); }
+
+        /* ── Cards (v41 structure + v40 dark adaptation) ── */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .info-card {
+            border-radius: 16px;
+            padding: 32px;
+            min-width: 0;
+            overflow-wrap: break-word;
+        }
+        /* Light section cards */
+        #sec-glocal30 .info-card,
+        #sec-org .info-card {
+            background: #fff;
+            border: 1px solid #e8e8e8;
+        }
+        /* Dark/colored section cards */
+        #sec-vision .info-card,
+        #sec-task1 .info-card,
+        #sec-task2 .info-card,
+        #sec-task3 .info-card {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .info-card .card-label {
+            font-size: 13px; font-weight: 700;
+            letter-spacing: 0.05em; margin-bottom: 16px;
+        }
+        #sec-glocal30 .card-label,
+        #sec-org .card-label { color: #3e31d5; }
+        #sec-vision .card-label,
+        #sec-task1 .card-label,
+        #sec-task2 .card-label,
+        #sec-task3 .card-label { color: rgba(255,255,255,0.4); }
+
+        .info-card p {
+            font-size: 15px; line-height: 1.7;
+        }
+        .info-card ul { padding-left: 18px; margin: 0; }
+        .info-card li { font-size: 15px; line-height: 1.8; margin-bottom: 2px; }
+
+        /* Light section card text */
+        #sec-glocal30 .info-card p,
+        #sec-glocal30 .info-card li,
+        #sec-org .info-card p,
+        #sec-org .info-card li { color: #444; }
+        /* Dark section card text */
+        #sec-vision .info-card p, #sec-vision .info-card li,
+        #sec-task1 .info-card p, #sec-task1 .info-card li,
+        #sec-task2 .info-card p, #sec-task2 .info-card li,
+        #sec-task3 .info-card p, #sec-task3 .info-card li { color: rgba(255,255,255,0.8); }
+
+        .info-card.full { grid-column: 1 / -1; }
+
+        /* ── Flow diagram ── */
+        .flow-row {
+            display: flex; align-items: stretch; gap: 12px; margin-top: 16px;
+        }
+        .flow-box {
+            flex: 1; min-width: 0;
+            border-radius: 12px;
+            padding: 20px 16px; text-align: center;
+        }
+        /* Light section flow */
+        #sec-glocal30 .flow-box,
+        #sec-org .flow-box {
+            background: #f5f7fa;
+            border: 1px solid #e8e8e8;
+        }
+        /* Dark section flow */
+        #sec-vision .flow-box,
+        #sec-task1 .flow-box,
+        #sec-task2 .flow-box,
+        #sec-task3 .flow-box {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .flow-box .flow-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+        .flow-box .flow-sub { font-size: 12px; }
+        #sec-glocal30 .flow-box .flow-sub,
+        #sec-org .flow-box .flow-sub { color: #888; }
+        #sec-vision .flow-box .flow-sub,
+        #sec-task1 .flow-box .flow-sub,
+        #sec-task2 .flow-box .flow-sub,
+        #sec-task3 .flow-box .flow-sub { color: rgba(255,255,255,0.35); }
+
+        .flow-arrow {
+            display: flex; align-items: center;
+            font-size: 18px; flex-shrink: 0;
+        }
+        #sec-glocal30 .flow-arrow,
+        #sec-org .flow-arrow { color: #ccc; }
+        #sec-vision .flow-arrow,
+        #sec-task1 .flow-arrow,
+        #sec-task2 .flow-arrow,
+        #sec-task3 .flow-arrow { color: rgba(255,255,255,0.2); }
+
+        /* ── Stat cards (Hero) ── */
+        .stat-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+            margin-top: 48px;
+        }
+        .stat-card {
+            background: #f5f7fa;
+            border-radius: 16px; padding: 32px;
+            border: 1px solid #ececec;
+        }
+        .stat-card .stat-num {
+            font-size: 32px; font-weight: 900; color: #3e31d5; margin-bottom: 8px;
+        }
+        .stat-card .stat-label {
+            font-size: 15px; font-weight: 600; color: #111; margin-bottom: 4px;
+        }
+        .stat-card .stat-desc {
+            font-size: 13px; color: #888; line-height: 1.5;
+        }
+
+        /* ── Tags ── */
+        .tag {
+            display: inline-block; padding: 4px 12px;
+            border-radius: 6px; font-size: 12px; font-weight: 700;
+            margin-bottom: 8px;
+        }
+        #sec-glocal30 .tag,
+        #sec-org .tag { background: #ededff; color: #3e31d5; }
+        #sec-vision .tag,
+        #sec-task1 .tag,
+        #sec-task2 .tag,
+        #sec-task3 .tag { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .capsule-header { padding: 8px 16px; gap: 4px; }
+            .capsule-header .logo { font-size: 14px; margin-right: 8px; }
+            .nav-pill { font-size: 11px; padding: 5px 10px; }
+            .section-dots { display: none; }
+            .stack-section {
+                padding: 80px 20px 48px;
+                justify-content: flex-start;
+            }
+            .stack-section:not(:first-child) {
+                border-top-left-radius: 16px;
+                border-top-right-radius: 16px;
+            }
+            .section-header { margin-bottom: 28px; }
+            .info-grid { grid-template-columns: 1fr; }
+            .info-card.full { grid-column: 1; }
+            .info-card { padding: 24px; }
+            .stat-grid { grid-template-columns: 1fr; }
+            .flow-row { flex-direction: column; }
+            .flow-arrow { justify-content: center; transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ── Capsule Header ── -->
+    <div class="header-container">
+        <header class="capsule-header" id="capsuleHeader">
+            <div class="logo"><span>GLOCAL</span> 동아·동서</div>
+            <nav class="flex items-center gap-1">
+                <a href="#sec-glocal30" class="nav-pill active" data-sec="sec-glocal30">글로컬대학30</a>
+                <a href="#sec-vision" class="nav-pill" data-sec="sec-vision">비전</a>
+                <a href="#sec-task1" class="nav-pill" data-sec="sec-task1">과제 01</a>
+                <a href="#sec-task2" class="nav-pill" data-sec="sec-task2">과제 02</a>
+                <a href="#sec-task3" class="nav-pill" data-sec="sec-task3">과제 03</a>
+                <a href="#sec-org" class="nav-pill" data-sec="sec-org">조직</a>
+            </nav>
+        </header>
+    </div>
+
+    <!-- ── Dots ── -->
+    <div class="section-dots" id="sectionDots">
+        <div class="section-dot active" data-sec="sec-glocal30"></div>
+        <div class="section-dot" data-sec="sec-vision"></div>
+        <div class="section-dot" data-sec="sec-task1"></div>
+        <div class="section-dot" data-sec="sec-task2"></div>
+        <div class="section-dot" data-sec="sec-task3"></div>
+        <div class="section-dot" data-sec="sec-org"></div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- STACK 1: 글로컬대학30 (Hero - White) -->
+    <!-- ============================================================ -->
+    <div class="stack-wrapper">
+        <section id="sec-glocal30" class="stack-section">
+            <div class="section-inner">
+                <div class="section-header center">
+                    <div class="section-eng">Glocal University 30</div>
+                    <h1 class="section-title">지역과 세계를 잇는<br>혁신 연합대학</h1>
+                    <p class="section-desc">
+                        동아대학교와 동서대학교가 함께 만들어가는<br>
+                        글로컬대학 30 사업, 지역 혁신의 새로운 패러다임
+                    </p>
+                </div>
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-num">2024</div>
+                        <div class="stat-label">선도기관 선정</div>
+                        <div class="stat-desc">교육부 글로컬대학30 사업 선도기관 인증</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">2</div>
+                        <div class="stat-label">개 대학 연합</div>
+                        <div class="stat-desc">동아대학교 + 동서대학교 공동 혁신체제 구축</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">287</div>
+                        <div class="stat-label">개 사업 추진</div>
+                        <div class="stat-desc">다층적 혁신(산업, 연구, 교육, 지역) 추진</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- STACK 2: 비전 (Dark #111) -->
+    <!-- ============================================================ -->
+    <div class="stack-wrapper">
+        <section id="sec-vision" class="stack-section">
+            <div class="section-inner">
+                <div class="section-header center">
+                    <div class="section-eng">Vision</div>
+                    <h2 class="section-title">지역정주형 특화산단<br>생태계 조성</h2>
+                    <p class="section-desc">
+                        대학-지역-산업간 초경계 Field 캠퍼스 교육·연구 혁신으로<br>
+                        지역정주형 특화산단 생태계 조성에 기여
+                    </p>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="card-label">핵심 비전</div>
+                        <p>부산 전략산업 전환 정책과 선도기관 인증 287개 사업에 부합하는 다층적 혁신 추진</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="card-label">목표 지표</div>
+                        <ul>
+                            <li>대학-기업 공동 연구 과제 확대</li>
+                            <li>청년인력 유출 대비 정주율 향상</li>
+                            <li>지역 산업 연계 취업률 개선</li>
+                            <li>특화산단 입주 기업 연계율 증대</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- STACK 3: 추진과제 1 (Purple #3e31d5) -->
+    <!-- ============================================================ -->
+    <div class="stack-wrapper">
+        <section id="sec-task1" class="stack-section">
+            <div class="section-inner">
+                <div class="section-header">
+                    <div class="section-eng">Initiative 01</div>
+                    <h2 class="section-title">초경계 융합 혁신<br>연합전공 체계</h2>
+                    <p class="section-desc">
+                        대학 간 경계를 넘어 산업 수요 기반의<br>
+                        연합전공 교육과정을 운영합니다
+                    </p>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="card-label">목표</div>
+                        <p>동아·동서 양 대학의 강점 학과를 결합하여 산업 현장 맞춤형 연합전공을 신설·운영</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="card-label">필요성</div>
+                        <ul>
+                            <li>단일 대학 교육으로는 융합인재 양성 한계</li>
+                            <li>산업계의 복합 역량 인재 수요 증가</li>
+                            <li>지역 산업구조 전환에 따른 새로운 인력 양성 필요</li>
+                        </ul>
+                    </div>
+                    <div class="info-card full">
+                        <div class="card-label">혁신방향</div>
+                        <div class="flow-row">
+                            <div class="flow-box">
+                                <div class="flow-title">학습관리모듈</div>
+                                <div class="flow-sub">LMS 통합</div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box">
+                                <div class="flow-title">원격교육시스템</div>
+                                <div class="flow-sub">양 대학 공유</div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box">
+                                <div class="flow-title">연합전공 운영</div>
+                                <div class="flow-sub">교과과정 공동설계</div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box">
+                                <div class="flow-title">커뮤니티</div>
+                                <div class="flow-sub">학생·교수 교류</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="card-label">세부과제</div>
+                        <div style="margin-bottom:12px;">
+                            <span class="tag">세부과제 1</span>
+                            <p>연합전공 교육과정 개발 및 운영</p>
+                        </div>
+                        <div>
+                            <span class="tag">세부과제 2</span>
+                            <p>통합 학습관리시스템(LMS) 구축</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="card-label">기대 효과</div>
+                        <ul>
+                            <li>AI·SW 융합 교육 확대</li>
+                            <li>양 대학 학생 교류 활성화</li>
+                            <li>산업 맞춤형 인재 배출</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- STACK 4: 추진과제 2 (Navy #0d1b2a) -->
+    <!-- ============================================================ -->
+    <div class="stack-wrapper">
+        <section id="sec-task2" class="stack-section">
+            <div class="section-inner">
+                <div class="section-header">
+                    <div class="section-eng">Initiative 02</div>
+                    <h2 class="section-title">지역 통합산단<br>혁신 플랫폼</h2>
+                    <p class="section-desc">
+                        대학-지역-산업 간 연결을 통한<br>
+                        기술사업화 플랫폼을 구축합니다
+                    </p>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="card-label">목표</div>
+                        <p>부산 지역 특화산단과 연계한 기술이전·사업화 생태계를 조성하여 지역 산업 경쟁력 강화</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="card-label">필요성</div>
+                        <ul>
+                            <li>대학 연구성과의 산업 연계 부족</li>
+                            <li>지역 중소기업 기술혁신 지원 필요</li>
+                            <li>산학협력 체계의 실효성 강화 요구</li>
+                        </ul>
+                    </div>
+                    <div class="info-card full">
+                        <div class="card-label">혁신방향</div>
+                        <div class="flow-row">
+                            <div class="flow-box">
+                                <div class="flow-title">지향점 및 혁신 성과 공유</div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box">
+                                <div class="flow-title">기술사업화 플랫폼 구축</div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box">
+                                <div class="flow-title">지역 기업 기술 이전</div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box">
+                                <div class="flow-title">산단 생태계 자생력 확보</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="card-label">세부과제</div>
+                        <div style="margin-bottom:12px;">
+                            <span class="tag">세부과제 1</span>
+                            <p>통합산단 혁신 성과 확산 체계 구축</p>
+                        </div>
+                        <div>
+                            <span class="tag">세부과제 2</span>
+                            <p>기술사업화 플랫폼 운영 및 고도화</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="card-label">기대 효과</div>
+                        <ul>
+                            <li>대학 연구성과 사업화율 향상</li>
+                            <li>지역 기업 기술 경쟁력 강화</li>
+                            <li>산학 협력 네트워크 확대</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- STACK 5: 추진과제 3 (Green #1a3a2a) -->
+    <!-- ============================================================ -->
+    <div class="stack-wrapper">
+        <section id="sec-task3" class="stack-section">
+            <div class="section-inner">
+                <div class="section-header">
+                    <div class="section-eng">Initiative 03</div>
+                    <h2 class="section-title">특화중심 Field 캠퍼스<br>교육·연구 혁신</h2>
+                    <p class="section-desc">
+                        대학-지역-산업간 초경계 Field 캠퍼스 교육·연구 혁신으로<br>
+                        지역정주형 특화산단 생태계 조성에 기여
+                    </p>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="card-label">목표</div>
+                        <p>부산 전략산업 전환 정책(2024, 선도기관 인증 287개사)에 부합하는 다층적(산업, 연구, 교육, 지역) 혁신 추진</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="card-label">필요성</div>
+                        <ul>
+                            <li>대구·경 청년인력유출 급증에 대응</li>
+                            <li>부산 미래 신산업 육성을 위한 부산-대학 공동 혁신 전략 필요</li>
+                            <li>산업의 빠른 변화에 대응하기 위한 대학 교육의 혁신 필요</li>
+                        </ul>
+                    </div>
+                    <div class="info-card full">
+                        <div class="card-label">혁신방향</div>
+                        <div class="flow-row">
+                            <div class="flow-box">
+                                <div class="flow-title">지역연계ESG</div>
+                                <div class="flow-sub">Field 캠퍼스 운영</div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box">
+                                <div class="flow-title">산관 기술연구단</div>
+                                <div class="flow-sub">공동 연구 수행</div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box">
+                                <div class="flow-title">가속화 기술연구단</div>
+                                <div class="flow-sub">기술 사업화 촉진</div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box">
+                                <div class="flow-title">통합산단</div>
+                                <div class="flow-sub">생태계 완성</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="card-label">세부과제</div>
+                        <div style="margin-bottom:12px;">
+                            <span class="tag">세부과제 1</span>
+                            <p>특화 Field 캠퍼스 중심 연합교육 혁신</p>
+                            <p style="font-size:13px;opacity:0.4;margin-top:4px;">JIT Edu 교과목, 패스트트랙 교과 운영</p>
+                        </div>
+                        <div style="margin-bottom:12px;">
+                            <span class="tag">세부과제 2</span>
+                            <p>특화 Field 캠퍼스 중심 지산학 R&D 혁신</p>
+                            <p style="font-size:13px;opacity:0.4;margin-top:4px;">기술 기업 연계, 테크노파크, 코스닥기업 참여</p>
+                        </div>
+                        <div>
+                            <span class="tag">별도</span>
+                            <p>특화 Field 캠퍼스 중심 지산학 혁신 기지 운영</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="card-label">교육과정 / 세부내용</div>
+                        <ul>
+                            <li>AI·SW 통합교육 및 SW 역량 인증</li>
+                            <li>D-Helix 교양, 위대한 교양 시리즈</li>
+                            <li>평생학습공동체를 위한 통합 교육과정</li>
+                            <li>통합 학생 상담 및 경력개발 체계 운영</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- STACK 6: 조직 (Light #f5f7fa) -->
+    <!-- ============================================================ -->
+    <div class="stack-wrapper">
+        <section id="sec-org" class="stack-section">
+            <div class="section-inner">
+                <div class="section-header center">
+                    <div class="section-eng">Organization</div>
+                    <h2 class="section-title">조직 구성</h2>
+                    <p class="section-desc">
+                        글로컬 연합대학 추진 조직도<br>
+                        (추후 업데이트 예정)
+                    </p>
+                </div>
+                <div style="max-width:800px;margin:0 auto;">
+                    <div style="background:#fff;border:2px dashed #ddd;border-radius:16px;padding:80px 40px;text-align:center;">
+                        <p style="color:#bbb;font-size:18px;font-weight:700;">조직도 영역</p>
+                        <p style="color:#ccc;font-size:14px;margin-top:8px;">추후 작업 예정</p>
+                    </div>
+                </div>
+            </div>
+            <footer style="position:absolute;bottom:32px;left:0;right:0;text-align:center;">
+                <p style="color:#bbb;font-size:13px;">&copy; 2026 동아·동서 글로컬 연합대학. All Rights Reserved.</p>
+            </footer>
+        </section>
+    </div>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+        const sections = gsap.utils.toArray('.stack-section');
+        const wrappers = gsap.utils.toArray('.stack-wrapper');
+        const navPills = document.querySelectorAll('.nav-pill');
+        const dots = document.querySelectorAll('.section-dot');
+        const capsule = document.getElementById('capsuleHeader');
+        const darkSections = [1, 2, 3, 4];
+        const pinTriggers = [];
+
+        /* ─────────────────────────────
+           1. GSAP Pin (오버플로우 처리)
+           ───────────────────────────── */
+        sections.forEach((sec, i) => {
+            const st = ScrollTrigger.create({
+                trigger: wrappers[i],
+                start: "top top",
+                end: () => `+=${Math.max(0, sec.scrollHeight - window.innerHeight)}`,
+                pin: sec,
+                pinSpacing: true,
+            });
+            pinTriggers.push(st);
+        });
+
+        /* ─────────────────────────────
+           2. Scrub 입장 애니메이션
+              (컨텐츠가 살짝 올라오며 등장)
+           ───────────────────────────── */
+        sections.forEach((sec, i) => {
+            if (i === 0) return;
+            const inner = sec.querySelector('.section-inner');
+            gsap.fromTo(inner,
+                { y: 50, opacity: 0 },
+                {
+                    y: 0, opacity: 1,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: wrappers[i],
+                        start: "top 75%",
+                        end: "top 25%",
+                        scrub: 0.3,
+                    }
+                }
+            );
+        });
+
+        /* ─────────────────────────────
+           3. Active section tracking
+           ───────────────────────────── */
+        sections.forEach((sec, i) => {
+            ScrollTrigger.create({
+                trigger: wrappers[i],
+                start: "top 40%",
+                end: "bottom 40%",
+                onEnter: () => setActive(i),
+                onEnterBack: () => setActive(i),
+            });
+        });
+
+        function setActive(index) {
+            navPills.forEach((pill, i) => pill.classList.toggle('active', i === index));
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+                dot.classList.toggle('light', darkSections.includes(index));
+            });
+            capsule.classList.toggle('dark-mode', darkSections.includes(index));
+        }
+
+        /* ─────────────────────────────
+           4. Nav 클릭
+           ───────────────────────────── */
+        [...navPills, ...dots].forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.preventDefault();
+                const secId = el.dataset.sec;
+                const idx = sections.findIndex(s => s.id === secId);
+                if (idx >= 0 && pinTriggers[idx]) {
+                    gsap.to(window, {
+                        scrollTo: pinTriggers[idx].start,
+                        duration: 0.8,
+                        ease: "power2.inOut",
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

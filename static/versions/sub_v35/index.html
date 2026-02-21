@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glocal Design System - Visual Hero</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        /* --- VISUAL TOKENS --- */
+        :root {
+            --primary: #3e31d5;       
+            --primary-light: #f1f2ff; 
+            
+            --text-title: #111111;    
+            --text-body: #222224;     
+            --text-cap: #66666e;      
+            
+            --bg-page: #f5f7fa;       
+            --card-bg: #ffffff;
+            
+            --card-radius: 30px;      
+        }
+
+        body { 
+            background-color: var(--bg-page); 
+            color: var(--text-body); 
+            font-family: 'SUIT', sans-serif; 
+            overflow-x: hidden;
+        }
+
+        .main-container { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+        .section-gap { margin-bottom: 120px; }
+
+        /* --- VISUAL HERO --- */
+        .hero-visual {
+            height: 60vh; width: 100%; position: relative;
+            background-image: url('../../pictures/464A9473 복사.jpg');
+            background-size: cover; background-position: center;
+            border-bottom-left-radius: 50px; border-bottom-right-radius: 50px;
+            overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; color: white;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6));
+        }
+        .hero-content { position: relative; z-index: 10; padding: 0 20px; }
+        .hero-title { font-size: 64px; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 16px; text-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        .hero-desc { font-size: 20px; font-weight: 500; opacity: 0.9; max-w-2xl mx-auto; line-height: 1.6; }
+
+        /* --- HEADER --- */
+        .header-container {
+            position: fixed; top: 24px; left: 0; width: 100%; z-index: 1000;
+            display: flex; justify-content: center; pointer-events: none;
+        }
+        .capsule-header {
+            pointer-events: auto;
+            background: rgba(255, 255, 255, 0.9); 
+            backdrop-filter: saturate(180%) blur(20px);
+            border-radius: 100px;
+            padding: 12px 36px;
+            display: flex; align-items: center; gap: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
+            border: 1px solid rgba(255,255,255,0.5);
+            transition: all 0.3s ease;
+        }
+        .nav-item { font-size: 15px; font-weight: 700; color: var(--text-cap); cursor: pointer; transition: 0.2s; position: relative; }
+        .nav-item:hover, .nav-item.active { color: var(--primary); }
+        .logo { font-weight: 900; font-size: 18px; letter-spacing: -0.5px; color: var(--text-title); }
+
+        /* --- COMPONENT STYLES (v34 Crisp) --- */
+        .glocal-card {
+            background: var(--card-bg);
+            border-radius: var(--card-radius);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.06); 
+            border: none; overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
+        }
+        .glocal-card.interactive:hover {
+            transform: translateY(-8px) scale(1.01); 
+            box-shadow: 0 20px 60px rgba(62, 49, 213, 0.15); 
+        }
+
+        .input-label { display: block; font-size: 14px; font-weight: 800; color: #4b5563; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+        .input-crisp {
+            width: 100%; padding: 16px; border-radius: 12px; background: #ffffff;
+            border: 1px solid #d1d5db; font-size: 16px; font-weight: 600; color: #111111;
+            outline: none; transition: 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .input-crisp:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(62, 49, 213, 0.1); }
+
+        .board-list { width: 100%; border-radius: 20px; overflow: hidden; background: white; border: 1px solid #e5e7eb; }
+        .board-row { 
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 24px 32px; border-bottom: 1px solid #e2e8f0; transition: 0.2s; cursor: pointer;
+        }
+        .board-row:hover { background: #f8fafc; }
+        .row-title { font-size: 17px; font-weight: 700; color: #111111; transition: 0.2s; }
+        .board-row:hover .row-title { color: var(--primary); }
+        .badge { display: inline-block; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 800; border: 1px solid transparent; }
+        .badge.new { background: #eff6ff; color: var(--primary); border-color: #dbeafe; }
+
+        .h3-title { font-size: 24px; font-weight: 800; letter-spacing: -0.01em; color: var(--text-title); }
+        .caption { font-size: 13px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; display: block; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header-container">
+        <header class="capsule-header">
+            <div class="logo">GLOCAL SYSTEM</div>
+            <nav class="nav-list hidden md:flex gap-10">
+                <a class="nav-item active">Components</a>
+                <a class="nav-item">Foundation</a>
+                <a class="nav-item">Patterns</a>
+            </nav>
+            <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center cursor-pointer hover:bg-indigo-50 transition border border-gray-200">
+                <span class="text-sm font-bold text-gray-700">≡</span>
+            </div>
+        </header>
+    </div>
+
+    <!-- Visual Hero -->
+    <section class="hero-visual">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur border border-white/30 text-sm font-bold mb-6">FIELD CAMPUS</span>
+            <h1 class="hero-title">Visual Impact.</h1>
+            <p class="hero-desc">
+                이미지로 시작하여 사용자의 몰입을 유도합니다.<br>
+                텍스트만으로는 전달할 수 없는 현장감을 제공하세요.
+            </p>
+        </div>
+    </section>
+
+    <div class="main-container pt-20 pb-20">
+        
+        <!-- 1. Content Starts Here -->
+        <section class="section-gap">
+            <span class="caption">01. Board System</span>
+            
+            <div class="glocal-card p-10 mb-12">
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="h3-title">공지사항 (Notice)</h3>
+                    <button class="text-primary font-bold text-sm hover:underline">View All</button>
+                </div>
+                <div class="board-list">
+                    <div class="board-row group">
+                        <div class="flex items-center gap-6">
+                            <span class="badge new">NEW</span>
+                            <span class="row-title">2026학년도 1학기 수강신청 일정 안내</span>
+                        </div>
+                        <span class="text-slate-500 font-bold font-mono">2026.02.09</span>
+                    </div>
+                    <div class="board-row group">
+                        <div class="flex items-center gap-6">
+                            <span class="badge new bg-gray-100 text-gray-600 border-gray-200">ACADEMIC</span>
+                            <span class="row-title">졸업요건 변경 사항 공지 (필독)</span>
+                        </div>
+                        <span class="text-slate-500 font-bold font-mono">2026.02.01</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Form Section -->
+        <section class="section-gap">
+            <span class="caption">02. Crisp Forms</span>
+            <div class="glocal-card p-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div>
+                        <label class="input-label">Email Address</label>
+                        <input type="email" placeholder="name@example.com" class="input-crisp">
+                    </div>
+                    <div>
+                        <label class="input-label">Department</label>
+                        <select class="input-crisp">
+                            <option>Select Option</option>
+                            <option>Bio Health</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-20 bg-white border-t border-gray-200 text-center">
+        <p class="text-xs font-bold text-gray-400">Glocal Design System v3.5 • Visual Hero</p>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Parallax
+        gsap.to(".hero-visual", {
+            backgroundPosition: "center 60%",
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".hero-visual",
+                start: "top top",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+
+        // Content Fade Up
+        gsap.from(".glocal-card", {
+            y: 50, opacity: 0, duration: 0.8, stagger: 0.2, ease: "power2.out",
+            scrollTrigger: {
+                trigger: ".main-container",
+                start: "top 80%"
+            }
+        });
+    </script>
+</body>
+</html>

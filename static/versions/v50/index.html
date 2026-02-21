@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동아·동서 글로컬 연합대학 v50 (Mobile Map UI)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['SUIT', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#4132CC', 
+                            mint: '#00BEB5',
+                            dark: '#1d1d1f', 
+                            gray: '#86868b',
+                            bg: '#F5F7FA',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #E5E7EB; color: #1d1d1f; font-family: 'SUIT', sans-serif; }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            padding: 60px 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Phone Mockup Frame */
+        .phone-mockup {
+            width: 280px; height: 560px;
+            background: white;
+            border-radius: 36px;
+            border: 8px solid #1d1d1f;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            margin: 0 auto;
+        }
+        .notch {
+            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 100px; height: 24px; background: #1d1d1f;
+            border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;
+            z-index: 50;
+        }
+        
+        /* Common Map Background */
+        .mobile-map-bg {
+            width: 100%; height: 100%;
+            background-color: #F0F2F9;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234132cc' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            position: relative;
+        }
+        .mobile-pin {
+            width: 12px; height: 12px; background: #4132CC; border-radius: 50%;
+            position: absolute; box-shadow: 0 0 0 4px rgba(255,255,255,0.8);
+        }
+
+        /* 1. Bottom Sheet */
+        .style-1 .sheet {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 200px;
+            background: white; border-radius: 20px 20px 0 0; padding: 20px;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+            transform: translateY(140px); transition: 0.3s;
+        }
+        .style-1:hover .sheet { transform: translateY(0); }
+        .style-1 .handle { width: 40px; height: 4px; background: #E5E7EB; border-radius: 4px; margin: 0 auto 16px; }
+
+        /* 2. Floating Card Swiper */
+        .style-2 .card-container {
+            position: absolute; bottom: 20px; left: 0; width: 100%;
+            display: flex; gap: 10px; padding: 0 20px; overflow-x: auto;
+        }
+        .style-2 .card {
+            min-width: 200px; height: 100px; background: white; border-radius: 16px;
+            padding: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: flex; gap: 10px;
+        }
+        .style-2 .card img { width: 60px; height: 100%; border-radius: 8px; object-fit: cover; background: #eee; }
+
+        /* 3. Full Screen Modal */
+        .style-3 .modal {
+            position: absolute; inset: 0; background: white; z-index: 20;
+            padding: 40px 20px; opacity: 0; pointer-events: none; transition: 0.3s;
+        }
+        .style-3:hover .modal { opacity: 1; pointer-events: auto; }
+        .style-3 .close { position: absolute; top: 20px; right: 20px; font-size: 24px; }
+
+        /* 4. Tooltip Pop */
+        .style-4 .tooltip {
+            position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-10px);
+            background: white; padding: 8px 12px; border-radius: 8px;
+            font-size: 12px; font-weight: 700; white-space: nowrap;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); opacity: 0; transition: 0.3s;
+        }
+        .style-4 .mobile-pin:hover .tooltip { opacity: 1; transform: translateX(-50%) translateY(-16px); }
+
+        /* 5. Split View */
+        .style-5 { display: flex; flex-direction: column; height: 100%; }
+        .style-5 .map-area { height: 50%; position: relative; }
+        .style-5 .list-area { height: 50%; background: white; overflow-y: auto; }
+        .style-5 .list-item { padding: 16px; border-bottom: 1px solid #eee; font-size: 14px; font-weight: 700; }
+
+        /* 6. Tab Switcher */
+        .style-6 .tabs {
+            position: absolute; top: 40px; left: 50%; transform: translateX(-50%);
+            background: white; padding: 4px; border-radius: 100px; display: flex;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .style-6 .tab { padding: 6px 16px; border-radius: 100px; font-size: 12px; font-weight: 700; }
+        .style-6 .tab.active { background: #4132CC; color: white; }
+
+        /* 7. Vertical Timeline */
+        .style-7 { background: white; padding: 40px 20px; overflow-y: auto; }
+        .style-7 .item { position: relative; padding-left: 30px; margin-bottom: 24px; }
+        .style-7 .item::before {
+            content: ''; position: absolute; top: 4px; left: 0; width: 12px; height: 12px;
+            background: #4132CC; border-radius: 50%; z-index: 2;
+        }
+        .style-7 .item::after {
+            content: ''; position: absolute; top: 16px; left: 5px; width: 2px; height: 100%;
+            background: #E5E7EB; z-index: 1;
+        }
+        .style-7 .item:last-child::after { display: none; }
+
+        /* 8. Mini Map Header */
+        .style-8 .mini-map { height: 160px; position: sticky; top: 0; z-index: 10; border-bottom: 1px solid #ddd; }
+        .style-8 .content { background: white; padding: 20px; min-height: 400px; }
+
+        /* 9. AR Mode */
+        .style-9 .bg-cam {
+            position: absolute; inset: 0; background: url('../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132226.682.jpg') center/cover;
+        }
+        .style-9 .ar-tag {
+            position: absolute; top: 40%; left: 30%;
+            background: rgba(65, 50, 204, 0.8); color: white; backdrop-filter: blur(4px);
+            padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 700;
+            display: flex; align-items: center; gap: 4px;
+        }
+        .style-9 .ar-tag::before { content: ''; width: 8px; height: 8px; background: #00BEB5; border-radius: 50%; }
+
+        /* 10. Wheel Selector */
+        .style-10 .wheel {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 160px;
+            background: white; border-radius: 24px 24px 0 0;
+            display: flex; align-items: center; justify-content: center;
+            mask-image: linear-gradient(to right, transparent, black 40%, black 60%, transparent);
+        }
+        .style-10 .wheel-item {
+            min-width: 100px; text-align: center; font-weight: 700; color: #ccc; transform: scale(0.8);
+        }
+        .style-10 .wheel-item.active { color: #4132CC; transform: scale(1.2); }
+
+    </style>
+</head>
+<body>
+
+    <div class="max-w-[1400px] mx-auto pt-16 px-10 text-center relative z-10">
+        <h1 class="text-4xl font-extrabold mb-2 text-brand-dark">Mobile Map UI Gallery</h1>
+        <p class="text-gray-500">10 responsive solutions for small screens.</p>
+    </div>
+
+    <div class="gallery-grid">
+
+        <!-- 1. Bottom Sheet -->
+        <div>
+            <h3 class="text-center font-bold mb-4">1. Bottom Sheet</h3>
+            <div class="phone-mockup style-1 group">
+                <div class="notch"></div>
+                <div class="mobile-map-bg">
+                    <div class="mobile-pin" style="top:40%; left:60%;"></div>
+                </div>
+                <div class="sheet">
+                    <div class="handle"></div>
+                    <h4 class="font-bold text-lg">전력반도체 센터</h4>
+                    <p class="text-xs text-gray-500 mt-1">부산 테크노파크 내 위치</p>
+                    <button class="w-full bg-brand-blue text-white rounded-lg py-2 mt-4 text-sm font-bold">상세보기</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Floating Swiper -->
+        <div>
+            <h3 class="text-center font-bold mb-4">2. Floating Swiper</h3>
+            <div class="phone-mockup style-2">
+                <div class="notch"></div>
+                <div class="mobile-map-bg">
+                    <div class="mobile-pin" style="top:30%; left:40%;"></div>
+                    <div class="mobile-pin" style="top:50%; left:70%;"></div>
+                </div>
+                <div class="card-container no-scrollbar">
+                    <div class="card">
+                        <img src="" alt="">
+                        <div class="flex-1 py-1">
+                            <div class="text-xs font-bold text-brand-blue">Tech</div>
+                            <div class="text-sm font-bold mt-1">반도체</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="" alt="">
+                        <div class="flex-1 py-1">
+                            <div class="text-xs font-bold text-brand-mint">Media</div>
+                            <div class="text-sm font-bold mt-1">콘텐츠</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Full Modal -->
+        <div>
+            <h3 class="text-center font-bold mb-4">3. Full Modal</h3>
+            <div class="phone-mockup style-3 group">
+                <div class="notch"></div>
+                <div class="mobile-map-bg">
+                    <div class="mobile-pin" style="top:50%; left:50%;"></div>
+                </div>
+                <div class="modal">
+                    <div class="close">×</div>
+                    <div class="w-full h-[200px] bg-gray-100 rounded-2xl mb-6"></div>
+                    <h2 class="text-2xl font-black mb-2">스마트 해양 랩</h2>
+                    <p class="text-gray-500 leading-relaxed text-sm">해양 데이터 분석 및 스마트 항만 물류 시스템을 연구합니다.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Tooltip Pop -->
+        <div>
+            <h3 class="text-center font-bold mb-4">4. Tooltip Pop</h3>
+            <div class="phone-mockup style-4">
+                <div class="notch"></div>
+                <div class="mobile-map-bg">
+                    <div class="mobile-pin group" style="top:40%; left:30%;">
+                        <div class="tooltip">바이오 헬스</div>
+                    </div>
+                    <div class="mobile-pin group" style="top:60%; left:70%;">
+                        <div class="tooltip">에너지 산업</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Split View -->
+        <div>
+            <h3 class="text-center font-bold mb-4">5. Split View</h3>
+            <div class="phone-mockup style-5">
+                <div class="notch"></div>
+                <div class="map-area mobile-map-bg">
+                    <div class="mobile-pin" style="top:50%; left:50%;"></div>
+                </div>
+                <div class="list-area">
+                    <div class="list-item">1. 전력반도체 센터</div>
+                    <div class="list-item">2. 디지털 콘텐츠 클러스터</div>
+                    <div class="list-item">3. 스마트 해양 랩</div>
+                    <div class="list-item">4. 바이오 헬스케어</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Tab Switcher -->
+        <div>
+            <h3 class="text-center font-bold mb-4">6. Tab Switcher</h3>
+            <div class="phone-mockup style-6">
+                <div class="notch"></div>
+                <div class="mobile-map-bg"></div>
+                <div class="tabs">
+                    <div class="tab active">지도</div>
+                    <div class="tab">목록</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. Timeline -->
+        <div>
+            <h3 class="text-center font-bold mb-4">7. Vertical Timeline</h3>
+            <div class="phone-mockup style-7">
+                <div class="notch"></div>
+                <h3 class="font-black text-xl mb-6">Course Map</h3>
+                <div class="item">
+                    <div class="font-bold">기초 교육 (사하구)</div>
+                    <div class="text-xs text-gray-500">승학캠퍼스 본관</div>
+                </div>
+                <div class="item">
+                    <div class="font-bold">심화 실습 (해운대구)</div>
+                    <div class="text-xs text-gray-500">센텀 기술 센터</div>
+                </div>
+                <div class="item">
+                    <div class="font-bold">현장 파견 (강서구)</div>
+                    <div class="text-xs text-gray-500">녹산 산업단지</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. Mini Map Header -->
+        <div>
+            <h3 class="text-center font-bold mb-4">8. Mini Map Header</h3>
+            <div class="phone-mockup style-8">
+                <div class="notch"></div>
+                <div class="mini-map mobile-map-bg">
+                    <div class="mobile-pin" style="top:50%; left:50%;"></div>
+                </div>
+                <div class="content">
+                    <h2 class="text-xl font-bold mb-2">디지털 콘텐츠</h2>
+                    <p class="text-sm text-gray-500">스크롤하면 지도가 따라옵니다.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. AR Mode -->
+        <div>
+            <h3 class="text-center font-bold mb-4">9. AR Mode</h3>
+            <div class="phone-mockup style-9">
+                <div class="notch"></div>
+                <div class="bg-cam"></div>
+                <div class="ar-tag">
+                    650m · 디자인 센터
+                </div>
+            </div>
+        </div>
+
+        <!-- 10. Wheel Selector -->
+        <div>
+            <h3 class="text-center font-bold mb-4">10. Wheel Selector</h3>
+            <div class="phone-mockup style-10">
+                <div class="notch"></div>
+                <div class="mobile-map-bg">
+                    <div class="mobile-pin" style="top:45%; left:50%;"></div>
+                </div>
+                <div class="wheel">
+                    <div class="wheel-item">Bio</div>
+                    <div class="wheel-item active">Tech</div>
+                    <div class="wheel-item">Art</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

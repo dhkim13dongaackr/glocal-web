@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D-insight | Proposal 06 (Layout Study)</title>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #1B3B5F;
+            --color-point: #56CFC9;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'SUIT', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-sans); }
+        
+        body { 
+            background: #fff; 
+            overflow: hidden; 
+            height: 100vh; 
+        }
+
+        /* --- LOGO (Shared) --- */
+        .brand-logo {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+        }
+        .brand-logo.dark span { color: #111 !important; } /* For white background */
+        
+        .brand-logo .sub {
+            font-size: 10px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.8);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .brand-logo .main {
+            font-family: var(--font-serif);
+            font-weight: 700;
+            font-style: italic;
+            font-size: 24px;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+
+
+        /* --- VARIATION CONTAINERS --- */
+        .layout-container {
+            width: 100%;
+            height: 100%;
+            display: none; /* JS Toggle */
+            position: relative;
+        }
+        .layout-container.active { display: flex; }
+
+
+        /* === TYPE A: CENTER CLASSIC (In Image) === */
+        #layout-a {
+            background-image: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        #layout-a::before {
+            content: ''; position: absolute; inset: 0;
+            background: rgba(0,0,0,0.4); /* Dark Overlay */
+        }
+        
+        .center-content { position: relative; z-index: 10; color: white; max-width: 800px; }
+        
+        .vol-pill {
+            display: inline-block;
+            border: 1px solid rgba(255,255,255,0.5);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+        
+        .center-head {
+            font-family: var(--font-serif);
+            font-size: 90px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 30px;
+        }
+        .center-head span { color: var(--color-point); font-style: italic; }
+        
+        .center-desc {
+            font-size: 18px;
+            line-height: 1.6;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+
+        /* === TYPE B: SPLIT WHITE (Out of Image) === */
+        #layout-b {
+            background: white;
+        }
+        
+        .split-text {
+            flex: 0.4; /* 40% Text */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 80px;
+            position: relative;
+        }
+        
+        .split-img {
+            flex: 0.6; /* 60% Image */
+            background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .split-head {
+            font-family: var(--font-serif);
+            font-size: 80px;
+            font-weight: 900;
+            color: #111;
+            line-height: 0.9;
+            margin-bottom: 40px;
+            letter-spacing: -2px;
+        }
+        .split-head span { color: var(--color-primary); font-style: italic; }
+        
+        .split-desc {
+            color: #555;
+            font-size: 17px;
+            line-height: 1.7;
+            max-width: 400px;
+            margin-bottom: 50px;
+        }
+        
+        .line-deco {
+            width: 60px;
+            height: 4px;
+            background: var(--color-point);
+            margin-bottom: 30px;
+        }
+
+
+        /* === TYPE C: BIG OVERLAY (Magazine Cover) === */
+        #layout-c {
+            background-image: url('https://images.unsplash.com/photo-1590402494587-44b71d87e394?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            align-items: flex-end; /* Bottom Align */
+            padding: 60px;
+        }
+        #layout-c::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 50%);
+        }
+
+        .overlay-content {
+            position: relative; z-index: 10; color: white;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .big-head {
+            font-family: var(--font-serif);
+            font-size: 120px;
+            font-weight: 700;
+            line-height: 0.85;
+            letter-spacing: -3px;
+        }
+        .big-head span { color: var(--color-point); font-style: italic; padding-left: 20px; }
+
+        .side-info {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+        .issue-date {
+            font-size: 14px;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 8px;
+            color: var(--color-point);
+        }
+        .issue-desc {
+            font-size: 14px;
+            opacity: 0.7;
+            line-height: 1.5;
+            max-width: 300px;
+        }
+
+
+        /* --- CONTROLS --- */
+        .control-panel {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 8px;
+            border-radius: 100px;
+            display: flex;
+            gap: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 200;
+        }
+        
+        .btn {
+            border: none;
+            background: transparent;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            color: #888;
+            transition: all 0.2s;
+        }
+        .btn:hover { background: #f0f0f0; color: #333; }
+        .btn.active { background: #111; color: white; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Logo (Changes color based on layout) -->
+    <a href="#" class="brand-logo" id="mainLogo">
+        <span class="sub">GLOCAL WEBZINE</span>
+        <span class="main">D-insight</span>
+    </a>
+
+    <!-- LAYOUT A: Center Classic -->
+    <div id="layout-a" class="layout-container active">
+        <div class="center-content">
+            <span class="vol-pill">THE JOURNAL VOL.03</span>
+            <h1 class="center-head">Bridging<br><span>Local</span> to Global</h1>
+            <p class="center-desc">
+                동아·동서 글로컬 연합대학이 만드는 새로운 교육의 지평.<br>
+                지역의 가능성을 세계로 연결합니다.
+            </p>
+        </div>
+    </div>
+
+    <!-- LAYOUT B: Split White -->
+    <div id="layout-b" class="layout-container">
+        <div class="split-text">
+            <div class="line-deco"></div>
+            <h1 class="split-head">Bridging<br><span>Local</span><br>to Global</h1>
+            <p class="split-desc">
+                이미지가 글자를 방해하지 않는<br>가장 깔끔하고 현대적인 레이아웃입니다.<br>
+                왼쪽의 여백이 주는 안정감을 느껴보세요.
+            </p>
+            <a href="#" style="color:#111; font-weight:700; text-decoration:underline;">COVER STORY &rarr;</a>
+        </div>
+        <div class="split-img"></div>
+    </div>
+
+    <!-- LAYOUT C: Big Overlay -->
+    <div id="layout-c" class="layout-container">
+        <div class="overlay-content">
+            <h1 class="big-head">Bridging<br><span>Local</span> to Global</h1>
+            <div class="side-info">
+                <span class="issue-date">FEB 2026</span>
+                <p class="issue-desc">
+                    Innovative Education Platform<br>
+                    Dong-A & Dongseo University
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="control-panel">
+        <button class="btn active" onclick="switchLayout('layout-a', this)">A. Center (In)</button>
+        <button class="btn" onclick="switchLayout('layout-b', this)">B. Split (Out)</button>
+        <button class="btn" onclick="switchLayout('layout-c', this)">C. Overlay (Big)</button>
+    </div>
+
+    <script>
+        function switchLayout(id, btn) {
+            // Hide all
+            document.querySelectorAll('.layout-container').forEach(el => el.classList.remove('active'));
+            // Show target
+            document.getElementById(id).classList.add('active');
+            
+            // Toggle Logo Color for Split Layout (White BG)
+            const logo = document.getElementById('mainLogo');
+            const sub = logo.querySelector('.sub');
+            const main = logo.querySelector('.main');
+            
+            if(id === 'layout-b') {
+                sub.style.color = '#999';
+                main.style.color = '#1B3B5F';
+            } else {
+                sub.style.color = 'rgba(255,255,255,0.8)';
+                main.style.color = 'white';
+            }
+
+            // Update Buttons
+            document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Field Major Guide - Glocal University</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <style>
+        :root {
+            --primary: #3e31d5; --primary-light: #f1f2ff;
+            --text-title: #111; --text-body: #333; --border-color: #e2e8f0;
+            --bg-page: #f5f7fa; --card-bg: #ffffff; --card-radius: 24px;
+        }
+        body { background-color: var(--bg-page); color: var(--text-body); font-family: 'SUIT', sans-serif; overflow-x: hidden; padding-bottom: 120px; }
+        .main-container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+        /* Header */
+        .header-container { position: fixed; top: 24px; left: 0; width: 100%; z-index: 1000; display: flex; justify-content: center; pointer-events: none; }
+        .capsule-header {
+            pointer-events: auto; background: rgba(255, 255, 255, 0.95); backdrop-filter: saturate(180%) blur(20px);
+            border-radius: 100px; padding: 12px 36px; display: flex; align-items: center; gap: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05);
+        }
+        .nav-item { font-size: 15px; font-weight: 700; color: #666; cursor: pointer; }
+        .nav-item:hover, .nav-item.active { color: var(--primary); }
+        .logo { font-weight: 900; font-size: 18px; color: var(--text-title); }
+
+        /* Visual Hero */
+        .hero-visual {
+            height: 400px; width: 100%; position: relative;
+            background-image: url('../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132236.355.jpg');
+            background-size: cover; background-position: center;
+            border-bottom-left-radius: 40px; border-bottom-right-radius: 40px;
+            overflow: hidden; display: flex; align-items: center; justify-content: center; text-align: center; color: white;
+        }
+        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(58, 45, 150, 0.4), rgba(0,0,0,0.8)); }
+        .hero-title { font-size: 48px; font-weight: 900; position: relative; z-index: 10; margin-bottom: 10px; }
+        .hero-desc { position: relative; z-index: 10; font-size: 18px; opacity: 0.9; }
+
+        /* Bottom Floating Nav (BNB) */
+        .bottom-nav-container {
+            position: fixed; bottom: 40px; left: 0; width: 100%; z-index: 900;
+            display: flex; justify-content: center; pointer-events: none;
+        }
+        .bottom-nav {
+            pointer-events: auto;
+            background: rgba(28, 28, 30, 0.85); /* Dark Glass for Contrast */
+            backdrop-filter: blur(20px);
+            border-radius: 100px; padding: 8px;
+            display: flex; gap: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .bnb-item {
+            padding: 10px 20px; border-radius: 99px;
+            font-size: 14px; font-weight: 700; color: #aaa;
+            cursor: pointer; transition: 0.3s;
+        }
+        .bnb-item:hover { color: white; }
+        .bnb-item.active { background: white; color: black; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+
+        /* Sections */
+        .content-section { margin-bottom: 100px; scroll-margin-top: 140px; }
+        .sec-title { font-size: 32px; font-weight: 800; color: #111; margin-bottom: 30px; display: flex; align-items: center; gap: 12px; }
+        .sec-icon { color: var(--primary); }
+
+        /* Components */
+        .info-card { background: white; border-radius: 24px; border: 1px solid var(--border-color); padding: 40px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+        
+        /* Accordion (Major) */
+        .acc-item { border: 1px solid var(--border-color); border-radius: 16px; margin-bottom: 12px; overflow: hidden; background: white; transition: 0.2s; }
+        .acc-item:hover { border-color: var(--primary); box-shadow: 0 4px 12px rgba(62, 49, 213, 0.1); }
+        .acc-head { padding: 20px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 18px; }
+        .acc-body { display: none; padding: 0 24px 24px; border-top: 1px solid #f0f0f0; background: #fafafa; }
+        .acc-item.active .acc-body { display: block; }
+        .acc-item.active .acc-head { background: var(--primary-light); color: var(--primary); }
+
+        /* Step Process */
+        .step-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .step-card { background: white; padding: 24px; border-radius: 20px; border: 1px solid var(--border-color); text-align: center; }
+        .step-num { display: inline-block; width: 32px; height: 32px; background: var(--primary); color: white; border-radius: 50%; font-weight: 800; line-height: 32px; margin-bottom: 16px; }
+
+        /* Comparison Grid */
+        .comp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .comp-card { background: white; border-radius: 24px; overflow: hidden; border: 1px solid var(--border-color); display: flex; flex-direction: column; }
+        .comp-head { padding: 24px; text-align: center; font-weight: 800; font-size: 18px; border-bottom: 1px solid #eee; }
+        .comp-head.highlight { background: var(--primary); color: white; }
+        .comp-body { padding: 24px; flex: 1; font-size: 14px; line-height: 1.6; text-align: center; color: #555; }
+        .comp-point { font-size: 32px; font-weight: 900; color: #111; margin-bottom: 8px; display: block; }
+
+        /* Feature Grid */
+        .feat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .feat-card { display: flex; gap: 20px; align-items: start; background: white; padding: 24px; border-radius: 20px; border: 1px solid var(--border-color); }
+        .feat-icon { flex-shrink: 0; width: 48px; height: 48px; background: var(--primary-light); color: var(--primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .step-grid, .comp-grid, .feat-grid { grid-template-columns: 1fr; }
+            .hero-title { font-size: 32px; }
+            .bottom-nav { width: 90%; justify-content: space-between; overflow-x: auto; }
+            .bnb-item { padding: 10px 14px; font-size: 13px; white-space: nowrap; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header (Top) -->
+    <div class="header-container">
+        <header class="capsule-header">
+            <div class="logo">GLOCAL</div>
+            <nav class="nav-list hidden md:flex gap-10">
+                <a class="nav-item active">FIELD 캠퍼스</a>
+                <a class="nav-item">교육과정</a>
+                <a class="nav-item">학생성공</a>
+            </nav>
+            <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center cursor-pointer hover:bg-indigo-50 transition border border-gray-200">
+                <span class="text-sm font-bold text-gray-700">≡</span>
+            </div>
+        </header>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero-visual">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Field 연합전공 안내</h1>
+            <p class="hero-desc">대학과 산업 현장이 하나 되는 미래형 교육 시스템</p>
+        </div>
+    </section>
+
+    <!-- Bottom Floating Nav (BNB) -->
+    <div class="bottom-nav-container">
+        <nav class="bottom-nav">
+            <a class="bnb-item active" onclick="scrollToSec('sec1', this)">소개</a>
+            <a class="bnb-item" onclick="scrollToSec('sec2', this)">운영현황</a>
+            <a class="bnb-item" onclick="scrollToSec('sec3', this)">신청방법</a>
+            <a class="bnb-item" onclick="scrollToSec('sec4', this)">이수체계</a>
+            <a class="bnb-item" onclick="scrollToSec('sec5', this)">참여혜택</a>
+        </nav>
+    </div>
+
+    <div class="main-container pt-20">
+
+        <!-- 1. Intro -->
+        <section id="sec1" class="content-section">
+            <div class="info-card text-center py-16">
+                <span class="text-primary font-bold tracking-widest text-sm mb-4 block">DEFINITION</span>
+                <h2 class="text-3xl md:text-4xl font-black mb-6 text-[#111]">Field 연합전공이란?</h2>
+                <p class="text-lg md:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+                    대학이 <strong>산업 현장(Field)</strong>으로 나아가,<br>
+                    사회 요구와 미래 예측을 기반으로 <strong>산업 생태계를 혁신</strong>하고<br>
+                    특화된 <strong>전문 인력</strong>을 양성하는 전공입니다.
+                </p>
+            </div>
+        </section>
+
+        <!-- 2. Operation Status (Accordions) -->
+        <section id="sec2" class="content-section">
+            <h2 class="sec-title"><span class="sec-icon">#</span> 운영 현황</h2>
+            <div class="space-y-2">
+                
+                <!-- Hydrogen -->
+                <div class="acc-item">
+                    <div class="acc-head" onclick="toggleAcc(this)">
+                        <span>⚡️ 수소에너지 (Hydrogen Energy)</span>
+                        <span class="text-sm font-normal text-gray-500">5개 모듈</span>
+                    </div>
+                    <div class="acc-body pt-6">
+                        <div class="mb-4">
+                            <span class="font-bold block mb-2 text-[#111]">운영 모듈</span>
+                            <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                                <li>수소에너지 소재 / 부품 / 친환경 시스템 (클린에너지전공 대상)</li>
+                                <li>수소 생산 및 활용</li>
+                                <li>수소 이송 및 저장</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <span class="font-bold block mb-2 text-[#111]">참여 학과</span>
+                            <p class="text-sm text-gray-500">기계공학, 신소재공학, 화학공학, 조선해양공학, 미래에너지공학</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Semiconductor -->
+                <div class="acc-item">
+                    <div class="acc-head" onclick="toggleAcc(this)">
+                        <span>💾 전력반도체 (Power Semiconductor)</span>
+                        <span class="text-sm font-normal text-gray-500">3개 모듈</span>
+                    </div>
+                    <div class="acc-body pt-6">
+                        <div class="mb-4">
+                            <span class="font-bold block mb-2 text-[#111]">운영 모듈</span>
+                            <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                                <li>전력반도체 소자 공정</li>
+                                <li>회로 설계</li>
+                                <li>응용시스템</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <span class="font-bold block mb-2 text-[#111]">참여 학과</span>
+                            <p class="text-sm text-gray-500">전자공학, 반도체학, 기계공학, 신소재공학, 전기공학 등</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contents -->
+                <div class="acc-item">
+                    <div class="acc-head" onclick="toggleAcc(this)">
+                        <span>🎮 첨단콘텐츠 (AI Contents)</span>
+                        <span class="text-sm font-normal text-gray-500">4개 모듈</span>
+                    </div>
+                    <div class="acc-body pt-6">
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>AI 콘텐츠 / XR 실감형 콘텐츠 / 서사 창작 / 엔터테인먼트 엔지니어링</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Design -->
+                <div class="acc-item">
+                    <div class="acc-head" onclick="toggleAcc(this)">
+                        <span>🎨 융합디자인 (Convergence Design)</span>
+                        <span class="text-sm font-normal text-gray-500">4개 모듈</span>
+                    </div>
+                    <div class="acc-body pt-6">
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>AI-UX 디자인 / 창업 / 미래 라이프스타일 / 무대 의상</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <p class="text-xs text-gray-400 mt-4">* 휴먼메타케어, 헤리티지콘텐츠 전공은 2026년부터 운영 예정입니다.</p>
+        </section>
+
+        <!-- 3. Application -->
+        <section id="sec3" class="content-section">
+            <h2 class="sec-title"><span class="sec-icon">#</span> 신청 방법</h2>
+            <div class="info-card mb-8">
+                <div class="flex flex-col md:flex-row gap-8 items-center">
+                    <div class="flex-1">
+                        <h3 class="font-bold text-lg mb-2">신청 자격</h3>
+                        <p class="text-gray-600 text-sm">4학기 이상 이수한 재학생 (졸업예정자 제외)<br>참여학과 소속이 아니어도 신청 가능</p>
+                    </div>
+                    <div class="w-px h-12 bg-gray-200 hidden md:block"></div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-lg mb-2">신청 기간</h3>
+                        <p class="text-gray-600 text-sm">학사 공지 게시판 별도 공지<br>(모바일 및 PC 신청 가능)</p>
+                    </div>
+                    <div>
+                        <button class="bg-black text-white px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition">매뉴얼 다운로드 ↓</button>
+                    </div>
+                </div>
+            </div>
+            <div class="step-grid">
+                <div class="step-card">
+                    <span class="step-num">1</span>
+                    <h4 class="font-bold mb-2">공지 확인</h4>
+                    <p class="text-xs text-gray-500">모집 기간 및 모듈 확인</p>
+                </div>
+                <div class="step-card">
+                    <span class="step-num">2</span>
+                    <h4 class="font-bold mb-2">신청서 제출</h4>
+                    <p class="text-xs text-gray-500">PC/모바일 시스템 접속</p>
+                </div>
+                <div class="step-card">
+                    <span class="step-num">3</span>
+                    <h4 class="font-bold mb-2">선발 및 이수</h4>
+                    <p class="text-xs text-gray-500">결격사유 확인 후 확정</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. System -->
+        <section id="sec4" class="content-section">
+            <h2 class="sec-title"><span class="sec-icon">#</span> 이수 체계</h2>
+            <div class="comp-grid">
+                <!-- MD -->
+                <div class="comp-card">
+                    <div class="comp-head">마이크로디그리</div>
+                    <div class="comp-body bg-gray-50">
+                        <span class="comp-point text-gray-600">9학점</span>
+                        <p>선택 모듈에서 9학점 이수</p>
+                        <p class="text-xs text-gray-400 mt-2">* Field 교과목 1개 필수</p>
+                    </div>
+                    <div class="p-4 border-t border-gray-200 text-center text-sm font-bold text-primary">이수증 발급</div>
+                </div>
+                <!-- Minor -->
+                <div class="comp-card border-primary ring-4 ring-primary/10">
+                    <div class="comp-head highlight">부전공</div>
+                    <div class="comp-body">
+                        <span class="comp-point text-primary">18학점</span>
+                        <p>연합전공 교과과정 이수</p>
+                        <p class="text-xs text-gray-400 mt-2">* 주전공 전선 학점 인정 불가</p>
+                    </div>
+                    <div class="p-4 border-t border-gray-200 text-center text-sm font-bold text-primary">학위증 부전공 기재</div>
+                </div>
+                <!-- Double -->
+                <div class="comp-card">
+                    <div class="comp-head">복수전공</div>
+                    <div class="comp-body bg-gray-50">
+                        <span class="comp-point text-gray-600">36학점</span>
+                        <p>연합전공 교과과정 이수</p>
+                        <p class="text-xs text-gray-400 mt-2">* 졸업논문 대체 실적 필요</p>
+                    </div>
+                    <div class="p-4 border-t border-gray-200 text-center text-sm font-bold text-primary">복수 학위 취득</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Benefits -->
+        <section id="sec5" class="content-section">
+            <h2 class="sec-title"><span class="sec-icon">#</span> 참여 혜택</h2>
+            <div class="feat-grid">
+                <div class="feat-card">
+                    <div class="feat-icon">💰</div>
+                    <div>
+                        <h4 class="font-bold text-lg mb-1">특별 장학금 지급</h4>
+                        <p class="text-sm text-gray-600">MD/부전공/복수전공 이수 완료 시<br>별도 장학금 지급</p>
+                    </div>
+                </div>
+                <div class="feat-card">
+                    <div class="feat-icon">✈️</div>
+                    <div>
+                        <h4 class="font-bold text-lg mb-1">해외 탐방 지원</h4>
+                        <p class="text-sm text-gray-600">우수 학생 선발 글로벌 체험 기회<br>항공료 및 체재비 지원</p>
+                    </div>
+                </div>
+                <div class="feat-card">
+                    <div class="feat-icon">🏭</div>
+                    <div>
+                        <h4 class="font-bold text-lg mb-1">기업 현장 실습</h4>
+                        <p class="text-sm text-gray-600">삼성, SK 등 주요 기업 인턴십<br>실무 역량 강화 프로그램</p>
+                    </div>
+                </div>
+                <div class="feat-card">
+                    <div class="feat-icon">🏆</div>
+                    <div>
+                        <h4 class="font-bold text-lg mb-1">비교과 프로그램</h4>
+                        <p class="text-sm text-gray-600">공모전, 경진대회, 캠프 참여<br>활동비 및 교육비 지원</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <div class="bg-gray-100 rounded-3xl p-8 text-center mb-20">
+            <p class="font-bold mb-2">기타 문의사항</p>
+            <p class="text-sm text-gray-600">글로컬대학추진단 교육혁신SO: 051-200-5912~4</p>
+            <p class="text-sm text-gray-600">학사관리과: 051-200-6122~4</p>
+        </div>
+
+    </div>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+        // Accordion
+        function toggleAcc(el) {
+            const item = el.parentElement;
+            item.classList.toggle('active');
+        }
+
+        // Anchor Scroll
+        function scrollToSec(id, el) {
+            gsap.to(window, {scrollTo: {y: "#" + id, offsetY: 80}, duration: 0.8, ease: "power2.out"});
+            
+            // Update Active State
+            document.querySelectorAll('.bnb-item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+        }
+        
+        // Scroll Spy Logic
+        gsap.utils.toArray('.content-section').forEach((section, i) => {
+            ScrollTrigger.create({
+                trigger: section,
+                start: "top center",
+                end: "bottom center",
+                onEnter: () => updateNav(i),
+                onEnterBack: () => updateNav(i)
+            });
+        });
+
+        function updateNav(index) {
+            const navItems = document.querySelectorAll('.bnb-item');
+            navItems.forEach(item => item.classList.remove('active'));
+            navItems[index].classList.add('active');
+        }
+    </script>
+</body>
+</html>

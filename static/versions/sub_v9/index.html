@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전력반도체 (Bento Grid) - 동아·동서 글로컬 연합대학</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['SUIT', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#4132CC', // Alliance Indigo
+                            mint: '#00BEB5', // Future Mint
+                            dark: '#171719',
+                            bg: '#F5F7FA',
+                            gray: '#86868b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #F5F7FA; color: #171719; }
+        
+        /* Header */
+        .g-header {
+            position: fixed; top: 0; width: 100%; height: 70px; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 40px;
+            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* Bento Grid Wrapper */
+        .bento-wrapper {
+            max-width: 1200px; margin: 0 auto; padding: 120px 20px 100px;
+        }
+        
+        /* Grid Layout */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: minmax(180px, auto);
+            gap: 24px;
+        }
+
+        /* Card Common Style */
+        .b-card {
+            background: white; border-radius: 32px; overflow: hidden;
+            position: relative; transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 1px solid rgba(0,0,0,0.03);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            display: flex; flex-direction: column;
+        }
+        .b-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(65, 50, 204, 0.08);
+            border-color: rgba(65, 50, 204, 0.2);
+            z-index: 10;
+        }
+
+        /* Size Variants */
+        .col-1 { grid-column: span 1; }
+        .col-2 { grid-column: span 2; }
+        .col-3 { grid-column: span 3; }
+        .col-4 { grid-column: span 4; }
+        .row-1 { grid-row: span 1; }
+        .row-2 { grid-row: span 2; }
+
+        /* Specific Card Styles */
+        /* Title Card */
+        .card-title-box {
+            padding: 40px; justify-content: center;
+            background: linear-gradient(135deg, #ffffff 0%, #F5F7FA 100%);
+        }
+        .b-tag { font-size: 12px; font-weight: 800; color: #4132CC; margin-bottom: 12px; display: inline-block; background: rgba(65, 50, 204, 0.1); padding: 4px 10px; border-radius: 99px; }
+        .b-title { font-size: 42px; font-weight: 900; line-height: 1.1; letter-spacing: -1px; color: #171719; }
+        
+        /* Video Card */
+        .card-video { padding: 0; }
+        .card-video video { width: 100%; height: 100%; object-fit: cover; }
+        .video-overlay {
+            position: absolute; inset: 0; background: rgba(0,0,0,0.2);
+            display: flex; align-items: flex-end; padding: 30px;
+            color: white; font-weight: 700; font-size: 18px;
+            opacity: 0; transition: 0.3s;
+        }
+        .card-video:hover .video-overlay { opacity: 1; }
+
+        /* Stat Card */
+        .card-stat {
+            background: #171719; color: white; padding: 30px; justify-content: center; align-items: center; text-align: center;
+        }
+        .stat-num { font-size: 56px; font-weight: 900; color: #00BEB5; line-height: 1; margin-bottom: 8px; }
+        .stat-desc { font-size: 14px; font-weight: 600; opacity: 0.7; }
+
+        /* Image Card */
+        .card-image { padding: 0; }
+        .card-image img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card-image:hover img { transform: scale(1.05); }
+        .img-label {
+            position: absolute; top: 20px; left: 20px;
+            background: rgba(255,255,255,0.9); backdrop-filter: blur(4px);
+            padding: 6px 12px; border-radius: 12px; font-size: 12px; font-weight: 800;
+        }
+
+        /* Link Card */
+        .card-link {
+            background: #4132CC; color: white; padding: 30px; justify-content: space-between;
+        }
+        .link-icon { font-size: 32px; margin-bottom: 20px; }
+        .link-text { font-size: 20px; font-weight: 800; }
+        .link-arrow { align-self: flex-end; font-size: 24px; transition: 0.3s; }
+        .card-link:hover .link-arrow { transform: translateX(5px) rotate(-45deg); }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .bento-grid { grid-template-columns: 1fr; }
+            .col-1, .col-2, .col-3, .col-4 { grid-column: span 1; }
+            .row-2 { grid-row: span 1; height: 300px; }
+            .b-title { font-size: 32px; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="g-header">
+        <div class="font-black text-xl tracking-tighter">GLOCAL</div>
+        <nav class="hidden md:flex gap-8 text-sm font-bold text-gray-500">
+            <a href="#">대학소개</a>
+            <a href="#" class="text-brand-blue">필드캠퍼스</a>
+            <a href="#">입학안내</a>
+        </nav>
+    </header>
+
+    <div class="bento-wrapper">
+        <div class="bento-grid">
+            
+            <!-- 1. Main Title -->
+            <div class="b-card col-2 row-2 card-title-box">
+                <div>
+                    <span class="b-tag">FIELD CAMPUS 01</span>
+                    <h1 class="b-title">전력반도체<br>통합 연구소</h1>
+                    <p class="mt-4 text-gray-500 font-medium leading-relaxed">
+                        부산테크노파크 거점, 국내 최대 파워반도체 클러스터.<br>
+                        이론을 넘어 현장의 기술을 직접 다루는<br>실무형 인재 양성 메카.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 2. Hero Video -->
+            <div class="b-card col-2 row-2 card-video">
+                <video autoplay muted loop playsinline poster="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132226.682.jpg">
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-circuit-board-technology-217-large.mp4" type="video/mp4">
+                </video>
+                <div class="video-overlay">Field Sketch ↗</div>
+            </div>
+
+            <!-- 3. Stat 1 -->
+            <div class="b-card col-1 row-1 card-stat">
+                <div class="stat-num counter" data-target="98">0</div>
+                <div class="stat-desc">취업률 (%)</div>
+            </div>
+
+            <!-- 4. Stat 2 -->
+            <div class="b-card col-1 row-1 card-stat bg-white text-black border-brand-blue border-2">
+                <div class="stat-num text-brand-blue counter" data-target="15">0</div>
+                <div class="stat-desc text-gray-500">협력 기업 (곳)</div>
+            </div>
+
+            <!-- 5. Facility Image (Tall) -->
+            <div class="b-card col-1 row-2 card-image">
+                <img src="../../pictures/464A4461.jpg">
+                <div class="img-label">Class 1000 Cleanroom</div>
+            </div>
+
+            <!-- 6. Curriculum Link -->
+            <div class="b-card col-1 row-1 card-link">
+                <div class="link-icon">📚</div>
+                <div>
+                    <div class="text-xs opacity-70 mb-1">CURRICULUM</div>
+                    <div class="link-text">교육과정<br>로드맵</div>
+                </div>
+                <div class="link-arrow">→</div>
+            </div>
+
+            <!-- 7. Professor Link -->
+            <div class="b-card col-1 row-1 card-link bg-brand-mint">
+                <div class="link-icon">👨‍🏫</div>
+                <div>
+                    <div class="text-xs opacity-70 mb-1">FACULTY</div>
+                    <div class="link-text">교수진<br>소개</div>
+                </div>
+                <div class="link-arrow">→</div>
+            </div>
+
+            <!-- 8. Equipment Image (Wide) -->
+            <div class="b-card col-2 row-1 card-image">
+                <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132211.153.jpg">
+                <div class="img-label">8대 핵심 공정 장비</div>
+            </div>
+
+            <!-- 9. Notice List -->
+            <div class="b-card col-2 row-1 p-8 justify-center">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold text-lg">최신 공지사항</h3>
+                    <a href="#" class="text-xs text-gray-400 font-bold hover:text-brand-blue">+ 더보기</a>
+                </div>
+                <ul class="space-y-3 text-sm text-gray-600">
+                    <li class="truncate hover:text-brand-blue cursor-pointer">· 2026학년도 1학기 수강신청 안내</li>
+                    <li class="truncate hover:text-brand-blue cursor-pointer">· 하계 방학 현장 실습생 모집 (SK Powertech)</li>
+                    <li class="truncate hover:text-brand-blue cursor-pointer">· [세미나] SiC 전력반도체 기술 동향</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Grid Entrance Animation
+        gsap.from(".b-card", {
+            y: 50,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: ".bento-grid",
+                start: "top 80%"
+            }
+        });
+
+        // Counter Animation
+        const counters = document.querySelectorAll('.counter');
+        counters.forEach(counter => {
+            const target = +counter.getAttribute('data-target');
+            gsap.to(counter, {
+                innerHTML: target,
+                duration: 2,
+                snap: { innerHTML: 1 },
+                scrollTrigger: {
+                    trigger: counter,
+                    start: "top 85%"
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

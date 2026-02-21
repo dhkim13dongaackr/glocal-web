@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glocal Design System - Sidebar Layout</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <style>
+        /* --- VISUAL TOKENS --- */
+        :root {
+            --primary: #3e31d5;       
+            --primary-light: #f1f2ff; 
+            
+            --text-title: #111111;    
+            --text-body: #333336;     
+            --text-cap: #66666e;      
+            
+            --bg-page: #f5f7fa;       
+            --card-bg: #ffffff;
+            --card-radius: 24px;      
+        }
+
+        body { 
+            background-color: var(--bg-page); 
+            color: var(--text-body); 
+            font-family: 'SUIT', sans-serif; 
+            overflow-x: hidden;
+        }
+
+        .main-container { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+
+        /* --- HERO --- */
+        .hero-short {
+            height: 400px; width: 100%; position: relative;
+            background-image: url('../../pictures/464A4461.jpg');
+            background-size: cover; background-position: center;
+            border-bottom-left-radius: 40px; border-bottom-right-radius: 40px;
+            overflow: hidden; display: flex; align-items: flex-end;
+        }
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.8));
+        }
+        .hero-content { position: relative; z-index: 10; padding: 60px 40px; width: 100%; max-width: 1280px; margin: 0 auto; }
+        .hero-title { font-size: 48px; font-weight: 800; color: white; margin-bottom: 10px; }
+        .hero-breadcrumb { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.8); }
+
+        /* --- HEADER --- */
+        .header-container {
+            position: fixed; top: 20px; left: 0; width: 100%; z-index: 1000;
+            display: flex; justify-content: center; pointer-events: none;
+        }
+        .capsule-header {
+            pointer-events: auto;
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: saturate(180%) blur(20px);
+            border-radius: 100px;
+            padding: 12px 36px;
+            display: flex; align-items: center; gap: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .nav-item { font-size: 15px; font-weight: 700; color: var(--text-cap); cursor: pointer; transition: 0.2s; }
+        .nav-item:hover, .nav-item.active { color: var(--primary); }
+        .logo { font-weight: 900; font-size: 18px; letter-spacing: -0.5px; color: var(--text-title); }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 280px; flex-shrink: 0;
+            position: sticky; top: 120px; /* Below Header */
+            height: fit-content;
+        }
+        .sidebar-menu {
+            background: white; border-radius: 20px; padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+        .lnb-item {
+            display: block; padding: 14px 20px; border-radius: 12px;
+            font-size: 15px; font-weight: 600; color: var(--text-cap);
+            cursor: pointer; transition: 0.2s; margin-bottom: 4px;
+        }
+        .lnb-item:hover { background: #f5f7fa; color: var(--text-title); }
+        .lnb-item.active { background: var(--primary-light); color: var(--primary); font-weight: 800; }
+
+        /* --- CONTENT --- */
+        .content-area { flex: 1; padding-left: 60px; }
+        
+        .glocal-card {
+            background: white; border-radius: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+            padding: 50px; margin-bottom: 40px;
+        }
+        .section-title { font-size: 28px; font-weight: 800; color: var(--text-title); margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid #f0f0f5; }
+        
+        .p-text { font-size: 17px; line-height: 1.7; color: var(--text-body); margin-bottom: 24px; }
+
+        /* List & Table (Crisp) */
+        .crisp-table { width: 100%; border-collapse: collapse; }
+        .crisp-table th { text-align: left; padding: 16px; border-bottom: 2px solid #e2e8f0; font-size: 14px; font-weight: 800; color: var(--text-cap); }
+        .crisp-table td { padding: 20px 16px; border-bottom: 1px solid #e2e8f0; font-size: 16px; font-weight: 500; color: var(--text-title); }
+        .crisp-table tr:last-child td { border-bottom: none; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .page-layout { flex-direction: column; }
+            .sidebar { width: 100%; position: static; margin-bottom: 40px; }
+            .sidebar-menu { display: flex; overflow-x: auto; gap: 10px; padding: 10px; white-space: nowrap; }
+            .lnb-item { margin-bottom: 0; flex-shrink: 0; }
+            .content-area { padding-left: 0; }
+            .hero-title { font-size: 32px; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header-container">
+        <header class="capsule-header">
+            <div class="logo">GLOCAL SYSTEM</div>
+            <nav class="nav-list hidden md:flex gap-10">
+                <a class="nav-item">Components</a>
+                <a class="nav-item active">Foundation</a>
+                <a class="nav-item">Patterns</a>
+            </nav>
+            <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center cursor-pointer hover:bg-indigo-50 transition border border-gray-200">
+                <span class="text-sm font-bold text-gray-700">≡</span>
+            </div>
+        </header>
+    </div>
+
+    <!-- Short Hero -->
+    <section class="hero-short">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-breadcrumb">HOME > 대학소개 > FIELD 캠퍼스</div>
+            <h1 class="hero-title">FIELD 캠퍼스 소개</h1>
+        </div>
+    </section>
+
+    <!-- Layout -->
+    <div class="main-container pt-20 pb-40 flex page-layout">
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-menu">
+                <a class="lnb-item active" onclick="scrollToId('sec1', this)">개요 (Overview)</a>
+                <a class="lnb-item" onclick="scrollToId('sec2', this)">교육 목표</a>
+                <a class="lnb-item" onclick="scrollToId('sec3', this)">주요 시설</a>
+                <a class="lnb-item" onclick="scrollToId('sec4', this)">담당자 연락처</a>
+            </nav>
+            
+            <!-- Banner in Sidebar -->
+            <div class="mt-6 rounded-2xl overflow-hidden shadow-lg relative h-40 hidden md:block cursor-pointer group">
+                <img src="../../pictures/464A9473 복사.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                    <span class="text-white font-bold border border-white px-4 py-2 rounded-full text-sm">브로슈어 다운로드</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content-area">
+            
+            <!-- Section 1 -->
+            <div id="sec1" class="glocal-card">
+                <h2 class="section-title">개요</h2>
+                <p class="p-text">
+                    <strong>FIELD 캠퍼스</strong>는 대학과 지역 산업이 협력하여 현장 중심의 실무형 교육을 운영하는 공간입니다.<br>
+                    강의실에서 배운 이론을 실제 산업 현장에서 적용하며, 문제 해결 능력을 갖춘 실무 인재를 양성합니다.
+                </p>
+                <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200">
+                    <ul class="list-disc list-inside space-y-2 text-gray-700 font-medium">
+                        <li>산업체 연계형 교과목 운영 (PBL, Capstone Design)</li>
+                        <li>현장 실습 및 인턴십 프로그램 연계</li>
+                        <li>기업 전문가 멘토링 및 특강 제공</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 2 -->
+            <div id="sec2" class="glocal-card">
+                <h2 class="section-title">교육 목표</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="border border-gray-200 rounded-2xl p-6 hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-2xl mb-4">🚀</div>
+                        <h3 class="text-xl font-bold mb-2 text-[#111]">실무 역량 강화</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed">산업 현장에서 즉시 활용 가능한 기술과 지식을 습득합니다.</p>
+                    </div>
+                    <div class="border border-gray-200 rounded-2xl p-6 hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-2xl mb-4">🤝</div>
+                        <h3 class="text-xl font-bold mb-2 text-[#111]">협업 능력 배양</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed">팀 프로젝트를 통해 소통하고 협력하는 자세를 기릅니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3 -->
+            <div id="sec3" class="glocal-card">
+                <h2 class="section-title">주요 시설 현황</h2>
+                <table class="crisp-table">
+                    <thead>
+                        <tr>
+                            <th>시설명</th>
+                            <th>위치</th>
+                            <th>주요 장비</th>
+                            <th>수용 인원</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>반도체 공정 실습실</td>
+                            <td>공학관 101호</td>
+                            <td>Cleanroom, Etcher</td>
+                            <td>20명</td>
+                        </tr>
+                        <tr>
+                            <td>스마트 팩토리 랩</td>
+                            <td>산학관 203호</td>
+                            <td>PLC, Robot Arm</td>
+                            <td>30명</td>
+                        </tr>
+                        <tr>
+                            <td>AI 데이터 센터</td>
+                            <td>도서관 5층</td>
+                            <td>GPU Server, Cloud</td>
+                            <td>50명</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-20 bg-white border-t border-gray-200 text-center">
+        <p class="text-xs font-bold text-gray-400">Glocal Design System v3.6 • Sidebar Layout</p>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+        // Sidebar Active State Logic
+        function scrollToId(id, el) {
+            gsap.to(window, {scrollTo: {y: "#" + id, offsetY: 140}, duration: 0.8, ease: "power2.out"});
+            
+            // UI Update
+            document.querySelectorAll('.lnb-item').forEach(item => item.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        // Scroll Spy (Simple)
+        // In production, use IntersectionObserver for better performance
+        
+    </script>
+</body>
+</html>

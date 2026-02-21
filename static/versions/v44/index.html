@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동아·동서 글로컬 연합대학 v44 (Brand Card Gallery)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['SUIT', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#3E31D5', /* Figma Official Blue */
+                            dark: '#3F3F44',
+                            gray: '#86868b',
+                            light: '#F5F7FA',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #F5F7FA; color: #3F3F44; font-family: 'SUIT', sans-serif; }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            padding: 60px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* 1. Standard */
+        .card-standard {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid #E5E7EB;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        .card-standard:hover { border-color: #3E31D5; box-shadow: 0 8px 24px rgba(62, 49, 213, 0.15); }
+
+        /* 2. Solid Blue */
+        .card-solid {
+            background: #3E31D5;
+            border-radius: 16px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(62, 49, 213, 0.3);
+        }
+        .card-solid p { color: rgba(255,255,255,0.8); }
+
+        /* 3. Accent Line */
+        .card-accent {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-top: 4px solid #3E31D5;
+        }
+
+        /* 4. Soft Shadow */
+        .card-soft {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px -10px rgba(62, 49, 213, 0.1);
+            border: 1px solid white;
+        }
+
+        /* 5. Frosted Glass */
+        .card-frosted {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.05);
+        }
+
+        /* 6. Gradient Overlay */
+        .card-gradient-overlay {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            color: white;
+        }
+        .card-gradient-overlay::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(62, 49, 213, 0.9), transparent);
+        }
+        .card-gradient-content { position: absolute; bottom: 0; left: 0; padding: 24px; z-index: 10; }
+
+        /* 7. Floating Icon */
+        .card-icon {
+            background: white;
+            border-radius: 20px;
+            margin-top: 20px;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        .icon-box {
+            position: absolute;
+            top: -20px; left: 24px;
+            width: 48px; height: 48px;
+            background: #3E31D5;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            color: white;
+            box-shadow: 0 8px 16px rgba(62, 49, 213, 0.3);
+        }
+
+        /* 8. Inner Glow */
+        .card-glow {
+            background: white;
+            border-radius: 20px;
+            box-shadow: inset 0 0 20px rgba(62, 49, 213, 0.05), 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid rgba(62, 49, 213, 0.1);
+        }
+
+        /* 9. Mesh Gradient */
+        .card-mesh {
+            background: radial-gradient(at top right, #e0e7ff, #ffffff);
+            border-radius: 24px;
+            border: 1px solid #c7d2fe;
+        }
+
+        /* 10. Dark Mode Tech */
+        .card-dark {
+            background: #1F1F24;
+            border-radius: 20px;
+            color: white;
+            border: 1px solid #3E31D5;
+            box-shadow: 0 0 15px rgba(62, 49, 213, 0.2);
+        }
+        .card-dark p { color: #a1a1a6; }
+
+        /* 11. Grid Pattern */
+        .card-grid {
+            background-color: white;
+            background-image: radial-gradient(#3E31D5 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-position: -10px -10px; /* Offset to not cut dots */
+            border-radius: 16px;
+            border: 1px solid #E5E7EB;
+        }
+        .card-grid-content {
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(4px);
+            height: 100%;
+            border-radius: 16px;
+        }
+
+        /* 12. Typo Big */
+        .card-typo {
+            background: #3E31D5;
+            border-radius: 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .big-text {
+            position: absolute;
+            top: -10px; right: -10px;
+            font-size: 100px;
+            font-weight: 900;
+            color: rgba(255,255,255,0.1);
+            line-height: 0.8;
+        }
+
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <div class="max-w-[1400px] mx-auto pt-20 px-10 text-center">
+        <h1 class="text-5xl font-extrabold mb-4 text-[#3F3F44]">Brand Card Collection</h1>
+        <p class="text-gray-500 text-xl">Figma 브랜드 테마(#3E31D5)에 맞춘 12가지 스타일</p>
+    </div>
+
+    <div class="gallery-grid">
+
+        <!-- 1. Standard -->
+        <div class="card-standard p-6 cursor-pointer group">
+            <div class="h-[160px] bg-gray-100 rounded-lg mb-4 overflow-hidden">
+                <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132226.682.jpg" class="w-full h-full object-cover">
+            </div>
+            <span class="text-brand-blue font-bold text-xs uppercase tracking-wide">Category</span>
+            <h3 class="text-xl font-bold mt-2 mb-2 group-hover:text-brand-blue transition-colors">전력반도체 센터</h3>
+            <p class="text-sm text-brand-gray leading-relaxed">가장 기본적이고 안정적인 스타일.<br>정보 전달에 충실합니다.</p>
+        </div>
+
+        <!-- 2. Solid Blue -->
+        <div class="card-solid p-6 cursor-pointer group">
+            <div class="h-[160px] bg-white/10 rounded-lg mb-4 overflow-hidden">
+                <img src="../../pictures/464A4461.jpg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+            </div>
+            <span class="text-white/70 font-bold text-xs uppercase tracking-wide">Highlight</span>
+            <h3 class="text-xl font-bold mt-2 mb-2">디지털 콘텐츠</h3>
+            <p class="text-sm leading-relaxed">브랜드 컬러를 강조한 스타일.<br>주요 거점 표시에 적합합니다.</p>
+        </div>
+
+        <!-- 3. Accent Line -->
+        <div class="card-accent p-6 cursor-pointer group">
+            <div class="h-[160px] bg-gray-100 rounded-lg mb-4 overflow-hidden">
+                <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132211.153.jpg" class="w-full h-full object-cover">
+            </div>
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-brand-dark font-bold text-xs bg-gray-100 px-2 py-1 rounded">Lab</span>
+                <span class="text-brand-blue font-bold text-lg">↗</span>
+            </div>
+            <h3 class="text-xl font-bold mb-2">스마트 해양 랩</h3>
+            <p class="text-sm text-brand-gray">상단 블루 라인으로 포인트를 준<br>깔끔한 디자인입니다.</p>
+        </div>
+
+        <!-- 4. Soft Shadow -->
+        <div class="card-soft p-6 cursor-pointer group hover:-translate-y-1 transition-transform duration-300">
+            <div class="h-[160px] bg-gray-50 rounded-2xl mb-4 overflow-hidden shadow-inner">
+                <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132234.075.jpg" class="w-full h-full object-cover">
+            </div>
+            <h3 class="text-xl font-extrabold text-brand-blue mb-2">바이오 헬스</h3>
+            <p class="text-sm text-brand-gray">부드러운 그림자와 둥근 모서리로<br>편안하고 고급스러운 느낌.</p>
+        </div>
+
+        <!-- 5. Frosted Glass (Current) -->
+        <div class="bg-[url('../../pictures/DJI_0938 복사.jpg')] bg-cover bg-center rounded-2xl p-4 cursor-pointer group">
+            <div class="card-frosted p-5 h-full flex flex-col justify-end">
+                <span class="text-brand-blue font-bold text-xs">Glass</span>
+                <h3 class="text-xl font-bold mt-1">미래 자동차</h3>
+                <p class="text-sm text-brand-dark mt-2">배경이 비치는 유리 질감.<br>지도 위에서 가장 자연스럽습니다.</p>
+            </div>
+        </div>
+
+        <!-- 6. Gradient Overlay -->
+        <div class="card-gradient-overlay h-[340px] cursor-pointer group">
+            <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132240.683.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+            <div class="card-gradient-content">
+                <span class="bg-white/20 backdrop-blur px-2 py-1 rounded text-xs font-bold">Immersive</span>
+                <h3 class="text-2xl font-bold mt-2">AI 로봇 공학</h3>
+                <p class="text-sm mt-2 opacity-90">이미지를 배경으로 사용하여<br>시각적 몰입감을 극대화합니다.</p>
+            </div>
+        </div>
+
+        <!-- 7. Floating Icon -->
+        <div class="card-icon p-6 pt-8 cursor-pointer group">
+            <div class="icon-box group-hover:scale-110 transition-transform">★</div>
+            <div class="h-[140px] bg-gray-100 rounded-lg mb-4 overflow-hidden">
+                <img src="../../pictures/DJI_0465 복사.jpg" class="w-full h-full object-cover">
+            </div>
+            <h3 class="text-xl font-bold mb-2">에너지 신산업</h3>
+            <p class="text-sm text-brand-gray">아이콘이 돋보이는 입체적 디자인.<br>카테고리 구분에 좋습니다.</p>
+        </div>
+
+        <!-- 8. Inner Glow -->
+        <div class="card-glow p-6 cursor-pointer group">
+            <div class="h-[160px] bg-white rounded-lg mb-4 overflow-hidden border border-gray-100">
+                <img src="../../pictures/MZU00838.ARW" class="w-full h-full object-cover">
+                <img src="../../pictures/부민캠퍼스 박물관 중심.jpg" class="w-full h-full object-cover absolute top-0 left-0">
+            </div>
+            <h3 class="text-xl font-bold text-brand-blue mb-2">관광 컨벤션</h3>
+            <p class="text-sm text-brand-gray">은은한 내부 광채로 신비로운 느낌.<br>기술적인 이미지를 줍니다.</p>
+        </div>
+
+        <!-- 9. Mesh Gradient -->
+        <div class="card-mesh p-6 cursor-pointer group">
+            <div class="h-[160px] bg-white rounded-xl mb-4 overflow-hidden shadow-sm">
+                <img src="../../pictures/승학캠퍼스 정문.jpg" class="w-full h-full object-cover">
+            </div>
+            <span class="text-brand-blue font-bold text-xs bg-white px-2 py-1 rounded shadow-sm">Trendy</span>
+            <h3 class="text-xl font-bold mt-2 mb-2">디자인 센터</h3>
+            <p class="text-sm text-brand-dark">트렌디한 메쉬 그라디언트 배경.<br>젊고 감각적인 분위기.</p>
+        </div>
+
+        <!-- 10. Dark Mode Tech -->
+        <div class="card-dark p-6 cursor-pointer group">
+            <div class="h-[160px] bg-gray-800 rounded-lg mb-4 overflow-hidden border border-gray-700">
+                <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132222.702.jpg" class="w-full h-full object-cover opacity-80">
+            </div>
+            <div class="flex justify-between">
+                <span class="text-brand-blue font-bold text-xs">TECH</span>
+                <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
+            </div>
+            <h3 class="text-xl font-bold mt-2 mb-2">금융 물류</h3>
+            <p class="text-sm">다크 테마의 전문적인 느낌.<br>공학/기술 분야에 어울립니다.</p>
+        </div>
+
+        <!-- 11. Grid Pattern -->
+        <div class="card-grid p-1 cursor-pointer group">
+            <div class="card-grid-content p-5">
+                <div class="h-[160px] bg-gray-50 rounded-lg mb-4 overflow-hidden border border-gray-200">
+                    <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132231.520.jpg" class="w-full h-full object-cover">
+                </div>
+                <h3 class="text-xl font-bold mb-2">라이프 케어</h3>
+                <p class="text-sm text-brand-gray">배경의 모눈 패턴이 공학적이고<br>체계적인 느낌을 줍니다.</p>
+            </div>
+        </div>
+
+        <!-- 12. Typo Big -->
+        <div class="card-typo p-6 cursor-pointer group h-[340px] flex flex-col justify-end">
+            <span class="big-text group-hover:scale-110 transition-transform duration-500">01</span>
+            <div class="relative z-10">
+                <div class="h-[140px] bg-white/10 rounded-lg mb-4 overflow-hidden backdrop-blur-sm">
+                    <img src="../../pictures/DJI_0971 복사.jpg" class="w-full h-full object-cover opacity-90">
+                </div>
+                <h3 class="text-2xl font-black mb-2">스마트 제조</h3>
+                <p class="text-sm text-white/80">과감한 타이포그래피와 컬러.<br>강렬한 인상을 남깁니다.</p>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동아·동서 글로컬 연합대학 v2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['SUIT', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#4132CC', // Alliance Indigo
+                            mint: '#00BEB5', // Future Mint
+                            dark: '#171719', // Gray 900
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'fade-in': 'fadeIn 1.2s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-header.scrolled {
+            background: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .glass-header.scrolled p, .glass-header.scrolled nav p {
+            color: #171719;
+        }
+    </style>
+</head>
+<body class="bg-[#F9FAFB] text-[#171719] font-sans antialiased">
+
+    <!-- Header (Sticky & Glass) -->
+    <header id="main-header" class="fixed top-0 left-0 w-full h-[80px] z-50 transition-all duration-300 glass-header flex items-center justify-center">
+        <div class="w-full max-w-[1600px] px-6 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex flex-col items-start cursor-pointer group">
+                <p class="text-[24px] font-extrabold leading-none tracking-tight text-white group-hover:text-brand-mint transition-colors">
+                    동아·동서 글로컬
+                </p>
+                <p class="text-[10px] font-medium tracking-widest mt-1 text-white/80">
+                    Dong-A · DongSeo Glocal University
+                </p>
+            </div>
+            
+            <!-- GNB & Utility -->
+            <div class="flex items-center gap-8">
+                <nav class="hidden md:flex items-center gap-6">
+                    <a href="#" class="text-[16px] font-bold text-white hover:text-brand-mint transition-colors py-2">통합산단</a>
+                    <a href="#" class="text-[16px] font-bold text-white hover:text-brand-mint transition-colors py-2">연합전공</a>
+                    <a href="#" class="text-[16px] font-bold text-white hover:text-brand-mint transition-colors py-2">Field캠퍼스</a>
+                </nav>
+
+                <div class="flex items-center gap-3">
+                    <a href="#" class="px-4 py-2 rounded-full border border-white/30 bg-white/10 text-white text-sm font-bold backdrop-blur-md hover:bg-white/20 transition-all">
+                        학생성공센터
+                    </a>
+                    <a href="#" class="px-4 py-2 rounded-full bg-brand-blue text-white text-sm font-bold shadow-lg hover:bg-indigo-700 hover:scale-105 transition-all flex items-center gap-2">
+                        Dinsight <span class="w-1.5 h-1.5 rounded-full bg-brand-mint animate-pulse"></span>
+                    </a>
+                    <button class="p-2 text-white hover:text-brand-mint transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section (Cinematic) -->
+    <section class="relative w-full h-[100vh] flex items-center justify-center overflow-hidden bg-black">
+        <!-- Video Background Placeholder -->
+        <div class="absolute inset-0 opacity-60">
+            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover animate-fade-in scale-105" alt="Campus">
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40"></div>
+
+        <div class="relative z-10 max-w-[1440px] w-full px-6 flex flex-col items-start">
+            <span class="inline-block px-3 py-1 mb-6 border border-brand-mint/50 rounded-full text-brand-mint text-sm font-bold tracking-wider uppercase animate-fade-in-up" style="animation-delay: 0.1s;">
+                The New Era of Education
+            </span>
+            <h1 class="text-6xl md:text-[80px] font-black text-white leading-tight mb-6 animate-fade-in-up" style="animation-delay: 0.3s;">
+                경계를 넘어,<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-mint to-brand-blue">미래를 잇다.</span>
+            </h1>
+            <p class="text-xl text-white/80 max-w-2xl font-light leading-relaxed animate-fade-in-up" style="animation-delay: 0.5s;">
+                대학의 벽을 허물고 지역 산업과 공존하는 새로운 교육 모델.<br>
+                동아·동서 글로컬 연합대학이 부산을 넘어 세계로 나아갑니다.
+            </p>
+        </div>
+
+        <!-- Scroll Down Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce text-white/50">
+            <span class="text-xs tracking-widest uppercase">Scroll</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+        </div>
+    </section>
+
+    <!-- Strategy Section (Bento Grid) -->
+    <section class="py-24 px-6 max-w-[1440px] mx-auto">
+        <div class="flex flex-col md:flex-row gap-12 mb-16 items-end">
+            <div class="flex-1">
+                <h2 class="text-brand-blue font-bold text-lg mb-2">OUR STRATEGY</h2>
+                <h3 class="text-4xl font-extrabold text-brand-dark leading-tight">글로컬 8대 핵심 전략<br><span class="text-gray-400">혁신의 청사진</span></h3>
+            </div>
+            <p class="text-gray-500 max-w-md leading-relaxed">
+                두 대학의 강점을 결합하여 지역 사회와 함께 성장하는 지속 가능한 교육 생태계를 구축합니다.
+            </p>
+        </div>
+
+        <!-- Bento Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6 h-auto md:h-[600px]">
+            <!-- Main Card (Large) -->
+            <div class="md:col-span-2 md:row-span-2 bg-white rounded-3xl p-10 border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group overflow-hidden relative">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-brand-blue/5 rounded-bl-full z-0 transition-transform group-hover:scale-110 duration-500"></div>
+                <div class="relative z-10 flex flex-col h-full justify-between">
+                    <div>
+                        <span class="text-6xl font-black text-brand-blue/10 absolute top-4 right-6">01</span>
+                        <h4 class="text-3xl font-bold mb-4 text-brand-dark">개방형 사학연합<br>모델 구축</h4>
+                        <p class="text-lg text-gray-500 mb-6">Open Alliance Model</p>
+                        <p class="text-gray-600 leading-relaxed max-w-lg">
+                            부산시와 대학의 공동 이익을 추구하는 '시스템 오피스' 기반의 통합 거버넌스를 확립하여 행정 효율성과 교육의 질을 동시에 높입니다.
+                        </p>
+                    </div>
+                    <div class="flex gap-2 mt-8">
+                        <span class="px-3 py-1 bg-brand-blue/10 text-brand-blue text-sm font-semibold rounded-lg">#통합거버넌스</span>
+                        <span class="px-3 py-1 bg-brand-blue/10 text-brand-blue text-sm font-semibold rounded-lg">#시스템오피스</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sub Card 1 -->
+            <div class="bg-gray-50 rounded-3xl p-8 hover:bg-brand-mint/10 transition-colors cursor-pointer group">
+                <div class="flex justify-between items-start mb-4">
+                    <h4 class="text-xl font-bold text-gray-800 group-hover:text-brand-mint transition-colors">부산 개방형<br>연합 대학</h4>
+                    <span class="text-2xl font-bold text-gray-300 group-hover:text-brand-mint/50">02</span>
+                </div>
+                <p class="text-sm text-gray-500">지역 사회에 열린 캠퍼스를 제공합니다.</p>
+            </div>
+
+            <!-- Sub Card 2 -->
+            <div class="bg-gray-50 rounded-3xl p-8 hover:bg-brand-blue/10 transition-colors cursor-pointer group">
+                <div class="flex justify-between items-start mb-4">
+                    <h4 class="text-xl font-bold text-gray-800 group-hover:text-brand-blue transition-colors">특화분야 중심<br>학사구조 혁신</h4>
+                    <span class="text-2xl font-bold text-gray-300 group-hover:text-brand-blue/50">03</span>
+                </div>
+                <p class="text-sm text-gray-500">미래 산업 수요에 맞춘 유연한 학사제도.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dinsight Section (Masonry / Editorial) -->
+    <section class="bg-white py-24 border-t border-gray-100">
+        <div class="max-w-[1440px] mx-auto px-6">
+            <div class="flex justify-between items-center mb-12">
+                <div>
+                    <h2 class="text-4xl font-extrabold text-brand-dark flex items-center gap-3">
+                        Dinsight <span class="w-3 h-3 rounded-full bg-brand-blue"></span>
+                    </h2>
+                    <p class="text-gray-500 mt-2">Data + Insight. 글로컬 대학의 새로운 시각.</p>
+                </div>
+                <a href="#" class="group flex items-center gap-2 text-brand-blue font-bold hover:underline">
+                    View All Issues 
+                    <span class="group-hover:translate-x-1 transition-transform">→</span>
+                </a>
+            </div>
+
+            <!-- Editorial Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 h-auto md:h-[500px]">
+                <!-- Featured Article -->
+                <div class="md:col-span-2 md:row-span-2 relative rounded-2xl overflow-hidden group cursor-pointer shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2070&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Article 1">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-8">
+                        <span class="px-3 py-1 bg-brand-mint text-white text-xs font-bold uppercase tracking-wider mb-3 inline-block">Cover Story</span>
+                        <h3 class="text-2xl font-bold text-white mb-2 leading-snug group-hover:text-brand-mint transition-colors">
+                            지역과 대학이 하나되는<br>화학적 결합의 시작
+                        </h3>
+                        <p class="text-white/70 text-sm line-clamp-2">동아대-동서대 연합대학 출범식 현장 스케치 및 총장 인터뷰</p>
+                    </div>
+                </div>
+
+                <!-- Article 2 -->
+                <div class="bg-gray-100 rounded-2xl p-6 flex flex-col justify-between hover:shadow-md transition-shadow cursor-pointer group">
+                    <div>
+                        <span class="text-brand-blue text-xs font-bold uppercase mb-2 block">Tech & Future</span>
+                        <h4 class="text-lg font-bold text-gray-800 group-hover:text-brand-blue transition-colors">AI 기반 학습 관리 시스템 전면 도입</h4>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-gray-400 text-sm">2026.02.01</span>
+                    </div>
+                </div>
+
+                <!-- Article 3 (Image) -->
+                <div class="relative rounded-2xl overflow-hidden group cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Article 3">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors"></div>
+                    <div class="absolute bottom-0 left-0 p-6">
+                        <h4 class="text-lg font-bold text-white leading-tight">글로컬 해커톤<br>우승팀 인터뷰</h4>
+                    </div>
+                </div>
+
+                <!-- Article 4 -->
+                <div class="md:col-span-2 bg-brand-dark rounded-2xl p-8 flex items-center justify-between group cursor-pointer overflow-hidden relative">
+                    <div class="relative z-10">
+                        <span class="text-brand-mint text-xs font-bold uppercase mb-2 block">New Program</span>
+                        <h4 class="text-xl font-bold text-white mb-2">2026 Field 캠퍼스<br>수강신청 가이드</h4>
+                        <p class="text-gray-400 text-sm">놓치지 말아야 할 핵심 체크포인트 5</p>
+                    </div>
+                    <div class="w-32 h-32 bg-brand-blue rounded-full blur-3xl absolute -right-4 -bottom-4 opacity-50 group-hover:opacity-80 transition-opacity"></div>
+                    <div class="relative z-10 w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-all">
+                        →
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mega Footer -->
+    <footer class="bg-[#111113] text-white py-20">
+        <div class="max-w-[1600px] mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-start mb-16">
+                <div>
+                    <h2 class="text-3xl font-black mb-2">동아·동서<br>글로컬 연합대학</h2>
+                    <p class="text-gray-500 text-sm tracking-widest">Dong-A · DongSeo Glocal University</p>
+                </div>
+                <div class="flex gap-12 mt-10 md:mt-0">
+                    <div>
+                        <h5 class="font-bold mb-4 text-gray-300">About</h5>
+                        <ul class="space-y-2 text-gray-500 text-sm">
+                            <li><a href="#" class="hover:text-white transition-colors">비전 및 미션</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">총장 인사말</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">조직도</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="font-bold mb-4 text-gray-300">Academics</h5>
+                        <ul class="space-y-2 text-gray-500 text-sm">
+                            <li><a href="#" class="hover:text-white transition-colors">연합전공 소개</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Field 캠퍼스</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">학사일정</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="font-bold mb-4 text-gray-300">Support</h5>
+                        <ul class="space-y-2 text-gray-500 text-sm">
+                            <li><a href="#" class="hover:text-white transition-colors">학생성공센터</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">장학안내</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-600">
+                <p>COPYRIGHT © DONG-A & DONGSEO UNIVERSITY. ALL RIGHTS RESERVED.</p>
+                <div class="flex gap-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white">개인정보처리방침</a>
+                    <a href="#" class="hover:text-white">이용약관</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sticky Header Script
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+                // Change text colors for light background
+                header.querySelectorAll('p, a, button').forEach(el => {
+                    if(!el.classList.contains('text-white/80')) { // Keep sub logo dim
+                        el.classList.remove('text-white');
+                        el.classList.add('text-[#171719]');
+                    }
+                });
+            } else {
+                header.classList.remove('scrolled');
+                // Revert text colors
+                header.querySelectorAll('p, a, button').forEach(el => {
+                    if(!el.classList.contains('text-white/80')) {
+                        el.classList.add('text-white');
+                        el.classList.remove('text-[#171719]');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIELD Campus (Air Slim) - Glocal University</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        body { 
+            background-color: #fbfbfd; /* Ultra Light Gray */
+            color: #1d1d1f; 
+            font-family: 'SUIT', sans-serif; 
+            overflow-x: hidden;
+        }
+
+        /* Slim Card Style */
+        .slim-card {
+            background: #ffffff;
+            border: 1px solid rgba(0,0,0,0.04); /* Ultra Slim Border */
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+        }
+        .slim-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            border-color: rgba(0,0,0,0.08);
+        }
+
+        /* Typography */
+        .h-hero { font-size: 80px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; }
+        .h-section { font-size: 48px; font-weight: 600; letter-spacing: -0.02em; }
+        .t-sub { font-size: 20px; font-weight: 400; color: #86868b; line-height: 1.5; }
+        .t-label { font-size: 13px; font-weight: 700; color: #0066cc; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; display: block; }
+
+        /* Header (Capsule) */
+        .header-container {
+            position: fixed; top: 20px; left: 0; width: 100%; z-index: 1000;
+            display: flex; justify-content: center; pointer-events: none;
+        }
+        .capsule-header {
+            pointer-events: auto;
+            background: rgba(255, 255, 255, 0.8); 
+            backdrop-filter: saturate(180%) blur(20px);
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 999px;
+            padding: 10px 28px;
+            display: flex; align-items: center; gap: 32px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+        .nav-item { font-size: 14px; font-weight: 500; color: #666; cursor: pointer; transition: 0.2s; }
+        .nav-item:hover, .nav-item.active { color: #111; font-weight: 600; }
+        .logo { font-weight: 800; font-size: 16px; letter-spacing: -0.5px; color: #111; }
+
+        /* Grid System */
+        .content-grid {
+            max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+            padding: 0 24px;
+        }
+        .col-span-2 { grid-column: span 2; }
+        .col-span-3 { grid-column: span 3; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .h-hero { font-size: 48px; }
+            .content-grid { grid-template-columns: 1fr; }
+            .col-span-2, .col-span-3 { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header-container">
+        <header class="capsule-header">
+            <div class="logo">GLOCAL</div>
+            <nav class="nav-list hidden md:flex gap-8">
+                <a class="nav-item">대학소개</a>
+                <a class="nav-item active">FIELD 캠퍼스</a>
+                <a class="nav-item">입학안내</a>
+                <a class="nav-item">학생성공</a>
+            </nav>
+            <div class="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center cursor-pointer">
+                <span class="text-xs font-bold text-black">≡</span>
+            </div>
+        </header>
+    </div>
+
+    <!-- 1. Hero: Clean & Direct -->
+    <section class="min-h-[90vh] flex flex-col items-center justify-center text-center pt-32 pb-20">
+        <div class="max-w-4xl mx-auto px-6 z-10">
+            <h1 class="h-hero mb-6 text-reveal">
+                Thinner Border.<br>
+                <span class="text-gray-400">Wider Future.</span>
+            </h1>
+            <p class="t-sub max-w-2xl mx-auto mb-10 text-reveal delay-100">
+                FIELD 캠퍼스는 대학과 산업의 경계를 지웁니다.<br>
+                불필요한 과정은 줄이고, 핵심 실무 역량만 담았습니다.
+            </p>
+            <div class="flex gap-4 justify-center text-reveal delay-200">
+                <button class="bg-[#0071e3] text-white px-8 py-3 rounded-full font-semibold hover:bg-[#0077ed] transition">입학 상담 신청</button>
+                <button class="text-[#0071e3] font-semibold flex items-center gap-1 hover:underline">브로슈어 다운로드 <span>↗</span></button>
+            </div>
+        </div>
+        
+        <!-- Hero Image -->
+        <div class="mt-16 w-full max-w-[1400px] px-6 relative">
+            <img src="../../pictures/464A9473 복사.jpg" class="w-full h-[600px] object-cover rounded-[32px] shadow-sm hero-img opacity-0 translate-y-20">
+            <div class="absolute bottom-10 left-10 text-white md:left-20">
+                <p class="text-sm font-bold opacity-80 uppercase tracking-widest mb-2">Campus View</p>
+                <p class="text-2xl md:text-3xl font-bold">Innovation Center</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Features: Organized Grid -->
+    <section class="py-32">
+        <div class="max-w-4xl mx-auto text-center mb-20 px-6">
+            <span class="t-label">Why Field Campus?</span>
+            <h2 class="h-section">모든 것이 정돈된<br>완벽한 교육 시스템.</h2>
+        </div>
+
+        <div class="content-grid">
+            
+            <!-- Card 1: Main Feature -->
+            <div class="slim-card col-span-2 min-h-[500px] p-10 flex flex-col justify-center bg-gray-50 overflow-hidden group">
+                <div class="relative z-10 max-w-lg">
+                    <span class="t-label">Environment</span>
+                    <h3 class="text-4xl font-bold mb-4">Class 1000.<br>Pure Tech.</h3>
+                    <p class="t-sub">
+                        반도체 공정을 위한 초청정 클린룸.<br>
+                        산업 현장과 동일한 스펙을 대학 내에 구현했습니다.
+                    </p>
+                </div>
+                <img src="../../pictures/464A4461.jpg" class="absolute right-[-10%] top-0 h-full w-2/3 object-cover opacity-10 group-hover:opacity-20 transition duration-700 mix-blend-multiply">
+            </div>
+
+            <!-- Card 2: Vertical Feature -->
+            <div class="slim-card p-8 flex flex-col justify-between bg-white">
+                <div>
+                    <span class="t-label">Partnership</span>
+                    <h3 class="text-2xl font-bold mb-2">Industrial<br>Alliance.</h3>
+                    <p class="text-gray-500 text-sm mt-4">
+                        삼성, SK, 르노코리아 등<br>
+                        글로벌 기업과의 협력.
+                    </p>
+                </div>
+                <div class="mt-8 flex flex-wrap gap-2">
+                    <span class="px-3 py-1 bg-gray-100 rounded text-xs font-bold text-gray-600">Samsung</span>
+                    <span class="px-3 py-1 bg-gray-100 rounded text-xs font-bold text-gray-600">SK</span>
+                    <span class="px-3 py-1 bg-gray-100 rounded text-xs font-bold text-gray-600">Renault</span>
+                </div>
+            </div>
+
+            <!-- Card 3: Horizontal Feature -->
+            <div class="slim-card p-8 bg-white flex items-center justify-between">
+                <div>
+                    <span class="t-label">Employment</span>
+                    <h3 class="text-3xl font-bold">98%</h3>
+                    <p class="text-gray-500 text-sm">전공 분야 취업률</p>
+                </div>
+                <div class="w-16 h-16 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center text-2xl font-bold">↗</div>
+            </div>
+
+            <!-- Card 4: Horizontal Feature -->
+            <div class="slim-card p-8 bg-white flex items-center justify-between">
+                <div>
+                    <span class="t-label">Scholarship</span>
+                    <h3 class="text-3xl font-bold">Full</h3>
+                    <p class="text-gray-500 text-sm">등록금 전액 지원</p>
+                </div>
+                <div class="w-16 h-16 rounded-full bg-green-50 text-green-500 flex items-center justify-center text-2xl font-bold">₩</div>
+            </div>
+
+             <!-- Card 5: Image Feature -->
+             <div class="slim-card p-0 relative h-[300px] overflow-hidden group">
+                <img src="../../pictures/MZU00838.ARW" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-700">
+                <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-white via-white/80 to-transparent">
+                    <h3 class="text-xl font-bold">Bio Health Lab</h3>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 3. Curriculum List (Organized) -->
+    <section class="py-32 bg-white">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="flex items-end justify-between mb-16 border-b border-gray-200 pb-6">
+                <div>
+                    <span class="t-label">Roadmap</span>
+                    <h2 class="h-section">체계적인 커리큘럼.</h2>
+                </div>
+                <button class="text-blue-600 font-bold hover:underline">전체 보기</button>
+            </div>
+
+            <!-- List Layout -->
+            <div class="space-y-4">
+                <!-- Item 1 -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between p-8 rounded-2xl bg-[#fbfbfd] hover:bg-[#f5f5f7] transition cursor-pointer group">
+                    <div class="flex items-center gap-6">
+                        <span class="text-4xl font-light text-gray-300 group-hover:text-blue-500 transition">01</span>
+                        <div>
+                            <h3 class="text-xl font-bold">기초 과정 (Foundation)</h3>
+                            <p class="text-gray-500 text-sm mt-1">이공계열 기초, 프로그래밍 입문</p>
+                        </div>
+                    </div>
+                    <span class="mt-4 md:mt-0 px-4 py-2 bg-white border border-gray-100 rounded-full text-xs font-bold text-gray-500">1-2학년</span>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between p-8 rounded-2xl bg-[#fbfbfd] hover:bg-[#f5f5f7] transition cursor-pointer group">
+                    <div class="flex items-center gap-6">
+                        <span class="text-4xl font-light text-gray-300 group-hover:text-blue-500 transition">02</span>
+                        <div>
+                            <h3 class="text-xl font-bold">전공 심화 (Core Major)</h3>
+                            <p class="text-gray-500 text-sm mt-1">회로설계, 공정실습, 데이터분석</p>
+                        </div>
+                    </div>
+                    <span class="mt-4 md:mt-0 px-4 py-2 bg-white border border-gray-100 rounded-full text-xs font-bold text-gray-500">3학년</span>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between p-8 rounded-2xl bg-[#fbfbfd] hover:bg-[#f5f5f7] transition cursor-pointer group">
+                    <div class="flex items-center gap-6">
+                        <span class="text-4xl font-light text-gray-300 group-hover:text-blue-500 transition">03</span>
+                        <div>
+                            <h3 class="text-xl font-bold">Field 실습 (Project)</h3>
+                            <p class="text-gray-500 text-sm mt-1">기업 연계 캡스톤, 현장 인턴십</p>
+                        </div>
+                    </div>
+                    <span class="mt-4 md:mt-0 px-4 py-2 bg-white border border-gray-100 rounded-full text-xs font-bold text-blue-600 bg-blue-50 border-blue-100">4학년</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 bg-gray-50 text-center border-t border-gray-100">
+        <div class="max-w-4xl mx-auto px-6">
+            <h2 class="text-2xl font-bold mb-6">Start your journey.</h2>
+            <div class="flex justify-center gap-8 mb-10 text-sm font-medium text-gray-600">
+                <a href="#" class="hover:text-black">개인정보처리방침</a>
+                <a href="#" class="hover:text-black">이용약관</a>
+                <a href="#" class="hover:text-black">오시는 길</a>
+            </div>
+            <p class="text-xs text-gray-400">Copyright © 2026 Glocal University. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Reveal
+        const heroTl = gsap.timeline();
+        heroTl.to(".text-reveal", { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out" })
+              .to(".hero-img", { y: 0, opacity: 1, duration: 1.2, ease: "power2.out" }, "-=0.5");
+
+        // Card Stagger
+        gsap.utils.toArray(".slim-card").forEach((card, i) => {
+            gsap.from(card, {
+                y: 50, opacity: 0, duration: 0.8, ease: "power2.out",
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 90%"
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>

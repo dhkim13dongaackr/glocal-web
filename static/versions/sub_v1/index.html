@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서브페이지 예시 - 전력반도체</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['SUIT', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#4132CC', 
+                            mint: '#00BEB5',
+                            dark: '#1d1d1f', 
+                            bg: '#F5F7FA',
+                            gray: '#86868b',
+                        }
+                    },
+                    animation: {
+                        'fade-up': 'fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    },
+                    keyframes: {
+                        'fade-up': {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'SUIT', sans-serif; color: #1d1d1f; -webkit-font-smoothing: antialiased; }
+        
+        /* Header (Solid for Sub) */
+        header {
+            height: 80px; display: flex; align-items: center; justify-content: space-between;
+            padding: 0 40px; border-bottom: 1px solid rgba(0,0,0,0.05);
+            background: rgba(255,255,255,0.9); backdrop-filter: blur(10px);
+            position: fixed; top: 0; width: 100%; z-index: 50;
+        }
+
+        /* Sub Hero */
+        .sub-hero {
+            height: 400px; position: relative; overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+            margin-top: 80px; /* Header Height */
+        }
+        .sub-hero-bg {
+            position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+        }
+        .sub-hero-overlay {
+            position: absolute; inset: 0; background: rgba(0,0,0,0.4);
+        }
+        .sub-hero-content {
+            position: relative; z-index: 10; text-align: center; color: white;
+        }
+
+        /* Sticky LNB (Local Nav) */
+        .lnb-bar {
+            position: sticky; top: 80px; z-index: 40; background: white;
+            border-bottom: 1px solid #eee;
+        }
+        .lnb-inner {
+            max-width: 1400px; margin: 0 auto; display: flex;
+        }
+        .lnb-item {
+            padding: 20px 30px; font-weight: 700; color: #888; cursor: pointer;
+            border-bottom: 2px solid transparent; transition: 0.3s;
+        }
+        .lnb-item:hover, .lnb-item.active { color: #4132CC; border-bottom: 2px solid #4132CC; }
+
+        /* Content Sections */
+        .section { padding: 100px 0; }
+        .inner { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
+
+        /* Grid Layout */
+        .grid-2col { display: grid; grid-template-columns: 400px 1fr; gap: 80px; }
+        @media (max-width: 1024px) { .grid-2col { grid-template-columns: 1fr; gap: 40px; } }
+
+        /* Typography */
+        .sec-title { font-size: 40px; font-weight: 900; margin-bottom: 24px; line-height: 1.2; }
+        .sec-desc { font-size: 18px; line-height: 1.6; color: #555; }
+        .highlight { color: #4132CC; font-weight: 800; }
+
+        /* Image Frame */
+        .img-frame { border-radius: 24px; overflow: hidden; width: 100%; }
+        .img-frame img { width: 100%; height: auto; display: block; transition: 0.5s; }
+        .img-frame:hover img { transform: scale(1.05); }
+
+        /* Fade Up Animation Class */
+        .reveal { opacity: 0; }
+        .reveal.active { animation: fade-up 0.8s forwards; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="text-xl font-black tracking-tighter">GLOCAL</div>
+        <nav class="hidden md:flex gap-8 text-sm font-bold">
+            <a href="#">대학소개</a>
+            <a href="#" class="text-brand-blue">필드캠퍼스</a>
+            <a href="#">입학안내</a>
+            <a href="#">학생성공</a>
+        </nav>
+        <div class="w-8 h-8 bg-gray-200 rounded-full"></div>
+    </header>
+
+    <!-- Sub Hero -->
+    <div class="sub-hero">
+        <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132226.682.jpg" class="sub-hero-bg">
+        <div class="sub-hero-overlay"></div>
+        <div class="sub-hero-content reveal active">
+            <p class="text-sm font-bold tracking-widest text-brand-mint mb-4 uppercase">Field Campus</p>
+            <h1 class="text-5xl md:text-6xl font-black mb-6">전력반도체</h1>
+            <div class="flex gap-2 justify-center text-sm opacity-80 font-medium">
+                <span>Home</span>
+                <span>/</span>
+                <span>필드캠퍼스</span>
+                <span>/</span>
+                <span>전력반도체</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- LNB -->
+    <div class="lnb-bar">
+        <div class="lnb-inner">
+            <div class="lnb-item active">소개 및 개요</div>
+            <div class="lnb-item">교육과정</div>
+            <div class="lnb-item">교수진</div>
+            <div class="lnb-item">시설안내</div>
+        </div>
+    </div>
+
+    <!-- Section 1: Overview -->
+    <section class="section">
+        <div class="inner">
+            <div class="grid-2col">
+                <div class="reveal">
+                    <h2 class="sec-title">미래 에너지를 제어하는<br><span class="highlight">핵심 기술</span></h2>
+                    <div class="w-12 h-1 bg-black mb-8"></div>
+                    <p class="text-brand-blue font-bold text-lg mb-2">부산테크노파크 거점</p>
+                    <p class="text-gray-500">부산 남구 신선로 365</p>
+                </div>
+                <div class="sec-desc reveal" style="animation-delay: 0.2s;">
+                    <p class="mb-6">
+                        전력반도체 필드캠퍼스는 부산의 전략 산업인 파워반도체 산업 생태계와 연계하여, 
+                        실무 중심의 전문 인재를 양성합니다. 
+                    </p>
+                    <p>
+                        부산테크노파크 내에 구축된 최첨단 클린룸과 공정 장비를 활용하여, 
+                        학생들은 이론을 넘어 실제 소자 제작부터 테스트까지 전 과정을 경험할 수 있습니다. 
+                        동아대와 동서대의 연합 전공을 통해 경계를 허문 융합 교육을 제공합니다.
+                    </p>
+                    
+                    <!-- Stats Grid -->
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mt-12 pt-12 border-t border-gray-200">
+                        <div>
+                            <div class="text-3xl font-black text-brand-blue mb-1">98%</div>
+                            <div class="text-sm text-gray-500 font-bold">취업률 달성</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-black text-brand-blue mb-1">15+</div>
+                            <div class="text-sm text-gray-500 font-bold">협력 기업</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-black text-brand-blue mb-1">300억</div>
+                            <div class="text-sm text-gray-500 font-bold">장비 구축 규모</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Visual (Full Width) -->
+    <section class="mb-20 reveal">
+        <div class="inner">
+            <div class="img-frame h-[500px]">
+                <img src="../../pictures/464A4461.jpg" class="object-cover h-full w-full">
+            </div>
+            <p class="text-right text-xs text-gray-400 mt-2 font-bold">▲ 클린룸 실습 현장</p>
+        </div>
+    </section>
+
+    <!-- Section 3: Curriculum -->
+    <section class="section bg-brand-bg">
+        <div class="inner">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 reveal">
+                <div>
+                    <span class="text-brand-blue font-bold text-sm mb-2 block">CURRICULUM</span>
+                    <h2 class="sec-title mb-0">현장 맞춤형 교육과정</h2>
+                </div>
+                <a href="#" class="text-sm font-bold border-b border-black pb-1 hover:text-brand-blue hover:border-brand-blue transition">전체 커리큘럼 다운로드 ↗</a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal" style="animation-delay: 0.2s;">
+                <!-- Step 1 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm hover:-translate-y-2 transition duration-300">
+                    <div class="text-4xl font-black text-gray-200 mb-6">01</div>
+                    <h3 class="text-xl font-bold mb-4">기초 공정 이론</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">
+                        반도체 물성 및 소자 원리 이해.<br>
+                        진공 기술 및 플라즈마 기초.
+                    </p>
+                </div>
+                <!-- Step 2 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm hover:-translate-y-2 transition duration-300 border border-brand-blue">
+                    <div class="text-4xl font-black text-brand-blue mb-6">02</div>
+                    <h3 class="text-xl font-bold mb-4 text-brand-blue">단위 공정 실습</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">
+                        Photo, Etch, Thin Film 등<br>
+                        8대 공정 장비 운용 실습.
+                    </p>
+                </div>
+                <!-- Step 3 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm hover:-translate-y-2 transition duration-300">
+                    <div class="text-4xl font-black text-gray-200 mb-6">03</div>
+                    <h3 class="text-xl font-bold mb-4">프로젝트 실무</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">
+                        기업 연계 캡스톤 디자인.<br>
+                        실제 소자 제작 및 특성 분석.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark text-white py-20 mt-20">
+        <div class="inner">
+            <div class="opacity-50 font-bold text-sm">GLOCAL UNIVERSITY 30</div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>

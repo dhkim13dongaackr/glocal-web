@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동아·동서 글로컬 연합대학 v49 (Connected Node 10)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['SUIT', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#4132CC', 
+                            mint: '#00BEB5',
+                            dark: '#1d1d1f', 
+                            bg: '#F0F2F9',
+                        }
+                    },
+                    animation: {
+                        'dash': 'dash 1s linear infinite',
+                        'ping-slow': 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite',
+                    },
+                    keyframes: {
+                        dash: {
+                            'to': { strokeDashoffset: '-20' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #E5E7EB; color: #1d1d1f; font-family: 'SUIT', sans-serif; }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            padding: 60px 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Common Map Piece */
+        .map-piece {
+            background-color: #F0F2F9;
+            border-radius: 24px;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid white;
+            box-shadow: 0 4px 20px rgba(65, 50, 204, 0.05);
+            cursor: pointer;
+        }
+        .map-piece svg {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 80%; height: 80%; color: #D1D5DB;
+        }
+        .map-piece:hover { box-shadow: 0 10px 40px rgba(65, 50, 204, 0.15); border-color: #4132CC; }
+
+        /* 1. Direct Line */
+        .style-1 .pin {
+            width: 12px; height: 12px; background: #4132CC; border-radius: 50%;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            box-shadow: 0 0 0 4px rgba(255,255,255,0.5); transition: 0.3s;
+        }
+        .style-1:hover .pin { transform: translate(-50%, -50%) scale(1.2); background: white; border: 3px solid #4132CC; }
+        .style-1 .line {
+            position: absolute; top: 50%; left: 50%; width: 0; height: 2px; background: #4132CC;
+            transition: 0.3s; transform-origin: left;
+        }
+        .style-1:hover .line { width: 60px; }
+        .style-1 .info {
+            position: absolute; top: 42%; left: calc(50% + 60px); opacity: 0; transition: 0.3s;
+            transform: translateX(-10px);
+        }
+        .style-1:hover .info { opacity: 1; transform: translateX(0); }
+
+        /* 2. Circuit Path */
+        .style-2 .pin {
+            width: 16px; height: 16px; background: #fff; border: 4px solid #4132CC; border-radius: 50%;
+            position: absolute; top: 60%; left: 30%; z-index: 10;
+        }
+        .style-2 .circuit-svg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;
+        }
+        .style-2 path {
+            fill: none; stroke: #4132CC; stroke-width: 2;
+            stroke-dasharray: 200; stroke-dashoffset: 200; transition: 0.5s ease-out;
+        }
+        .style-2:hover path { stroke-dashoffset: 0; }
+        .style-2 .info {
+            position: absolute; top: 30%; left: 60%; opacity: 0; transition: 0.3s 0.3s;
+            background: white; padding: 8px 12px; border-radius: 8px; border: 1px solid #4132CC;
+        }
+        .style-2:hover .info { opacity: 1; }
+
+        /* 3. Dashed Flow */
+        .style-3 .pin {
+            width: 40px; height: 40px; background: #4132CC; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; font-size: 20px;
+        }
+        .style-3 .flow-line {
+            position: absolute; top: 50%; left: 50%; width: 100px; height: 2px;
+            background-image: linear-gradient(to right, #4132CC 50%, transparent 50%);
+            background-size: 10px 100%;
+            transform-origin: left; transform: rotate(-45deg); opacity: 0;
+        }
+        .style-3:hover .flow-line { opacity: 1; animation: dash 0.5s linear infinite; }
+        .style-3 .info {
+            position: absolute; top: 20%; left: 70%; opacity: 0; transition: 0.3s;
+        }
+        .style-3:hover .info { opacity: 1; }
+
+        /* 4. Radar Pulse */
+        .style-4 .pin {
+            width: 14px; height: 14px; background: #4132CC; border-radius: 50%;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;
+        }
+        .style-4 .ripple {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 14px; height: 14px; border-radius: 50%; border: 1px solid #4132CC;
+            opacity: 0; transition: 0.5s;
+        }
+        .style-4:hover .ripple { width: 120px; height: 120px; opacity: 1; background: rgba(65, 50, 204, 0.05); }
+        .style-4 .item {
+            position: absolute; opacity: 0; transition: 0.3s 0.2s;
+        }
+        .style-4:hover .item:nth-child(3) { top: 30%; left: 50%; transform: translateX(-50%); opacity: 1; } /* Top */
+        .style-4:hover .item:nth-child(4) { bottom: 30%; left: 50%; transform: translateX(-50%); opacity: 1; } /* Bottom */
+
+        /* 5. Bubble Pop */
+        .style-5 .pin {
+            width: 16px; height: 16px; background: #4132CC; border-radius: 50%;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: 0.3s; z-index: 10;
+        }
+        .style-5 .bubble {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
+            width: 140px; height: 140px; border-radius: 50%; overflow: hidden;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 4px solid #4132CC; z-index: 5;
+        }
+        .style-5:hover .bubble { transform: translate(-50%, -110%) scale(1); }
+        .style-5 .bubble img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* 6. Slide Reveal */
+        .style-6 .pin {
+            width: 12px; height: 12px; background: #4132CC; border-radius: 50%;
+            position: absolute; top: 50%; left: 40%; transform: translate(-50%, -50%); z-index: 10;
+        }
+        .style-6 .line {
+            position: absolute; top: 50%; left: 40%; width: 0; height: 1px; background: #ccc; transition: 0.3s;
+        }
+        .style-6:hover .line { width: 160px; background: #4132CC; }
+        .style-6 .card {
+            position: absolute; top: 30%; left: 40%; width: 0; height: 80px;
+            background: white; border-left: 2px solid #4132CC; overflow: hidden;
+            transition: 0.4s 0.1s; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .style-6:hover .card { width: 160px; }
+        .style-6 .card-content { width: 160px; padding: 10px; }
+
+        /* 7. Hologram */
+        .style-7 .base {
+            position: absolute; top: 70%; left: 50%; width: 40px; height: 10px;
+            background: #4132CC; border-radius: 50%; opacity: 0.5; filter: blur(2px);
+            transform: translateX(-50%); transition: 0.3s;
+        }
+        .style-7 .beam {
+            position: absolute; bottom: 30%; left: 50%; width: 60px; height: 0;
+            background: linear-gradient(to top, rgba(65, 50, 204, 0.5), transparent);
+            transform: translateX(-50%); transition: 0.4s; clip-path: polygon(20% 100%, 80% 100%, 100% 0, 0 0);
+        }
+        .style-7:hover .beam { height: 100px; }
+        .style-7 .holo-img {
+            position: absolute; bottom: 35%; left: 50%; transform: translateX(-50%) translateY(10px);
+            width: 100px; opacity: 0; transition: 0.4s 0.1s;
+        }
+        .style-7:hover .holo-img { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* 8. Region Glow */
+        .style-8 svg { width: 100%; height: 100%; }
+        .style-8 path { fill: #E5E7EB; stroke: white; transition: 0.3s; }
+        .style-8:hover path.active { fill: #4132CC; stroke: #4132CC; filter: drop-shadow(0 0 10px rgba(65, 50, 204, 0.5)); }
+        .style-8 .pin {
+            position: absolute; top: 40%; left: 40%;
+            background: white; padding: 4px 8px; border-radius: 4px;
+            font-size: 10px; font-weight: 700; color: #4132CC;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); opacity: 0.7;
+        }
+        .style-8:hover .pin { opacity: 1; transform: scale(1.1); }
+
+        /* 9. 3D Pin Drop */
+        .style-9 .pin-3d {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 30px; height: 40px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234132CC'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'/%3E%3C/svg%3E");
+            background-size: cover; transition: 0.3s;
+        }
+        .style-9:hover .pin-3d { top: 40%; opacity: 0; }
+        .style-9 .card-pop {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
+            background: white; padding: 10px; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            transition: 0.3s 0.1s; text-align: center; width: 140px;
+        }
+        .style-9:hover .card-pop { transform: translate(-50%, -50%) scale(1); }
+
+        /* 10. Magnetic Link */
+        .style-10 { cursor: crosshair; }
+        .style-10 .pin {
+            width: 10px; height: 10px; background: #ccc; border-radius: 50%; position: absolute; transition: 0.2s;
+        }
+        .style-10 .pin.active { background: #4132CC; transform: scale(1.5); }
+        .style-10 .line {
+            position: absolute; height: 1px; background: #4132CC; transform-origin: top left; opacity: 0;
+        }
+        .style-10:hover .line { opacity: 1; }
+
+    </style>
+</head>
+<body>
+
+    <div class="max-w-[1400px] mx-auto pt-16 px-10 text-center">
+        <h1 class="text-4xl font-extrabold mb-2 text-brand-blue">Connected Node Variations</h1>
+        <p class="text-gray-500">10 different ways to visualize "Connection" on a map.</p>
+    </div>
+
+    <div class="gallery-grid">
+
+        <!-- 1. Direct Line -->
+        <div class="map-piece style-1 group">
+            <div class="pin"></div>
+            <div class="line"></div>
+            <div class="info">
+                <h3 class="text-lg font-bold text-brand-blue">전력반도체</h3>
+                <p class="text-xs text-gray-500">Power Semi Center</p>
+            </div>
+        </div>
+
+        <!-- 2. Circuit Path -->
+        <div class="map-piece style-2 group">
+            <div class="pin"></div>
+            <svg class="circuit-svg">
+                <path d="M 100 180 L 150 180 L 180 150 L 200 150" />
+            </svg>
+            <div class="info">
+                <h3 class="text-sm font-bold text-brand-blue">디지털 콘텐츠</h3>
+            </div>
+        </div>
+
+        <!-- 3. Dashed Flow -->
+        <div class="map-piece style-3 group">
+            <div class="pin">⚡️</div>
+            <div class="flow-line"></div>
+            <div class="info">
+                <h3 class="text-lg font-bold text-brand-blue">에너지 전송</h3>
+                <p class="text-xs text-gray-500">실시간 데이터</p>
+            </div>
+        </div>
+
+        <!-- 4. Radar Pulse -->
+        <div class="map-piece style-4 group">
+            <div class="pin"></div>
+            <div class="ripple"></div>
+            <div class="item text-xs font-bold text-brand-blue bg-white px-2 py-1 rounded shadow-sm">AI Lab</div>
+            <div class="item text-xs font-bold text-gray-500">Google</div>
+        </div>
+
+        <!-- 5. Bubble Pop -->
+        <div class="map-piece style-5 group">
+            <div class="pin"></div>
+            <div class="bubble">
+                <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132226.682.jpg">
+            </div>
+        </div>
+
+        <!-- 6. Slide Reveal -->
+        <div class="map-piece style-6 group">
+            <div class="pin"></div>
+            <div class="line"></div>
+            <div class="card">
+                <div class="card-content">
+                    <img src="../../pictures/464A4461.jpg" class="w-full h-[40px] object-cover mb-2 rounded">
+                    <h3 class="text-xs font-bold">스마트 해양</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. Hologram -->
+        <div class="map-piece style-7 group">
+            <div class="base"></div>
+            <div class="beam"></div>
+            <img src="../../pictures/DJI_0465 복사.jpg" class="holo-img w-[80px] h-[60px] object-cover border-2 border-brand-blue rounded-lg">
+        </div>
+
+        <!-- 8. Region Glow -->
+        <div class="map-piece style-8 group flex items-center justify-center p-10">
+            <svg viewBox="0 0 100 100">
+                <path class="active" d="M20,50 Q40,20 60,40 T90,60 T60,90 T20,50 Z" />
+            </svg>
+            <div class="pin">사하구</div>
+        </div>
+
+        <!-- 9. 3D Pin Drop -->
+        <div class="map-piece style-9 group">
+            <div class="pin-3d"></div>
+            <div class="card-pop">
+                <h3 class="text-sm font-bold text-brand-blue">바이오 헬스</h3>
+                <button class="text-[10px] bg-gray-100 px-2 py-1 rounded mt-1">이동</button>
+            </div>
+        </div>
+
+        <!-- 10. Magnetic Link -->
+        <div class="map-piece style-10 group" id="magnetic-map">
+            <div class="pin active" style="top:30%; left:30%;"></div>
+            <div class="pin" style="top:70%; left:70%;"></div>
+            <div class="pin" style="top:30%; left:70%;"></div>
+            <div class="pin" style="top:70%; left:30%;"></div>
+            <div class="absolute top-[30%] left-[30%] pointer-events-none">
+                <span class="text-xs font-bold text-brand-blue ml-4 bg-white px-2 rounded opacity-0 group-hover:opacity-100 transition">Nearest Node</span>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

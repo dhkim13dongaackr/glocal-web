@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIELD Campus (MacBook Air Style) - Glocal University</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        body { 
+            background-color: #fff; 
+            color: #1d1d1f; 
+            font-family: 'SUIT', sans-serif; 
+            overflow-x: hidden;
+        }
+
+        /* Typography Override */
+        .air-hero-title {
+            font-size: 12vw; line-height: 0.95; font-weight: 800; letter-spacing: -0.03em;
+            background: linear-gradient(180deg, #1d1d1f 20%, #86868b 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        
+        .air-section-head { font-size: 56px; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
+        .air-sub { font-size: 24px; font-weight: 600; color: #6e6e73; margin-top: 16px; line-height: 1.4; }
+
+        /* Bento Grid Style */
+        .bento-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+            max-width: 1200px; margin: 0 auto;
+        }
+        .bento-card {
+            background: #f5f5f7; border-radius: 30px; padding: 40px;
+            display: flex; flex-direction: column; justify-content: space-between;
+            transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            overflow: hidden; position: relative;
+        }
+        .bento-card:hover { transform: scale(1.02); background: #f0f0f2; }
+        
+        .bc-large { grid-column: span 2; grid-row: span 2; min-height: 600px; }
+        .bc-tall { grid-row: span 2; }
+        
+        /* Sticky Section */
+        .sticky-wrapper { height: 300vh; position: relative; }
+        .sticky-content {
+            position: sticky; top: 0; height: 100vh; display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        
+        /* Header (Capsule) */
+        .header-container {
+            position: fixed; top: 20px; left: 0; width: 100%; z-index: 1000;
+            display: flex; justify-content: center; pointer-events: none;
+        }
+        .capsule-header {
+            pointer-events: auto;
+            background: rgba(255, 255, 255, 0.72); 
+            backdrop-filter: saturate(180%) blur(20px);
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 999px;
+            padding: 12px 32px;
+            display: flex; align-items: center; gap: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        }
+        .nav-item { font-size: 14px; font-weight: 600; color: #86868b; cursor: pointer; transition: 0.2s; }
+        .nav-item:hover, .nav-item.active { color: #1d1d1f; }
+        .logo { font-weight: 900; font-size: 18px; letter-spacing: -0.5px; color: #1d1d1f; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .air-hero-title { font-size: 16vw; }
+            .bento-grid { grid-template-columns: 1fr; }
+            .bc-large, .bc-tall { grid-column: span 1; grid-row: span 1; min-height: 400px; }
+            .air-section-head { font-size: 36px; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header-container">
+        <header class="capsule-header">
+            <div class="logo">GLOCAL</div>
+            <nav class="nav-list hidden md:flex gap-8">
+                <a class="nav-item">대학소개</a>
+                <a class="nav-item active">FIELD 캠퍼스</a>
+                <a class="nav-item">입학안내</a>
+                <a class="nav-item">학생성공</a>
+            </nav>
+            <div class="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center cursor-pointer">
+                <span class="text-xs font-bold text-black">≡</span>
+            </div>
+        </header>
+    </div>
+
+    <!-- 1. Hero: The Big Statement -->
+    <section class="min-h-screen flex flex-col justify-center items-center text-center px-6 relative pt-32 pb-20">
+        <div class="mb-10 opacity-0 intro-fade">
+            <span class="text-xl font-bold text-blue-600 tracking-wide uppercase">Glocal University</span>
+        </div>
+        <h1 class="air-hero-title intro-title opacity-0 transform translate-y-10">
+            Lean. Mean.<br>Field Machine.
+        </h1>
+        <p class="text-2xl md:text-3xl text-gray-500 font-medium mt-10 max-w-3xl mx-auto opacity-0 intro-fade">
+            이론에서 현장으로 가볍게 이동하세요.<br>
+            가장 강력한 실무 역량이 당신을 기다립니다.
+        </p>
+        <div class="mt-20 w-full max-w-5xl mx-auto relative intro-img opacity-0 translate-y-20">
+            <!-- Laptop-like Image Container -->
+            <img src="../../pictures/464A9473 복사.jpg" class="rounded-[40px] shadow-2xl w-full">
+            <div class="absolute inset-0 rounded-[40px] ring-1 ring-black/5 pointer-events-none"></div>
+        </div>
+    </section>
+
+    <!-- 2. Sticky: The "Thinness" (Agility) -->
+    <section class="sticky-wrapper">
+        <div class="sticky-content bg-gray-50">
+            <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+                <div class="order-2 md:order-1 relative">
+                    <img src="../../pictures/DJI_0971 복사.jpg" class="rounded-3xl shadow-xl w-full sticky-img transform scale-90 opacity-0">
+                </div>
+                <div class="order-1 md:order-2 sticky-text opacity-0 translate-x-10">
+                    <h2 class="air-section-head">Agile.<br>Anywhere.</h2>
+                    <p class="air-sub">
+                        강의실과 산업 현장의 경계를 허물었습니다.<br>
+                        부산테크노파크, 스마트 산단, 어디든 배움터가 됩니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Grid: Supercharged Features -->
+    <section class="py-40 bg-white">
+        <div class="text-center mb-20">
+            <h2 class="text-5xl md:text-7xl font-bold mb-6">Supercharged by Industry.</h2>
+            <p class="text-2xl text-gray-500 font-medium">기업이 직접 참여하고 검증하는 교육.</p>
+        </div>
+
+        <div class="bento-grid px-6">
+            <!-- Large Feature -->
+            <div class="bento-card bc-large bg-black !text-white !p-0">
+                <div class="absolute inset-0 z-0">
+                    <img src="../../pictures/464A4461.jpg" class="w-full h-full object-cover opacity-60">
+                </div>
+                <div class="relative z-10 p-10 mt-auto">
+                    <h3 class="text-4xl font-bold mb-4">Class 1000 Cleanroom.</h3>
+                    <p class="text-gray-300 text-lg">
+                        대학 내 실제 반도체 공정을 위한<br>
+                        완벽한 인프라 구축.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Stat 1 -->
+            <div class="bento-card items-center text-center justify-center">
+                <h4 class="text-6xl font-black text-blue-600 mb-2 count-up">98%</h4>
+                <p class="font-bold text-gray-500">Employment Rate</p>
+            </div>
+
+            <!-- Stat 2 -->
+            <div class="bento-card items-center text-center justify-center">
+                <div class="flex -space-x-4 mb-4">
+                    <div class="w-12 h-12 rounded-full bg-gray-200 border-2 border-white"></div>
+                    <div class="w-12 h-12 rounded-full bg-gray-300 border-2 border-white"></div>
+                    <div class="w-12 h-12 rounded-full bg-gray-400 border-2 border-white"></div>
+                    <div class="w-12 h-12 rounded-full bg-gray-500 border-2 border-white flex items-center justify-center text-white text-xs font-bold">+50</div>
+                </div>
+                <p class="font-bold text-gray-500">Partner Companies</p>
+            </div>
+
+            <!-- Tall Feature -->
+            <div class="bento-card bc-tall bg-gray-100">
+                <div class="flex flex-col h-full">
+                    <div class="mb-6">
+                        <span class="inline-block px-3 py-1 rounded-full bg-white text-xs font-bold shadow-sm mb-4">NEW</span>
+                        <h3 class="text-3xl font-bold">Hydrogen<br>Energy.</h3>
+                        <p class="text-gray-500 mt-2">미래 에너지의 핵심.</p>
+                    </div>
+                    <img src="../../pictures/MZU00838.ARW" class="w-full h-auto mt-auto rounded-xl shadow-sm bg-white" alt="Image Placeholder"> 
+                    <!-- Using placeholder logic for non-image extension, actually let's use a real jpg -->
+                    <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132211.153.jpg" class="absolute bottom-10 right-10 w-[80%] rounded-xl shadow-md rotate-[-5deg] hover:rotate-0 transition duration-500">
+                </div>
+            </div>
+
+            <!-- Feature -->
+            <div class="bento-card">
+                <h3 class="text-2xl font-bold">AI Contents.</h3>
+                <p class="text-gray-500 mt-2">창의력과 기술의 결합.</p>
+                <div class="mt-8 flex gap-2">
+                    <span class="w-8 h-8 rounded-full bg-red-400"></span>
+                    <span class="w-8 h-8 rounded-full bg-purple-400"></span>
+                    <span class="w-8 h-8 rounded-full bg-blue-400"></span>
+                </div>
+            </div>
+
+            <!-- Feature -->
+            <div class="bento-card">
+                <h3 class="text-2xl font-bold">Scholarship.</h3>
+                <p class="text-gray-500 mt-2">등록금 걱정 없는 교육.</p>
+                <div class="mt-auto text-right">
+                    <span class="text-4xl font-bold">Full Support</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 4. Text Reveal Scroller -->
+    <section class="py-40 bg-black text-white text-center">
+        <div class="max-w-4xl mx-auto px-6 space-y-32">
+            <p class="text-4xl md:text-6xl font-bold leading-tight reveal-text opacity-20">
+                You don't just learn it.
+            </p>
+            <p class="text-4xl md:text-6xl font-bold leading-tight reveal-text opacity-20">
+                You live it.
+            </p>
+            <p class="text-4xl md:text-6xl font-bold leading-tight reveal-text opacity-20 text-blue-500">
+                This is Field Campus.
+            </p>
+        </div>
+    </section>
+
+    <footer class="py-20 bg-gray-50 text-center border-t border-gray-200">
+        <p class="text-xs font-bold text-gray-500">Copyright © 2026 Glocal University. All rights reserved.</p>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 1. Hero Intro
+        const heroTl = gsap.timeline();
+        heroTl.to(".intro-fade", { opacity: 1, duration: 1, stagger: 0.2 })
+              .to(".intro-title", { opacity: 1, y: 0, duration: 1, ease: "power3.out" }, "-=0.5")
+              .to(".intro-img", { opacity: 1, y: 0, duration: 1.2, ease: "power2.out" }, "-=0.8");
+
+        // 2. Sticky Section
+        ScrollTrigger.create({
+            trigger: ".sticky-wrapper",
+            start: "top top",
+            end: "bottom bottom",
+            onUpdate: (self) => {
+                const p = self.progress;
+                // Fade in content
+                if (p > 0.2) {
+                    gsap.to(".sticky-img", { opacity: 1, scale: 1, duration: 0.5 });
+                    gsap.to(".sticky-text", { opacity: 1, x: 0, duration: 0.5 });
+                }
+            }
+        });
+
+        // 3. Bento Grid Parallax
+        gsap.utils.toArray(".bento-card").forEach((card, i) => {
+            gsap.from(card, {
+                y: 100, opacity: 0, duration: 0.8, ease: "power2.out",
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 90%"
+                }
+            });
+        });
+
+        // 4. Text Reveal
+        gsap.utils.toArray(".reveal-text").forEach(text => {
+            gsap.to(text, {
+                opacity: 1,
+                scrollTrigger: {
+                    trigger: text,
+                    start: "top 70%",
+                    end: "top 30%",
+                    scrub: true
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>

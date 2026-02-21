@@ -1,0 +1,1210 @@
+[
+  {
+    "id": "v_proposal_11",
+    "title": "피그마 시안 히어로 — 분할 레이아웃 + YouTube (v_proposal_11)",
+    "description": "피그마 원안대로 히어로 구현: 연보라(#f1f2ff) 배경 + 좌측 텍스트(그라디언트 타이틀) + 우측 YouTube 영상(라운드 30px). 일시정지/음소거 컨트롤, 프로그레스바(01─03), 이전/다음 화살표. 나머지 섹션(혁신방향 수평타임라인, Field캠퍼스, 성과 카드, 뉴스, FAQ)은 v_proposal_10 동일.",
+    "path": "/static/v_proposal_11/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-21 17:00"
+  },
+  {
+    "id": "v_proposal_10",
+    "title": "수평 타임라인 + 피그마 성과 카드 (v_proposal_10)",
+    "description": "혁신방향을 수평 타임라인(Noda-style)으로 재구현: 스크롤 기반 도트 이동, 배경 크로스페이드, 마지막 도트에서 스티키 해제. Core Achievements를 피그마 시안대로 YouTube 영상 카드 3장(15,000+/2,000억+/7,000+) + 다크 배경. 히어로 YouTube 영상 3종 + 분절 프로그레스바.",
+    "path": "/static/v_proposal_10/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-21 16:00"
+  },
+  {
+    "id": "v_proposal_09",
+    "title": "인터랙션 프리뷰 — YouTube 영상 히어로 (v_proposal_09)",
+    "description": "v_proposal_08 기반. 히어로를 원안 YouTube 영상 3종(연합전공 수강생 / 통합산단 매출액 / 외국인 유학생 유치 실적)으로 교체. 슬라이드 전환 시 영상별 네이밍 라벨이 페이드 전환됨. 나머지 섹션 동일.",
+    "path": "/static/v_proposal_09/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-21 15:00"
+  },
+  {
+    "id": "v_proposal_08",
+    "title": "피드백 인터랙션 프리뷰 (v_proposal_08)",
+    "description": "배포 사이트 피드백 기반 인터랙션 프리뷰. 헤더 스크롤 전환, 히어로 슬라이드쇼+프로그레스바, Innovation Strategy 스티키+스냅 스크롤(데스크톱)/캐러셀(모바일), Field Campus 탭+지도 핀+스크롤 전환, Core Achievements 보라배경+카운트업, Glocal Now 스크롤스냅 뉴스카드, FAQ 아코디언. Tailwind CDN + SUIT + Vanilla JS.",
+    "path": "/static/v_proposal_08/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-21 14:00"
+  },
+  {
+    "id": "sub_page_21",
+    "title": "교과과정 카뱅네비 + 카드 디자인 (sub_page_21)",
+    "description": "카카오뱅크 스타일 플로팅 캡슐 서브네비 + 카드 디자인. 모듈별 독립 카드(둥근모서리+그림자), 카드 안에 학년별 과목. 6개 전공. 스크롤 시 네비 pill 색상 전환.",
+    "path": "/static/versions/sub_page_21/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-21 01:00"
+  },
+  {
+    "id": "sub_page_20",
+    "title": "교과과정 카뱅 플로팅네비 + 표 (sub_page_20)",
+    "description": "카카오뱅크 스타일 플로팅 캡슐 서브네비 + 표(테이블) 디자인. 6개 전공. 스크롤 시 네비 pill 색상이 전공별로 전환. 인디고 출발.",
+    "path": "/static/versions/sub_page_20/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-21 00:00"
+  },
+  {
+    "id": "sub_page_19",
+    "title": "교과과정 카카오뱅크 스타일 (sub_page_19)",
+    "description": "풀페이지 스크롤 + 스티키 서브네비. 6개 전공 (수소에너지/전략반도체/첨단콘텐츠/융합디자인/휴먼메타케어/헤리티지콘텐츠). 스크롤 시 네비 active 컬러가 전공별로 변화. 인디고 출발.",
+    "path": "/static/versions/sub_page_19/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-20 23:00"
+  },
+  {
+    "id": "sub_page_18",
+    "title": "교과과정 투톤 교차 (sub_page_18)",
+    "description": "탭 버전. 모듈 헤더 포인트 컬러 투톤 교차 (진/중 번갈아). 학년 라벨 포인트 컬러. 탭은 보라 유지. 끝 컬럼 불공평 없음.",
+    "path": "/static/versions/sub_page_18/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-20 22:45"
+  },
+  {
+    "id": "sub_page_17",
+    "title": "교과과정 C-Uniform (sub_page_17)",
+    "description": "탭 버전. 포인트 컬러 모듈 헤더 + 학년 라벨. 모든 컬럼 동일 색상 (그라데이션 없음). 탭은 보라 유지.",
+    "path": "/static/versions/sub_page_17/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-20 22:30"
+  },
+  {
+    "id": "sub_page_16",
+    "title": "교과과정 풀페이지 보라+포인트 (sub_page_16)",
+    "description": "풀페이지 스크롤 버전. 피그마처럼 4개 전공 모두 한 페이지에. 모듈 헤더 포인트 컬러 그라데이션 + 학년 라벨 포인트 컬러.",
+    "path": "/static/versions/sub_page_16/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-20 22:00"
+  },
+  {
+    "id": "sub_page_15",
+    "title": "교과과정 탭 보라+포인트 그라데이션 (sub_page_15)",
+    "description": "탭 버전. 모듈 헤더 포인트 컬러 진→연 그라데이션 + 학년 라벨 포인트 컬러. 탭은 보라 유지.",
+    "path": "/static/versions/sub_page_15/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-20 21:30"
+  },
+  {
+    "id": "sub_page_14",
+    "title": "교과과정 초기 (sub_page_14)",
+    "description": "교과과정표 초기 버전. 전공별 독립 컬러 테마 (틸/골드/블루틸/코랄). 탭 전환 시 전체 색상 변경.",
+    "path": "/static/versions/sub_page_14/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-20 20:00"
+  },
+  {
+    "id": "v_sub_43",
+    "title": "Hybrid Tab Hub (v_sub_43)",
+    "description": "Stacking scroll for intro (Hero + Vision) + Tab-based 8대 과제 hub. Solves content density by separating hierarchy: stacking for impact, tabs for browsing. Actual initiative content from source material.",
+    "path": "/static/versions/sub_v43/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-12 17:00"
+  },
+  {
+    "id": "v_sub_42",
+    "title": "Stacking Hybrid (v_sub_42)",
+    "description": "v40 Color Mood + v41 Clean Structure. Rich colored backgrounds with clean card design, GSAP pin for overflow fix, subtle rounded corners. The balanced middle ground.",
+    "path": "/static/versions/sub_v42/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-12 15:30"
+  },
+  {
+    "id": "v_sub_41",
+    "title": "Clean Stacking (v_sub_41)",
+    "description": "Figma-matched clean design. White/LightGray alternating backgrounds, flat section transitions, GSAP pin for overflow scroll. Institutional tone.",
+    "path": "/static/versions/sub_v41/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-12 15:00"
+  },
+  {
+    "id": "v_sub_40",
+    "title": "Color Stacking (v_sub_40)",
+    "description": "Bold colored stacking sections (Dark/Purple/Navy/Green). CSS sticky with 48px rounded corners. Flashy marketing landing style.",
+    "path": "/static/versions/sub_v40/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-12 14:00"
+  },
+  {
+    "id": "v_proposal_07",
+    "title": "Webzine Proposal 7 (Advanced Layouts)",
+    "description": "More sophisticated layout options focusing on 'Art Direction'. D. Frame (Gallery Style), E. Vertical (Architectural), F. Floating Card (Invitation). Highly polished visual experiments.",
+    "path": "/static/v_proposal_07/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-10 20:00"
+  },
+  {
+    "id": "v_proposal_06",
+    "title": "Webzine Proposal 6 (Layout Study)",
+    "description": "Typography & Image Layout Variations. Focusing on 'Bridging Local to Global'. 1. Center Classic (In-Image), 2. Split White (Out-Image), 3. Big Overlay (Magazine Cover). Find the best balance.",
+    "path": "/static/v_proposal_06/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-10 19:00"
+  },
+  {
+    "id": "v_proposal_05",
+    "title": "Webzine Proposal 5 (Radical)",
+    "description": "Experimental Layouts. Features 3 radical concepts: 1. Split Slider (Dynamic Interaction), 2. Typography First (Big Text, No bg), 3. Bento Grid (Dashboard Style). A departure from traditional magazine layouts.",
+    "path": "/static/v_proposal_05/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-10 18:00"
+  },
+  {
+    "id": "v_proposal_04",
+    "title": "Webzine Proposal 4 (Design Switcher)",
+    "description": "Interactive Design Lab. Features a 'Style Switcher' that lets you toggle between 3 Cover Story Layouts: A (Classic Left), B (Center Poster), and C (Modern Grid). Right panel remains fixed as requested.",
+    "path": "/static/v_proposal_04/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-10 17:00"
+  },
+  {
+    "id": "v_proposal_03",
+    "title": "Webzine Proposal 3 (Frameless Cover)",
+    "description": "Full-screen Split Layout without a top header bar. Logo is integrated into the Cover Story (Left). Categories act as the main navigation on the Top Right. Highly immersive 'Magazine Cover' experience.",
+    "path": "/static/v_proposal_03/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-10 16:00"
+  },
+  {
+    "id": "v_proposal_02",
+    "title": "Webzine Proposal 2 (Immersive Cover)",
+    "description": "Refined Proposal 1. Features a 2:1 Split Hero Section with Immersive Typography (Playfair Display) and a clean Side List for Top Stories. Replaces the grid layout with a focused magazine cover look.",
+    "path": "/static/v_proposal_02/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-10 15:00"
+  },
+  {
+    "id": "v_proposal_01",
+    "title": "Webzine Proposal 1 (JoongAng + Elle)",
+    "description": "New Webzine concept proposal. Features a 'JoongAng Plus' style minimalist header (Hamburger Menu + Logo only) and an 'Elle' style split layout hero section (Left Typography / Right Image). Uses 'Journal' naming and Navy/Mint color scheme.",
+    "path": "/static/v_proposal_01/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-10 14:00"
+  },
+  {
+    "id": "v_sub_39",
+    "title": "Final Sub-Special (v_sub_39)",
+    "description": "Corrected Presentation Page. Restores 'Scroll Snap' for that polished feel. Fully localized Korean content. Adjusted layout (Breadcrumbs, Split Screen) to ensure it feels like a Sub-page, not a Main Landing.",
+    "path": "/static/versions/sub_v39/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-09 22:00"
+  },
+  {
+    "id": "v_sub_38",
+    "title": "The Ultimate Presentation (v_sub_38)",
+    "description": "Solved Color & Layout Issues. Uses a consistent Light/Gray palette for 8 sections to ensure content flexibility. Integrates Horizontal Scroll, Right Dot Nav, and Mobile Sticky LNB. Practical and scalable.",
+    "path": "/static/versions/sub_v38/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-09 21:00"
+  },
+  {
+    "id": "v_sub_37",
+    "title": "Refined Stacking (v_sub_37)",
+    "description": "Improved v14 Stacking. The first section is a static base, and subsequent sections slide up with rounded tops to create a 'Card Deck' effect. Solves the header overlap issue.",
+    "path": "/static/versions/sub_v37/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-09 20:00"
+  },
+  {
+    "id": "sub_page_13",
+    "title": "The Presenter (Example 13)",
+    "description": "Special Landing Page. Combines 'Card Stacking' vertical scroll (squared edges) with a 'Horizontal Scroll' section. Features Right Dot Nav (Desktop) / Top Nav (Mobile). Light Theme Presentation vibe.",
+    "path": "/static/versions/sub_page_13/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-09 18:00"
+  },
+  {
+    "id": "sub_page_12",
+    "title": "Content Modules (Example 12)",
+    "description": "Modular Component Library. Extracts and organizes the structured content blocks from sub_page_08 (Accordions, Step Cards, Comparison Grids, Feature Boxes). A toolkit for building content-heavy pages.",
+    "path": "/static/versions/sub_page_12/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-09 17:00"
+  },
+  {
+    "id": "sub_page_11",
+    "title": "The Perfect List (Example 11)",
+    "description": "Responsive Board List. Matches the tone of sub_page_10. Features a Classic Table that elegantly transforms into a Card List on mobile devices. Refined pagination and search UI.",
+    "path": "/static/versions/sub_page_11/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-09 16:00"
+  },
+  {
+    "id": "sub_page_10",
+    "title": "Board Detail View (Example 10)",
+    "description": "Board Post View. The detail page for the Classic Table board. Features a structured metadata header, clean typography for reading, file attachment box, and prev/next navigation. Optimized for readability.",
+    "path": "/static/versions/sub_page_10/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-09 15:00"
+  },
+  {
+    "id": "sub_page_09",
+    "title": "Text Board Variants (Example 9)",
+    "description": "Text Board Proposals. Showcases 3 styles: 1. Classic Table (Dense/Official), 2. Card Row (Separated/Interactive), 3. Timeline List (Editorial/Date-focused). All match the Crisp & Solid theme.",
+    "path": "/static/versions/sub_page_09/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-09 14:00"
+  },
+  {
+    "id": "sub_page_08",
+    "title": "Sticky LNB Layout (Example 8)",
+    "description": "Stable Navigation Alternative. Solves the 'Double Capsule' visual conflict. The Section Navigation starts below the hero and 'Sticks' to the top on scroll. Professional, grounded, and distraction-free.",
+    "path": "/static/versions/sub_page_08/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-09 13:00"
+  },
+  {
+    "id": "sub_page_07",
+    "title": "Bottom Nav Layout (Example 7)",
+    "description": "Mobile-first Navigation Variant. Based on Example 6, but moves the section anchor links to a floating Bottom Navigation Bar (BNB). Keeps the header clean and accessible.",
+    "path": "/static/versions/sub_page_07/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-09 12:00"
+  },
+  {
+    "id": "sub_page_06",
+    "title": "Content Structure Guide (Example 6)",
+    "description": "Heavy Content Solution. organizes massive text information (Majors, Application, Systems) into user-friendly Accordions, Step Process Cards, and Comparison Grids. Perfect for the 'Field Major Guide' page.",
+    "path": "/static/versions/sub_page_06/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-09 11:00"
+  },
+  {
+    "id": "sub_page_05",
+    "title": "Board Styles (Example 5)",
+    "description": "Board Design Proposals. Showcases 3 distinct styles: 1. Clean List with Tabs (Notices), 2. Visual Grid (Events), 3. Horizontal Webzine List. All aligned with the Glocal Violet identity.",
+    "path": "/static/versions/sub_page_05/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-09 10:00"
+  },
+  {
+    "id": "sub_page_04",
+    "title": "D-insight Webzine (Example 4)",
+    "description": "Production Example: Digital Webzine. Scrollytelling format with Parallax Cover, Horizontal Scroll Articles, and Floating Motion elements. Maintains Glocal Violet identity while delivering an editorial experience.",
+    "path": "/static/versions/sub_page_04/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-09 09:00"
+  },
+  {
+    "id": "sub_page_03",
+    "title": "Community & Support (Example 3)",
+    "description": "Production Example: Notice Board & Inquiry. Uses v33 Rich List and v34 Crisp Forms. Clean layout without sidebar.",
+    "path": "/static/versions/sub_page_03/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-09 08:00"
+  },
+  {
+    "id": "sub_page_02",
+    "title": "Curriculum & Track (Example 2)",
+    "description": "Production Example: Education Roadmap. Uses v34 Crisp Table styles for course lists. Centered layout suitable for dense information.",
+    "path": "/static/versions/sub_page_02/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-09 07:00"
+  },
+  {
+    "id": "sub_page_01",
+    "title": "About FIELD Campus (Example 1)",
+    "description": "Production Example: Introduction Page. Uses v35 Visual Hero style. Immersive top image followed by structured grid content.",
+    "path": "/static/versions/sub_page_01/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-09 06:00"
+  },
+  {
+    "id": "v_sub_36",
+    "title": "The Sidebar Layout (v_sub_36)",
+    "description": "Content-heavy Layout. Features a sticky Sidebar Navigation (LNB) on the left and structured content on the right. Perfect for Curriculum, Regulations, or FAQ pages.",
+    "path": "/static/versions/sub_v36/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-09 05:00"
+  },
+  {
+    "id": "v_sub_35",
+    "title": "The Visual Hero (v_sub_35)",
+    "description": "Visual Start Scenario. Replaces the text-only intro with an immersive background image Hero section (50% height). Features white text on dark visuals and a rounded connection to the content.",
+    "path": "/static/versions/sub_v35/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-09 04:00"
+  },
+  {
+    "id": "v_sub_34",
+    "title": "The Crisp Fix (v_sub_34)",
+    "description": "Fixes blurry elements in v32. Inputs and Lists now have crisp borders (#cbd5e1) and darker text (#111) for perfect legibility, while maintaining the soft card aesthetic.",
+    "path": "/static/versions/sub_v34/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-09 03:00"
+  },
+  {
+    "id": "v_sub_33",
+    "title": "The Detail Polish (v_sub_33)",
+    "description": "Content Density increased. 'Empty' lists and forms are now filled with rich UI elements (icons, avatars, toggles, file indicators). Keeps the clean background for readability.",
+    "path": "/static/versions/sub_v33/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-09 02:00"
+  },
+  {
+    "id": "v_sub_32",
+    "title": "The Perfect Glocal (v_sub_32)",
+    "description": "The Final Converged Standard. v30's Soft Figma Visuals + Floating Capsule Header + v31's Rich Interactions. Improved text contrast and shadows for a solid yet airy feel.",
+    "path": "/static/versions/sub_v32/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-09 01:00"
+  },
+  {
+    "id": "v_sub_31",
+    "title": "The Solid Glocal (v_sub_31)",
+    "description": "High Contrast & Rich Interaction. Solves 'faintness' with crisp borders and darker typography. Features lively micro-interactions (hover zoom, icon slide, active states).",
+    "path": "/static/versions/sub_v31/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-09 00:00"
+  },
+  {
+    "id": "v_sub_30",
+    "title": "The Glocal Refined (v_sub_30)",
+    "description": "Final Polish of the Glocal System. Improved contrast (darker text, deeper shadows), fixed side margins (centered container), and optimized visual weight. Ready for production.",
+    "path": "/static/versions/sub_v30/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-08 23:30"
+  },
+  {
+    "id": "v_sub_29",
+    "title": "The Glocal System (v_sub_29)",
+    "description": "The Ultimate Standard. Combines the structured components of 'Air System' (v27) with the 'Glocal Violet' visual identity (v28). Features soft shadows, 30px radius, violet accents, and functional sub-page layouts.",
+    "path": "/static/versions/sub_v29/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-08 23:00"
+  },
+  {
+    "id": "v_sub_28",
+    "title": "The Glocal Match (v_sub_28)",
+    "description": "Perfect Figma Match. Adopts the specific Glocal Violet (#3e31d5) and Pale Tint (#f1f2ff) palette. Features soft shadow cards (no borders), large radii (30px), and a high-contrast deep blue section.",
+    "path": "/static/versions/sub_v28/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-08 22:00"
+  },
+  {
+    "id": "v_sub_27",
+    "title": "The Air System (v_sub_27)",
+    "description": "Design System & Component Guide based on 'The Air Slim'. Includes Typography, Buttons, Count-up Animations, Photo Gallery, Notice Boards, and Accordions. A toolkit for building consistent sub-pages.",
+    "path": "/static/versions/sub_v27/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-08 21:00"
+  },
+  {
+    "id": "v_sub_26",
+    "title": "The Air Slim (v_sub_26)",
+    "description": "Refined 'iPhone Air' Concept. Ultra-slim borders, generous whitespace, and organized grid layouts. Natural scrolling with a focus on content hierarchy and clarity.",
+    "path": "/static/versions/sub_v26/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-08 20:00"
+  },
+  {
+    "id": "v_sub_25",
+    "title": "The Air Scrollytelling (v_sub_25)",
+    "description": "MacBook Air M3 Style. High-quality scrollytelling. Sticky sections, rhythmic typography, and 'Bento' feature grids. A polished, narrative-driven experience.",
+    "path": "/static/versions/sub_v25/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-08 19:00"
+  },
+  {
+    "id": "v_sub_24",
+    "title": "The Curriculum Finder (v_sub_24)",
+    "description": "macOS Sequoia Style. Clean 'Window' layout with Sidebar Navigation. Structured List Views perfect for displaying complex Curriculum and Academic Roadmaps.",
+    "path": "/static/versions/sub_v24/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-08 18:00"
+  },
+  {
+    "id": "v_sub_23",
+    "title": "The Dashboard (v_sub_23)",
+    "description": "CarPlay Style Web. Practical Dashboard Layout. Clean, high-contrast panels with rounded corners. Organized information density suitable for sub-pages.",
+    "path": "/static/versions/sub_v23/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-08 17:00"
+  },
+  {
+    "id": "v_sub_22",
+    "title": "The Ultra Titanium (v_sub_22)",
+    "description": "Apple Watch Ultra Style (White Titanium). International Orange Accents, Rugged Modular Grid, and DIN-style Typography. Professional and Technical.",
+    "path": "/static/versions/sub_v22/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-08 16:00"
+  },
+  {
+    "id": "v_sub_21",
+    "title": "Spatial Vision OS (v_sub_21)",
+    "description": "Apple Vision Pro Style. Immersive 'Spatial Computing' layout. Glass panels with depth, gaze-driven hover effects, and a sense of physical presence in a digital space.",
+    "path": "/static/versions/sub_v21/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-08 15:00"
+  },
+  {
+    "id": "v_sub_20",
+    "title": "The Air Light Mode (v_sub_20)",
+    "description": "iPad Air Style. Colorful, playful, and bright. Big gradient typography, smooth scroll animations, and a focus on 'Lightness' and 'Creativity'.",
+    "path": "/static/versions/sub_v20/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-08 14:00"
+  },
+  {
+    "id": "v_sub_19",
+    "title": "The Pro White Mode (v_sub_19)",
+    "description": "iPhone Pro Style (White). Titan Typography on Clean White. High-end, premium engineering vibe with Always-Visible Capsule Header.",
+    "path": "/static/versions/sub_v19/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-08 13:00"
+  },
+  {
+    "id": "v_sub_18",
+    "title": "The Glassy Professional (v_sub_18)",
+    "description": "Premium Glassmorphism Design. Soft Aurora Gradient background with frosted glass cards. Clean, modern, and highly readable.",
+    "path": "/static/versions/sub_v18/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 23:00"
+  },
+  {
+    "id": "v_sub_17",
+    "title": "The Kinetic Layers (v_sub_17)",
+    "description": "Experimental Layout using Mix-Blend-Mode. Typography overlaps images and changes color. Kinetic Marquee and Layered Reveal effects.",
+    "path": "/static/versions/sub_v17/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 22:00"
+  },
+  {
+    "id": "v_sub_16",
+    "title": "The Korean Smart Grid (v_sub_16)",
+    "description": "Optimized for Korean Typography (SUIT, Word-break). Features Sticky Intro + Smart Grid Layout with immersive video hero.",
+    "path": "/static/versions/sub_v16/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 21:00"
+  },
+  {
+    "id": "v_sub_15",
+    "title": "The Art Gallery (v_sub_15)",
+    "description": "Editorial Minimal Design. Features Split Layout (Pin & Slide), Horizontal Scroll for Curriculum, and refined typography. Understated elegance.",
+    "path": "/static/versions/sub_v15/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 20:00"
+  },
+  {
+    "id": "v_sub_14",
+    "title": "Color Stacking Scroll (v_sub_14)",
+    "description": "Immersive 'Card Stacking' layout where each section has a distinct color theme (White -> Dark -> Blue). Always Floating Capsule Header included.",
+    "path": "/static/versions/sub_v14/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 19:00"
+  },
+  {
+    "id": "v_sub_13",
+    "title": "The Free-Flow Grid (v_sub_13)",
+    "description": "Trendy Asymmetrical Layout. Always Floating Capsule Header. Zigzag Parallax Content. Background color transitions to Dark Mode on scroll.",
+    "path": "/static/versions/sub_v13/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 18:00"
+  },
+  {
+    "id": "v_sub_12",
+    "title": "True Floating Header (v_sub_12)",
+    "description": "Sub-page implementation respecting the 'Floating Capsule Header' design (v41). Features layered hero section and independent tab navigation.",
+    "path": "/static/versions/sub_v12/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 17:00"
+  },
+  {
+    "id": "v_sub_11",
+    "title": "Integrated Header (v_sub_11)",
+    "description": "Seamless Sub-page experience inheriting the Main Page's Context-Aware Floating Header logic. Features Smart Sticky LNB that attaches to header or top.",
+    "path": "/static/versions/sub_v11/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 16:00"
+  },
+  {
+    "id": "v_sub_10",
+    "title": "The Cinematic Scroll (v_sub_10)",
+    "description": "Full-screen Scrollytelling with Sticky Text and Background Video changes. Maximizes immersion for introductory content.",
+    "path": "/static/versions/sub_v10/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 15:00"
+  },
+  {
+    "id": "v_sub_9",
+    "title": "The Bento Archive (v_sub_9)",
+    "description": "Modern Bento Grid Layout. Modular blocks for Video, Stats, Images, and Links. High information density with trendy UI.",
+    "path": "/static/versions/sub_v9/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 14:00"
+  },
+  {
+    "id": "v_sub_8",
+    "title": "The Research Insight (v_sub_8)",
+    "description": "Magazine & Dashboard Style Layout for Research/Business pages. Features Key Metrics Hero, Cluster Grid, and Project Slider.",
+    "path": "/static/versions/sub_v8/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 13:00"
+  },
+  {
+    "id": "v_sub_7",
+    "title": "Clean LNB (v_sub_7)",
+    "description": "Removed redundant Floating Nav. Implemented 'Sticky Tab Bar' for Mobile and 'Side Dot Nav' for Desktop. Cleanest integration with 4th Draft Header.",
+    "path": "/static/versions/sub_v7/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 12:00"
+  },
+  {
+    "id": "v_sub_6",
+    "title": "The Stacking Experience (v_sub_6)",
+    "description": "Trendy Card Stacking Scroll Layout. Bottom-fixed Floating Capsule Nav (like Arc/iOS). Split screen sticky interaction for immersive storytelling.",
+    "path": "/static/versions/sub_v6/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 11:00"
+  },
+  {
+    "id": "v_sub_5",
+    "title": "The Ultimate Standard (v_sub_5)",
+    "description": "Combines the requested 'Round Floating Capsule Nav' with GSAP Scrollytelling. Features Parallax Hero, Horizontal Curriculum Scroll, and Bento Grid Facilities.",
+    "path": "/static/versions/sub_v5/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 10:00"
+  },
+  {
+    "id": "v_sub_4",
+    "title": "The Scroll Narrative (v_sub_4)",
+    "description": "Interactive Scrollytelling Layout using GSAP. Features Horizontal Scroll Section, Typography Reveal, and Parallax Image effects. Highly immersive experience.",
+    "path": "/static/versions/sub_v4/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 09:00"
+  },
+  {
+    "id": "v_sub_3",
+    "title": "The Tech Dashboard (v_sub_3)",
+    "description": "A completely new Sub-page Concept: Dark Mode Parallax Hero, Floating Capsule Nav (Auto-show), and Bento Grid Layout. Focused on 'Data' and 'Visual Immersion'.",
+    "path": "/static/versions/sub_v3/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 08:00"
+  },
+  {
+    "id": "v_sub_2",
+    "title": "Connected Field Campus Detail (v_sub_2)",
+    "description": "Corrected Sub-page design matching the '4th Draft' and 'Color System'. Aligned Header, Fonts, and Rounded Card styles. Focus on Alliance Indigo identity.",
+    "path": "/static/versions/sub_v2/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 07:00"
+  },
+  {
+    "id": "v_sub_1",
+    "title": "Sub-Page Standard (v_sub_1)",
+    "description": "Standard Sub-page Template featuring Sub-Hero, Sticky LNB, and Content Grid. Based on Main Page design DNA.",
+    "path": "/static/versions/sub_v1/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 06:00"
+  },
+  {
+    "id": "v76",
+    "title": "Peeking 3D Carousel (v76)",
+    "description": "Reduced card width to 240px to show neighboring cards (Peeking). Gentle 3D Arc motion and opacity control for better scroll affordance.",
+    "path": "/static/versions/v76/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 05:00"
+  },
+  {
+    "id": "v75",
+    "title": "3D Ark Carousel (v75)",
+    "description": "Removed FOCUS label. Applied 3D Arc Motion: cards rise from below and scale up as they approach the center. Seamless infinite loop.",
+    "path": "/static/versions/v75/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 04:00"
+  },
+  {
+    "id": "v74",
+    "title": "Infinite Focus Loop (v74)",
+    "description": "Perfect infinite looping carousel with snap scrolling. Cards snap exactly into the fixed focus frame. Seamless 'Clone' logic implemented.",
+    "path": "/static/versions/v74/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 03:00"
+  },
+  {
+    "id": "v73",
+    "title": "Mobile Focus Carousel (v73)",
+    "description": "Implemented 'Focus Snap Carousel' for mobile. Fixed purple border frame stays in center, cards slide behind it. Map pins sync with scroll.",
+    "path": "/static/versions/v73/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 02:00"
+  },
+  {
+    "id": "v72",
+    "title": "Typo Tuned Map (v72)",
+    "description": "Adjusted font weights (Semibold / ExtraBold / Regular) and card width to ensure one-line titles. Final Polish for Blueprint Style.",
+    "path": "/static/versions/v72/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 01:00"
+  },
+  {
+    "id": "v71",
+    "title": "Final Blueprint (v71)",
+    "description": "The Ultimate Combination: v70's Blueprint Card Design + v68's Forced Pulse Logic. Ensuring perfect visibility and style.",
+    "path": "/static/versions/v71/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-05 00:00"
+  },
+  {
+    "id": "v70",
+    "title": "Blueprint Card Style (v70)",
+    "description": "Implemented the requested Rounded Card Design: White background, Bold Blue Border, Full-height Image on left. Infinite Pulse restored.",
+    "path": "/static/versions/v70/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 23:00"
+  },
+  {
+    "id": "v69",
+    "title": "Impact Pulse (v69)",
+    "description": "Large scale, high-impact pulse animation that runs 4 times and stops. Perfect visibility and cleaner UX.",
+    "path": "/static/versions/v69/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 22:00"
+  },
+  {
+    "id": "v68",
+    "title": "Pulse Animation Revival (v68)",
+    "description": "Forced animation on pseudo-elements to ensure Pulse visibility. Simplified keyframes and layout fixes for consistent rendering.",
+    "path": "/static/versions/v68/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 21:00"
+  },
+  {
+    "id": "v67",
+    "title": "Frameless HUD Fix (v67)",
+    "description": "Fixed the 'Square Pulse' issue by using a pseudo-element with forced border-radius. Clean Frameless HUD style preserved.",
+    "path": "/static/versions/v67/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 20:00"
+  },
+  {
+    "id": "v66",
+    "title": "Mobile Map Layouts (v66)",
+    "description": "3 Mobile-Specific Layouts for Map Interaction: Horizontal Swiper (Airbnb), Vertical Pull-up (Naver Map), Focus Context (Taxi App).",
+    "path": "/static/versions/v66/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 19:00"
+  },
+  {
+    "id": "v65",
+    "title": "Square Card Gallery (v65)",
+    "description": "3 Styles of Square Image Cards: Polaroid (Vertical), Side-by-Side (Horizontal), and Overlay (Immersive). Modern and instagram-like layout.",
+    "path": "/static/versions/v65/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 18:00"
+  },
+  {
+    "id": "v64",
+    "title": "Compact Glass Node (v64)",
+    "description": "Smaller card size with Glassmorphism background to blend with the map. Brand blue accents for integration. Pulse effect retained.",
+    "path": "/static/versions/v64/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 17:00"
+  },
+  {
+    "id": "v63",
+    "title": "Large Image Node (v63)",
+    "description": "Expanded the thumbnail to a 16:9 Panoramic Card. Shows rich visual context on hover/tap. Suitable for building exteriors or lab interiors.",
+    "path": "/static/versions/v63/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 16:00"
+  },
+  {
+    "id": "v62",
+    "title": "Living Glow Node (v62)",
+    "description": "Initial State: Breathing Glow (box-shadow animation). Active State: Strong Static Glow + Line Expand + Card Reveal. Perfect visibility.",
+    "path": "/static/versions/v62/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 15:00"
+  },
+  {
+    "id": "v61",
+    "title": "High-Visibility Pulse (v61)",
+    "description": "Double Ring Pulse animation using real DOM elements to ensure visibility. Unified motion for desktop/mobile interaction.",
+    "path": "/static/versions/v61/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 14:00"
+  },
+  {
+    "id": "v60",
+    "title": "Unified Motion (v60)",
+    "description": "Identical animation for Desktop (Hover) & Mobile (Tap). Fixed Pulse visibility using real DOM elements. Responsive line length.",
+    "path": "/static/versions/v60/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 13:00"
+  },
+  {
+    "id": "v59",
+    "title": "Final Polish (v59)",
+    "description": "Perfect circular pulse using pseudo-elements. Cleaned up hover interaction with 'Rich Card' style (Thumbnail + Text). Optimized for both Desktop and Mobile.",
+    "path": "/static/versions/v59/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 12:00"
+  },
+  {
+    "id": "v58",
+    "title": "Frameless HUD (v58)",
+    "description": "Removed card box for a cleaner, HUD-like look. Stronger 'Pulse' animation. Text shadow for readability. Circle Bubble option.",
+    "path": "/static/versions/v58/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 11:00"
+  },
+  {
+    "id": "v57",
+    "title": "Data-Specific Living Node (v57)",
+    "description": "Implemented 'Double Pulse' animation for high visibility. Updated content to specific data: Category (e.g. 전력반도체), Name (e.g. 부산테크노파크), Location (e.g. 남구 감만동).",
+    "path": "/static/versions/v57/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 10:00"
+  },
+  {
+    "id": "v56",
+    "title": "Refined Living Node (v56)",
+    "description": "Simplified motion (One-time expand). Strong initial Pulse effect. Mobile-optimized tap interaction (Card Popover).",
+    "path": "/static/versions/v56/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 09:00"
+  },
+  {
+    "id": "v55",
+    "title": "Tech-Architectural Node (v55)",
+    "description": "Reimagined Connected Node with rectangular holographic frames instead of circles. Construction line animation and scan effects for a more professional, architectural feel.",
+    "path": "/static/versions/v55/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 09:00"
+  },
+  {
+    "id": "v54",
+    "title": "Rich Living Node (v54)",
+    "description": "Fixed Pulse animation with custom CSS. Added Rich Content (Thumbnail + Badge + Title) for both Desktop (Line Connect) and Mobile (Card Pop).",
+    "path": "/static/versions/v54/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 08:00"
+  },
+  {
+    "id": "v53",
+    "title": "Living Node System (v53)",
+    "description": "Unified 'Connected Node' system for both Desktop (Hover & Line) and Mobile (Tap & Morph/Bubble). Pulse animation for initial attention.",
+    "path": "/static/versions/v53/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 07:00"
+  },
+  {
+    "id": "v52",
+    "title": "Universal Map Pin UI (v52)",
+    "description": "6 Map Pin designs that work seamlessly on both Desktop (Hover) and Mobile (Tap/Always Visible). Tag, Pill, Expandable, etc.",
+    "path": "/static/versions/v52/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 06:00"
+  },
+  {
+    "id": "v51",
+    "title": "Mobile Connected Node (v51)",
+    "description": "Adapted 'Connected Node' concept for mobile screens. 3 Prototypes: Touch & Connect, HUD Scroll Scanning, Vertical Flow Accordion.",
+    "path": "/static/versions/v51/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 05:00"
+  },
+  {
+    "id": "v50",
+    "title": "Mobile Map UI Gallery (v50)",
+    "description": "10 Responsive solutions for map interaction on mobile devices. Bottom Sheet, Floating Swiper, Full Modal, etc. simulated in phone mockups.",
+    "path": "/static/versions/v50/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 04:00"
+  },
+  {
+    "id": "v49",
+    "title": "Connected Node 10 (v49)",
+    "description": "10 variations of 'Connected Node' interaction. Line-based, Bubble Pop, Region Glow, etc. Focusing on minimal tech vibe.",
+    "path": "/static/versions/v49/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 03:00"
+  },
+  {
+    "id": "v48",
+    "title": "Connected Node UI (v48)",
+    "description": "A unique, fancy interaction where info lines expand from dots on hover. No box cards, just connected typography and lines. Sci-fi/Tech vibe.",
+    "path": "/static/versions/v48/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 02:00"
+  },
+  {
+    "id": "v47",
+    "title": "Brand Widgets (v47)",
+    "description": "Re-colored 6 interactive widgets using the official brand palette (Primary #4132CC, Mint #00BEB5). Perfectly tailored for Glocal University.",
+    "path": "/static/versions/v47/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 01:00"
+  },
+  {
+    "id": "v46",
+    "title": "Interactive Widgets (v46)",
+    "description": "6 High-end card styles focusing on 'Clickability' and 'Micro-interaction'. iOS Widget, Dynamic Island, Drawer, Glass Overlay, Folder, Neon Border.",
+    "path": "/static/versions/v46/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-04 00:00"
+  },
+  {
+    "id": "v45",
+    "title": "12 Card Styles Fixed (v45)",
+    "description": "Correctly displayed 12 card styles on a map background. Only Category, Photo, Title included. Clean & Fancy variations.",
+    "path": "/static/versions/v45/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 23:00"
+  },
+  {
+    "id": "v44",
+    "title": "Brand Card Gallery (v44)",
+    "description": "12 Card variations tailored to the Glocal University brand theme (Deep Blue #3E31D5, SUIT Font). Ranging from Clean/Professional to Modern/Glass.",
+    "path": "/static/versions/v44/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 22:00"
+  },
+  {
+    "id": "v43",
+    "title": "Card Design Gallery (v43)",
+    "description": "A gallery of 12 distinct card design styles: Classic, Glassmorphism, Neumorphism, Minimal, Dark Mode, Brutalism, and more. Visual reference for selection.",
+    "path": "/static/versions/v43/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 21:00"
+  },
+  {
+    "id": "v42",
+    "title": "Solid Card Styles (v42)",
+    "description": "Non-glassmorphism card options: Floating Tile (Clean White), Minimal Border (Brutalism), and Dark Accent (Night Mode).",
+    "path": "/static/versions/v42/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 20:00"
+  },
+  {
+    "id": "v41",
+    "title": "Card Styles (v41)",
+    "description": "Card Style Playground: Frosty Glass vs Dark Onyx vs Neon Aurora. Interactive Map pins showcase 3 different glassmorphism card designs.",
+    "path": "/static/versions/v41/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 19:00"
+  },
+  {
+    "id": "v40",
+    "title": "Interactive Map (v40)",
+    "description": "Replaced Strategy text section with an Interactive Map featuring Glassmorphism cards (Figma Option 2 style).",
+    "path": "/static/versions/v40/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 18:00"
+  },
+  {
+    "id": "v39",
+    "title": "Clean Text Link (v39)",
+    "description": "Removed Compass Icon. 'Student Success Center' is now a clean, bold text link. Preserved v37's refined layout and v31's interaction.",
+    "path": "/static/versions/v39/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 17:00"
+  },
+  {
+    "id": "v38",
+    "title": "Compass Icon (v38)",
+    "description": "Final Polish: Added Compass Icon to 'Student Success Center' link. Preserved v37's refined layout and typography.",
+    "path": "/static/versions/v38/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 16:00"
+  },
+  {
+    "id": "v37",
+    "title": "v31 Refined (v37)",
+    "description": "Restored v31's stable layout. Improved typography (leading-relaxed). Aligned body content with header width (1400px).",
+    "path": "/static/versions/v37/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 15:00"
+  },
+  {
+    "id": "v36",
+    "title": "Ultimate Fix (v36)",
+    "description": "Solved Full Screen Expand issue by using absolute positioning based on window center. Improved typography with wider leading.",
+    "path": "/static/versions/v36/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 14:00"
+  },
+  {
+    "id": "v35",
+    "title": "Fix Expand & Typo (v35)",
+    "description": "Fixed video full-screen expand issue by moving video outside layout container. Improved main text typography (leading). 1920px Centered Layout.",
+    "path": "/static/versions/v35/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 13:00"
+  },
+  {
+    "id": "v34",
+    "title": "Overflowing Hero & 1920 Layout (v34)",
+    "description": "Max-width 1920px centralized layout. Hero video overflows to the right (off-canvas) for dynamic entry. Context-aware header preserved.",
+    "path": "/static/versions/v34/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 12:00"
+  },
+  {
+    "id": "v33",
+    "title": "The Masterpiece (v33)",
+    "description": "Combines v31's Context-Aware Header with v32's Layout Alignment. Floating Header hides on video, shows on content. Content aligns perfectly with Header width.",
+    "path": "/static/versions/v33/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 11:00"
+  },
+  {
+    "id": "v32",
+    "title": "Final Content Polish (v32)",
+    "description": "Updated Main Copy (Vision 2030). Aligned Desktop Content width (1400px) with Header for grid consistency. Cinematic Expand preserved.",
+    "path": "/static/versions/v32/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 10:00"
+  },
+  {
+    "id": "v31",
+    "title": "Context-Aware Cinematic Header (v31)",
+    "description": "Header disappears during the immersive video section (Scroll Down) and reappears when content starts (or user scrolls to very top). Perfect balance of immersion and usability.",
+    "path": "/static/versions/v31/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 09:00"
+  },
+  {
+    "id": "v30",
+    "title": "Floating Cinematic Header (v30)",
+    "description": "Rounded Floating Header design with Cinematic Hide/Show logic. Hides on scroll/expand for immersion, reappears on demand.",
+    "path": "/static/versions/v30/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 08:00"
+  },
+  {
+    "id": "v29",
+    "title": "Cinematic Header & Giant Hero (v29)",
+    "description": "Initial Video size increased (70vw/75vh). Header hides on scroll down/expand for immersion, shows on scroll up/content. Perfect blend.",
+    "path": "/static/versions/v29/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 07:00"
+  },
+  {
+    "id": "v28",
+    "title": "Floating Smart Header (v28)",
+    "description": "App-like floating header that hides on scroll down and shows on scroll up. Clean Expand layout preserved.",
+    "path": "/static/versions/v28/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 06:00"
+  },
+  {
+    "id": "v27",
+    "title": "Solid Header & Big Hero (v27)",
+    "description": "Always Solid White Header for stability. Cool Gray background with larger initial video (70vh). Polished split expansion.",
+    "path": "/static/versions/v27/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 05:00"
+  },
+  {
+    "id": "v26",
+    "title": "Perfect Full Screen Expand (v26)",
+    "description": "Fixed layout. Video breaks out of container to cover 100vw/100vh edge-to-edge on scroll. Immersive experience.",
+    "path": "/static/versions/v26/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 04:00"
+  },
+  {
+    "id": "v25",
+    "title": "Clean Expand & Cool Gray (v25)",
+    "description": "Background: #F5F5F7 (Cool Gray). Removed dots. Initial video size increased (70vw). Perfect centered expansion.",
+    "path": "/static/versions/v25/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 03:00"
+  },
+  {
+    "id": "v24",
+    "title": "True Full Screen Expand (v24)",
+    "description": "Fixed layout issue. Video now expands to cover the entire screen (100vw/100vh) edge-to-edge on scroll. Immersive experience.",
+    "path": "/static/versions/v24/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 02:00"
+  },
+  {
+    "id": "v23",
+    "title": "Polished Split Expand (v23)",
+    "description": "Perfected Split-to-Full interaction. Center-aligned video expansion, background dot pattern, and tighter layout for wide screens.",
+    "path": "/static/versions/v23/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 01:30"
+  },
+  {
+    "id": "v22",
+    "title": "Split Expand & Tight Layout (v22)",
+    "description": "Initial Left Text / Right Video layout that expands to Full Screen Video on scroll. Tighter container for WHD monitors.",
+    "path": "/static/versions/v22/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 01:00"
+  },
+  {
+    "id": "v21",
+    "title": "Expand to Full & Tight Layout (v21)",
+    "description": "Starts with Floating Rounded Video -> Expands to Full Screen on Scroll. Tighter container for WHD monitors.",
+    "path": "/static/versions/v21/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 00:30"
+  },
+  {
+    "id": "v20",
+    "title": "Reverse Expand (Full to Split)",
+    "description": "Start with Full-screen Video -> Scroll to shrink into Floating Card + Split Text. Apple TV+ style interaction. Mobile-optimized.",
+    "path": "/static/versions/v20/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-03 00:00"
+  },
+  {
+    "id": "v19",
+    "title": "Apple TV+ Style Split (v19)",
+    "description": "Initial split layout (Left Text / Right Video) that expands to full-screen video with overlay text on scroll. Immersive storytelling.",
+    "path": "/static/versions/v19/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-02 23:30"
+  },
+  {
+    "id": "v18",
+    "title": "White Expand Hero (v18)",
+    "description": "White background. Rounded video box expands on scroll (Apple/Toss style). Mobile video optimized with portrait aspect ratio.",
+    "path": "/static/versions/v18/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-02 23:00"
+  },
+  {
+    "id": "v17",
+    "title": "Intro Story & Mobile Split (v17)",
+    "description": "Desktop: Intro Text -> Video Reveal interaction. Mobile: Top Video / Bottom Text split layout to prevent cropping. Optimized UX.",
+    "path": "/static/versions/v17/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-02 22:00"
+  },
+  {
+    "id": "v16",
+    "title": "Floating Video Layout (Final)",
+    "description": "Desktop Hero video floats with padding and scales down on scroll (Apple style). Mobile video fits screen height.",
+    "path": "/static/versions/v16/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-02 21:00"
+  },
+  {
+    "id": "v15",
+    "title": "Text Link Polish (v15)",
+    "description": "Replaced 'Student Success Icon' with explicit text link + arrow for clarity. Most user-friendly for public institutions.",
+    "path": "/static/versions/v15/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-02 20:30"
+  },
+  {
+    "id": "v14",
+    "title": "Graduation Cap Icon (v14)",
+    "description": "Replaced Student Success Center icon with a clean 'Graduation Cap' symbol. Most intuitive and academic look.",
+    "path": "/static/versions/v14/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-02 20:00"
+  },
+  {
+    "id": "v13",
+    "title": "Final Icon Polish & Details (v13)",
+    "description": "Replaced 'User' icon with 'Compass/Puzzle' for Student Success Center. Refined tooltip and finishing touches.",
+    "path": "/static/versions/v13/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-02 19:30"
+  },
+  {
+    "id": "v12",
+    "title": "Royal Edition (Lakers Gold Point)",
+    "description": "Premium feel with Deep Lakers Gold (#FDB927) accent color. Adjusted for a more authoritative and luxurious look.",
+    "path": "/static/versions/v12/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-02 19:00"
+  },
+  {
+    "id": "v11",
+    "title": "Brand Point & Detail Polish (v11)",
+    "description": "Added Yellow Dot (.) to D-insight logo for branding. Refined color harmony with yellow accents.",
+    "path": "/static/versions/v11/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-02 18:30"
+  },
+  {
+    "id": "v10",
+    "title": "Digital Network & More Stories (v10)",
+    "description": "Added 'Digital Network' Section 3 with particle canvas & count-up data. Expanded Dinsight with 5 cards + View More link.",
+    "path": "/static/versions/v10/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-02 18:00"
+  },
+  {
+    "id": "v9",
+    "title": "Neon Future (Dark Mode Color System)",
+    "description": "Bold Dark Theme with Electric Indigo & Neon Mint gradients. Glassmorphism UI and futuristic vibes.",
+    "path": "/static/versions/v9/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-02 17:00"
+  },
+  {
+    "id": "v8",
+    "title": "Apple Vertical Sticky & Clean Cards (v8)",
+    "description": "Full-screen Vertical Sticky Scrolling (Image Background + Text Overlay). Clean 'Image Top / Text Bottom' cards for Dinsight. NEWSLETTER typo update.",
+    "path": "/static/versions/v8/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-02 16:30"
+  },
+  {
+    "id": "v7",
+    "title": "Apple Horizontal Scroll (Dinsight)",
+    "description": "Added Apple-style horizontal snap scrolling news section with large cards and zoom hover effects. Dark mode Dinsight area.",
+    "path": "/static/versions/v7/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-02 16:00"
+  },
+  {
+    "id": "v6",
+    "title": "Kakao Interactive Scroll (v6)",
+    "description": "True Sticky Interaction with Text Morphing & Progress Indicator. Deep Parallax and seamless transitions.",
+    "path": "/static/versions/v6/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-02 15:30"
+  },
+  {
+    "id": "v5",
+    "title": "Clean Minimal & Sticky (v5)",
+    "description": "Text-free Cinematic Hero, Student Success Icon Tooltip, Real Kakao-style Sticky Scrolling.",
+    "path": "/static/versions/v5/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-02 14:30"
+  },
+  {
+    "id": "v4",
+    "title": "Kakao Style Header & Visual",
+    "description": "Refined Sticky Header (Transparent -> White), Slideshow Hero with interview photos, Typographic Dinsight icon.",
+    "path": "/static/versions/v4/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-02 14:00"
+  },
+  {
+    "id": "v3",
+    "title": "Cinematic & Interactive (Kakao Style)",
+    "description": "Featuring real site photos, sticky scrolling interactions, and cinematic hero section.",
+    "path": "/static/versions/v3/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-02 13:30"
+  },
+  {
+    "id": "v2",
+    "title": "Glocal Hybrid Theme (2.0)",
+    "description": "Enhanced design with Glassmorphism, Cinematic Hero, Bento Grid, and Masonry Layout.",
+    "path": "/static/versions/v2/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-02 11:30"
+  },
+  {
+    "id": "v1",
+    "title": "Initial Prototype (Figma)",
+    "description": "Faithful implementation of the original Figma design using Tailwind CSS.",
+    "path": "/static/versions/v1/index.html",
+    "snapshot": "/static/versions/v1/preview.jpg",
+    "date": "2026-02-02 10:00"
+  }
+]

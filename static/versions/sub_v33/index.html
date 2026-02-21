@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glocal Design System - Detail Polish</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        /* --- VISUAL TOKENS --- */
+        :root {
+            --primary: #3e31d5;
+            --primary-dark: #2a21a0;
+            --primary-light: #f1f2ff;
+            
+            --text-title: #111111;
+            --text-body: #333336;
+            --text-cap: #66666e;
+            
+            --bg-page: #f5f7fa;
+            --card-bg: #ffffff;
+            
+            --card-radius: 30px;
+        }
+
+        body { 
+            background-color: var(--bg-page); 
+            color: var(--text-body); 
+            font-family: 'SUIT', sans-serif; 
+            overflow-x: hidden;
+        }
+
+        /* Subtle Top Gradient (to answer "Background" question) */
+        .page-gradient {
+            position: absolute; top: 0; left: 0; width: 100%; height: 600px;
+            background: linear-gradient(to bottom, #eef2ff, transparent);
+            z-index: -1; pointer-events: none;
+        }
+
+        /* --- LAYOUT --- */
+        .main-container { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+        .section-gap { margin-bottom: 120px; }
+
+        /* --- COMPONENTS --- */
+        
+        /* 1. Header (Floating) */
+        .header-container {
+            position: fixed; top: 24px; left: 0; width: 100%; z-index: 1000;
+            display: flex; justify-content: center; pointer-events: none;
+        }
+        .capsule-header {
+            pointer-events: auto;
+            background: rgba(255, 255, 255, 0.9); 
+            backdrop-filter: saturate(180%) blur(20px);
+            border-radius: 100px;
+            padding: 12px 36px;
+            display: flex; align-items: center; gap: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid rgba(255,255,255,0.5);
+            transition: all 0.3s ease;
+        }
+        .nav-item { font-size: 15px; font-weight: 700; color: var(--text-cap); cursor: pointer; transition: 0.2s; }
+        .nav-item:hover, .nav-item.active { color: var(--primary); }
+        .logo { font-weight: 900; font-size: 18px; letter-spacing: -0.5px; color: var(--text-title); }
+
+        /* 2. Cards */
+        .glocal-card {
+            background: var(--card-bg);
+            border-radius: var(--card-radius);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .glocal-card.interactive:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(62, 49, 213, 0.15);
+        }
+
+        /* 3. Typography */
+        .h3-title { font-size: 24px; font-weight: 800; letter-spacing: -0.01em; color: var(--text-title); }
+        .caption { font-size: 13px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; display: block; }
+
+        /* 4. Enhanced Inputs */
+        .input-group { position: relative; }
+        .input-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-cap); }
+        .input-field {
+            width: 100%; padding: 16px 16px 16px 48px; /* Left padding for icon */
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            font-size: 16px; font-weight: 500; color: #111;
+            transition: 0.2s; outline: none;
+        }
+        .input-field:focus {
+            background: #fff; border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(62, 49, 213, 0.1);
+        }
+        
+        /* Toggle Switch */
+        .toggle-checkbox:checked { right: 0; border-color: var(--primary); }
+        .toggle-checkbox:checked + .toggle-label { background-color: var(--primary); }
+        .toggle-checkbox:checked + .toggle-label:before { transform: translateX(100%); }
+        
+        /* 5. Rich List */
+        .rich-row { 
+            display: flex; align-items: center; gap: 20px;
+            padding: 24px 32px; border-bottom: 1px solid #f0f0f5; 
+            transition: 0.2s; cursor: pointer;
+        }
+        .rich-row:hover { background: var(--primary-light); }
+        .rich-row:last-child { border-bottom: none; }
+        
+        .file-icon { width: 40px; height: 40px; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--primary); }
+        .download-btn { padding: 8px 16px; border-radius: 8px; background: white; border: 1px solid #e2e8f0; font-size: 13px; font-bold; color: var(--text-cap); transition: 0.2s; }
+        .rich-row:hover .download-btn { border-color: var(--primary); color: var(--primary); }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--primary); color: white; border-radius: 100px; padding: 14px 32px; font-size: 16px; font-weight: 700;
+            transition: 0.3s; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+            box-shadow: 0 8px 20px rgba(62, 49, 213, 0.25);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(62, 49, 213, 0.4); }
+
+    </style>
+</head>
+<body>
+
+    <div class="page-gradient"></div>
+
+    <!-- Header -->
+    <div class="header-container">
+        <header class="capsule-header">
+            <div class="logo">GLOCAL SYSTEM</div>
+            <nav class="nav-list hidden md:flex gap-10">
+                <a class="nav-item active">Components</a>
+                <a class="nav-item">Foundation</a>
+                <a class="nav-item">Patterns</a>
+            </nav>
+            <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center cursor-pointer hover:bg-indigo-50 transition">
+                <span class="text-sm font-bold text-gray-700">≡</span>
+            </div>
+        </header>
+    </div>
+
+    <div class="main-container pt-40 pb-20">
+        
+        <!-- Intro -->
+        <div class="mb-24 text-center">
+            <span class="caption mb-6 inline-block bg-white px-4 py-1.5 rounded-full shadow-sm border border-gray-100 text-sm">Design System v3.1 Detail</span>
+            <h1 class="text-5xl font-extrabold mb-6 text-[#111]">
+                Details Matter.
+            </h1>
+            <p class="text-lg text-gray-500 max-w-2xl mx-auto font-medium">
+                서브 페이지 배경은 깔끔한 것이 가장 좋습니다.<br>
+                대신 콘텐츠의 밀도를 높여 비어 보이지 않게 채웠습니다.
+            </p>
+        </div>
+
+        <!-- 1. Rich Interactive List -->
+        <section class="section-gap">
+            <span class="caption">01. Rich List Items</span>
+            
+            <div class="glocal-card p-0 mb-12">
+                <div class="flex justify-between items-center p-8 pb-4 border-b border-gray-100">
+                    <h3 class="h3-title">자료실 (Resources)</h3>
+                    <button class="text-primary font-bold text-sm hover:underline">View All</button>
+                </div>
+                
+                <div class="w-full">
+                    <!-- Row 1 -->
+                    <div class="rich-row group">
+                        <div class="file-icon shadow-sm">📄</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-1">
+                                <span class="bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded text-[11px] font-bold">GUIDE</span>
+                                <h4 class="text-base font-bold text-[#111]">2026학년도 신입생 모집요강.pdf</h4>
+                            </div>
+                            <p class="text-xs text-gray-400">입학관리처 • 2.5MB</p>
+                        </div>
+                        <span class="text-sm text-gray-500 font-mono hidden md:block">2026.02.09</span>
+                        <button class="download-btn">Download ↓</button>
+                    </div>
+                    <!-- Row 2 -->
+                    <div class="rich-row group">
+                        <div class="file-icon shadow-sm">📊</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-1">
+                                <span class="bg-blue-50 text-blue-600 px-2 py-0.5 rounded text-[11px] font-bold">REPORT</span>
+                                <h4 class="text-base font-bold text-[#111]">2025 산학협력 성과보고서.pptx</h4>
+                            </div>
+                            <p class="text-xs text-gray-400">LINC 3.0 사업단 • 12MB</p>
+                        </div>
+                        <span class="text-sm text-gray-500 font-mono hidden md:block">2026.02.01</span>
+                        <button class="download-btn">Download ↓</button>
+                    </div>
+                    <!-- Row 3 -->
+                    <div class="rich-row group">
+                        <div class="file-icon shadow-sm">📝</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-1">
+                                <span class="bg-gray-100 text-gray-600 px-2 py-0.5 rounded text-[11px] font-bold">FORM</span>
+                                <h4 class="text-base font-bold text-[#111]">현장실습 신청서 양식.hwp</h4>
+                            </div>
+                            <p class="text-xs text-gray-400">학생지원팀 • 500KB</p>
+                        </div>
+                        <span class="text-sm text-gray-500 font-mono hidden md:block">2026.01.28</span>
+                        <button class="download-btn">Download ↓</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Detailed Forms -->
+        <section class="section-gap">
+            <span class="caption">02. Detailed Forms</span>
+            <div class="glocal-card p-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                    <!-- Column 1 -->
+                    <div>
+                        <h3 class="h3-title mb-8">Newsletter Info</h3>
+                        <div class="space-y-6">
+                            <!-- Input with Icon -->
+                            <div>
+                                <label class="block text-sm font-bold text-gray-500 mb-2 uppercase tracking-wide">Email Address</label>
+                                <div class="input-group">
+                                    <span class="input-icon">✉️</span>
+                                    <input type="email" placeholder="example@glocal.ac.kr" class="input-field">
+                                </div>
+                                <p class="text-xs text-gray-400 mt-2 ml-1">* 학교 이메일 주소를 입력해주세요.</p>
+                            </div>
+                            
+                            <!-- Toggle -->
+                            <div class="flex items-center justify-between py-4 border-b border-gray-100">
+                                <div>
+                                    <p class="font-bold text-[#111]">주간 뉴스레터 구독</p>
+                                    <p class="text-xs text-gray-400">매주 월요일 주요 소식을 보내드립니다.</p>
+                                </div>
+                                <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+                                    <input type="checkbox" name="toggle" id="toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer border-gray-300 checked:border-primary transition-all duration-300"/>
+                                    <label for="toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer checked:bg-primary transition-colors duration-300"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 2 -->
+                    <div>
+                        <h3 class="h3-title mb-8">Preferences</h3>
+                        <div class="space-y-6">
+                            <!-- Select -->
+                            <div>
+                                <label class="block text-sm font-bold text-gray-500 mb-2 uppercase tracking-wide">Category</label>
+                                <div class="input-group">
+                                    <span class="input-icon">📂</span>
+                                    <select class="input-field appearance-none cursor-pointer">
+                                        <option>관심 분야를 선택하세요</option>
+                                        <option>바이오 헬스 (Bio Health)</option>
+                                        <option>신재생 에너지 (Energy)</option>
+                                        <option>스마트 모빌리티 (Mobility)</option>
+                                    </select>
+                                    <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs">▼</span>
+                                </div>
+                            </div>
+
+                            <!-- Checkboxes -->
+                            <div>
+                                <label class="flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 transition">
+                                    <input type="checkbox" class="w-5 h-5 text-primary border-gray-300 rounded focus:ring-primary">
+                                    <span class="text-sm font-bold text-gray-600">개인정보 수집 및 이용에 동의합니다.</span>
+                                </label>
+                            </div>
+
+                            <button class="btn-primary w-full justify-center mt-4">
+                                Subscribe Now <span class="ml-2">→</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-20 bg-white border-t border-gray-200 text-center">
+        <p class="text-xs font-bold text-gray-400">Glocal Design System v3.1 • Rich Details</p>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // List Stagger
+        gsap.from(".rich-row", {
+            y: 20, opacity: 0, duration: 0.5, stagger: 0.1, ease: "power2.out",
+            scrollTrigger: {
+                trigger: ".rich-row",
+                start: "top 90%"
+            }
+        });
+        
+        // Input Stagger
+        gsap.from(".input-group", {
+            x: -20, opacity: 0, duration: 0.6, stagger: 0.1, ease: "power2.out",
+            scrollTrigger: {
+                trigger: ".glocal-card",
+                start: "top 80%"
+            }
+        });
+    </script>
+</body>
+</html>

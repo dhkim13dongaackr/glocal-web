@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동아·동서 글로컬 연합대학 v39 (Clean Text Link)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['SUIT', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#4132CC', 
+                            mint: '#00BEB5',
+                            dark: '#1d1d1f', 
+                            gray: '#86868b',
+                            point: '#FDB927',
+                        }
+                    },
+                    animation: {
+                        'count-up': 'countUp 2s ease-out forwards',
+                    },
+                    backgroundImage: {
+                        'dot-pattern': 'radial-gradient(#e5e7eb 1px, transparent 1px)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .bg-slide { transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1); }
+        .text-block { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0, 0, 0.2, 1); }
+        .text-block.active { opacity: 1; transform: translateY(0); }
+        .snap-x-mandatory { scroll-snap-type: x mandatory; }
+        .snap-center { scroll-snap-align: center; }
+
+        #network-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.3;
+        }
+        
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            right: 14px;
+            width: 8px;
+            height: 8px;
+            background: #161617;
+            transform: rotate(45deg);
+        }
+
+        /* Cinematic Expand Interaction (v31 Logic) */
+        .expand-container {
+            height: 300vh; /* Scroll distance */
+            position: relative;
+            background-color: #f5f5f7;
+        }
+        .expand-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Left Content */
+        .left-content {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 35%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 6vw;
+            z-index: 10;
+            opacity: 1;
+            transform: translateX(0);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        
+        /* Video Box (v31 Original) */
+        .video-box {
+            position: absolute;
+            right: 2vw;
+            width: 70vw; /* v31 Size */
+            height: 75vh;
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 40px 80px -12px rgba(0, 0, 0, 0.2);
+            transform-origin: center center; 
+            will-change: width, height, right, border-radius;
+            z-index: 20;
+        }
+
+        .video-content {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Full Screen Overlay Text */
+        .overlay-text {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translate(-50%, 20px);
+            text-align: center;
+            color: white;
+            opacity: 0;
+            transition: all 0.8s;
+            z-index: 30;
+            width: 100%;
+            pointer-events: none;
+        }
+        .overlay-text.active {
+            opacity: 1;
+            transform: translate(-50%, 0);
+            pointer-events: auto;
+        }
+
+        /* Header Transition */
+        .header-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+            display: flex;
+            justify-content: center;
+            padding-top: 24px;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            transform: translateY(-150%);
+        }
+        .header-wrapper.show {
+            transform: translateY(0);
+        }
+        
+        #header {
+            pointer-events: auto;
+            width: 95%;
+            max-width: 1400px;
+            height: 64px;
+            border-radius: 9999px;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+        }
+
+        /* Content Aligner (For sections AFTER hero) */
+        .content-aligner {
+            width: 100%;
+            max-width: 1400px; /* Match header max-width */
+            margin: 0 auto;
+            padding: 0 2rem; /* Match header padding visually */
+        }
+
+        @media (max-width: 1024px) {
+            .left-content { width: 100%; height: 40vh; top: 0; padding: 24px; text-align: center; align-items: center; }
+            .video-box { top: 40vh; right: 2vw; left: 2vw; width: 96vw; height: 50vh; border-radius: 24px 24px 0 0; }
+        }
+    </style>
+</head>
+<body class="bg-[#f5f5f7] text-[#1d1d1f] font-sans antialiased overflow-x-hidden">
+
+    <!-- Header (Cinematic Logic) -->
+    <div class="header-wrapper show" id="header-wrapper">
+        <header id="header">
+            <div class="flex flex-col items-start cursor-pointer">
+                <p class="text-[18px] font-extrabold leading-none text-[#1d1d1f]">동아·동서 글로컬</p>
+            </div>
+            <nav class="hidden lg:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
+                <a href="#" class="text-[15px] font-semibold text-[#1d1d1f] hover:text-brand-blue transition-colors">혁신방향</a>
+                <a href="#" class="text-[15px] font-semibold text-[#1d1d1f] hover:text-brand-blue transition-colors">통합산단</a>
+                <a href="#" class="text-[15px] font-semibold text-[#1d1d1f] hover:text-brand-blue transition-colors">연합전공</a>
+                <a href="#" class="text-[15px] font-semibold text-[#1d1d1f] hover:text-brand-blue transition-colors">Field캠퍼스</a>
+            </nav>
+            <div class="flex items-center gap-6">
+                <a href="#dinsight" class="flex flex-col items-end leading-none group/dinsight">
+                    <span class="text-[9px] font-bold uppercase tracking-widest text-brand-mint mb-[1px]">NEWSLETTER</span>
+                    <span class="text-[16px] font-black font-serif italic text-[#1d1d1f] group-hover/dinsight:text-brand-blue transition-colors tracking-tight relative">
+                        D-insight<span class="text-brand-point text-lg leading-none ml-[1px]">.</span>
+                    </span>
+                </a>
+                <div class="w-[1px] h-[16px] bg-gray-300"></div>
+                <!-- Clean Text Link (No Icon) -->
+                <a href="#" class="text-[14px] font-extrabold tracking-tight text-[#1d1d1f] hover:text-brand-blue transition-colors group/ssc">
+                    학생성공센터
+                </a>
+                <button class="p-1 text-[#1d1d1f] hover:text-brand-blue transition-colors"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16m-7 6h7"></path></svg></button>
+            </div>
+        </header>
+    </div>
+
+    <!-- Expand Section (v31 Original) -->
+    <section class="expand-container" id="expand-trigger">
+        <div class="expand-sticky">
+            
+            <!-- Left: Text -->
+            <div class="left-content" id="left-content">
+                <span class="text-brand-blue font-bold tracking-widest uppercase text-sm mb-6 bg-brand-blue/10 px-3 py-1 rounded w-fit">Vision 2030</span>
+                <!-- Typography Improvement: Leading Relaxed -->
+                <h1 class="text-5xl md:text-7xl font-black text-[#1d1d1f] leading-relaxed mb-10">
+                    새로운 방향.<br>
+                    새로운 미래.<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-mint">동아·동서<br>글로컬 연합대학</span>
+                </h1>
+                <div class="flex items-center gap-2 text-[#1d1d1f] font-bold cursor-pointer hover:text-brand-blue transition-colors animate-bounce mt-4">
+                    <div class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center">↓</div>
+                    <span>Scroll Down</span>
+                </div>
+            </div>
+
+            <!-- Right: Video (v31 Original) -->
+            <div class="video-wrapper-outer">
+                <div class="video-box" id="video-box">
+                    <div id="slideshow" class="absolute inset-0">
+                        <div class="absolute inset-0 transition-opacity duration-[2000ms] opacity-100 slide-item">
+                            <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132237.721.jpg" class="video-content" alt="Hero 1">
+                        </div>
+                        <div class="absolute inset-0 transition-opacity duration-[2000ms] opacity-0 slide-item">
+                            <img src="../../pictures/DJI_0985 복사.jpg" class="video-content" alt="Hero 2">
+                        </div>
+                    </div>
+                    <div class="absolute inset-0 bg-black/10 transition-colors duration-500" id="video-dim"></div>
+                </div>
+            </div>
+
+            <!-- Full Screen Overlay Text -->
+            <div class="overlay-text" id="overlay-text">
+                <h2 class="text-6xl font-black mb-6 drop-shadow-xl">현장이 곧 강의실이다.</h2>
+                <p class="text-xl text-white/90 font-medium max-w-2xl mx-auto drop-shadow-lg leading-relaxed">
+                    16개 산업 거점 Field 캠퍼스에서 펼쳐지는<br>살아있는 교육 현장
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Strategy Section (White) - Aligned Content -->
+    <section class="relative bg-white text-[#1d1d1f] pt-20" id="strategy-section">
+        <div class="sticky top-0 h-[100vh] w-full overflow-hidden">
+            <div class="absolute inset-0 bg-slide opacity-100" id="bg-1"><img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132226.682.jpg" class="w-full h-full object-cover opacity-20"></div>
+            <div class="absolute inset-0 bg-slide opacity-0" id="bg-2"><img src="../../pictures/464A4461.jpg" class="w-full h-full object-cover opacity-20"></div>
+            <div class="absolute inset-0 bg-slide opacity-0" id="bg-3"><img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132211.153.jpg" class="w-full h-full object-cover opacity-20"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 -mt-[100vh]">
+            <!-- Content Aligner Applied Here -->
+            <div class="h-[100vh] flex items-center justify-center text-center px-6 trigger-section" data-index="1">
+                <div class="text-block max-w-3xl content-aligner">
+                    <p class="text-brand-mint font-bold tracking-widest uppercase mb-4">Governance</p>
+                    <h2 class="text-5xl md:text-7xl font-bold mb-8 leading-tight">경계를 허무는<br>통합 거버넌스.</h2>
+                    <p class="text-xl md:text-2xl text-gray-500 font-medium leading-relaxed">부산시와 대학이 하나되는 시스템 오피스.</p>
+                </div>
+            </div>
+            <div class="h-[100vh] flex items-center justify-center text-center px-6 trigger-section" data-index="2">
+                <div class="text-block max-w-3xl content-aligner">
+                    <p class="text-brand-blue font-bold tracking-widest uppercase mb-4">Field Campus</p>
+                    <h2 class="text-5xl md:text-7xl font-bold mb-8 leading-tight">강의실을 넘어<br>현장 속으로.</h2>
+                    <p class="text-xl md:text-2xl text-gray-500 font-medium leading-relaxed">16개 산업 거점에 세워진 현장 캠퍼스.</p>
+                </div>
+            </div>
+            <div class="h-[100vh] flex items-center justify-center text-center px-6 trigger-section" data-index="3">
+                <div class="text-block max-w-3xl content-aligner">
+                    <p class="text-indigo-500 font-bold tracking-widest uppercase mb-4">Union Major</p>
+                    <h2 class="text-5xl md:text-7xl font-bold mb-8 leading-tight">무한한 가능성,<br>연합 전공.</h2>
+                    <p class="text-xl md:text-2xl text-gray-500 font-medium leading-relaxed">대학 간 장벽을 없앤 무한한 선택권.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Digital Network - Aligned Content -->
+    <section class="relative py-32 bg-[#111113] text-white overflow-hidden">
+        <canvas id="network-canvas"></canvas>
+        <div class="relative z-10 content-aligner"> <!-- Aligned to 1400px -->
+            <div class="text-center mb-24">
+                <span class="text-brand-point font-bold tracking-widest uppercase text-sm mb-4 block animate-pulse">Our Impact</span>
+                <h2 class="text-5xl md:text-7xl font-black mb-6">숫자로 증명하는<br>글로컬 혁신</h2>
+                <p class="text-gray-400 text-xl max-w-2xl mx-auto">데이터가 말해주는 변화.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white/5 border border-white/10 rounded-[32px] p-8 flex flex-col items-center justify-center text-center backdrop-blur-sm hover:bg-white/10 transition-colors group">
+                    <div class="text-5xl font-black text-white mb-2 flex items-baseline"><span class="count-up" data-target="92">0</span><span class="text-2xl text-brand-blue ml-1">%</span></div>
+                    <p class="text-gray-400 font-medium">취업 연계율</p>
+                    <div class="w-full bg-gray-700 h-1 mt-6 rounded-full overflow-hidden"><div class="bg-brand-blue h-full w-0 transition-all duration-[2000ms] ease-out group-hover:w-[92%]"></div></div>
+                </div>
+                <div class="bg-white/5 border border-white/10 rounded-[32px] p-8 flex flex-col items-center justify-center text-center backdrop-blur-sm hover:bg-white/10 transition-colors group">
+                    <div class="text-5xl font-black text-white mb-2 flex items-baseline"><span class="count-up" data-target="16">0</span><span class="text-2xl text-brand-mint ml-1">개</span></div>
+                    <p class="text-gray-400 font-medium">산업단지 캠퍼스</p>
+                    <div class="w-full bg-gray-700 h-1 mt-6 rounded-full overflow-hidden"><div class="bg-brand-mint h-full w-0 transition-all duration-[2000ms] ease-out group-hover:w-[80%]"></div></div>
+                </div>
+                <div class="bg-white/5 border border-white/10 rounded-[32px] p-8 flex flex-col items-center justify-center text-center backdrop-blur-sm hover:bg-white/10 transition-colors group">
+                    <div class="text-5xl font-black text-white mb-2 flex items-baseline"><span class="count-up" data-target="250">0</span><span class="text-2xl text-purple-500 ml-1">억</span></div>
+                    <p class="text-gray-400 font-medium">R&D 수주액</p>
+                    <div class="w-full bg-gray-700 h-1 mt-6 rounded-full overflow-hidden"><div class="bg-purple-500 h-full w-0 transition-all duration-[2000ms] ease-out group-hover:w-[70%]"></div></div>
+                </div>
+                <div class="bg-white/5 border border-white/10 rounded-[32px] p-8 flex flex-col items-center justify-center text-center backdrop-blur-sm hover:bg-white/10 transition-colors group">
+                    <div class="text-5xl font-black text-white mb-2 flex items-baseline"><span class="count-up" data-target="45">0</span><span class="text-2xl text-brand-point ml-1">개</span></div>
+                    <p class="text-gray-400 font-medium">신규 융합 전공</p>
+                    <div class="w-full bg-gray-700 h-1 mt-6 rounded-full overflow-hidden"><div class="bg-brand-point h-full w-0 transition-all duration-[2000ms] ease-out group-hover:w-[60%]"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="dinsight" class="bg-[#f5f5f7] py-32 overflow-hidden border-t border-gray-200">
+        <div class="content-aligner mb-12 flex justify-between items-end"> <!-- Aligned to 1400px -->
+            <div>
+                <h2 class="text-5xl font-black text-[#1d1d1f] mb-2 flex items-baseline">D-insight<span class="text-brand-point text-6xl leading-none">.</span></h2>
+                <p class="text-[#86868b] text-xl font-medium">글로컬 대학의 새로운 소식.</p>
+            </div>
+            <a href="#" class="text-brand-blue font-semibold hover:underline flex items-center gap-1">전체보기 <span class="text-lg">›</span></a>
+        </div>
+        <div class="horizontal-scroll-container flex gap-8 overflow-x-auto snap-x-mandatory no-scrollbar px-8 pb-12 md:px-[calc((100vw-1400px)/2+2rem)]">
+            <div class="snap-center shrink-0 w-[380px] md:w-[440px] group cursor-pointer flex flex-col gap-6">
+                <div class="overflow-hidden rounded-[24px] shadow-sm group-hover:shadow-xl transition-shadow duration-300 aspect-[4/3] bg-white"><img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132250.472.jpg" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" alt="News"></div>
+                <div class="px-2"><span class="text-xs font-bold text-brand-blue uppercase tracking-wider mb-2 block">New Program</span><h3 class="text-2xl font-bold text-[#1d1d1f] mb-3 leading-snug group-hover:text-brand-blue transition-colors">2026학년도 신입생<br>모집 요강 발표</h3><span class="text-xs text-[#86868b] mt-4 block">2026.02.02</span></div>
+            </div>
+            <div class="snap-center shrink-0 w-[380px] md:w-[440px] group cursor-pointer flex flex-col gap-6">
+                <div class="overflow-hidden rounded-[24px] shadow-sm group-hover:shadow-xl transition-shadow duration-300 aspect-[4/3] bg-white"><img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132240.683.jpg" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" alt="News"></div>
+                <div class="px-2"><span class="text-xs font-bold text-brand-mint uppercase tracking-wider mb-2 block">Tech & Lab</span><h3 class="text-2xl font-bold text-[#1d1d1f] mb-3 leading-snug group-hover:text-brand-blue transition-colors">구글 협력 AI 연구소<br>개소식 현장</h3><span class="text-xs text-[#86868b] mt-4 block">2026.01.28</span></div>
+            </div>
+            <div class="snap-center shrink-0 w-[380px] md:w-[440px] group cursor-pointer flex flex-col gap-6">
+                <div class="overflow-hidden rounded-[24px] shadow-sm group-hover:shadow-xl transition-shadow duration-300 aspect-[4/3] bg-white"><img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132234.075.jpg" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" alt="News"></div>
+                <div class="px-2"><span class="text-xs font-bold text-indigo-500 uppercase tracking-wider mb-2 block">Interview</span><h3 class="text-2xl font-bold text-[#1d1d1f] mb-3 leading-snug group-hover:text-brand-blue transition-colors">"현장이 곧 강의실"<br>재학생 인터뷰</h3><span class="text-xs text-[#86868b] mt-4 block">2026.01.15</span></div>
+            </div>
+            <div class="snap-center shrink-0 w-[300px] group cursor-pointer flex items-center justify-center">
+                <div class="w-full h-[300px] rounded-[32px] bg-white border border-gray-200 flex flex-col items-center justify-center text-center gap-4 hover:bg-gray-50 transition-colors shadow-sm hover:shadow-lg"><div class="w-16 h-16 rounded-full bg-brand-dark text-white flex items-center justify-center text-2xl font-bold group-hover:scale-110 transition-transform">→</div><span class="font-bold text-lg text-brand-dark">View More<br>Stories</span></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white text-[#86868b] py-20 border-t border-[#d2d2d7]">
+        <div class="content-aligner flex flex-col md:flex-row justify-between items-start gap-8">
+            <div><h2 class="text-xl font-bold text-[#1d1d1f] mb-2">동아·동서 글로컬 연합대학</h2><p class="text-xs">Dong-A · DongSeo Glocal University</p></div>
+            <div class="flex gap-6 text-xs font-medium"><a href="#" class="hover:text-[#1d1d1f]">개인정보처리방침</a><a href="#" class="hover:text-[#1d1d1f]">이용약관</a></div>
+        </div>
+    </footer>
+
+    <script>
+        const slides = document.querySelectorAll('.slide-item');
+        let currentSlide = 0;
+        setInterval(() => {
+            slides[currentSlide].classList.replace('opacity-100', 'opacity-0');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.replace('opacity-0', 'opacity-100');
+        }, 4000);
+
+        // Header Logic (Cinematic)
+        const headerWrapper = document.getElementById('header-wrapper');
+        const strategySection = document.getElementById('strategy-section');
+
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const heroHeight = window.innerHeight * 2.5;
+            
+            let progress = Math.min(Math.max(scrollY / (window.innerHeight * 0.8), 0), 1);
+
+            if (scrollY < 50) {
+                headerWrapper.classList.add('show');
+                headerWrapper.classList.remove('hide');
+            } else if (scrollY >= 50 && scrollY < heroHeight) {
+                headerWrapper.classList.add('hide');
+                headerWrapper.classList.remove('show');
+            } else {
+                headerWrapper.classList.add('show');
+                headerWrapper.classList.remove('hide');
+            }
+
+            // Expand Logic (v31)
+            if (window.innerWidth > 1024) {
+                if (progress >= 0) {
+                    const widthVal = 70 + (30 * progress); // 70vw -> 100vw
+                    const heightVal = 75 + (25 * progress); // 75vh -> 100vh
+                    const rightVal = 2 * (1 - progress); 
+                    
+                    videoBox.style.width = widthVal + 'vw';
+                    videoBox.style.height = heightVal + 'vh';
+                    videoBox.style.right = rightVal + 'vw';
+                    
+                    const radius = 40 * (1 - progress);
+                    videoBox.style.borderRadius = radius + 'px';
+                    
+                    leftContent.style.opacity = 1 - (progress * 2);
+                    leftContent.style.transform = 'translateX(' + (-50 * progress) + 'px)';
+                    
+                    videoDim.style.backgroundColor = 'rgba(0,0,0,' + (0.1 + (0.3 * progress)) + ')';
+                }
+                
+                if (progress > 0.8) {
+                    overlayText.classList.add('active');
+                } else {
+                    overlayText.classList.remove('active');
+                }
+            }
+        });
+
+        const triggers = document.querySelectorAll('.trigger-section');
+        const bgs = [document.getElementById('bg-1'), document.getElementById('bg-2'), document.getElementById('bg-3')];
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const index = parseInt(entry.target.getAttribute('data-index')) - 1;
+                const textBlock = entry.target.querySelector('.text-block');
+                if (entry.isIntersecting) {
+                    textBlock.classList.add('active');
+                    bgs.forEach((bg, i) => { if (i === index) bg.classList.replace('opacity-0', 'opacity-100'); else bg.classList.replace('opacity-100', 'opacity-0'); });
+                } else { textBlock.classList.remove('active'); }
+            });
+        }, { root: null, rootMargin: '-40% 0px -40% 0px', threshold: 0 });
+        triggers.forEach(t => observer.observe(t));
+
+        const canvas = document.getElementById('network-canvas'); const ctx = canvas.getContext('2d'); let width, height; const particles = [];
+        function resize() { width = canvas.width = canvas.offsetWidth; height = canvas.height = canvas.offsetHeight; } window.addEventListener('resize', resize); resize();
+        class Particle { constructor() { this.x = Math.random() * width; this.y = Math.random() * height; this.vx = (Math.random() - 0.5) * 0.5; this.vy = (Math.random() - 0.5) * 0.5; this.size = Math.random() * 2 + 1; } update() { this.x += this.vx; this.y += this.vy; if (this.x < 0 || this.x > width) this.vx *= -1; if (this.y < 0 || this.y > height) this.vy *= -1; } draw() { ctx.fillStyle = 'rgba(255, 255, 255, 0.5)'; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); } }
+        for (let i = 0; i < 50; i++) particles.push(new Particle());
+        function animate() { ctx.clearRect(0, 0, width, height); particles.forEach((p, i) => { p.update(); p.draw(); for (let j = i + 1; j < particles.length; j++) { const p2 = particles[j]; const dx = p.x - p2.x; const dy = p.y - p2.y; const dist = Math.sqrt(dx * dx + dy * dy); if (dist < 150) { ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 - dist/1500})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke(); } } }); requestAnimationFrame(animate); } animate();
+        const counters = document.querySelectorAll('.count-up'); const countObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { const target = +entry.target.getAttribute('data-target'); let count = 0; const inc = target / 50; const updateCount = () => { count += inc; if (count < target) { entry.target.innerText = Math.ceil(count); requestAnimationFrame(updateCount); } else { entry.target.innerText = target; } }; updateCount(); countObserver.unobserve(entry.target); } }); }, { threshold: 0.5 }); counters.forEach(c => countObserver.observe(c));
+    </script>
+</body>
+</html>

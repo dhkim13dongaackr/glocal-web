@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동아·동서 글로컬 연합대학 v3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['SUIT', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#4132CC', 
+                            mint: '#00BEB5',
+                            dark: '#111111',
+                        }
+                    },
+                    backgroundImage: {
+                        'hero-gradient': 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Kakao Style Animations */
+        .reveal-text {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-text.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .sticky-wrapper {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body class="bg-white text-[#171719] font-sans antialiased overflow-x-hidden">
+
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 w-full h-[80px] z-50 transition-all duration-500 flex items-center justify-center">
+        <div class="absolute inset-0 bg-black/0 backdrop-blur-0 transition-all duration-500" id="header-bg"></div>
+        <div class="w-full max-w-[1600px] px-6 flex items-center justify-between relative z-10">
+            <div class="flex flex-col items-start cursor-pointer group">
+                <p class="text-[22px] font-extrabold leading-none text-white transition-colors duration-300" id="logo-text">
+                    동아·동서 글로컬
+                </p>
+            </div>
+            
+            <div class="flex items-center gap-8">
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="#" class="text-[16px] font-bold text-white hover:text-brand-mint transition-colors nav-item">통합산단</a>
+                    <a href="#" class="text-[16px] font-bold text-white hover:text-brand-mint transition-colors nav-item">연합전공</a>
+                    <a href="#" class="text-[16px] font-bold text-white hover:text-brand-mint transition-colors nav-item">Field캠퍼스</a>
+                </nav>
+                <div class="flex items-center gap-3">
+                    <a href="#" class="px-4 py-2 rounded-full border border-white/30 bg-white/10 text-white text-sm font-bold backdrop-blur-md hover:bg-white/20 transition-all nav-btn">
+                        학생성공센터
+                    </a>
+                    <a href="#" class="px-4 py-2 rounded-full bg-brand-blue text-white text-sm font-bold hover:bg-indigo-700 transition-all flex items-center gap-2 shadow-lg">
+                        Dinsight
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section (Video Feel) -->
+    <section class="relative w-full h-[100vh] overflow-hidden bg-black">
+        <!-- Background Image Slideshow -->
+        <div class="absolute inset-0 transition-opacity duration-[2000ms] ease-in-out opacity-100" id="hero-bg-1">
+            <img src="../../pictures/DJI_0985 복사.jpg" class="w-full h-full object-cover scale-105 animate-[pulse_10s_ease-in-out_infinite]" alt="Hero 1">
+        </div>
+        <div class="absolute inset-0 bg-black/40"></div>
+
+        <div class="relative z-10 h-full flex flex-col justify-center items-center text-center px-6">
+            <span class="reveal-text text-brand-mint font-bold tracking-widest uppercase mb-6 border border-brand-mint px-4 py-1 rounded-full">
+                New Standard
+            </span>
+            <h1 class="reveal-text text-6xl md:text-[90px] font-black text-white leading-tight mb-8" style="transition-delay: 0.1s;">
+                대학의 경계를 넘어,<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-mint to-brand-blue">미래의 기준이 되다.</span>
+            </h1>
+            <p class="reveal-text text-xl text-white/80 font-light max-w-2xl leading-relaxed" style="transition-delay: 0.2s;">
+                동아·동서 글로컬 연합대학은 지역과 산업, 학교가 하나되어<br>
+                지속 가능한 교육 생태계를 만들어갑니다.
+            </p>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 animate-bounce">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        </div>
+    </section>
+
+    <!-- Sticky Scroll Section (Kakao Style) -->
+    <section class="relative bg-white">
+        <div class="max-w-[1600px] mx-auto flex flex-col md:flex-row">
+            
+            <!-- Sticky Left: Title -->
+            <div class="md:w-1/3 hidden md:block">
+                <div class="sticky-wrapper pl-6">
+                    <div class="flex flex-col gap-4">
+                        <span class="text-brand-blue font-bold tracking-widest uppercase">Our Strategy</span>
+                        <h2 class="text-5xl font-extrabold leading-tight text-[#171719]">
+                            혁신을 위한<br>8가지 약속
+                        </h2>
+                        <p class="text-gray-500 text-lg mt-4 leading-relaxed">
+                            두 대학의 역량을 결집하여<br>가장 현실적이고 강력한<br>변화를 만듭니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scrollable Right: Content -->
+            <div class="md:w-2/3 px-6 py-24 flex flex-col gap-32">
+                
+                <!-- Item 1 -->
+                <div class="reveal-text flex flex-col gap-6 group">
+                    <div class="overflow-hidden rounded-3xl relative h-[500px]">
+                        <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132237.721.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Strategy 1">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-10">
+                            <span class="text-brand-mint font-bold text-lg mb-2">01. Governance</span>
+                            <h3 class="text-4xl font-bold text-white mb-4">개방형 사학연합 모델</h3>
+                            <p class="text-white/80 text-lg">부산시와 대학의 공동 이익을 추구하는 '시스템 오피스' 기반의 통합 거버넌스를 확립합니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="reveal-text flex flex-col gap-6 group">
+                    <div class="overflow-hidden rounded-3xl relative h-[500px]">
+                        <img src="../../pictures/부민캠퍼스 박물관 중심.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Strategy 2">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-10">
+                            <span class="text-brand-mint font-bold text-lg mb-2">02. Open Campus</span>
+                            <h3 class="text-4xl font-bold text-white mb-4">부산 개방형 연합 대학</h3>
+                            <p class="text-white/80 text-lg">담장을 허물고 지역 사회에 캠퍼스를 전면 개방하여, 시민과 학생이 함께하는 공간을 만듭니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="reveal-text flex flex-col gap-6 group">
+                    <div class="overflow-hidden rounded-3xl relative h-[500px]">
+                        <img src="../../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132226.682.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Strategy 3">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-10">
+                            <span class="text-brand-mint font-bold text-lg mb-2">03. Innovation</span>
+                            <h3 class="text-4xl font-bold text-white mb-4">특화분야 학사구조 혁신</h3>
+                            <p class="text-white/80 text-lg">미래 산업 수요에 맞춰 유연하고 실용적인 학사 구조로 전면 개편합니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Field Campus (Dark Mode) -->
+    <section class="bg-[#111] text-white py-32 relative overflow-hidden">
+        <div class="absolute right-0 top-0 w-1/2 h-full opacity-20 pointer-events-none">
+             <img src="../../pictures/DJI_0971 복사.jpg" class="w-full h-full object-cover mask-image-gradient" alt="bg">
+        </div>
+        
+        <div class="max-w-[1440px] mx-auto px-6 relative z-10">
+            <div class="mb-20">
+                <span class="text-brand-blue font-bold tracking-widest uppercase">Field Campus</span>
+                <h2 class="text-5xl font-extrabold mt-4">현장이 곧 강의실이다.</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1 -->
+                <div class="reveal-text bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-colors">
+                    <h4 class="text-2xl font-bold mb-4 text-brand-mint">16개 거점</h4>
+                    <p class="text-gray-400">부산 전역 주요 산업단지에<br>설치된 현장 캠퍼스</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="reveal-text bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-colors" style="transition-delay: 0.1s;">
+                    <h4 class="text-2xl font-bold mb-4 text-brand-mint">6대 특화분야</h4>
+                    <p class="text-gray-400">반도체, AI, 에너지 등<br>미래 핵심 산업 집중 육성</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="reveal-text bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-colors" style="transition-delay: 0.2s;">
+                    <h4 class="text-2xl font-bold mb-4 text-brand-mint">실무형 인재</h4>
+                    <p class="text-gray-400">졸업과 동시에 현장에<br>투입 가능한 역량 배양</p>
+                </div>
+                <!-- Card 4 -->
+                <div class="reveal-text bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-colors" style="transition-delay: 0.3s;">
+                    <h4 class="text-2xl font-bold mb-4 text-brand-mint">취업 연계</h4>
+                    <p class="text-gray-400">참여 기업과 함께하는<br>채용 약정형 프로그램</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-20 border-t border-white/10">
+        <div class="max-w-[1600px] mx-auto px-6">
+            <h2 class="text-2xl font-black mb-8">동아·동서 글로컬 연합대학</h2>
+            <div class="flex flex-col md:flex-row justify-between text-sm text-gray-500">
+                <p>© 2026 Dong-A & DongSeo University. All rights reserved.</p>
+                <div class="flex gap-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white">개인정보처리방침</a>
+                    <a href="#" class="hover:text-white">이용약관</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for Reveal Animation
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // Run once
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-text').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Header Scroll Effect
+        const header = document.getElementById('header');
+        const headerBg = document.getElementById('header-bg');
+        const logoText = document.getElementById('logo-text');
+        const navItems = document.querySelectorAll('.nav-item');
+        const navBtn = document.querySelector('.nav-btn');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                headerBg.classList.remove('bg-black/0', 'backdrop-blur-0');
+                headerBg.classList.add('bg-white/90', 'backdrop-blur-md', 'shadow-sm');
+                
+                logoText.classList.remove('text-white');
+                logoText.classList.add('text-[#171719]');
+                
+                navItems.forEach(el => {
+                    el.classList.remove('text-white');
+                    el.classList.add('text-[#171719]');
+                });
+
+                navBtn.classList.remove('text-white', 'border-white/30', 'bg-white/10');
+                navBtn.classList.add('text-[#171719]', 'border-gray-300', 'bg-gray-100');
+            } else {
+                headerBg.classList.add('bg-black/0', 'backdrop-blur-0');
+                headerBg.classList.remove('bg-white/90', 'backdrop-blur-md', 'shadow-sm');
+                
+                logoText.classList.add('text-white');
+                logoText.classList.remove('text-[#171719]');
+                
+                navItems.forEach(el => {
+                    el.classList.add('text-white');
+                    el.classList.remove('text-[#171719]');
+                });
+
+                navBtn.classList.add('text-white', 'border-white/30', 'bg-white/10');
+                navBtn.classList.remove('text-[#171719]', 'border-gray-300', 'bg-gray-100');
+            }
+        });
+    </script>
+</body>
+</html>
