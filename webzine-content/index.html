@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>D-insight | 글로컬 대학의 미래 - 지역혁신을 위한 새로운 패러다임</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=Rakkas&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT/fonts/variable/woff2/SUIT-Variable.css" rel="stylesheet" />
+  <style>
+    @font-face {
+      font-family: 'ELAND Nice';
+      src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/ELAND_Nice_M.woff2') format('woff2');
+      font-weight: 400; font-style: normal;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            wz: {
+              primary: '#2ca39c', 'primary-dark': '#0a968e',
+              text: '#3f3f44', title: '#171719', 'text-light': '#606068',
+              caption: '#74747e', bg: '#f5f7fa', container: '#ffffff', 'footer-bg': '#edeff4',
+            }
+          },
+          fontFamily: {
+            sans: ['SUIT Variable', 'SUIT', 'sans-serif'],
+            display: ['ELAND Nice', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --header-h: 56px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'SUIT Variable', 'SUIT', sans-serif;
+      color: #3f3f44; overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ═══════════ HEADER ═══════════ */
+    .wz-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      background: rgba(255,255,255,0);
+      backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px);
+      transition: background 0.4s var(--ease-out-expo), backdrop-filter 0.4s, -webkit-backdrop-filter 0.4s, box-shadow 0.4s var(--ease-out-expo);
+    }
+    .wz-header.solid {
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 1px 24px rgba(0,0,0,0.06);
+    }
+    .header-inner {
+      position: relative; display: flex; align-items: center; justify-content: space-between;
+      max-width: 1280px; margin: 0 auto; padding: 10px 20px; height: var(--header-h);
+    }
+
+    /* NEWSROOM link — fades out on scroll */
+    .header-nav-initial {
+      opacity: 1; transform: translateY(0);
+      transition: opacity 0.35s var(--ease-out-expo), transform 0.35s var(--ease-out-expo);
+    }
+    .wz-header.solid .header-nav-initial {
+      opacity: 0; transform: translateY(-4px); pointer-events: none;
+    }
+
+    /* Compact title in header — blank initially, filled by JS clone */
+    .header-compact-title {
+      position: absolute; left: 50%; top: 50%;
+      transform: translate(-50%, -50%) translateY(4px);
+      opacity: 0; pointer-events: none;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      max-width: min(560px, 38vw);
+      transition: opacity 0.35s var(--ease-out-expo), transform 0.35s var(--ease-out-expo);
+    }
+    .wz-header.solid .header-compact-title {
+      opacity: 1; transform: translate(-50%, -50%) translateY(0); pointer-events: auto;
+    }
+
+    /* Progress bar */
+    .progress-track {
+      height: 4px; overflow: hidden; opacity: 0;
+      transition: opacity 0.4s var(--ease-out-expo);
+    }
+    .wz-header.solid .progress-track { opacity: 1; }
+    .progress-fill {
+      height: 100%; background: #2ca39c; width: 0%; will-change: width;
+    }
+
+    /* ═══════════ HERO ═══════════ */
+    .hero-section {
+      position: relative; background: #f5f7fa;
+      display: flex; flex-direction: column;
+      padding-bottom: 40px;
+    }
+
+    /* Floating title — starts big, morphs into header on scroll */
+    .hero-title-block {
+      position: relative; z-index: 10;
+      text-align: left;
+      padding-top: calc(var(--header-h) + 60px);
+    }
+    .hero-main-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 900;
+      line-height: 1.35;
+      letter-spacing: -1px;
+      color: #171719;
+      will-change: transform, opacity;
+    }
+
+    /* Hero image morph track */
+    .hero-image-track {
+      flex: 1; display: flex; align-items: flex-end; justify-content: center;
+      padding-bottom: 0; position: relative;
+    }
+    .hero-image-wrapper {
+      overflow: hidden; will-change: transform, border-radius;
+      position: relative;
+    }
+    .hero-image-wrapper img {
+      width: 100%; height: 100%; object-fit: cover;
+      will-change: transform;
+    }
+
+    /* ═══════════ SCROLL REVEALS ═══════════ */
+    .reveal {
+      opacity: 0; transform: translateY(48px);
+      transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
+    }
+    .reveal.vis { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.2s; }
+    .reveal-d3 { transition-delay: 0.3s; }
+
+    .accent-bar {
+      transform-origin: left; transform: scaleX(0);
+      transition: transform 0.8s var(--ease-out-expo);
+    }
+    .accent-bar.vis { transform: scaleX(1); }
+
+    /* Article body */
+    .article-body .spacer { height: 36px; }
+
+    /* Parallax image */
+    .parallax-wrap { overflow: hidden; position: relative; }
+    .parallax-wrap img { will-change: transform; }
+
+    /* ═══════════ INSIGHT CARDS ═══════════ */
+    .insight-card {
+      cursor: pointer;
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo), background 0.25s;
+    }
+    .insight-card.vis { opacity: 1; transform: translateY(0); }
+    .insight-card:hover { background: rgba(44,163,156,0.05); }
+    .insight-card .thumb img { transition: transform 0.5s var(--ease-out-expo); }
+    .insight-card:hover .thumb img { transform: scale(1.06); }
+
+    /* ═══════════ REDUCED MOTION ═══════════ */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { transition-duration: 0.01s !important; transform: none !important; }
+      .accent-bar { transition-duration: 0.01s !important; }
+      .insight-card { transition-duration: 0.01s !important; transform: none !important; }
+      .hero-main-title { transition: none !important; }
+    }
+
+    /* ═══════════ MOBILE ═══════════ */
+    @media (max-width: 767px) {
+      :root { --header-h: 56px; }
+      .header-nav-initial { display: none !important; }
+      .header-compact-title { display: none; }
+      .hero-title-block { padding-top: calc(var(--header-h) + 40px); }
+      .hero-main-title { font-size: clamp(28px, 8vw, 38px); letter-spacing: -0.5px; }
+    }
+  </style>
+</head>
+<body class="bg-wz-bg">
+
+  <!-- ═══════════ HEADER ═══════════ -->
+  <header class="wz-header" id="header">
+    <div class="header-inner">
+      <!-- Logo -->
+      <a href="/static/webzine_01/" class="shrink-0 relative z-10 no-underline" style="text-decoration:none;">
+        <span style="font-family:'Rakkas',Georgia,serif; font-size:22px; font-weight:400; letter-spacing:-0.3px; color:#1d1d1f; line-height:1;">D-insight<span style="color:#2ca39c;">.</span></span>
+      </a>
+
+      <!-- Compact title — appears on scroll -->
+      <p class="header-compact-title text-[18px] text-wz-text tracking-[-0.36px] leading-[1.4]"
+         style="font-family:'Noto Serif KR',serif; font-weight:600;">
+        글로컬 대학의 미래 - 지역혁신을 위한 새로운 패러다임
+      </p>
+
+      <div class="flex items-center gap-2 md:gap-4 relative z-10">
+        <!-- NEWSROOM — disappears on scroll -->
+        <a href="/static/webzine_01/" class="header-nav-initial hidden md:flex items-center relative" style="font-weight:700; font-size:14px; letter-spacing:-0.28px; color:#3f3f44; text-decoration:none; padding:6px 14px; border-radius:999px; transition:all 0.3s ease;">
+          NEWSROOM
+        </a>
+        <!-- Vol pill -->
+        <button class="flex items-center gap-2 bg-[#f5f7fa] rounded-full px-3 py-1.5 md:px-4 md:py-1.5 hover:bg-[#eceef3] transition-colors duration-300">
+          <span class="font-bold text-[13px] tracking-[-0.3px] text-wz-text">Vol. 03</span>
+          <span class="hidden md:inline font-normal text-[12px] tracking-[-0.26px] text-wz-caption">2026. 02</span>
+          <svg width="12" height="12" viewBox="0 0 18 18" fill="none">
+            <path d="M6 7l3 3 3-3" stroke="#3f3f44" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <!-- Search -->
+        <button class="p-1.5 rounded-full hover:bg-[#f0f0f0] transition-colors duration-300">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="10.5" cy="10.5" r="7" stroke="#3f3f44" stroke-width="1.8"/>
+            <path d="M15.5 15.5L21 21" stroke="#3f3f44" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </header>
+
+
+  <!-- ═══════════ HERO ═══════════ -->
+  <section class="hero-section" id="heroSection">
+    <!-- Title block -->
+    <div class="hero-title-block px-5 md:px-10">
+      <div class="max-w-[680px] mx-auto flex flex-col items-start">
+        <!-- Category -->
+        <div class="mb-5 md:mb-6 reveal">
+          <span class="inline-block font-bold text-[11px] md:text-[12px] tracking-[0.3px] text-white leading-[1]
+                       px-2 py-[4px] bg-wz-primary-dark">DEEP DIVE</span>
+        </div>
+        <!-- BIG title -->
+        <h1 class="hero-main-title reveal reveal-d1" id="heroTitle">
+          글로컬 대학의 미래 —<br>지역혁신을 위한 새로운 패러다임
+        </h1>
+        <!-- Description -->
+        <div class="mt-6 md:mt-8 reveal reveal-d2 self-stretch">
+          <p class="block w-full min-w-full px-4 py-3 bg-wz-primary/[0.05] text-wz-text-light
+                    font-medium text-[15px] md:text-[17px] tracking-[-0.3px] leading-[1.8]">동아대학교와 동서대학교의 연합이 만들어낸 교육 모델을 깊이 있게 들여다봅니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero image — scroll-morphs from rounded to full-bleed -->
+    <div class="hero-image-track mt-10 md:mt-16" id="heroImageTrack">
+      <div class="hero-image-wrapper" id="heroImageWrapper">
+        <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=1600&q=80"
+             alt="글로컬 대학 캠퍼스" id="heroImg" />
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════ ARTICLE BODY ═══════════ -->
+  <main class="bg-white px-0 md:px-10 py-10 md:py-[60px]" id="articleBody">
+    <div class="max-w-[680px] mx-auto flex flex-col gap-10 md:gap-[60px]">
+
+      <!-- Section 1 -->
+      <div class="px-[30px] md:px-10 py-0 md:py-5 flex flex-col gap-[30px] md:gap-10">
+        <div class="flex flex-col gap-5 md:gap-6">
+          <div class="accent-bar w-12 md:w-16 h-[3px] bg-wz-primary"></div>
+          <div class="flex flex-col gap-3">
+            <p class="reveal font-bold text-[14px] md:text-[16px] text-wz-primary tracking-[1.12px] md:tracking-[1.28px] leading-[1.2]">지역 혁신의 시작</p>
+            <h2 class="reveal reveal-d1 font-extrabold text-[20px] md:text-[24px] text-wz-title tracking-[-0.4px] md:tracking-[-0.48px] leading-[1.2]">메이커 스페이스</h2>
+          </div>
+        </div>
+        <div class="reveal article-body font-medium text-[16px] md:text-[18px] text-wz-text tracking-[-0.32px] md:tracking-[-0.36px] leading-[2] text-justify">
+          <p>글로컬 대학은 지역의 미래를 혁신하는 새로운 교육 모델입니다. 동아대학교와 동서대학교의 연합은 단순한 통합을 넘어, 각 대학의 강점을 살려 시너지를 만들어내고 있습니다. 부산이라는 도시의 특성을 최대한 활용하며, 글로벌 네트워크를 통해 지역 인재 양성에 새로운 패러다임을 제시합니다.</p>
+          <div class="spacer"></div>
+          <p>메이커 스페이스는 이 비전의 핵심 공간입니다. 학생들은 이곳에서 아이디어를 현실로 구현합니다. 3D 프린터, 레이저 커터, CNC 장비 등 첨단 제조 장비를 자유롭게 활용할 수 있으며, 전문 멘토의 지도 아래 프로토타입을 제작하고 창업 아이디어를 발전시킵니다. 이론과 실습의 경계를 허물고, 창의적 문제 해결 능력을 기르는 것이 메이커 스페이스의 핵심 가치입니다.</p>
+          <div class="spacer"></div>
+          <p>특히 주목할 점은 양 대학 학생들이 함께 프로젝트를 수행한다는 것입니다. 동아대학교의 공학적 전문성과 동서대학교의 디자인·미디어 역량이 만나 진정한 융합 교육이 이루어집니다. 학생들은 서로 다른 배경과 시각을 가진 동료들과 협업하며, 실제 산업 현장에서 요구되는 협업 능력과 소통 능력을 자연스럽게 체득하게 됩니다.</p>
+        </div>
+      </div>
+
+      <!-- Inline image with parallax -->
+      <div class="reveal flex flex-col gap-3 w-full">
+        <div class="parallax-wrap w-full aspect-[680/400]">
+          <img src="https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?w=1400&q=80"
+               alt="캠퍼스 전경" class="w-full h-[120%] object-cover" data-parallax
+               style="transform: translateY(-10%);" />
+        </div>
+        <p class="font-medium text-[14px] md:text-[15px] text-wz-text-light tracking-[-0.28px] md:tracking-[-0.3px] leading-[2] px-4 md:px-0">
+          동아대학교·동서대학교 글로컬 연합 캠퍼스 전경.
+        </p>
+      </div>
+
+      <!-- Section 2 -->
+      <div class="px-[30px] md:px-10 py-0 md:py-5 flex flex-col gap-5 md:gap-10">
+        <div class="flex flex-col gap-5 md:gap-6">
+          <div class="accent-bar w-12 md:w-16 h-[3px] bg-wz-primary"></div>
+          <div class="flex flex-col gap-3">
+            <p class="reveal font-bold text-[14px] md:text-[16px] text-wz-primary tracking-[1.12px] md:tracking-[1.28px] leading-[1.2]">아이디어를 현실에 구현하다</p>
+            <h2 class="reveal reveal-d1 font-extrabold text-[20px] md:text-[24px] text-wz-title tracking-[-0.4px] md:tracking-[-0.48px] leading-[1.2]">지역과 세계를 잇는 교육</h2>
+          </div>
+        </div>
+        <div class="reveal article-body font-medium text-[16px] md:text-[18px] text-wz-text tracking-[-0.32px] md:tracking-[-0.36px] leading-[2] text-justify">
+          <p>글로컬 연합대학의 교육 과정은 지역 산업의 수요에 맞춤화되어 있습니다. 부산의 핵심 산업인 해양, 물류, 영상, IT 분야를 중심으로 특화된 연합 전공을 운영하며, 학생들은 양 대학의 교수진과 시설을 자유롭게 오가며 배웁니다. 이를 통해 하나의 대학에서는 불가능했던 폭넓은 학습 경험을 제공합니다.</p>
+          <div class="spacer"></div>
+          <p>해외 파트너 대학과의 교류 프로그램도 글로컬 교육의 핵심입니다. 학생들은 학기 중 해외 대학에서 수업을 듣고, 글로벌 기업에서 인턴십을 수행할 수 있습니다. 지역에 뿌리를 두되, 세계적 시야를 갖춘 인재를 양성하겠다는 글로컬의 비전이 이러한 프로그램을 통해 구현되고 있습니다.</p>
+          <div class="spacer"></div>
+          <p>연구 분야에서도 양 대학의 시너지는 뚜렷합니다. 공동 연구 센터를 통해 지역 기업과 협력하고, 연구 성과를 지역 사회에 환원하는 선순환 구조를 만들어가고 있습니다. 수소 에너지, 스마트 시티, 디지털 헬스케어 등 미래 산업 분야에서 양 대학의 연구진이 힘을 합쳐 글로벌 수준의 성과를 내고 있으며, 이는 지역 경제 활성화에도 크게 기여하고 있습니다.</p>
+          <div class="spacer"></div>
+          <p>궁극적으로 글로컬 연합대학이 추구하는 것은 '지역이 곧 세계'라는 비전의 실현입니다. 부산이라는 도시의 잠재력을 최대한 끌어올리고, 이곳에서 배출된 인재가 세계 무대에서 활약할 수 있도록 하는 것. 그것이 동아대학교와 동서대학교가 함께 그려가는 교육의 미래입니다.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+
+  <!-- ═══════════ MORE INSIGHTS + CREDIT ═══════════ -->
+  <section class="bg-wz-bg px-5 md:px-10 py-[60px] md:py-20 overflow-hidden">
+    <div class="max-w-[800px] mx-auto flex flex-col gap-[100px]">
+      <div class="flex flex-col gap-[30px]">
+        <h3 class="reveal text-[32px] md:text-[40px] text-wz-text tracking-[-0.96px] md:tracking-[-1.2px] leading-[1.3]"
+            style="font-family:'Noto Serif KR',serif; font-weight:700;">
+          More <span class="text-wz-primary">Insights</span>
+        </h3>
+        <div class="flex flex-col gap-0">
+          <a href="#" class="insight-card flex gap-4 items-start p-3 md:p-4">
+            <div class="thumb w-[128px] h-[90px] shrink-0 overflow-hidden"><img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=256&q=80" alt="" class="w-full h-full object-cover" /></div>
+            <div class="flex flex-col gap-1 flex-1 min-w-0 pt-1">
+              <span class="font-extrabold text-[12px] md:text-[14px] text-wz-primary-dark tracking-[-0.24px] md:tracking-[-0.28px] leading-[1.6]">SO 브리핑</span>
+              <span class="font-bold text-[16px] md:text-[18px] text-wz-title tracking-[-0.32px] md:tracking-[-0.36px] leading-[1.6]">공동 연구 센터 설립 - 지역 산업과 대학의 새로운 연결</span>
+            </div>
+          </a>
+          <a href="#" class="insight-card flex gap-4 items-start p-3 md:p-4" style="transition-delay:.08s">
+            <div class="thumb w-[128px] h-[90px] shrink-0 overflow-hidden"><img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=256&q=80" alt="" class="w-full h-full object-cover" /></div>
+            <div class="flex flex-col gap-1 flex-1 min-w-0 pt-1">
+              <span class="font-extrabold text-[12px] md:text-[14px] text-wz-primary-dark tracking-[-0.24px] md:tracking-[-0.28px] leading-[1.6]">DEEP DIVE</span>
+              <span class="font-bold text-[16px] md:text-[18px] text-wz-title tracking-[-0.32px] md:tracking-[-0.36px] leading-[1.6]">학생들이 만드는 미래 - 글로컬 창업 프로그램</span>
+            </div>
+          </a>
+          <a href="#" class="insight-card flex gap-4 items-start p-3 md:p-4" style="transition-delay:.16s">
+            <div class="thumb w-[128px] h-[90px] shrink-0 overflow-hidden"><img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=256&q=80" alt="" class="w-full h-full object-cover" /></div>
+            <div class="flex flex-col gap-1 flex-1 min-w-0 pt-1">
+              <span class="font-extrabold text-[12px] md:text-[14px] text-wz-primary-dark tracking-[-0.24px] md:tracking-[-0.28px] leading-[1.6]">SPOTLIGHT</span>
+              <span class="font-bold text-[16px] md:text-[18px] text-wz-title tracking-[-0.32px] md:tracking-[-0.36px] leading-[1.6]">해외 파트너십으로 여는 글로벌 교육의 문</span>
+            </div>
+          </a>
+          <a href="#" class="insight-card flex gap-4 items-start p-3 md:p-4" style="transition-delay:.24s">
+            <div class="thumb w-[128px] h-[90px] shrink-0 overflow-hidden"><img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=256&q=80" alt="" class="w-full h-full object-cover" /></div>
+            <div class="flex flex-col gap-1 flex-1 min-w-0 pt-1">
+              <span class="font-extrabold text-[12px] md:text-[14px] text-wz-primary-dark tracking-[-0.24px] md:tracking-[-0.28px] leading-[1.6]">DISCOVER</span>
+              <span class="font-bold text-[16px] md:text-[18px] text-wz-title tracking-[-0.32px] md:tracking-[-0.36px] leading-[1.6]">수소에너지에서 실감콘텐츠까지 - 연합 전공 소개</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="flex flex-col gap-5 reveal">
+        <h4 class="text-[24px] md:text-[32px] text-wz-text tracking-[-0.72px] md:tracking-[-0.96px] leading-[1.3]"
+            style="font-family:'Noto Serif KR',serif; font-weight:700;">Credit</h4>
+        <div class="font-medium text-[16px] md:text-[18px] text-wz-title tracking-[-0.32px] md:tracking-[-0.36px] leading-[2]">
+          <p>글 박태원</p>
+          <p>사진 출처 동아대학교, 동서대학교</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="bg-wz-footer-bg">
+    <div class="max-w-[1280px] mx-auto px-5">
+      <div class="py-10 md:py-12">
+        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
+          <div class="flex flex-col md:flex-row gap-4 flex-1 text-wz-caption leading-[1.4]">
+            <div class="flex flex-col gap-2.5 flex-1">
+              <p class="font-bold text-[15px] md:text-[16px] tracking-[-0.45px] md:tracking-[-0.48px]">동아대학교</p>
+              <div class="flex flex-col gap-1 text-[13px] md:text-[14px] tracking-[-0.39px] md:tracking-[-0.42px]">
+                <div class="flex gap-1 md:gap-2 items-center"><span class="font-bold">승학캠퍼스(대학본부)</span><span class="font-medium">(49315) 부산 사하구 낙동대로550번길 37</span></div>
+                <div class="flex gap-1 md:gap-2 items-center"><span class="font-bold">구덕캠퍼스</span><span class="font-medium">(49201) 부산시 서구 대신공원로 32</span></div>
+                <div class="flex gap-1 md:gap-2 items-center"><span class="font-bold">부민캠퍼스</span><span class="font-medium">(49236) 부산시 서구 구덕로 225</span></div>
+                <span class="font-medium">TEL: 051-200-5922</span>
+              </div>
+            </div>
+            <div class="flex flex-col gap-2.5 flex-1">
+              <p class="font-bold text-[15px] md:text-[16px] tracking-[-0.45px] md:tracking-[-0.48px]">동서대학교</p>
+              <div class="flex flex-col gap-1 text-[13px] md:text-[14px] tracking-[-0.39px] md:tracking-[-0.42px]">
+                <div class="flex gap-1 md:gap-2 items-center"><span class="font-bold">주례캠퍼스</span><span class="font-medium">(47011) 부산광역시 사상구 주례로 47</span></div>
+                <div class="flex gap-1 md:gap-2 items-center"><span class="font-bold">센텀캠퍼스</span><span class="font-medium">(48058) 부산광역시 해운대구 센텀중앙로 55</span></div>
+                <span class="font-medium">TEL: 051-320-4258</span>
+              </div>
+            </div>
+          </div>
+          <div class="hidden md:flex flex-col items-end justify-center">
+            <div class="flex items-center gap-10">
+              <a href="https://www.donga.ac.kr" target="_blank"><img src="https://www.donga.ac.kr/common/images/logo.png" alt="동아대학교" class="h-[47px] w-auto opacity-40 hover:opacity-70 transition-opacity" /></a>
+              <a href="https://www.dongseo.ac.kr" target="_blank"><img src="https://www.dongseo.ac.kr/kr/images/common/logo.png" alt="동서대학교" class="h-[43px] w-auto opacity-40 hover:opacity-70 transition-opacity" /></a>
+            </div>
+          </div>
+        </div>
+        <div class="mt-6 flex flex-col md:flex-row md:items-center gap-4">
+          <a href="#" class="font-bold text-[14px] md:text-[15px] text-wz-primary tracking-[-0.42px] md:tracking-[-0.45px]">개인정보처리방침</a>
+          <div class="md:hidden flex items-start justify-between">
+            <a href="https://www.donga.ac.kr" target="_blank"><img src="https://www.donga.ac.kr/common/images/logo.png" alt="동아대학교" class="h-[37px] w-auto opacity-40" /></a>
+            <a href="https://www.dongseo.ac.kr" target="_blank"><img src="https://www.dongseo.ac.kr/kr/images/common/logo.png" alt="동서대학교" class="h-[29px] w-auto opacity-40" /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ═══════════ JAVASCRIPT ═══════════ -->
+  <script>
+  (function() {
+    'use strict';
+
+    const $ = s => document.querySelector(s);
+    const $$ = s => document.querySelectorAll(s);
+
+    const header       = $('#header');
+    const progressFill = $('#progressFill');
+    const heroSection  = $('#heroSection');
+    const heroTitle    = $('#heroTitle');
+    const heroWrapper  = $('#heroImageWrapper');
+    const heroImg      = $('#heroImg');
+    const heroTrack    = $('#heroImageTrack');
+
+    const isMob = () => window.innerWidth < 768;
+    const headerH = () => 56;
+    const clamp  = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+    const lerp   = (a, b, t) => a + (b - a) * t;
+    const ease   = t => 1 - Math.pow(1 - t, 3); // easeOutCubic
+
+    // ─── Header hysteresis state ───
+    let headerSolid = false;
+
+    // ─── Hero image initial state ───
+    function setHeroInitial() {
+      const mob = isMob();
+      heroWrapper.style.maxWidth    = mob ? '100%' : '800px';
+      heroWrapper.style.width       = mob ? '100%' : 'calc(100% - 80px)';
+      heroWrapper.style.borderRadius = '0px';
+      heroWrapper.style.aspectRatio = mob ? '360/180' : '800/360';
+      heroImg.style.transform       = 'scale(1.15)';
+    }
+    setHeroInitial();
+
+    // ─── Main scroll loop ───
+    let raf = 0;
+    function tick() {
+      const sy = window.scrollY;
+      const mob = isMob();
+      const viewW = window.innerWidth;
+      const viewH = window.innerHeight;
+      const hH = headerH();
+
+      // ── 1. Title → Header morph ──
+      // When the title's top edge reaches header bottom, start shrinking
+      const titleRect = heroTitle.getBoundingClientRect();
+      const titleNaturalTop = heroTitle.offsetTop; // from document top
+      const titleH = titleRect.height;
+
+      // Phase: 0 = title in normal position, 1 = fully absorbed into header
+      const morphStart = titleNaturalTop - hH - titleH * 0.5;
+      const morphEnd   = titleNaturalTop + titleH * 0.3;
+      const morphT = ease(clamp((sy - morphStart) / (morphEnd - morphStart), 0, 1));
+
+      // Scale: 1 → 0.5 (56px → ~28px effective)
+      const titleScale = lerp(1, 0.5, morphT);
+      // Opacity: clean fade — fully gone by morphT ~0.75
+      const titleOpacity = clamp(1 - morphT * 1.3, 0, 1);
+
+      heroTitle.style.transform = `scale(${titleScale})`;
+      heroTitle.style.opacity   = titleOpacity;
+      heroTitle.style.transformOrigin = 'center top';
+
+      // ── 2. Header state (hysteresis to prevent flicker) ──
+      if (!headerSolid && morphT > 0.5) {
+        headerSolid = true;
+        header.classList.add('solid');
+      } else if (headerSolid && morphT < 0.2) {
+        headerSolid = false;
+        header.classList.remove('solid');
+      }
+
+      // ── 3. Progress bar ──
+      const docH = document.documentElement.scrollHeight - viewH;
+      if (docH > 0) progressFill.style.width = (clamp(sy / docH, 0, 1) * 100) + '%';
+
+      // ── 4. Hero image morph (rounded → full-bleed) ──
+      const imgScrollStart = heroTrack.offsetTop - viewH * 0.8;
+      const imgScrollEnd   = heroTrack.offsetTop + heroTrack.offsetHeight * 0.15;
+      const imgT = ease(clamp((sy - imgScrollStart) / (imgScrollEnd - imgScrollStart), 0, 1));
+
+      if (mob) {
+        heroWrapper.style.maxWidth    = '100%';
+        heroWrapper.style.width       = '100%';
+        heroWrapper.style.borderRadius = '0px';
+        heroWrapper.style.aspectRatio = '360/180';
+        heroImg.style.transform = `scale(${lerp(1.15, 1.0, imgT)})`;
+      } else {
+        const startW = Math.min(800, viewW - 80);
+        heroWrapper.style.maxWidth     = lerp(startW, viewW, imgT) + 'px';
+        heroWrapper.style.width        = '100%';
+        heroWrapper.style.borderRadius = '0px';
+        heroWrapper.style.aspectRatio  = lerp(800/360, viewW/420, imgT);
+        heroImg.style.transform        = `scale(${lerp(1.15, 1.0, imgT)})`;
+      }
+
+      // ── 5. Parallax images ──
+      $$('[data-parallax]').forEach(img => {
+        const wrap = img.closest('.parallax-wrap');
+        if (!wrap) return;
+        const r = wrap.getBoundingClientRect();
+        const p = clamp(1 - (r.top + r.height) / (viewH + r.height), 0, 1);
+        img.style.transform = `translateY(${lerp(-12, 2, p)}%)`;
+      });
+
+      raf = 0;
+    }
+
+    function onScroll() {
+      if (!raf) raf = requestAnimationFrame(tick);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', () => { setHeroInitial(); tick(); });
+    tick();
+
+    // ─── Intersection Observer: reveal / accent-bar / insight-card ───
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('vis');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+
+    $$('.reveal, .accent-bar, .insight-card').forEach(el => obs.observe(el));
+
+  })();
+  </script>
+
+</body>
+</html>
