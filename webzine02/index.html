@@ -207,8 +207,8 @@
       clip-path: polygon(0 0, 58% 0, 38% 100%, 0 100%);
       z-index: 2;
     }
-    .cover-img-sub { z-index: 1; left: 30%; }
-    .cover-img-sub img { object-position: -400%; }
+    .cover-img-sub { z-index: 1; }
+    .cover-img-sub img { object-position: 50% 8%; }
     .cover-diagonal-line {
       position: absolute; inset: 0; width: 100%; height: 100%;
       z-index: 3; pointer-events: none;
@@ -832,20 +832,15 @@
 
         // Image positions: shift as hero narrows
         const mainImg = heroInner.querySelector('.cover-img-main img');
-        const subFig = heroInner.querySelector('.cover-img-sub');
         const subImg = heroInner.querySelector('.cover-img-sub img');
         if (mainImg) {
           // 동아대: 간판이 사진 왼쪽 → 50% → 30% (narrowed시 왼쪽으로)
           const mainX = 50 - 20 * eased;
           mainImg.style.objectPosition = mainX + '% 35%';
         }
-        if (subFig) {
-          // figure left: 30% → 0% (넓어지면서 사선 빈공간 방지)
-          subFig.style.left = (30 - 30 * eased) + '%';
-        }
         if (subImg) {
-          // 동서대: -400% → 40% 8% (figure 넓어지며 보정)
-          const subX = -400 + 440 * eased;
+          // 동서대: 50% → 40% (compact시 건물 센터 미세 조정)
+          const subX = 50 - 10 * eased;
           subImg.style.objectPosition = subX + '% 8%';
         }
 
