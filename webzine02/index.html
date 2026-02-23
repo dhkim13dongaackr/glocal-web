@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>D-insight | Vol.01 - 4개에서 6개로, 연합전공이 더 넓어진다</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Rakkas&family=Abril+Fatface&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT/fonts/variable/woff2/SUIT-Variable.css" rel="stylesheet" />
+  <style>
+    @font-face {
+      font-family: 'ELAND Nice';
+      src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/ELAND_Nice_M.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Elice DigitalBaeum';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_elice@1.0/EliceDigitalBaeum-Bd.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            wz: {
+              primary: '#2ca39c',
+              'primary-dark': '#0a968e',
+              accent: '#56cfc9',
+              text: '#3f3f44',
+              title: '#171719',
+              'text-light': '#606068',
+              caption: '#74747e',
+              bg: '#f5f7fa',
+              container: '#ffffff',
+              'footer-bg': '#edeff4',
+            }
+          },
+          fontFamily: {
+            sans: ['SUIT Variable', 'SUIT', 'sans-serif'],
+            display: ['ELAND Nice', 'serif'],
+            serif: ['Noto Serif', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+      --header-h: 56px;
+    }
+    @media (min-width: 768px) { :root { --header-h: 149px; } }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'SUIT Variable', 'SUIT', sans-serif; color: #3f3f44; overflow-x: hidden; }
+    .wz-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: #fff;
+      transition: box-shadow 0.4s;
+    }
+    .glocal-logo-link { display: flex; align-items: center; text-decoration: none; }
+    .glocal-logo-link:hover { opacity: 0.7; }
+    .newsroom-link {
+      font-weight: 700; font-size: 14px; letter-spacing: -0.28px; color: #3f3f44;
+      text-decoration: none; padding: 6px 14px; border-radius: 999px;
+      transition: all 0.3s ease;
+    }
+    .newsroom-link:hover { background: #f0f0f0; color: #2ca39c; }
+    .newsroom-link { position: relative; }
+    .newsroom-dot {
+      position: absolute;
+      top: 2px; right: 2px;
+      width: 7px; height: 7px;
+      background: #2ca39c;
+      border-radius: 50%;
+      display: none;
+    }
+    .newsroom-dot.active {
+      display: block;
+      animation: dotPulse 2s ease-in-out infinite;
+    }
+    @keyframes dotPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.85); }
+    }
+    .hdr-collapsible {
+      overflow: hidden;
+      max-height: 120px;
+      opacity: 1;
+      transition: max-height 0.35s var(--ease-out-expo), opacity 0.25s ease;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .wz-header.compact .hdr-collapsible {
+      max-height: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .compact-logo {
+      display: none !important;
+      transition: opacity 0.3s ease;
+    }
+    .wz-header.compact .compact-logo {
+      display: flex !important;
+    }
+    .wz-header.hero-mode .hdr-divider { background: rgba(255,255,255,0.35); }
+    .wz-header.hero-mode .glocal-top { fill: white; }
+    .wz-header.hero-mode .glocal-bottom { fill: white; }
+    @media (max-width: 767px) {
+      .glocal-logo-link svg { height: 18px; }
+      .hdr-divider { height: 20px; margin: 0 10px; }
+    }
+    .wz-header.scrolled {
+      background: rgba(255,255,255,0.95);
+      border-bottom-color: rgba(0,0,0,0.06);
+      box-shadow: 0 1px 12px rgba(0,0,0,0.06);
+    }
+    .wz-header.hero-mode {
+      background: transparent !important;
+      backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+      border-bottom-color: transparent !important;
+      box-shadow: none !important;
+    }
+    .wz-header.hero-mode .hdr-text { color: white !important; }
+    .wz-header.hero-mode svg path:not(.glocal-top):not(.glocal-bottom),
+    .wz-header.hero-mode svg circle { stroke: white !important; }
+    .wz-header.hero-mode img { filter: brightness(0) invert(1); }
+    .wz-header.hero-mode .bg-wz-bg { background-color: rgba(255,255,255,0.15) !important; }
+    .wz-header.hero-mode .hover\:bg-\[#eceef3\]:hover { background-color: rgba(255,255,255,0.25) !important; }
+    .wz-header.hero-mode .hover\:bg-wz-bg:hover { background-color: rgba(255,255,255,0.2) !important; }
+    .wz-tab {
+      cursor: pointer; padding: 16px 0; font-size: 17px; line-height: 1.4;
+      letter-spacing: -0.51px; position: relative; color: #606068; font-weight: 700;
+      transition: color 0.3s var(--ease-out-expo);
+    }
+    .wz-tab::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: #2ca39c; transform: scaleX(0); transform-origin: center;
+      transition: transform 0.35s var(--ease-out-expo);
+    }
+    .wz-tab.active { color: #2ca39c; font-weight: 800; }
+    .wz-tab.active::after { transform: scaleX(1); }
+    .wz-tab:hover:not(.active) { color: #3f3f44; }
+    .article-card {
+      cursor: pointer; opacity: 0; transform: translateY(40px);
+      transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
+    }
+    .article-card.revealed { opacity: 1; transform: translateY(0); }
+    .article-card .card-img { overflow: hidden; border-radius: 4px; }
+    .article-card .card-img img {
+      transition: transform 0.6s var(--ease-out-expo), filter 0.6s;
+      will-change: transform;
+    }
+    .article-card:hover .card-img img { transform: scale(1.06); }
+    .article-card .article-title { transition: color 0.3s; }
+    .article-card:hover .article-title { color: #2ca39c; }
+    .press-card {
+      cursor: pointer; flex-shrink: 0; opacity: 0; transform: translateY(30px);
+      transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
+    }
+    .press-card.revealed { opacity: 1; transform: translateY(0); }
+    .press-card .press-img { overflow: hidden; border-radius: 4px; }
+    .press-card .press-img img { transition: transform 0.6s var(--ease-out-expo); }
+    .press-card:hover .press-img img { transform: scale(1.05); }
+    .press-card:hover,
+    .press-card.revealed:hover { transform: translateY(-4px); }
+    .history-item {
+      cursor: pointer; opacity: 0; transform: translateY(20px);
+      transition: opacity 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo);
+    }
+    .history-item.revealed { opacity: 1; transform: translateY(0); }
+    .history-item .hist-img { overflow: hidden; border-radius: 4px; }
+    .history-item .hist-img img { transition: transform 0.5s var(--ease-out-expo); }
+    .history-item:hover .hist-img img { transform: scale(1.06); }
+    .history-item:hover,
+    .history-item.revealed:hover { transform: translateY(-6px); }
+    .hero-gradient {
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 30%, rgba(0,0,0,0.75) 100%);
+    }
+    .hero-cover {
+      overflow: hidden; position: relative;
+      background: #fff;
+    }
+    .cover-images {
+      position: absolute; inset: 0;
+    }
+    .cover-images figure {
+      position: absolute; inset: 0;
+      overflow: hidden; margin: 0;
+    }
+    .cover-images figure img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.6s var(--ease-out-expo);
+    }
+    .cover-images figure:hover img { transform: scale(1.03); }
+    .cover-img-main {
+      clip-path: polygon(0 0, 58% 0, 38% 100%, 0 100%);
+      z-index: 2;
+    }
+    .cover-img-sub { z-index: 1; left: 30%; }
+    .cover-img-sub img { object-position: -400%; }
+    .cover-diagonal-line {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      z-index: 3; pointer-events: none;
+    }
+    .cover-img-label {
+      position: absolute;
+      font-family: 'SUIT Variable', 'SUIT', sans-serif;
+      font-size: 10px; letter-spacing: -0.3px; font-weight: 400;
+      color: rgba(255,255,255,0.82);
+      background: rgba(0,0,0,0.25); backdrop-filter: blur(6px);
+      border-radius: 100px; padding: 2px 10px 3px;
+    }
+    .cover-img-main .cover-img-label { top: 12px; left: 12px; }
+    .cover-img-sub .cover-img-label { top: 12px; right: 12px; }
+    .cover-text {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      z-index: 5;
+      padding: 22px 28px 32px;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255,255,255,0.6);
+      text-align: right;
+      transition: background 0.6s ease, backdrop-filter 0.6s ease;
+    }
+    .cover-title-num { /* no longer used, kept for compat */ }
+    @media (min-width: 768px) {
+      .wz-magazine-section { padding-top: var(--header-h); }
+      .wz-split-wrap {
+        display: flex; align-items: flex-start;
+        min-height: 250vh;
+        max-width: 1280px; margin: 0 auto; padding: 0 40px 80px;
+      }
+      .wz-sticky-hero {
+        position: sticky; top: var(--header-h);
+        height: calc(100dvh - var(--header-h));
+        flex-shrink: 0; z-index: 2;
+        transition: top 0.35s var(--ease-out-expo), height 0.35s var(--ease-out-expo);
+      }
+      .wz-hero-inner { width: 100%; height: 100%; overflow: hidden; position: relative; }
+      .wz-content-area {
+        position: sticky; top: var(--header-h);
+        flex: 1 1 0; min-width: 0;
+        opacity: 0;
+        padding: 10px 0 0 30px;
+      }
+      .wz-content-area.compact-scroll {
+        height: calc(100dvh - var(--header-h));
+        overflow-y: auto;
+        padding-top: 0;
+        scrollbar-width: none;
+        scrollbar-color: transparent transparent;
+      }
+      .wz-content-area.compact-scroll::-webkit-scrollbar { width: 0; height: 0; }
+      .wz-content-area.compact-scroll #tabsDesktop {
+        top: 0 !important;
+      }
+      /* 동아대/동서대 image position transitions */
+      .cover-img-main img, .cover-img-sub img {
+        transition: object-position 0.4s ease;
+      }
+      .cover-img-sub {
+        transition: left 0.4s ease;
+      }
+      .wz-content-area .article-card { opacity: 1; transform: none; }
+    }
+    .hero-text-reveal > * {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+    }
+    .hero-text-reveal.active > *:nth-child(1) { opacity:1; transform:translateY(0); transition-delay:0.2s; }
+    .hero-text-reveal.active > *:nth-child(2) { opacity:1; transform:translateY(0); transition-delay:0.45s; }
+    .hero-text-reveal.active > *:nth-child(3) { opacity:1; transform:translateY(0); transition-delay:0.65s; }
+    .hero-text-reveal.active > *:nth-child(4) { opacity:1; transform:translateY(0); transition-delay:0.8s; }
+    .section-reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+    }
+    .section-reveal.revealed { opacity: 1; transform: translateY(0); }
+    .carousel-btn {
+      background: rgba(72,91,111,0.06); border-radius: 100px; padding: 16px;
+      cursor: pointer; border: none;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+    }
+    .carousel-btn:hover { background: rgba(72,91,111,0.14); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .carousel-btn:active { transform: scale(0.92); }
+    .drag-scroll { cursor: grab; -webkit-overflow-scrolling: touch; }
+    .drag-scroll.dragging { cursor: grabbing; scroll-snap-type: none !important; }
+    .drag-scroll:not(.dragging) { scroll-snap-type: x mandatory; }
+    .drag-scroll > * { scroll-snap-align: start; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .vol-dropdown {
+      position: absolute; top: calc(100% + 8px); right: 0;
+      background: white; border-radius: 16px; padding: 8px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.08);
+      opacity: 0; transform: translateY(-8px) scale(0.97); pointer-events: none;
+      transition: opacity 0.25s var(--ease-out-expo), transform 0.25s var(--ease-out-expo);
+      min-width: 200px; z-index: 200;
+    }
+    .vol-dropdown.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+    .vol-dropdown a {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px; border-radius: 10px; text-decoration: none; color: #3f3f44;
+      transition: background 0.2s;
+    }
+    .vol-dropdown a:hover { background: #f5f7fa; }
+    .vol-dropdown a.current { color: #2ca39c; font-weight: 800; }
+    .footer-logo { transition: opacity 0.3s; }
+    .footer-logo:hover { opacity: 0.7; }
+  </style>
+</head>
+<body class="bg-white">
+
+  <!-- ═══════════ HEADER ═══════════ -->
+  <header class="wz-header" id="wzHeader">
+    <div class="max-w-[1920px] mx-auto">
+      <!-- Desktop: ELLE-inspired centered layout -->
+      <div class="hidden md:flex flex-col items-center max-w-[1280px] mx-auto px-10">
+        <div class="hdr-collapsible" id="hdrCollapsible">
+        <!-- Top row: University name as logo-text (left) -->
+        <div class="flex items-center justify-start w-full pt-2.5 pb-1">
+          <a href="../v_proposal_11/index.html" class="hover:text-[#2ca39c] transition-colors no-underline flex items-center gap-1.5" style="text-decoration:none; font-size:12px; font-weight:600; letter-spacing:-0.1px; color:#74747e;" title="동아·동서 글로컬 연합대학 홈페이지"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="opacity:0.55"><path d="M3 12l9-8 9 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 10v9a1 1 0 001 1h3v-5h6v5h3a1 1 0 001-1v-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>연합대학 홈</a>
+        </div>
+        <!-- University name + D-insight (centered) -->
+        <div class="flex flex-col items-center w-full">
+          <span class="text-[12px] tracking-[1.5px] text-[#2ca39c] mb-[2px]" style="font-weight:500;">동아·동서 글로컬 연합대학 웹진</span>
+          <a href="#" class="no-underline" style="text-decoration:none;">
+            <span style="font-family:'Rakkas',Georgia,serif; font-size:52px; font-weight:400; letter-spacing:-0.5px; color:#1d1d1f; line-height:1;">D-insight<span style="color:#2ca39c;">.</span></span>
+          </a>
+        </div>
+        </div><!-- /hdr-collapsible -->
+        <!-- Nav bar: Vol capsule left / NEWSROOM + search right -->
+        <div class="flex items-center justify-between pt-2.5 pb-2 w-full" id="navBar">
+          <div class="flex items-center gap-4">
+            <!-- Compact-only small logo -->
+            <a href="#" class="compact-logo items-center no-underline" style="text-decoration:none;">
+              <span style="font-family:'Rakkas',Georgia,serif; font-size:22px; font-weight:400; letter-spacing:-0.3px; color:#1d1d1f; line-height:1;">D-insight<span style="color:#2ca39c;">.</span></span>
+            </a>
+          <div class="relative" id="volWrap">
+            <button class="flex items-center gap-2 bg-[#f5f7fa] rounded-full px-4 py-1.5 hover:bg-[#eceef3] transition-colors duration-300" id="volBtn">
+              <span class="hdr-text font-bold text-[13px] tracking-[-0.3px] text-wz-text">Vol. 01</span>
+              <svg width="12" height="12" viewBox="0 0 18 18" fill="none" class="transition-transform duration-300" id="volArrow">
+                <path d="M6 7l3 3 3-3" stroke="#3f3f44" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="vol-dropdown" id="volDropdown">
+              <a href="#" class="current">
+                <span class="font-bold">Vol. 01</span><span class="text-sm text-wz-caption">2026. 02</span>
+              </a>
+            </div>
+          </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <a href="#" class="newsroom-link">NEWSROOM<span class="newsroom-dot active" id="newsroomDot"></span></a>
+            <button class="p-1.5 rounded-full hover:bg-[#f0f0f0] transition-colors duration-300">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <circle cx="10.5" cy="10.5" r="7" stroke="#3f3f44" stroke-width="1.8"/>
+                <path d="M15.5 15.5L21 21" stroke="#3f3f44" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Mobile -->
+      <div class="flex md:hidden items-center justify-between px-4 py-4">
+        <div class="flex items-center">
+          <a href="#" class="no-underline" style="text-decoration:none;">
+            <span style="font-family:'Rakkas',Georgia,serif; font-size:24px; font-weight:400; letter-spacing:-0.3px; color:#1d1d1f; line-height:1;">D-insight<span style="color:#2ca39c;">.</span></span>
+          </a>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="relative" id="volWrapM">
+            <button class="flex items-center justify-between bg-wz-bg rounded-full px-3 py-2 w-[110px] hover:bg-[#eceef3] transition-colors" id="volBtnM">
+              <span class="hdr-text font-bold text-[13px] tracking-[-0.42px] text-wz-text">Vol. 01</span>
+              <svg width="16" height="16" viewBox="0 0 18 18" fill="none" class="transition-transform duration-300" id="volArrowM">
+                <path d="M6 7l3 3 3-3" stroke="#3f3f44" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="vol-dropdown" id="volDropdownM">
+              <a href="#" class="current"><span class="font-bold text-sm">Vol. 01</span><span class="text-xs text-wz-caption">2026. 02 · 창간호</span></a>
+            </div>
+          </div>
+          <button class="p-1.5 rounded-full hover:bg-wz-bg transition-colors">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <circle cx="10.5" cy="10.5" r="7" stroke="#3f3f44" stroke-width="1.8"/>
+              <path d="M15.5 15.5L21 21" stroke="#3f3f44" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ═══════════ SECTION 1: HERO + ARTICLE GRID ═══════════ -->
+
+    <!-- ── Desktop: Sticky Hero → Split Layout (width animation) ── -->
+    <section class="hidden md:block wz-magazine-section" id="heroSection">
+      <div class="wz-split-wrap" id="heroContainer">
+        <!-- Sticky Hero: starts 100% width, animates to 48% on scroll -->
+        <div class="wz-sticky-hero" id="stickyHero" style="width:100%">
+          <div class="wz-hero-inner hero-cover" id="heroInner">
+            <!-- Full-bleed images with diagonal split -->
+            <div class="cover-images">
+              <figure class="cover-img-main">
+                <img src="./campus-seunghak.jpg" alt="동아대 승학캠퍼스" loading="eager" />
+                <span class="cover-img-label">동아대 승학캠퍼스</span>
+              </figure>
+              <figure class="cover-img-sub">
+                <img src="./campus-jurye.jpg" alt="동서대 주례캠퍼스" loading="eager" />
+                <span class="cover-img-label">동서대 주례캠퍼스</span>
+              </figure>
+              <!-- White diagonal separator -->
+              <svg class="cover-diagonal-line" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <line x1="58" y1="0" x2="38" y2="100" stroke="white" stroke-width="0.5" />
+              </svg>
+            </div>
+            <!-- Text band on photo -->
+            <div class="cover-text hero-text-reveal" id="heroTextDesktop">
+              <span class="font-extrabold text-[14px] tracking-[-0.28px] text-wz-primary-dark leading-[1.6]">COVER STORY</span>
+              <h1 class="text-[28px] leading-[1.3] tracking-[-0.8px] text-wz-title font-extrabold mb-2 mt-1">
+                <span class="text-wz-primary font-extrabold">4</span>개에서 <span class="text-wz-primary font-extrabold">6</span>개로, 연합전공이 더 넓어진다
+              </h1>
+              <div class="w-[32px] h-[2px] bg-wz-primary mb-2 ml-auto"></div>
+              <p class="text-[14px] leading-[1.65] tracking-[-0.3px] text-wz-text-light font-normal">
+                휴먼메타케어와 B-Heritage가 합류한 동아·동서의 새 학기
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content: sticky at top, slides in from right -->
+        <div class="wz-content-area" id="contentArea">
+          <div>
+              <!-- Tabs -->
+              <div class="flex gap-8 items-center sticky bg-white z-10 pb-1" id="tabsDesktop" style="top: var(--header-h)">
+                <span class="wz-tab active" data-cat="all">ALL</span>
+                <span class="wz-tab" data-cat="deep-dive">DEEP DIVE</span>
+                <span class="wz-tab" data-cat="spotlight">SPOTLIGHT</span>
+                <span class="wz-tab" data-cat="discover">DISCOVER</span>
+              </div>
+              <!-- Article Grid (2-column masonry) -->
+              <div class="flex gap-[30px] mt-[30px]" id="gridDesktop">
+                <div class="flex-1 flex flex-col gap-[60px]" id="colL">
+                  <div class="article-card" data-cat="deep-dive">
+                    <div class="card-img aspect-[320/289] mb-2.5"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage1.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+                    <span class="font-extrabold text-[14px] tracking-[-0.28px] text-wz-primary-dark leading-[1.6]">DEEP DIVE</span>
+                    <h3 class="article-title font-bold text-[18px] tracking-[-0.36px] text-wz-title leading-[1.6]">글로컬 연합대학, 지역 혁신의 새로운 모델을 제시하다</h3>
+                  </div>
+                  <div class="article-card" data-cat="discover">
+                    <div class="card-img aspect-[320/377] mb-2.5"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage3.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+                    <span class="font-extrabold text-[14px] tracking-[-0.28px] text-wz-primary-dark leading-[1.6]">DISCOVER</span>
+                    <h3 class="article-title font-bold text-[18px] tracking-[-0.36px] text-wz-title leading-[1.6]">부산에서 세계로, 지역 인재 양성 프로그램의 현장</h3>
+                  </div>
+                  <div class="article-card" data-cat="deep-dive">
+                    <div class="card-img aspect-[320/289] mb-2.5"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage5.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+                    <span class="font-extrabold text-[14px] tracking-[-0.28px] text-wz-primary-dark leading-[1.6]">DEEP DIVE</span>
+                    <h3 class="article-title font-bold text-[18px] tracking-[-0.36px] text-wz-title leading-[1.6]">글로컬 교육 혁신, 해외 대학과의 공동 연구 사례</h3>
+                  </div>
+                  <div class="article-card" data-cat="discover">
+                    <div class="card-img aspect-[320/377] mb-2.5"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage7.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+                    <span class="font-extrabold text-[14px] tracking-[-0.28px] text-wz-primary-dark leading-[1.6]">DISCOVER</span>
+                    <h3 class="article-title font-bold text-[18px] tracking-[-0.36px] text-wz-title leading-[1.6]">디지털 전환 시대, 지역 대학의 AI 교육 혁신 전략</h3>
+                  </div>
+                </div>
+                <div class="flex-1 flex flex-col gap-[60px]" id="colR">
+                  <div class="article-card" data-cat="spotlight">
+                    <div class="card-img aspect-[320/414] mb-2.5"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage2.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+                    <span class="font-extrabold text-[14px] tracking-[-0.28px] text-wz-primary-dark leading-[1.6]">SPOTLIGHT</span>
+                    <h3 class="article-title font-bold text-[18px] tracking-[-0.36px] text-wz-title leading-[1.6]">동아대·동서대 학생들이 만들어가는 글로벌 캠퍼스</h3>
+                  </div>
+                  <div class="article-card" data-cat="spotlight">
+                    <div class="card-img aspect-[320/377] mb-2.5"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage4.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+                    <span class="font-extrabold text-[14px] tracking-[-0.28px] text-wz-primary-dark leading-[1.6]">SPOTLIGHT</span>
+                    <h3 class="article-title font-bold text-[18px] tracking-[-0.36px] text-wz-title leading-[1.6]">산학협력 플랫폼으로 연결되는 대학과 지역사회</h3>
+                  </div>
+                  <div class="article-card" data-cat="spotlight">
+                    <div class="card-img aspect-[320/377] mb-2.5"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage6.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+                    <span class="font-extrabold text-[14px] tracking-[-0.28px] text-wz-primary-dark leading-[1.6]">SPOTLIGHT</span>
+                    <h3 class="article-title font-bold text-[18px] tracking-[-0.36px] text-wz-title leading-[1.6]">지역 문화 콘텐츠를 세계에 알리는 학생 프로젝트</h3>
+                  </div>
+                  <div class="article-card" data-cat="deep-dive">
+                    <div class="card-img aspect-[320/289] mb-2.5"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage8.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+                    <span class="font-extrabold text-[14px] tracking-[-0.28px] text-wz-primary-dark leading-[1.6]">DEEP DIVE</span>
+                    <h3 class="article-title font-bold text-[18px] tracking-[-0.36px] text-wz-title leading-[1.6]">부산 스타트업 생태계와 대학의 만남, 창업 지원 프로그램</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </section>
+
+    <!-- ── Mobile: Full Hero + Stack Layout ── -->
+    <section class="md:hidden bg-white pt-[56px] pb-[60px] px-4" id="heroSectionMobile">
+      <div class="flex flex-col gap-5">
+        <!-- Hero -->
+        <div class="hero-cover -mx-4 rounded-none overflow-hidden" style="height: 480px;">
+          <div class="cover-images">
+            <figure class="cover-img-main">
+              <img src="./campus-seunghak.jpg" alt="동아대 승학캠퍼스" loading="eager" />
+              <span class="cover-img-label" style="font-size:9px;">동아대 승학캠퍼스</span>
+            </figure>
+            <figure class="cover-img-sub">
+              <img src="./campus-jurye.jpg" alt="동서대 주례캠퍼스" loading="eager" />
+              <span class="cover-img-label" style="font-size:9px;">동서대 주례캠퍼스</span>
+            </figure>
+            <svg class="cover-diagonal-line" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <line x1="58" y1="0" x2="38" y2="100" stroke="white" stroke-width="0.5" />
+            </svg>
+          </div>
+          <div class="cover-text hero-text-reveal" id="heroTextMobile" style="padding: 14px 16px 18px;">
+            <span class="font-extrabold text-[12px] tracking-[-0.24px] text-wz-primary-dark leading-[1.6]">COVER STORY</span>
+            <h1 class="text-[22px] leading-[1.28] tracking-[-0.7px] text-wz-title font-extrabold mb-1.5">
+              <span class="text-wz-primary font-extrabold">4</span>개에서 <span class="text-wz-primary font-extrabold">6</span>개로, 연합전공이 더 넓어진다
+            </h1>
+            <div class="w-[20px] h-[2px] bg-wz-primary mb-1.5 ml-auto"></div>
+            <p class="text-[12px] leading-[1.6] tracking-[-0.25px] text-wz-text-light font-normal">
+              휴먼메타케어와 B-Heritage가 합류한 동아·동서의 새 학기
+            </p>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex gap-8 items-center px-1 overflow-x-auto scrollbar-hide" id="tabsMobile">
+          <span class="wz-tab active whitespace-nowrap" data-cat="all">ALL</span>
+          <span class="wz-tab whitespace-nowrap" data-cat="deep-dive">DEEP DIVE</span>
+          <span class="wz-tab whitespace-nowrap" data-cat="spotlight">SPOTLIGHT</span>
+          <span class="wz-tab whitespace-nowrap" data-cat="discover">DISCOVER</span>
+        </div>
+
+        <!-- Grid -->
+        <div class="flex gap-3" id="gridMobile">
+          <div class="flex-1 flex flex-col gap-10">
+            <div class="article-card" data-cat="deep-dive">
+              <div class="card-img aspect-[168/152] mb-2.5"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage1.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+              <span class="font-extrabold text-[12px] tracking-[-0.24px] text-wz-primary-dark leading-[1.6]">DEEP DIVE</span>
+              <h3 class="article-title font-bold text-[16px] tracking-[-0.32px] text-wz-title leading-[1.6]">글로컬 연합대학, 지역 혁신의 새로운 모델을 제시하다</h3>
+            </div>
+            <div class="article-card" data-cat="discover">
+              <div class="card-img aspect-[168/198] mb-2.5"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage3.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+              <span class="font-extrabold text-[12px] tracking-[-0.24px] text-wz-primary-dark leading-[1.6]">DISCOVER</span>
+              <h3 class="article-title font-bold text-[16px] tracking-[-0.32px] text-wz-title leading-[1.6]">부산에서 세계로, 지역 인재 양성 프로그램의 현장</h3>
+            </div>
+            <div class="article-card" data-cat="deep-dive">
+              <div class="card-img aspect-[168/152] mb-2.5"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage5.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+              <span class="font-extrabold text-[12px] tracking-[-0.24px] text-wz-primary-dark leading-[1.6]">DEEP DIVE</span>
+              <h3 class="article-title font-bold text-[16px] tracking-[-0.32px] text-wz-title leading-[1.6]">글로컬 교육 혁신, 해외 대학과의 공동 연구 사례</h3>
+            </div>
+            <div class="article-card" data-cat="discover">
+              <div class="card-img aspect-[168/198] mb-2.5"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage7.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+              <span class="font-extrabold text-[12px] tracking-[-0.24px] text-wz-primary-dark leading-[1.6]">DISCOVER</span>
+              <h3 class="article-title font-bold text-[16px] tracking-[-0.32px] text-wz-title leading-[1.6]">디지털 전환 시대, 지역 대학의 AI 교육 혁신 전략</h3>
+            </div>
+          </div>
+          <div class="flex-1 flex flex-col gap-10">
+            <div class="article-card" data-cat="spotlight">
+              <div class="card-img aspect-[168/217] mb-2.5"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage2.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+              <span class="font-extrabold text-[12px] tracking-[-0.24px] text-wz-primary-dark leading-[1.6]">SPOTLIGHT</span>
+              <h3 class="article-title font-bold text-[16px] tracking-[-0.32px] text-wz-title leading-[1.6]">동아대·동서대 학생들이 만들어가는 글로벌 캠퍼스</h3>
+            </div>
+            <div class="article-card" data-cat="spotlight">
+              <div class="card-img aspect-[168/198] mb-2.5"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage4.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+              <span class="font-extrabold text-[12px] tracking-[-0.24px] text-wz-primary-dark leading-[1.6]">SPOTLIGHT</span>
+              <h3 class="article-title font-bold text-[16px] tracking-[-0.32px] text-wz-title leading-[1.6]">산학협력 플랫폼으로 연결되는 대학과 지역사회</h3>
+            </div>
+            <div class="article-card" data-cat="spotlight">
+              <div class="card-img aspect-[168/198] mb-2.5"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage6.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+              <span class="font-extrabold text-[12px] tracking-[-0.24px] text-wz-primary-dark leading-[1.6]">SPOTLIGHT</span>
+              <h3 class="article-title font-bold text-[16px] tracking-[-0.32px] text-wz-title leading-[1.6]">지역 문화 콘텐츠를 세계에 알리는 학생 프로젝트</h3>
+            </div>
+            <div class="article-card" data-cat="deep-dive">
+              <div class="card-img aspect-[168/152] mb-2.5"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage8.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+              <span class="font-extrabold text-[12px] tracking-[-0.24px] text-wz-primary-dark leading-[1.6]">DEEP DIVE</span>
+              <h3 class="article-title font-bold text-[16px] tracking-[-0.32px] text-wz-title leading-[1.6]">부산 스타트업 생태계와 대학의 만남, 창업 지원 프로그램</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ SECTION 2: GLOCAL NOW ═══════════ -->
+    <section class="bg-wz-bg px-4 md:px-10 py-[80px] md:py-[120px]" id="glocalNow">
+      <div class="max-w-[1280px] mx-auto">
+        <div class="section-reveal mb-[50px] md:mb-[60px] text-center md:text-left">
+          <h2 class="font-serif font-bold text-[32px] md:text-[50px] leading-[1.3] tracking-[-0.96px] md:tracking-[-1.5px] text-wz-text mb-2.5">
+            Glocal <span class="text-wz-primary">Now</span>
+          </h2>
+          <p class="text-[15px] md:text-[18px] leading-[1.6] tracking-[-0.3px] md:tracking-[-0.36px] text-wz-text-light font-normal">
+            동아-동서 글로컬 연합 대학의 새로운 소식을 확인해보세요
+          </p>
+        </div>
+
+        <div class="flex gap-4 md:gap-8 overflow-x-auto scrollbar-hide drag-scroll pb-4" id="pressScroll">
+          <div class="press-card w-[260px] md:w-[380px] flex-shrink-0">
+            <div class="press-img aspect-[400/280] mb-3 md:mb-4"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage1.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+            <h3 class="font-bold text-[16px] md:text-[18px] tracking-[-0.32px] md:tracking-[-0.36px] text-wz-title leading-[1.6] mb-1">글로컬 연합대학, 지역 혁신의 새로운 모델을 제시하다</h3>
+            <p class="hidden md:block font-medium text-[15px] tracking-[-0.3px] text-wz-caption leading-[1.6]">지역 소멸 위기 속에서 대학이 나아갈 길을 모색하다. 동아대학교와 동서대학교의 연합이 만들어낸 혁신적 모델.</p>
+          </div>
+          <div class="press-card w-[260px] md:w-[380px] flex-shrink-0">
+            <div class="press-img aspect-[400/280] mb-3 md:mb-4"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage2.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+            <h3 class="font-bold text-[16px] md:text-[18px] tracking-[-0.32px] md:tracking-[-0.36px] text-wz-title leading-[1.6] mb-1">동아대·동서대 학생들이 만들어가는 글로벌 캠퍼스</h3>
+            <p class="hidden md:block font-medium text-[15px] tracking-[-0.3px] text-wz-caption leading-[1.6]">두 대학 학생들의 공동 프로젝트와 해외 교류 현장을 직접 들여다봤습니다.</p>
+          </div>
+          <div class="press-card w-[260px] md:w-[380px] flex-shrink-0">
+            <div class="press-img aspect-[400/280] mb-3 md:mb-4"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage4.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+            <h3 class="font-bold text-[16px] md:text-[18px] tracking-[-0.32px] md:tracking-[-0.36px] text-wz-title leading-[1.6] mb-1">산학협력 플랫폼으로 연결되는 대학과 지역사회</h3>
+            <p class="hidden md:block font-medium text-[15px] tracking-[-0.3px] text-wz-caption leading-[1.6]">지역 산업체와 대학을 연결하는 새로운 협력 플랫폼이 공식 출범했습니다.</p>
+          </div>
+          <div class="press-card w-[260px] md:w-[380px] flex-shrink-0">
+            <div class="press-img aspect-[400/280] mb-3 md:mb-4"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage6.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+            <h3 class="font-bold text-[16px] md:text-[18px] tracking-[-0.32px] md:tracking-[-0.36px] text-wz-title leading-[1.6] mb-1">지역 문화 콘텐츠를 세계에 알리는 학생 프로젝트</h3>
+            <p class="hidden md:block font-medium text-[15px] tracking-[-0.3px] text-wz-caption leading-[1.6]">부산의 문화 자원을 활용한 글로벌 콘텐츠 제작 프로젝트 현장.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ SECTION 3: EXPLORE OTHER ISSUES ═══════════ -->
+    <section class="bg-white px-4 md:px-10 py-[80px] md:py-[100px]" id="exploreIssues">
+      <div class="max-w-[1280px] mx-auto">
+        <div class="section-reveal text-center mb-10 md:mb-[60px]">
+          <h2 class="font-serif font-bold text-[32px] md:text-[50px] leading-[1.3] tracking-[-0.96px] md:tracking-[-1.5px] text-wz-text mb-2.5">
+            <span class="md:inline block">Explore</span> <span class="md:inline block">Other Issues</span>
+          </h2>
+          <p class="text-[15px] md:text-[18px] leading-[1.6] tracking-[-0.3px] md:tracking-[-0.36px] text-wz-text-light font-normal">
+            지난 호 웹진을 확인해보세요
+          </p>
+        </div>
+
+        <div class="flex items-center gap-4 md:gap-6">
+          <button class="carousel-btn hidden md:flex items-center justify-center flex-shrink-0" id="prevBtn" aria-label="이전">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" class="transform rotate-180">
+              <path d="M7 5l4 4-4 4" stroke="#3f3f44" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          <div class="flex-1 flex gap-5 md:gap-6 overflow-x-auto scrollbar-hide drag-scroll" id="volumeScroll">
+            <a href="#" class="history-item flex flex-col items-center gap-2.5 flex-shrink-0 w-[110px] md:flex-1">
+              <div class="hist-img aspect-[120/160] w-full"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage8.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+              <div class="flex flex-col gap-1 items-center text-center leading-[1.6]">
+                <span class="font-black text-[16px] md:text-[20px] tracking-[-0.32px] md:tracking-[-0.4px] text-wz-text">Vol. 06</span>
+                <span class="font-semibold text-[12px] md:text-[14px] tracking-[-0.24px] md:tracking-[-0.28px] text-wz-text-light">2026. 10</span>
+              </div>
+            </a>
+            <a href="#" class="history-item flex flex-col items-center gap-2.5 flex-shrink-0 w-[110px] md:flex-1">
+              <div class="hist-img aspect-[120/160] w-full"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage6.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+              <div class="flex flex-col gap-1 items-center text-center leading-[1.6]">
+                <span class="font-black text-[16px] md:text-[20px] tracking-[-0.32px] md:tracking-[-0.4px] text-wz-text">Vol. 05</span>
+                <span class="font-semibold text-[12px] md:text-[14px] tracking-[-0.24px] md:tracking-[-0.28px] text-wz-text-light">2026. 08</span>
+              </div>
+            </a>
+            <a href="#" class="history-item flex flex-col items-center gap-2.5 flex-shrink-0 w-[110px] md:flex-1">
+              <div class="hist-img aspect-[120/160] w-full"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage4.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+              <div class="flex flex-col gap-1 items-center text-center leading-[1.6]">
+                <span class="font-black text-[16px] md:text-[20px] tracking-[-0.32px] md:tracking-[-0.4px] text-wz-text">Vol. 04</span>
+                <span class="font-semibold text-[12px] md:text-[14px] tracking-[-0.24px] md:tracking-[-0.28px] text-wz-text-light">2026. 06</span>
+              </div>
+            </a>
+            <a href="#" class="history-item flex flex-col items-center gap-2.5 flex-shrink-0 w-[110px] md:flex-1">
+              <div class="hist-img aspect-[120/160] w-full"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage2.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+              <div class="flex flex-col gap-1 items-center text-center leading-[1.6]">
+                <span class="font-black text-[16px] md:text-[20px] tracking-[-0.32px] md:tracking-[-0.4px] text-wz-text">Vol. 01</span>
+                <span class="font-semibold text-[12px] md:text-[14px] tracking-[-0.24px] md:tracking-[-0.28px] text-wz-text-light">2026. 04</span>
+              </div>
+            </a>
+            <a href="#" class="history-item flex flex-col items-center gap-2.5 flex-shrink-0 w-[110px] md:flex-1">
+              <div class="hist-img aspect-[120/160] w-full"><img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/magazine/home/DummyImage1.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+              <div class="flex flex-col gap-1 items-center text-center leading-[1.6]">
+                <span class="font-black text-[16px] md:text-[20px] tracking-[-0.32px] md:tracking-[-0.4px] text-wz-text">Vol. 02</span>
+                <span class="font-semibold text-[12px] md:text-[14px] tracking-[-0.24px] md:tracking-[-0.28px] text-wz-text-light">2026. 02</span>
+              </div>
+            </a>
+          </div>
+
+          <button class="carousel-btn hidden md:flex items-center justify-center flex-shrink-0" id="nextBtn" aria-label="다음">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M7 5l4 4-4 4" stroke="#3f3f44" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="bg-[#edeff4]">
+    <div class="max-w-[1280px] mx-auto px-5 py-12">
+      <!-- Desktop -->
+      <div class="hidden md:flex items-start justify-between">
+        <div class="flex-1 flex flex-col gap-6 leading-[1.4] text-wz-caption">
+          <div class="flex gap-4">
+            <div class="flex-1 flex flex-col gap-2.5">
+              <p class="font-bold text-[16px] tracking-[-0.48px]">동아대학교</p>
+              <div class="flex flex-col gap-1 text-[14px] tracking-[-0.42px]">
+                <div class="flex gap-2 items-center"><span class="font-bold">승학캠퍼스(대학본부)</span><span class="font-medium">(49315) 부산 사하구 낙동대로550번길 37</span></div>
+                <div class="flex gap-2 items-center"><span class="font-bold">구덕캠퍼스</span><span class="font-medium">(49201) 부산시 서구 대신공원로 32</span></div>
+                <div class="flex gap-2 items-center"><span class="font-bold">부민캠퍼스</span><span class="font-medium">(49236) 부산시 서구 구덕로 225</span></div>
+                <p class="font-medium">TEL: 051-200-5922</p>
+              </div>
+            </div>
+            <div class="flex-1 flex flex-col gap-2.5">
+              <p class="font-bold text-[16px] tracking-[-0.48px]">동서대학교</p>
+              <div class="flex flex-col gap-1 text-[14px] tracking-[-0.42px]">
+                <div class="flex gap-2 items-center"><span class="font-bold">주례캠퍼스</span><span class="font-medium">(47011) 부산광역시 사상구 주례로 47</span></div>
+                <div class="flex gap-2 items-center"><span class="font-bold">센텀캠퍼스</span><span class="font-medium">(48058) 부산광역시 해운대구 센텀중앙로 55</span></div>
+                <p class="font-medium">TEL: 051-320-4258</p>
+              </div>
+            </div>
+          </div>
+          <a href="#" class="font-bold text-[15px] tracking-[-0.45px] text-wz-primary hover:underline w-fit">개인정보처리방침</a>
+        </div>
+        <div class="flex gap-10 items-center ml-10">
+          <a href="https://www.donga.ac.kr" target="_blank" class="footer-logo">
+            <img src="https://dev-five-git.github.io/donga-dongseo-glocal/icons/logo/donga-logo2.svg" alt="동아대학교" class="h-[44px]" />
+          </a>
+          <a href="https://www.dongseo.ac.kr" target="_blank" class="footer-logo">
+            <img src="https://dev-five-git.github.io/donga-dongseo-glocal/icons/logo/dongseo-logo2.svg" alt="동서대학교" class="h-[40px]" />
+          </a>
+        </div>
+      </div>
+      <!-- Mobile -->
+      <div class="md:hidden flex flex-col gap-8">
+        <div class="flex flex-col gap-4 leading-[1.4] text-wz-caption">
+          <div class="flex flex-col gap-2.5">
+            <p class="font-bold text-[15px] tracking-[-0.45px]">동아대학교</p>
+            <div class="flex flex-col gap-1 text-[13px] tracking-[-0.39px]">
+              <div class="flex gap-1 items-center flex-wrap"><span class="font-bold">승학캠퍼스(대학본부)</span><span class="font-medium">(49315) 부산 사하구 낙동대로550번길 37</span></div>
+              <div class="flex gap-1 items-center"><span class="font-bold">구덕캠퍼스</span><span class="font-medium">(49201) 부산시 서구 대신공원로 32</span></div>
+              <div class="flex gap-1 items-center"><span class="font-bold">부민캠퍼스</span><span class="font-medium">(49236) 부산시 서구 구덕로 225</span></div>
+              <p class="font-medium">TEL: 051-200-5922</p>
+            </div>
+          </div>
+          <div class="flex flex-col gap-2.5">
+            <p class="font-bold text-[15px] tracking-[-0.45px]">동서대학교</p>
+            <div class="flex flex-col gap-1 text-[13px] tracking-[-0.39px]">
+              <div class="flex gap-1 items-center flex-wrap"><span class="font-bold">주례캠퍼스</span><span class="font-medium">(47011) 부산광역시 사상구 주례로 47</span></div>
+              <div class="flex gap-1 items-center flex-wrap"><span class="font-bold">센텀캠퍼스</span><span class="font-medium">(48058) 부산광역시 해운대구 센텀중앙로 55</span></div>
+              <p class="font-medium">TEL: 051-320-4258</p>
+            </div>
+          </div>
+          <a href="#" class="font-bold text-[14px] tracking-[-0.42px] text-wz-primary hover:underline w-fit">개인정보처리방침</a>
+        </div>
+        <div class="flex items-center justify-between">
+          <a href="https://www.donga.ac.kr" target="_blank" class="footer-logo">
+            <img src="https://dev-five-git.github.io/donga-dongseo-glocal/icons/logo/donga-logo2.svg" alt="동아대학교" class="h-[32px]" />
+          </a>
+          <a href="https://www.dongseo.ac.kr" target="_blank" class="footer-logo">
+            <img src="https://dev-five-git.github.io/donga-dongseo-glocal/icons/logo/dongseo-logo2.svg" alt="동서대학교" class="h-[28px]" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════ SCRIPTS ═══════════ -->
+  <script>
+  (function() {
+    'use strict';
+
+    /* ─── 1. Scroll controller: hero width animation + header transition ─── */
+    const header = document.getElementById('wzHeader');
+    const stickyHero = document.getElementById('stickyHero');
+    const heroInner = document.getElementById('heroInner');
+    const contentArea = document.getElementById('contentArea');
+    const heroContainer = document.getElementById('heroContainer');
+    const isDesktop = () => window.innerWidth >= 768;
+    let ticking = false;
+    let isCompact = false;
+    // Measure full header height once on load
+    const FULL_HEADER_H = 149;
+    let compactHeaderH = 47; // nav bar only, updated on first compact
+
+    // Keep split-wrap min-height in sync with content size via ResizeObserver
+    function updateMinHeight() {
+      if (!isDesktop() || !contentArea || !heroContainer) return;
+      const contentH = contentArea.scrollHeight;
+      const vh = window.innerHeight;
+      // Content must stay sticky through compact threshold (heroHeight * 0.95)
+      // Formula: containerContentHeight > contentH + compactThreshold + FULL_HEADER_H
+      // Add generous buffer to ensure content never un-sticks before compact
+      const needed = contentH + vh + FULL_HEADER_H + 200;
+      const current = parseInt(heroContainer.style.minHeight) || 0;
+      if (needed > current) {
+        heroContainer.style.minHeight = needed + 'px';
+      }
+    }
+
+    // Use ResizeObserver to recalculate when content dimensions change
+    if (isDesktop() && contentArea && heroContainer) {
+      const ro = new ResizeObserver(() => updateMinHeight());
+      ro.observe(contentArea);
+    }
+
+    function onScroll() {
+      const scrollY = window.scrollY;
+      const vh = window.innerHeight;
+
+      if (isDesktop() && stickyHero && heroInner && contentArea && heroContainer) {
+        // Use full header for hero animation calculations
+        const heroHeight = vh - FULL_HEADER_H;
+        const progress = Math.min(Math.max(scrollY / heroHeight, 0), 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+
+        // Sticky cover width: 100% → 48%
+        const targetWidth = 48;
+        const width = 100 - (100 - targetWidth) * eased;
+        stickyHero.style.width = width + '%';
+
+        // Content: fade in only (no translateX, content appears fully laid out)
+        contentArea.style.opacity = String(eased);
+
+        // Cover text band: gradually 0.88 → 1.0 opacity as scroll progresses
+        const coverText = heroInner.querySelector('.cover-text');
+        if (coverText) {
+          const bgAlpha = 0.88 + 0.12 * eased;
+          coverText.style.background = 'rgba(255,255,255,' + bgAlpha.toFixed(3) + ')';
+          if (eased > 0.8) {
+            coverText.style.backdropFilter = 'none';
+            coverText.style.webkitBackdropFilter = 'none';
+          } else {
+            coverText.style.backdropFilter = '';
+            coverText.style.webkitBackdropFilter = '';
+          }
+        }
+
+        // Image positions: shift as hero narrows
+        const mainImg = heroInner.querySelector('.cover-img-main img');
+        const subFig = heroInner.querySelector('.cover-img-sub');
+        const subImg = heroInner.querySelector('.cover-img-sub img');
+        if (mainImg) {
+          // 동아대: 간판이 사진 왼쪽 → 50% → 30% (narrowed시 왼쪽으로)
+          const mainX = 50 - 20 * eased;
+          mainImg.style.objectPosition = mainX + '% 35%';
+        }
+        if (subFig) {
+          // figure left: 30% → 0% (넓어지면서 사선 빈공간 방지)
+          subFig.style.left = (30 - 30 * eased) + '%';
+        }
+        if (subImg) {
+          // 동서대: -400% → 40% 8% (figure 넓어지며 보정)
+          const subX = -400 + 440 * eased;
+          subImg.style.objectPosition = subX + '% 8%';
+        }
+
+        // Compact header: activate after hero transition completes
+        const compactThreshold = heroHeight * 0.95;
+        const shouldCompact = scrollY > compactThreshold;
+
+        if (shouldCompact !== isCompact) {
+          isCompact = shouldCompact;
+          header.classList.toggle('compact', isCompact);
+          // Update --header-h so hero moves up with header
+          if (isCompact) {
+            const navBar = document.getElementById('navBar');
+            if (navBar) compactHeaderH = navBar.offsetHeight;
+          }
+          const newH = isCompact ? compactHeaderH : FULL_HEADER_H;
+          document.documentElement.style.setProperty('--header-h', newH + 'px');
+
+          // Toggle content scroll mode
+          if (isCompact) {
+            contentArea.classList.add('compact-scroll');
+            contentArea.scrollTop = 0;
+          } else {
+            contentArea.classList.remove('compact-scroll');
+          }
+        }
+
+        // Header shadow on scroll
+        header.classList.toggle('scrolled', scrollY > 40);
+      } else {
+        // Mobile: toggle header shadow on scroll
+        header.classList.toggle('scrolled', scrollY > 40);
+      }
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          onScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    // Intercept wheel events on content area to enable internal scrolling
+    // In compact mode, ALL wheel events scroll the content area (not the page)
+    window.addEventListener('wheel', (e) => {
+      if (!contentArea || !contentArea.classList.contains('compact-scroll')) return;
+      const atTop = contentArea.scrollTop <= 0 && e.deltaY < 0;
+      const atBottom = contentArea.scrollTop + contentArea.clientHeight >= contentArea.scrollHeight - 1 && e.deltaY > 0;
+      if (atTop || atBottom) return;
+      e.preventDefault();
+      contentArea.scrollTop += e.deltaY;
+    }, { passive: false });
+
+    /* ─── 2. Vol Dropdown ─── */
+    function setupDropdown(btnId, dropId, arrowId) {
+      const btn = document.getElementById(btnId);
+      const drop = document.getElementById(dropId);
+      const arrow = document.getElementById(arrowId);
+      if (!btn || !drop) return;
+
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = drop.classList.contains('open');
+        drop.classList.toggle('open');
+        if (arrow) arrow.style.transform = isOpen ? '' : 'rotate(180deg)';
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!drop.contains(e.target) && !btn.contains(e.target)) {
+          drop.classList.remove('open');
+          if (arrow) arrow.style.transform = '';
+        }
+      });
+    }
+    setupDropdown('volBtn', 'volDropdown', 'volArrow');
+    setupDropdown('volBtnM', 'volDropdownM', 'volArrowM');
+
+    /* ─── 3. Hero text reveal ─── */
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        document.querySelectorAll('.hero-text-reveal').forEach(el => el.classList.add('active'));
+      }, 300);
+    });
+
+    /* ─── 4. Scroll-triggered reveal (IntersectionObserver) ─── */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const delay = parseInt(el.dataset.delay || '0', 10);
+          setTimeout(() => el.classList.add('revealed'), delay);
+          revealObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    // Staggered reveal for article cards (skip desktop hero section — content slides in from right)
+    document.querySelectorAll('.article-card').forEach((card, i) => {
+      const inDesktopHero = card.closest('.wz-content-area');
+      if (inDesktopHero) {
+        // Desktop split: pre-reveal, no individual animation
+        card.classList.add('revealed');
+      } else {
+        card.dataset.delay = String((i % 4) * 100);
+        revealObserver.observe(card);
+      }
+    });
+
+    // Staggered reveal for press cards
+    document.querySelectorAll('.press-card').forEach((card, i) => {
+      card.dataset.delay = String(i * 120);
+      revealObserver.observe(card);
+    });
+
+    // Staggered reveal for history items
+    document.querySelectorAll('.history-item').forEach((item, i) => {
+      item.dataset.delay = String(i * 100);
+      revealObserver.observe(item);
+    });
+
+    // Section heading reveal
+    document.querySelectorAll('.section-reveal').forEach(el => revealObserver.observe(el));
+
+    /* ─── 5. Tab filtering ─── */
+    function setupTabs(tabContainerId) {
+      const container = document.getElementById(tabContainerId);
+      if (!container) return;
+
+      const tabs = container.querySelectorAll('.wz-tab');
+      const section = container.closest('section') || container.parentElement;
+      const cards = section.querySelectorAll('.article-card');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+
+          const cat = tab.dataset.cat;
+
+          cards.forEach((card, i) => {
+            const cardCat = card.dataset.cat;
+            const show = (cat === 'all' || cardCat === cat);
+
+            card.style.transition = 'opacity 0.4s cubic-bezier(0.16,1,0.3,1), transform 0.4s cubic-bezier(0.16,1,0.3,1)';
+
+            if (show) {
+              card.style.display = '';
+              card.style.opacity = '0';
+              card.style.transform = 'translateY(16px)';
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                  card.style.opacity = '1';
+                  card.style.transform = 'translateY(0)';
+                  card.style.transitionDelay = (i % 4) * 60 + 'ms';
+                });
+              });
+            } else {
+              card.style.opacity = '0';
+              card.style.transform = 'scale(0.96) translateY(8px)';
+              setTimeout(() => { card.style.display = 'none'; }, 350);
+            }
+          });
+        });
+      });
+    }
+    setupTabs('tabsDesktop');
+    setupTabs('tabsMobile');
+
+    /* ─── 6. Drag-to-scroll for carousels ─── */
+    function enableDragScroll(el) {
+      if (!el) return;
+      let isDown = false, startX, scrollLeft, velX = 0, rafId;
+
+      el.addEventListener('mousedown', (e) => {
+        isDown = true;
+        el.classList.add('dragging');
+        startX = e.pageX - el.offsetLeft;
+        scrollLeft = el.scrollLeft;
+        velX = 0;
+        cancelAnimationFrame(rafId);
+        e.preventDefault();
+      });
+      el.addEventListener('mouseleave', () => { if (isDown) stopDrag(); });
+      el.addEventListener('mouseup', () => { if (isDown) stopDrag(); });
+      el.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        const x = e.pageX - el.offsetLeft;
+        const walk = (x - startX) * 1.2;
+        velX = el.scrollLeft - (scrollLeft - walk);
+        el.scrollLeft = scrollLeft - walk;
+      });
+
+      function stopDrag() {
+        isDown = false;
+        el.classList.remove('dragging');
+        const decel = 0.95;
+        function momentum() {
+          if (Math.abs(velX) > 0.5) {
+            el.scrollLeft -= velX;
+            velX *= decel;
+            rafId = requestAnimationFrame(momentum);
+          }
+        }
+        if (Math.abs(velX) < 30) momentum();
+      }
+
+      el.addEventListener('touchend', () => {
+        el.classList.remove('dragging');
+      });
+    }
+    enableDragScroll(document.getElementById('pressScroll'));
+    enableDragScroll(document.getElementById('volumeScroll'));
+
+    /* ─── 7. Volume carousel arrows ─── */
+    const volScroll = document.getElementById('volumeScroll');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    if (prevBtn && nextBtn && volScroll) {
+      const scrollAmount = 200;
+      prevBtn.addEventListener('click', () => {
+        volScroll.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      });
+      nextBtn.addEventListener('click', () => {
+        volScroll.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      });
+    }
+
+  })();
+  </script>
+</body>
+</html>
