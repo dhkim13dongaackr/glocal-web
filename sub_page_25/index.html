@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>연합전공 교과과정표 - 동아·동서 글로컬 연합대학</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/variable/woff2/SUIT-Variable.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --border: #dfe0e9;
+            --background: #f5f7fa;
+            --title: #171719;
+            --text: #3f3f44;
+            --textlight: #606068;
+        }
+
+        html {
+            overflow-x: clip;
+        }
+        body {
+            font-family: 'SUIT Variable', 'SUIT', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f5f5f8;
+            color: #1a1a2e;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== SITE HEADER (v_proposal_11 style) ===== */
+        .site-header { position: fixed; top: 0; left: 0; width: 100%; z-index: 2000; padding: 0 16px; transition: transform .3s ease-in-out; }
+        @media (min-width: 1280px) { .site-header { padding: 0 40px; } }
+        .site-header.hidden-up { transform: translateY(-120%); }
+        .hdr-inner { position: relative; max-width: 1920px; margin: 20px auto 0; border-radius: 36px; background: rgba(255,255,255,.72); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); box-shadow: 0 4px 20px rgba(135,138,146,.1); border: 1px solid rgba(255,255,255,.45); overflow: hidden; transition: background .3s ease-in-out; }
+        .hdr-inner.dropdown-open { background: rgba(255,255,255,.95); }
+        .hdr-inner::after { content: ''; position: absolute; left: 30px; right: 30px; height: 1px; background: rgba(0,0,0,.06); opacity: 0; transition: opacity .25s; pointer-events: none; z-index: 2; }
+        @media (min-width: 1280px) { .hdr-inner::after { top: 72px; } }
+        .hdr-inner.dropdown-open::after { opacity: 1; }
+        .hdr-row { display: flex; align-items: center; justify-content: space-between; height: 64px; padding: 0 24px; width: 100%; }
+        @media (min-width: 1280px) { .hdr-row { padding: 0 30px; height: auto; min-height: 72px; align-items: flex-start; } }
+        .hdr-logo-wrap { display: flex; align-items: center; flex-shrink: 0; text-decoration: none; }
+        @media (min-width: 1280px) { .hdr-logo-wrap { height: 72px; } }
+        .hdr-logo-desktop { display: none; height: 22px; width: 13vw; max-width: 260px; object-fit: contain; }
+        .hdr-logo-mobile { display: block; height: 34px; width: 100px; object-fit: contain; }
+        @media (min-width: 1280px) { .hdr-logo-desktop { display: block; } .hdr-logo-mobile { display: none; } }
+        .hdr-right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+        @media (min-width: 1280px) { .hdr-right { height: 72px; } }
+        .hdr-hamburger { display: block; width: 24px; height: 24px; cursor: pointer; }
+        @media (min-width: 1280px) { .hdr-hamburger { display: none; } }
+        .hdr-dinsight { display: none; }
+        @media (min-width: 1280px) { .hdr-dinsight { display: flex; align-items: center; } }
+        /* Nav — 각 메뉴 아이템 안에 서브메뉴 내장 */
+        .hdr-nav { display: none; }
+        @media (min-width: 1280px) { .hdr-nav { display: flex; align-items: flex-start; gap: 12px; } }
+        .hdr-menu-col { display: flex; flex-direction: column; flex: 1 1 0; min-width: 0; }
+        .hdr-link { font-size: 17px; font-weight: 700; color: #171719; letter-spacing: -.03em; cursor: pointer; height: 72px; display: flex; align-items: center; justify-content: center; white-space: nowrap; padding: 0; text-decoration: none; }
+        .hdr-link i { font-style: normal; padding: 5px 0; border-radius: 100px; transition: all .2s; width: 100%; text-align: center; }
+        .hdr-link:hover i { color: #3e31d5; background: #f0eeff; }
+        .hdr-link.active i { color: #3e31d5; background: #f0eeff; }
+        .hdr-sub-items { display: flex; flex-direction: column; max-height: 0; overflow: hidden; opacity: 0; transition: max-height .35s ease, opacity .25s ease, padding .3s ease; padding: 0 16px; }
+        .hdr-inner.dropdown-open .hdr-sub-items { max-height: 300px; opacity: 1; padding: 8px 16px 24px; }
+        .hdr-sub-link { font-size: 14px; font-weight: 600; color: #3f3f44; letter-spacing: -.04em; padding: 7px 0; cursor: pointer; transition: color .2s; display: flex; align-items: center; gap: 5px; white-space: nowrap; text-decoration: none; }
+        .hdr-sub-link:hover { color: #3E31D5; }
+        .hdr-sub-link .ext-icon { width: 14px; height: 14px; opacity: .5; flex-shrink: 0; }
+        /* 학생성공센터 */
+        .hdr-success-card { position: absolute; bottom: 20px; right: 30px; width: 200px; background: #f1f2ff; border-radius: 12px; padding: 16px; display: none; flex-direction: column; gap: 10px; z-index: 3; }
+        .hdr-inner.dropdown-open .hdr-success-card { display: flex; }
+        .hdr-success-card .card-label { font-size: 17px; font-weight: 700; color: #3f3f44; }
+        .hdr-success-card .card-link { font-size: 13px; font-weight: 600; color: #3E31D5; display: flex; align-items: center; gap: 4px; text-decoration: none; }
+
+        /* Mobile Menu Panel */
+        .mobile-menu { position: fixed; inset: 0; z-index: 2100; background: #fff; transform: translateX(100%); transition: transform .35s cubic-bezier(.4,0,.2,1); overflow-y: auto; -webkit-overflow-scrolling: touch; }
+        .mobile-menu.open { transform: translateX(0); }
+        .mobile-menu-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 20px 12px; }
+        .mobile-menu-close { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 50%; transition: background .2s; }
+        .mobile-menu-close:hover { background: #f5f7fa; }
+        .mobile-menu-body { padding: 0 20px 20px; display: flex; flex-direction: column; gap: 12px; }
+        .mobile-menu-section { background: #f5f7fa; border-radius: 16px; padding: 16px 20px; display: grid; grid-template-columns: 1fr 1.5fr; gap: 6px 12px; }
+        .mobile-menu-section-title { font-size: 16px; font-weight: 700; color: #171719; letter-spacing: -.02em; padding: 6px 0; align-self: start; }
+        .mobile-menu-section-items { display: flex; flex-direction: column; gap: 4px; }
+        .mobile-sub-link { font-size: 14px; font-weight: 700; color: #171719; letter-spacing: -.03em; padding: 8px 0; display: flex; align-items: center; gap: 4px; text-decoration: none; }
+        .mobile-sub-link:active { color: #3E31D5; }
+        .mobile-sub-link .ext-icon { width: 12px; height: 12px; opacity: .5; }
+        .mobile-menu-footer { padding: 8px 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+        .mobile-success-btn { background: #f5f7fa; border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 10px; }
+        .mobile-success-btn .btn-label { font-size: 14px; font-weight: 700; color: #3f3f44; flex: 1; }
+        .mobile-success-btn .btn-link { font-size: 12px; font-weight: 600; color: #3E31D5; display: flex; align-items: center; gap: 4px; white-space: nowrap; text-decoration: none; }
+        .mobile-menu-dinsight { display: flex; justify-content: flex-end; align-items: center; gap: 4px; padding: 0 4px; }
+        .mobile-menu-dinsight .label { font-size: 8px; font-weight: 800; color: #2ca39c; letter-spacing: 2px; text-transform: uppercase; }
+        .mobile-menu-dinsight .title { font-size: 20px; font-weight: 800; color: #3f3f44; letter-spacing: -1px; font-style: italic; }
+
+        /* ===== TITLE AREA ===== */
+        .title-area {
+            text-align: center;
+            padding-top: 140px;
+            padding-bottom: 16px;
+        }
+        .title-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #3e31d5;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .title-heading {
+            font-size: 42px;
+            font-weight: 800;
+            color: #1a1a2e;
+            letter-spacing: -1px;
+        }
+        .title-notice {
+            font-size: 14px;
+            color: #888;
+            margin-top: 16px;
+            line-height: 1.6;
+        }
+
+        /* ===== FLOATING CAPSULE SUB-NAV ===== */
+        .sub-nav-wrapper {
+            position: sticky;
+            top: 16px;
+            z-index: 1500;
+            display: flex;
+            justify-content: center;
+            padding: 0 20px;
+            margin-bottom: 40px;
+            transition: top 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .sub-nav-wrapper.header-visible {
+            top: 108px;
+        }
+        .sub-nav {
+            background: rgba(255,255,255,.72);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid rgba(255,255,255,.45);
+            border-radius: 100px;
+            padding: 6px 8px;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            box-shadow: 0 4px 20px rgba(135,138,146,.1);
+            max-width: 680px;
+            overflow-x: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .sub-nav::-webkit-scrollbar { display: none; }
+        .sub-nav-btn {
+            flex-shrink: 0;
+            padding: 10px 18px;
+            border: none;
+            background: transparent;
+            color: #888;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: inherit;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+        }
+        .sub-nav-btn.active {
+            color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        }
+        .sub-nav-btn:not(.active):hover { color: #333; background: #f5f5f5; }
+
+        /* ===== CURRICULUM SECTION ===== */
+        .curriculum-section {
+            max-width: 1340px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        .section-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+        .section-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .section-icon svg { width: 26px; height: 26px; }
+        .section-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1a1a2e;
+            text-align: center;
+        }
+        .section-divider {
+            width: 120px;
+            height: 4px;
+            border-radius: 2px;
+        }
+
+        /* ===== CARD GRID ===== */
+        .card-grid {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .card-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+        .card-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+        .card-grid.cols-3 {
+            grid-template-columns: repeat(3, 1fr);
+            max-width: 990px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .module-card {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: white;
+            overflow: hidden;
+            min-width: 0;
+        }
+
+        /* ===== CARD HEADER ===== */
+        .card-header {
+            background: var(--section-color);
+            color: #fff;
+            padding: 16px 16px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+        }
+        .card-header h3 {
+            font-size: 20px;
+            font-weight: 800;
+            line-height: 1.5;
+            letter-spacing: -0.4px;
+        }
+        .card-header .header-sub {
+            font-size: 14px;
+            font-weight: 400;
+            opacity: 0.75;
+            letter-spacing: -0.28px;
+        }
+
+        /* ===== CELL (year-group) ===== */
+        .cell {
+            border-bottom: 1px dashed var(--border);
+            padding: 32px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+        }
+        .cell:last-child {
+            border-bottom: none;
+        }
+        .cell:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            bottom: -9px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 10px solid var(--section-color);
+            z-index: 1;
+        }
+
+        /* ===== SEMESTER LABEL ===== */
+        .semester-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2px 16px;
+            border-radius: 200px;
+            background: var(--background);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--textlight);
+            letter-spacing: -0.28px;
+        }
+
+        /* ===== SUBJECT LIST (centered) ===== */
+        .subject-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            width: 100%;
+            text-align: center;
+        }
+        .subject-item {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--title);
+            line-height: 1.6;
+            letter-spacing: -0.32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        .subject-item.field {
+            font-weight: 900;
+            color: #3389ca;
+            letter-spacing: -0.68px;
+        }
+
+        /* ===== COMMON COURSE BOX ===== */
+        .common-course {
+            background: linear-gradient(to right, #e0f1f4, #f2f7e4);
+            border-radius: 8px;
+            padding: 6px 8px;
+            width: 100%;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--title);
+            line-height: 1.6;
+            letter-spacing: -0.32px;
+        }
+
+        /* ===== UNIVERSITY-SPECIFIC COURSE BOX ===== */
+        .univ-course {
+            border: 2px solid #e1f1f3;
+            border-radius: 8px;
+            padding: 8px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--title);
+            line-height: 1.6;
+            letter-spacing: -0.32px;
+        }
+
+        /* ===== BADGES (Figma 34×16 outlined pill) ===== */
+        .badge-dau, .badge-dsu {
+            display: inline-block;
+            width: 34px;
+            height: 16px;
+            vertical-align: middle;
+            flex-shrink: 0;
+        }
+
+        /* ===== LEGEND ===== */
+        .legend {
+            background: var(--background);
+            border-radius: 12px;
+            padding: 12px 24px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .legend .field-mark {
+            font-weight: 900;
+            font-size: 17px;
+            color: var(--text);
+        }
+
+        /* ===== PLACEHOLDER (미개설) ===== */
+        .placeholder-box {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 60px 24px;
+            text-align: center;
+        }
+        .placeholder-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .placeholder-msg {
+            font-size: 15px;
+            color: #999;
+        }
+
+        /* ===== FOOTER ===== */
+        .site-footer {
+            background: #1a1a2e;
+            margin-top: 120px;
+            padding: 60px 24px 40px;
+        }
+        .footer-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+        .footer-links h4 {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .footer-links a {
+            display: block;
+            color: #888;
+            font-size: 13px;
+            text-decoration: none;
+            margin-bottom: 6px;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: #ccc; }
+        .footer-bottom {
+            border-top: 1px solid #2a2a40;
+            padding-top: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            font-size: 12px;
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1100px) {
+            .card-grid.cols-5 { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .title-area { padding-top: 120px; }
+            .title-heading { font-size: 28px; }
+            .sub-nav { padding: 5px 6px; gap: 1px; }
+            .sub-nav-btn { font-size: 12px; padding: 8px 10px; }
+            .section-title { font-size: 22px; }
+            .card-grid.cols-5,
+            .card-grid.cols-4,
+            .card-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+            .card-grid { gap: 8px; }
+            .footer-links { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 480px) {
+            .card-grid.cols-5,
+            .card-grid.cols-4,
+            .card-grid.cols-3 { grid-template-columns: 1fr; }
+            .footer-links { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="site-header" id="siteHeader">
+    <div class="hdr-inner" id="hdrInner">
+        <div class="hdr-row">
+            <!-- Logo -->
+            <a href="#" class="hdr-logo-wrap">
+                <img src="https://dev-five-git.github.io/donga-dongseo-glocal/icons/header/headerTitle.svg" alt="동아·동서 글로컬 연합대학" class="hdr-logo-desktop">
+                <img src="https://dev-five-git.github.io/donga-dongseo-glocal/icons/header/headerTitleMobile.svg" alt="동아·동서 글로컬" class="hdr-logo-mobile">
+            </a>
+            <!-- Nav — 서브메뉴가 각 아이템 아래에 바로 나옴 -->
+            <nav class="hdr-nav" id="hdrNav">
+                <div class="hdr-menu-col">
+                    <span class="hdr-link"><i>혁신방향</i></span>
+                    <div class="hdr-sub-items">
+                        <a class="hdr-sub-link" href="#">글로컬대학 30</a>
+                        <a class="hdr-sub-link" href="#">비전</a>
+                        <a class="hdr-sub-link" href="#">추진과제</a>
+                        <a class="hdr-sub-link" href="#">조직</a>
+                    </div>
+                </div>
+                <div class="hdr-menu-col">
+                    <span class="hdr-link"><i>통합산단</i></span>
+                    <div class="hdr-sub-items">
+                        <a class="hdr-sub-link" href="#">추진전략</a>
+                        <a class="hdr-sub-link" href="#">통합기술플랫폼 <svg class="ext-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg></a>
+                    </div>
+                </div>
+                <div class="hdr-menu-col">
+                    <span class="hdr-link active"><i>연합전공</i></span>
+                    <div class="hdr-sub-items">
+                        <a class="hdr-sub-link" href="#">학습관리모듈 <svg class="ext-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg></a>
+                        <a class="hdr-sub-link" href="#">원격교육시스템 <svg class="ext-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg></a>
+                        <a class="hdr-sub-link" href="#">연합전공소개</a>
+                        <a class="hdr-sub-link" href="#">교과과정표</a>
+                        <a class="hdr-sub-link" href="#">커뮤니티</a>
+                    </div>
+                </div>
+                <div class="hdr-menu-col">
+                    <span class="hdr-link"><i>Field 캠퍼스</i></span>
+                    <div class="hdr-sub-items">
+                        <a class="hdr-sub-link" href="#">소개</a>
+                        <a class="hdr-sub-link" href="#">구축현황</a>
+                    </div>
+                </div>
+            </nav>
+            <!-- Right -->
+            <div class="hdr-right">
+                <a href="#" class="hdr-dinsight">
+                    <img src="https://dev-five-git.github.io/donga-dongseo-glocal/icons/header/dinsight.svg" alt="D-insight" style="height:36px;">
+                </a>
+                <img src="https://dev-five-git.github.io/donga-dongseo-glocal/icons/header/hamburger.svg" alt="메뉴" class="hdr-hamburger" id="mobileMenuOpen">
+            </div>
+        </div>
+        <!-- 학생성공센터 (dropdown 열릴 때만 표시) -->
+        <div class="hdr-success-card">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3E31D5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m8 16l2-6l6-2l-2 6z"/><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0m9-9v2m0 14v2m-9-9h2m14 0h2"/></svg>
+            <span class="card-label">학생성공센터</span>
+            <a href="#" class="card-link">바로가기 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg></a>
+        </div>
+    </div>
+</header>
+
+<!-- ═══ MOBILE MENU PANEL ═══ -->
+<div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+        <a href="#">
+            <img src="https://dev-five-git.github.io/donga-dongseo-glocal/icons/header/headerTitle.svg" alt="동아·동서 글로컬 연합대학" style="height:28px;">
+        </a>
+        <div class="mobile-menu-close" id="mobileMenuClose">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#171719" stroke-width="2"><path stroke-linecap="round" d="M18 6L6 18M6 6l12 12"/></svg>
+        </div>
+    </div>
+    <div class="mobile-menu-body">
+        <!-- 혁신방향 -->
+        <div class="mobile-menu-section">
+            <span class="mobile-menu-section-title">혁신방향</span>
+            <div class="mobile-menu-section-items">
+                <a class="mobile-sub-link" href="#">글로컬대학30</a>
+                <a class="mobile-sub-link" href="#">비전</a>
+                <a class="mobile-sub-link" href="#">추진과제</a>
+                <a class="mobile-sub-link" href="#">조직</a>
+            </div>
+        </div>
+        <!-- 통합산단 -->
+        <div class="mobile-menu-section">
+            <span class="mobile-menu-section-title">통합산단</span>
+            <div class="mobile-menu-section-items">
+                <a class="mobile-sub-link" href="#">추진전략</a>
+                <a class="mobile-sub-link" href="#">통합기술플랫폼<svg class="ext-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg></a>
+            </div>
+        </div>
+        <!-- 연합전공 -->
+        <div class="mobile-menu-section">
+            <span class="mobile-menu-section-title">연합전공</span>
+            <div class="mobile-menu-section-items">
+                <a class="mobile-sub-link" href="#">연합전공소개</a>
+                <a class="mobile-sub-link" href="#">교과과정표</a>
+                <a class="mobile-sub-link" href="#">커뮤니티</a>
+                <a class="mobile-sub-link" href="#">학습관리모듈<svg class="ext-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg></a>
+                <a class="mobile-sub-link" href="#">원격교육시스템<svg class="ext-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg></a>
+            </div>
+        </div>
+        <!-- Field 캠퍼스 -->
+        <div class="mobile-menu-section">
+            <span class="mobile-menu-section-title">Field 캠퍼스</span>
+            <div class="mobile-menu-section-items">
+                <a class="mobile-sub-link" href="#">소개</a>
+                <a class="mobile-sub-link" href="#">구축현황</a>
+            </div>
+        </div>
+    </div>
+    <div class="mobile-menu-footer">
+        <div class="mobile-success-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3E31D5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m8 16l2-6l6-2l-2 6z"/><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0m9-9v2m0 14v2m-9-9h2m14 0h2"/></svg>
+            <span class="btn-label">학생성공센터</span>
+            <a href="#" class="btn-link">바로가기 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg></a>
+        </div>
+        <div class="mobile-menu-dinsight">
+            <span class="label">GLOCAL WEBZINE</span>
+            <span class="title">D-insight</span>
+        </div>
+    </div>
+</div>
+
+<!-- ===== TITLE AREA ===== -->
+<div class="title-area">
+    <div class="title-label">CURRICULUM</div>
+    <h1 class="title-heading">연합전공 교과과정표</h1>
+    <p class="title-notice">※ 26학년도 개설예정인 휴먼메타케어, 헤리티지 연합전공에 대한 교과과정표는 추후 게시될 예정입니다.</p>
+</div>
+
+<!-- ===== FLOATING CAPSULE SUB-NAV ===== -->
+<div class="sub-nav-wrapper" id="subNavWrapper">
+    <nav class="sub-nav" id="subNav">
+        <button class="sub-nav-btn active" data-index="0" onclick="scrollToSection(0)">수소에너지</button>
+        <button class="sub-nav-btn" data-index="1" onclick="scrollToSection(1)">전력반도체</button>
+        <button class="sub-nav-btn" data-index="2" onclick="scrollToSection(2)">첨단콘텐츠</button>
+        <button class="sub-nav-btn" data-index="3" onclick="scrollToSection(3)">융합디자인</button>
+        <button class="sub-nav-btn" data-index="4" onclick="scrollToSection(4)">휴먼메타케어</button>
+        <button class="sub-nav-btn" data-index="5" onclick="scrollToSection(5)">헤리티지콘텐츠</button>
+    </nav>
+</div>
+
+<!-- ===== SECTIONS CONTAINER ===== -->
+<div style="display: flex; flex-direction: column; gap: 100px; padding-top: 60px; padding-bottom: 60px;">
+
+<!-- ============================== -->
+<!-- SECTION 1: 수소에너지            -->
+<!-- ============================== -->
+<section class="curriculum-section" id="section-0" style="--section-color: #0ABAB5;">
+    <div class="section-header">
+        <div class="section-icon" style="background: #e6f7f6;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0ABAB5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2c-4 4-6 7-6 11a6 6 0 0 0 12 0c0-4-2-7-6-11z"/>
+            </svg>
+        </div>
+        <h2 class="section-title">수소에너지 연합전공 이수체계도</h2>
+        <div class="section-divider" style="background: #0ABAB5;"></div>
+    </div>
+    <div class="card-grid cols-5">
+        <!-- Card 1: 수소에너지 소재 모듈 -->
+        <div class="module-card">
+            <div class="card-header">
+                <h3>수소에너지 소재 모듈</h3>
+                <div class="header-sub">(BITS 공유대학 참여학생 대상)</div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item">수소산업활용 금속소재</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item">촉매와 수소 생산기술,</div>
+                    <div class="subject-item">기계적성질 및 수소 취성</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item">수소활용소재개론</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item">수소소재실습,</div>
+                    <div class="subject-item field">수소기자재시험인증 Ⓕ,</div>
+                    <div class="subject-item field">글로컬수소에너지캡스톤디자인 Ⓕ,</div>
+                    <div class="subject-item field">수소시스템융합캡스톤디자인 Ⓕ</div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 2: 수소에너지 부품 모듈 -->
+        <div class="module-card">
+            <div class="card-header">
+                <h3>수소에너지 부품 모듈</h3>
+                <div class="header-sub">(BITS 공유대학 참여학생 대상)</div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item">연료전지공학</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item">수소전기화학,</div>
+                    <div class="subject-item">수소에너지변환</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item">수소연료전지시스템</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item">수소에너지종합설계,</div>
+                    <div class="subject-item field">수소기자재시험인증 Ⓕ,</div>
+                    <div class="subject-item field">글로컬수소에너지캡스톤디자인 Ⓕ,</div>
+                    <div class="subject-item field">수소시스템융합캡스톤디자인 Ⓕ</div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 3: 친환경 시스템 모듈 -->
+        <div class="module-card">
+            <div class="card-header">
+                <h3>친환경 시스템 모듈</h3>
+                <div class="header-sub">(BITS 공유대학 참여학생 대상)</div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item">친환경자동차공학</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item">전기차배터리시스템,</div>
+                    <div class="subject-item">신재생에너지</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item">수소차시스템</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item">수소에너지종합설계,</div>
+                    <div class="subject-item field">수소기자재시험인증 Ⓕ,</div>
+                    <div class="subject-item field">글로컬수소에너지캡스톤디자인 Ⓕ,</div>
+                    <div class="subject-item field">수소시스템융합캡스톤디자인 Ⓕ</div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 4: 수소 생산 및 활용 모듈 -->
+        <div class="module-card">
+            <div class="card-header">
+                <h3>수소 생산 및 활용 모듈</h3>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item">수소생산기술공학 <svg class="badge-dsu" viewBox="0 0 34 16" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="32" height="14" rx="7" fill="none" stroke="#C84D65" stroke-width="1.2"/><text x="17" y="11.5" fill="#C84D65" font-size="9" font-weight="800" text-anchor="middle" font-family="SUIT Variable,sans-serif">DSU</text></svg></div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item">열전달, LNG 생산공학</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item">수소연료전지공학,</div>
+                    <div class="subject-item field">수소시스템융합세미나 Ⓕ,</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item field">수소 생산 및 활용 실습 Ⓕ,</div>
+                    <div class="subject-item field">수소시스템융합캡스톤디자인 Ⓕ</div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 5: 수소 이송 및 저장 모듈 -->
+        <div class="module-card">
+            <div class="card-header">
+                <h3>수소 이송 및 저장 모듈</h3>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item">수소소재개론,</div>
+                    <div class="subject-item">수소에너지개론 <svg class="badge-dsu" viewBox="0 0 34 16" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="32" height="14" rx="7" fill="none" stroke="#C84D65" stroke-width="1.2"/><text x="17" y="11.5" fill="#C84D65" font-size="9" font-weight="800" text-anchor="middle" font-family="SUIT Variable,sans-serif">DSU</text></svg></div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item">수소저장기술,</div>
+                    <div class="subject-item">고압가스공학</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item">수소배관설계,</div>
+                    <div class="subject-item">수소인프라공학</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item field">수소에너지종합설계 Ⓕ,</div>
+                    <div class="subject-item field">수소시스템융합캡스톤디자인 Ⓕ</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="legend">
+        <div class="legend-item"><span class="field-mark">Ⓕ</span> : Field 교과목 (9학점 이수 시 Field 디그리 (FD) 취득 가능)</div>
+        <div class="legend-item"><svg class="badge-dsu" viewBox="0 0 34 16" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="32" height="14" rx="7" fill="none" stroke="#C84D65" stroke-width="1.2"/><text x="17" y="11.5" fill="#C84D65" font-size="9" font-weight="800" text-anchor="middle" font-family="SUIT Variable,sans-serif">DSU</text></svg> 동서대 개설 교과목</div>
+    </div>
+</section>
+
+<!-- ============================== -->
+<!-- SECTION 2: 전략반도체             -->
+<!-- ============================== -->
+<section class="curriculum-section" id="section-1" style="--section-color: #2B7CDE;">
+    <div class="section-header">
+        <div class="section-icon" style="background: #eaf2fc;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2B7CDE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+            </svg>
+        </div>
+        <h2 class="section-title">전력반도체 연합전공 이수 체계도</h2>
+        <div class="section-divider" style="background: #2B7CDE;"></div>
+    </div>
+    <div class="card-grid cols-3">
+        <!-- Card 1 -->
+        <div class="module-card">
+            <div class="card-header">
+                <h3>전력반도체 소자 공정 모듈</h3>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item">반도체물리기초,</div>
+                    <div class="subject-item">전기회로기초</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item">반도체소자공학,</div>
+                    <div class="subject-item field">전력반도체개론 Ⓕ</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item">전력반도체공정,</div>
+                    <div class="subject-item">반도체측정분석</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item field">전력반도체종합설계 Ⓕ,</div>
+                    <div class="subject-item">캡스톤디자인</div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="module-card">
+            <div class="card-header">
+                <h3>전력반도체 회로 설계 모듈</h3>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item">전기회로기초,</div>
+                    <div class="subject-item">프로그래밍기초 <svg class="badge-dau" viewBox="0 0 34 16" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="32" height="14" rx="7" fill="none" stroke="#2868B5" stroke-width="1.2"/><text x="17" y="11.5" fill="#2868B5" font-size="9" font-weight="800" text-anchor="middle" font-family="SUIT Variable,sans-serif">DAU</text></svg> <svg class="badge-dsu" viewBox="0 0 34 16" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="32" height="14" rx="7" fill="none" stroke="#C84D65" stroke-width="1.2"/><text x="17" y="11.5" fill="#C84D65" font-size="9" font-weight="800" text-anchor="middle" font-family="SUIT Variable,sans-serif">DSU</text></svg></div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item">아날로그회로설계,</div>
+                    <div class="subject-item">디지털회로설계</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item">전력변환회로,</div>
+                    <div class="subject-item field">전력반도체구동회로 Ⓕ</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item field">전력반도체종합설계 Ⓕ,</div>
+                    <div class="subject-item">캡스톤디자인</div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="module-card">
+            <div class="card-header">
+                <h3>전력반도체 응용 시스템 모듈</h3>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item">전기회로기초,</div>
+                    <div class="subject-item">프로그래밍기초 <svg class="badge-dau" viewBox="0 0 34 16" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="32" height="14" rx="7" fill="none" stroke="#2868B5" stroke-width="1.2"/><text x="17" y="11.5" fill="#2868B5" font-size="9" font-weight="800" text-anchor="middle" font-family="SUIT Variable,sans-serif">DAU</text></svg></div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item">전력전자공학,</div>
+                    <div class="subject-item">마이크로프로세서,</div>
+                    <div class="subject-item">제어공학 <svg class="badge-dsu" viewBox="0 0 34 16" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="32" height="14" rx="7" fill="none" stroke="#C84D65" stroke-width="1.2"/><text x="17" y="11.5" fill="#C84D65" font-size="9" font-weight="800" text-anchor="middle" font-family="SUIT Variable,sans-serif">DSU</text></svg></div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item">전기자동차시스템,</div>
+                    <div class="subject-item">신재생에너지시스템,</div>
+                    <div class="subject-item field">로봇구동시스템 Ⓕ</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item field">전력반도체종합설계 Ⓕ,</div>
+                    <div class="subject-item">캡스톤디자인</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="legend">
+        <div class="legend-item"><span class="field-mark">Ⓕ</span> : Field 교과목 (9학점 이수 시 Field 디그리 (FD) 취득 가능)</div>
+        <div class="legend-item"><svg class="badge-dau" viewBox="0 0 34 16" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="32" height="14" rx="7" fill="none" stroke="#2868B5" stroke-width="1.2"/><text x="17" y="11.5" fill="#2868B5" font-size="9" font-weight="800" text-anchor="middle" font-family="SUIT Variable,sans-serif">DAU</text></svg> 동아대 개설</div>
+        <div class="legend-item"><svg class="badge-dsu" viewBox="0 0 34 16" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="32" height="14" rx="7" fill="none" stroke="#C84D65" stroke-width="1.2"/><text x="17" y="11.5" fill="#C84D65" font-size="9" font-weight="800" text-anchor="middle" font-family="SUIT Variable,sans-serif">DSU</text></svg> 동서대 개설</div>
+    </div>
+</section>
+
+<!-- ============================== -->
+<!-- SECTION 3: 첨단콘텐츠             -->
+<!-- ============================== -->
+<section class="curriculum-section" id="section-2" style="--section-color: #D94FA0;">
+    <div class="section-header">
+        <div class="section-icon" style="background: #fdf0f7;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#D94FA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2l2.09 6.26L20.18 9l-5.09 3.74L16.18 19 12 15.27 7.82 19l1.09-6.26L3.82 9l6.09-.74z"/>
+            </svg>
+        </div>
+        <h2 class="section-title">첨단콘텐츠 연합전공 이수 체계도</h2>
+        <div class="section-divider" style="background: #D94FA0;"></div>
+    </div>
+    <div class="card-grid cols-4">
+        <!-- Card 1: AI콘텐츠 -->
+        <div class="module-card">
+            <div class="card-header">
+                <h3>AI콘텐츠</h3>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 1</span>
+                <div class="subject-list" style="gap: 8px;">
+                    <div class="common-course">스토리텔링 (연합전공 공통과목)</div>
+                    <div class="univ-course">크리에이티브AI콘텐츠디자인 <svg class="badge-dau" viewBox="0 0 34 16" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="32" height="14" rx="7" fill="none" stroke="#2868B5" stroke-width="1.2"/><text x="17" y="11.5" fill="#2868B5" font-size="9" font-weight="800" text-anchor="middle" font-family="SUIT Variable,sans-serif">DAU</text></svg></div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item field">영화실무프로젝트1 Ⓕ,</div>
+                    <div class="subject-item">3D그래픽1</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item">인터랙티브미디어,</div>
+                    <div class="subject-item field">AI콘텐츠기획 Ⓕ</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item field">AI콘텐츠종합설계 Ⓕ,</div>
+                    <div class="subject-item">캡스톤디자인</div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 2: XR/실감형콘텐츠 -->
+        <div class="module-card">
+            <div class="card-header">
+                <h3>XR/실감형콘텐츠</h3>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 1</span>
+                <div class="subject-list" style="gap: 8px;">
+                    <div class="common-course">스토리텔링 (연합전공 공통과목)</div>
+                    <div class="univ-course">크리에이티브AI콘텐츠디자인 <svg class="badge-dau" viewBox="0 0 34 16" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="32" height="14" rx="7" fill="none" stroke="#2868B5" stroke-width="1.2"/><text x="17" y="11.5" fill="#2868B5" font-size="9" font-weight="800" text-anchor="middle" font-family="SUIT Variable,sans-serif">DAU</text></svg></div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item field">사운드스케이프 Ⓕ,</div>
+                    <div class="subject-item">종합편집실무,</div>
+                    <div class="subject-item">멀티미디어글쓰기,</div>
+                    <div class="subject-item">기초영상실습</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item field">XR콘텐츠제작 Ⓕ,</div>
+                    <div class="subject-item">실감형콘텐츠기획</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item field">XR콘텐츠종합설계 Ⓕ,</div>
+                    <div class="subject-item">캡스톤디자인</div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 3: 서사창작 -->
+        <div class="module-card">
+            <div class="card-header">
+                <h3>서사창작</h3>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 1</span>
+                <div class="subject-list" style="gap: 8px;">
+                    <div class="common-course">스토리텔링 (연합전공 공통과목)</div>
+                    <div class="subject-item">영화보기와영화읽기1</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item">미디어의이해,</div>
+                    <div class="subject-item">시나리오작법,</div>
+                    <div class="subject-item">영화장르연구</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item field">서사창작워크숍 Ⓕ,</div>
+                    <div class="subject-item">디지털스토리텔링</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item field">서사창작종합설계 Ⓕ,</div>
+                    <div class="subject-item">캡스톤디자인</div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 4: 엔터테인먼트 엔지니어링 -->
+        <div class="module-card">
+            <div class="card-header">
+                <h3>엔터테인먼트엔지니어링</h3>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 1</span>
+                <div class="subject-list" style="gap: 8px;">
+                    <div class="common-course">스토리텔링 (연합전공 공통과목)</div>
+                    <div class="subject-item">무대기술기초,</div>
+                    <div class="subject-item field">엔터테인먼트엔지니어링1 Ⓕ,</div>
+                    <div class="subject-item">전자기초</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item">무대기술디자인,</div>
+                    <div class="subject-item field">엔터테인먼트엔지니어링2 Ⓕ,</div>
+                    <div class="subject-item">음향공학기초</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item field">공연기술종합실습 Ⓕ,</div>
+                    <div class="subject-item">무대자동화시스템</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item field">엔터테인먼트종합설계 Ⓕ,</div>
+                    <div class="subject-item">캡스톤디자인</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="legend">
+        <div class="legend-item"><span class="field-mark">Ⓕ</span> : Field 교과목 (9학점 이수 시 Field 디그리 (FD) 취득 가능)</div>
+        <div class="legend-item"><svg class="badge-dau" viewBox="0 0 34 16" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="32" height="14" rx="7" fill="none" stroke="#2868B5" stroke-width="1.2"/><text x="17" y="11.5" fill="#2868B5" font-size="9" font-weight="800" text-anchor="middle" font-family="SUIT Variable,sans-serif">DAU</text></svg> 동아대 개설</div>
+    </div>
+</section>
+
+<!-- ============================== -->
+<!-- SECTION 4: 융합디자인             -->
+<!-- ============================== -->
+<section class="curriculum-section" id="section-3" style="--section-color: #2ABFBF;">
+    <div class="section-header">
+        <div class="section-icon" style="background: #e8f8f8;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2ABFBF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/>
+            </svg>
+        </div>
+        <h2 class="section-title">융합디자인 연합전공 이수 체계도</h2>
+        <div class="section-divider" style="background: #2ABFBF;"></div>
+    </div>
+    <div class="card-grid cols-4">
+        <!-- Card 1: AI-UX디자인 -->
+        <div class="module-card">
+            <div class="card-header">
+                <h3>AI-UX디자인</h3>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item">디자인씽킹,</div>
+                    <div class="subject-item">UX리서치기초</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item">인터랙션디자인,</div>
+                    <div class="subject-item field">AI기반UX설계 Ⓕ</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item">서비스디자인,</div>
+                    <div class="subject-item">UX프로토타이핑</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item field">융합디자인종합설계 Ⓕ,</div>
+                    <div class="subject-item">캡스톤디자인</div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 2: AI디자인창업 -->
+        <div class="module-card">
+            <div class="card-header">
+                <h3>AI디자인창업</h3>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item">창업기초,</div>
+                    <div class="subject-item">비주얼커뮤니케이션</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item">브랜드디자인,</div>
+                    <div class="subject-item">AI디자인도구활용</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item field">디자인비즈니스 Ⓕ,</div>
+                    <div class="subject-item">스타트업프로젝트</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item field">융합디자인종합설계 Ⓕ,</div>
+                    <div class="subject-item">캡스톤디자인</div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 3: 미래라이프스타일디자인 -->
+        <div class="module-card">
+            <div class="card-header">
+                <h3>미래라이프스타일디자인</h3>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item">공간디자인기초,</div>
+                    <div class="subject-item">라이프스타일트렌드</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item">스마트리빙디자인,</div>
+                    <div class="subject-item">지속가능디자인</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item field">미래주거환경디자인 Ⓕ,</div>
+                    <div class="subject-item">도시재생디자인</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item field">융합디자인종합설계 Ⓕ,</div>
+                    <div class="subject-item">캡스톤디자인</div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 4: 무대의상디자인과 기술 -->
+        <div class="module-card">
+            <div class="card-header">
+                <h3>무대의상디자인과 기술</h3>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item">패션디자인기초,</div>
+                    <div class="subject-item">의상사</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">3 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item">무대의상디자인,</div>
+                    <div class="subject-item field">패턴제작기술 Ⓕ</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 1</span>
+                <div class="subject-list">
+                    <div class="subject-item field">공연의상제작실습 Ⓕ,</div>
+                    <div class="subject-item">특수의상기술</div>
+                </div>
+            </div>
+            <div class="cell">
+                <span class="semester-label">4 - 2</span>
+                <div class="subject-list">
+                    <div class="subject-item field">융합디자인종합설계 Ⓕ,</div>
+                    <div class="subject-item">캡스톤디자인</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="legend">
+        <div class="legend-item"><span class="field-mark">Ⓕ</span> : Field 교과목 (9학점 이수 시 Field 디그리 (FD) 취득 가능)</div>
+    </div>
+</section>
+
+<!-- ============================== -->
+<!-- SECTION 5: 휴먼메타케어           -->
+<!-- ============================== -->
+<section class="curriculum-section" id="section-4" style="--section-color: #7B61B8;">
+    <div class="section-header">
+        <div class="section-icon" style="background: #f3f0fa;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#7B61B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+        </div>
+        <h2 class="section-title">휴먼메타케어</h2>
+        <div class="section-divider" style="background: #7B61B8;"></div>
+    </div>
+    <div class="placeholder-box">
+        <div class="placeholder-badge" style="background: #eeebf5; color: #7B61B8;">26학년도 개설 예정</div>
+        <p class="placeholder-msg">교과과정표는 추후 게시될 예정입니다</p>
+    </div>
+</section>
+
+<!-- ============================== -->
+<!-- SECTION 6: 헤리티지콘텐츠          -->
+<!-- ============================== -->
+<section class="curriculum-section" id="section-5" style="--section-color: #A67C52;">
+    <div class="section-header">
+        <div class="section-icon" style="background: #f7f1ea;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#A67C52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/><path d="M9 10h.01"/><path d="M15 10h.01"/>
+            </svg>
+        </div>
+        <h2 class="section-title">헤리티지콘텐츠</h2>
+        <div class="section-divider" style="background: #A67C52;"></div>
+    </div>
+    <div class="placeholder-box">
+        <div class="placeholder-badge" style="background: #f3ece4; color: #A67C52;">26학년도 개설 예정</div>
+        <p class="placeholder-msg">교과과정표는 추후 게시될 예정입니다</p>
+    </div>
+</section>
+
+</div><!-- end sections container -->
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-links">
+            <div>
+                <h4>혁신 방향</h4>
+                <a href="#">비전 및 목표</a>
+                <a href="#">추진 전략</a>
+                <a href="#">거버넌스</a>
+            </div>
+            <div>
+                <h4>통합산단</h4>
+                <a href="#">산단 개요</a>
+                <a href="#">참여 기업</a>
+                <a href="#">산학 협력</a>
+            </div>
+            <div>
+                <h4>연합전공</h4>
+                <a href="#">전공 소개</a>
+                <a href="#">교과과정표</a>
+                <a href="#">교수진</a>
+            </div>
+            <div>
+                <h4>Field캠퍼스</h4>
+                <a href="#">캠퍼스 소개</a>
+                <a href="#">프로그램</a>
+                <a href="#">참여 방법</a>
+            </div>
+            <div>
+                <h4>D-insight &#8599;</h4>
+                <a href="#">데이터 대시보드</a>
+                <a href="#">성과 분석</a>
+                <a href="#">리포트</a>
+            </div>
+            <div>
+                <h4>관련 사이트</h4>
+                <a href="#">동아대학교</a>
+                <a href="#">동서대학교</a>
+                <a href="#">교육부 RISE</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>
+                <strong style="color: #ccc;">동아대학교</strong><br>
+                부산광역시 사하구 낙동대로 550번길 37 (하단동)
+            </div>
+            <div>
+                <strong style="color: #ccc;">동서대학교</strong><br>
+                부산광역시 사상구 주례로 47 (주례동)
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // ===== SECTION CONFIG =====
+    const sectionColors = ['#0ABAB5','#2B7CDE','#D94FA0','#2ABFBF','#7B61B8','#A67C52'];
+    const sectionIds = ['section-0','section-1','section-2','section-3','section-4','section-5'];
+    let currentActiveIndex = 0;
+
+    // ===== HEADER SCROLL HIDE/SHOW =====
+    const siteHeader = document.getElementById('siteHeader');
+    const hdrInner = document.getElementById('hdrInner');
+    const subNavWrapper = document.getElementById('subNavWrapper');
+    let lastScrollY = 0;
+    let headerHidden = false;
+
+    // Initial state: header visible → sub-nav docked below
+    subNavWrapper.classList.add('header-visible');
+
+    window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
+        if (currentScrollY > 200 && currentScrollY > lastScrollY && !headerHidden) {
+            siteHeader.classList.add('hidden-up');
+            subNavWrapper.classList.remove('header-visible');
+            headerHidden = true;
+        } else if (currentScrollY < lastScrollY && headerHidden) {
+            siteHeader.classList.remove('hidden-up');
+            subNavWrapper.classList.add('header-visible');
+            headerHidden = false;
+        }
+        lastScrollY = currentScrollY;
+    }, { passive: true });
+
+    // ===== DESKTOP DROPDOWN MENU =====
+    const hdrNav = document.getElementById('hdrNav');
+    let dropdownTimeout;
+    function openDropdown() { clearTimeout(dropdownTimeout); hdrInner.classList.add('dropdown-open'); }
+    function closeDropdown() { dropdownTimeout = setTimeout(() => hdrInner.classList.remove('dropdown-open'), 150); }
+    if (hdrNav) hdrNav.addEventListener('mouseenter', openDropdown);
+    if (hdrInner) hdrInner.addEventListener('mouseleave', closeDropdown);
+
+    // ===== MOBILE MENU =====
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileOpenBtn = document.getElementById('mobileMenuOpen');
+    const mobileCloseBtn = document.getElementById('mobileMenuClose');
+    if (mobileOpenBtn) mobileOpenBtn.addEventListener('click', () => { mobileMenu.classList.add('open'); document.body.style.overflow = 'hidden'; });
+    if (mobileCloseBtn) mobileCloseBtn.addEventListener('click', () => { mobileMenu.classList.remove('open'); document.body.style.overflow = ''; });
+    document.querySelectorAll('.mobile-sub-link').forEach(l => l.addEventListener('click', () => { mobileMenu.classList.remove('open'); document.body.style.overflow = ''; }));
+
+    // ===== SET ACTIVE NAV =====
+    function setActiveNav(index) {
+        if (index === currentActiveIndex) return;
+        currentActiveIndex = index;
+        const btns = document.querySelectorAll('.sub-nav-btn');
+        btns.forEach((btn, i) => {
+            if (i === index) {
+                btn.classList.add('active');
+                btn.style.backgroundColor = sectionColors[index];
+                btn.style.color = 'white';
+            } else {
+                btn.classList.remove('active');
+                btn.style.backgroundColor = 'transparent';
+                btn.style.color = '#888';
+            }
+        });
+        btns[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+
+    // Initialize first button
+    (function initNav() {
+        const firstBtn = document.querySelector('.sub-nav-btn[data-index="0"]');
+        if (firstBtn) {
+            firstBtn.style.backgroundColor = sectionColors[0];
+            firstBtn.style.color = 'white';
+        }
+    })();
+
+    // ===== SCROLL TO SECTION =====
+    function scrollToSection(index) {
+        const el = document.getElementById(sectionIds[index]);
+        if (!el) return;
+        const navHeight = 80;
+        const top = el.getBoundingClientRect().top + window.scrollY - navHeight;
+        window.scrollTo({ top, behavior: 'smooth' });
+    }
+
+    // ===== GSAP SCROLL TRIGGERS =====
+    gsap.registerPlugin(ScrollTrigger);
+
+    sectionIds.forEach((id, index) => {
+        const section = document.getElementById(id);
+        if (!section) return;
+
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(24px)';
+
+        // Nav switching — use center of viewport
+        ScrollTrigger.create({
+            trigger: section,
+            start: 'top center',
+            end: 'bottom center',
+            onEnter: () => setActiveNav(index),
+            onEnterBack: () => setActiveNav(index),
+        });
+
+        // Fade in — trigger when section top reaches 85% of viewport
+        gsap.to(section, {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: section,
+                start: 'top 85%',
+                once: true,
+            }
+        });
+    });
+
+    // Fallback: ensure all sections are visible after 1.5s
+    setTimeout(() => {
+        document.querySelectorAll('.curriculum-section').forEach(s => {
+            if (parseFloat(getComputedStyle(s).opacity) < 1) {
+                s.style.transition = 'opacity 0.4s, transform 0.4s';
+                s.style.opacity = '1';
+                s.style.transform = 'translateY(0)';
+            }
+        });
+    }, 1500);
+</script>
+
+</body>
+</html>
