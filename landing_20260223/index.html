@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동아·동서 글로컬 연합대학 — v_proposal_11</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['SUIT', 'sans-serif'], serif: ['Playfair Display', 'serif'] },
+                    colors: {
+                        brand: { indigo: '#3E31D5', blue: '#4132CC', mint: '#00BEB5', dark: '#171719', gray: '#86868b', point: '#FDB927', light: '#f5f7fa', herobg: '#f1f2ff', heroaccent: '#dfe4fa' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Header */
+        .site-header { position: fixed; top: 0; left: 0; width: 100%; z-index: 100; padding: 0 16px; transition: transform .3s ease-in-out; }
+        @media (min-width: 1280px) { .site-header { padding: 0 40px; } }
+        .site-header.hidden-up { transform: translateY(-120%); }
+        .hdr-inner { position: relative; max-width: 1920px; margin: 20px auto 0; border-radius: 36px; background: rgba(255,255,255,.72); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); box-shadow: 0 4px 20px rgba(135,138,146,.1); border: 1px solid rgba(255,255,255,.45); overflow: hidden; transition: background .3s ease-in-out; }
+        .hdr-inner.dropdown-open { background: rgba(255,255,255,.95); }
+        .hdr-inner::after { content: ''; position: absolute; left: 30px; right: 30px; height: 1px; background: rgba(0,0,0,.06); opacity: 0; transition: opacity .25s; pointer-events: none; z-index: 2; }
+        @media (min-width: 1280px) { .hdr-inner::after { top: 72px; } }
+        .hdr-inner.dropdown-open::after { opacity: 1; }
+        .hdr-row { display: flex; align-items: center; justify-content: space-between; height: 64px; padding: 0 24px; width: 100%; }
+        @media (min-width: 1280px) { .hdr-row { padding: 0 30px; height: auto; min-height: 72px; align-items: flex-start; } }
+        .hdr-logo-wrap { display: flex; align-items: center; flex-shrink: 0; }
+        @media (min-width: 1280px) { .hdr-logo-wrap { height: 72px; } }
+        .hdr-logo-desktop { display: none; height: 22px; width: 13vw; max-width: 260px; object-fit: contain; }
+        .hdr-logo-mobile { display: block; height: 34px; width: 100px; object-fit: contain; }
+        @media (min-width: 1280px) { .hdr-logo-desktop { display: block; } .hdr-logo-mobile { display: none; } }
+        .hdr-right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+        @media (min-width: 1280px) { .hdr-right { height: 72px; } }
+        .hdr-hamburger { display: block; width: 24px; height: 24px; cursor: pointer; }
+        @media (min-width: 1280px) { .hdr-hamburger { display: none; } }
+        .hdr-dinsight { display: none; }
+        @media (min-width: 1280px) { .hdr-dinsight { display: flex; align-items: center; } }
+        /* Nav — 각 메뉴 아이템 안에 서브메뉴 내장 */
+        .hdr-nav { display: none; }
+        @media (min-width: 1280px) { .hdr-nav { display: flex; align-items: flex-start; gap: 12px; } }
+        .hdr-menu-col { display: flex; flex-direction: column; flex: 1 1 0; min-width: 0; }
+        .hdr-link { font-size: 17px; font-weight: 700; color: #171719; letter-spacing: -.03em; cursor: pointer; height: 72px; display: flex; align-items: center; justify-content: center; white-space: nowrap; padding: 0; }
+        .hdr-link i { font-style: normal; padding: 5px 0; border-radius: 100px; transition: all .2s; width: 100%; text-align: center; }
+        .hdr-link:hover i { color: #3e31d5; background: #f0eeff; }
+        .hdr-link.active i { color: #3e31d5; background: #f0eeff; }
+        .hdr-sub-items { display: flex; flex-direction: column; max-height: 0; overflow: hidden; opacity: 0; transition: max-height .35s ease, opacity .25s ease, padding .3s ease; padding: 0 16px; }
+        .hdr-inner.dropdown-open .hdr-sub-items { max-height: 300px; opacity: 1; padding: 8px 16px 24px; }
+        .hdr-sub-link { font-size: 14px; font-weight: 600; color: #3f3f44; letter-spacing: -.04em; padding: 7px 0; cursor: pointer; transition: color .2s; display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+        .hdr-sub-link:hover { color: #3E31D5; }
+        .hdr-sub-link .ext-icon { width: 14px; height: 14px; opacity: .5; flex-shrink: 0; }
+        /* 학생성공센터 */
+        .hdr-success-card { position: absolute; bottom: 20px; right: 30px; width: 200px; background: #f1f2ff; border-radius: 12px; padding: 16px; display: none; flex-direction: column; gap: 10px; z-index: 3; }
+        .hdr-inner.dropdown-open .hdr-success-card { display: flex; }
+        .hdr-success-card .card-label { font-size: 17px; font-weight: 700; color: #3f3f44; }
+        .hdr-success-card .card-link { font-size: 13px; font-weight: 600; color: #3E31D5; display: flex; align-items: center; gap: 4px; }
+
+        /* Mobile Menu Panel */
+        .mobile-menu { position: fixed; inset: 0; z-index: 200; background: #fff; transform: translateX(100%); transition: transform .35s cubic-bezier(.4,0,.2,1); overflow-y: auto; -webkit-overflow-scrolling: touch; }
+        .mobile-menu.open { transform: translateX(0); }
+        .mobile-menu-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 20px 12px; }
+        .mobile-menu-close { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 50%; transition: background .2s; }
+        .mobile-menu-close:hover { background: #f5f7fa; }
+        .mobile-menu-body { padding: 0 20px 20px; display: flex; flex-direction: column; gap: 12px; }
+        .mobile-menu-section { background: #f5f7fa; border-radius: 16px; padding: 16px 20px; display: grid; grid-template-columns: 1fr 1.5fr; gap: 6px 12px; }
+        .mobile-menu-section-title { font-size: 16px; font-weight: 700; color: #171719; letter-spacing: -.02em; padding: 6px 0; align-self: start; }
+        .mobile-menu-section-items { display: flex; flex-direction: column; gap: 4px; }
+        .mobile-sub-link { font-size: 14px; font-weight: 700; color: #171719; letter-spacing: -.03em; padding: 8px 0; display: flex; align-items: center; gap: 4px; }
+        .mobile-sub-link:active { color: #3E31D5; }
+        .mobile-sub-link .ext-icon { width: 12px; height: 12px; opacity: .5; }
+        .mobile-menu-footer { padding: 8px 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+        .mobile-success-btn { background: #f5f7fa; border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 10px; }
+        .mobile-success-btn .btn-label { font-size: 14px; font-weight: 700; color: #3f3f44; flex: 1; }
+        .mobile-success-btn .btn-link { font-size: 12px; font-weight: 600; color: #3E31D5; display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+        .mobile-menu-dinsight { display: flex; justify-content: flex-end; align-items: center; gap: 4px; padding: 0 4px; }
+        .mobile-menu-dinsight .label { font-size: 8px; font-weight: 800; color: #2ca39c; letter-spacing: 2px; text-transform: uppercase; }
+        .mobile-menu-dinsight .title { font-size: 20px; font-weight: 800; color: #3f3f44; letter-spacing: -1px; font-style: italic; }
+
+        /* Hero */
+        @keyframes bounce-down { 0%,100%{transform:translateY(0)} 50%{transform:translateY(10px)} }
+        .scroll-bounce { animation: bounce-down 2s ease-in-out infinite; }
+        .hero-gradient-text {
+            background: linear-gradient(90deg, #6b3eff 0%, #0acaff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-video-wrap { aspect-ratio: 16 / 9; border-radius: 30px; overflow: hidden; position: relative; transform-origin: center center; will-change: transform; }
+        .hero-video-wrap video { width: 100%; height: 100%; object-fit: cover; }
+        .hero-vslide { position: absolute; inset: 0; }
+        .hero-vslide video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        @media (max-width: 1023px) { .hero-fullscreen-section { height: auto !important; } }
+        /* Ultrawide blurred video backdrop */
+        .hero-blur-backdrop { position: absolute; inset: 0; z-index: 5; opacity: 0; pointer-events: none; overflow: hidden; }
+        .hero-blur-backdrop video { width: 100%; height: 100%; object-fit: cover; filter: blur(40px) brightness(.6) saturate(1.4); transform: scale(1.15); }
+        .hero-progress-track { width: 160px; height: 4px; background: #dfe0e9; border-radius: 2px; overflow: hidden; }
+        .hero-progress-fill { height: 100%; background: #3f3f44; border-radius: 2px; transition: width .3s linear; }
+        .hero-ctrl-btn { width: 34px; height: 34px; border-radius: 50%; background: rgba(0,0,0,.5); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .2s; }
+        .hero-ctrl-btn:hover { background: rgba(0,0,0,.7); }
+        .hero-nav-btn { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .2s; }
+        .hero-nav-btn:hover { background: rgba(0,0,0,.06); }
+        /* Hero text transition */
+        .hero-text-area { position: relative; width: 100%; }
+        .hero-text-panel { display: none; flex-direction: column; justify-content: center; }
+        .hero-text-panel.active { display: flex; }
+        @media (min-width: 1024px) {
+            .hero-text-area { min-height: 300px; }
+            .hero-text-panel { position: absolute; inset: 0; display: flex; opacity: 0; transition: opacity .6s ease; pointer-events: none; }
+            .hero-text-panel.active { opacity: 1; pointer-events: auto; }
+        }
+        @media (max-width: 1023px) {
+            .hero-video-wrap { border-radius: 20px; }
+        }
+
+        /* Innovation — Left Image + Right (Fixed Dots + Sliding Cards) */
+        .innov-section { height: 600vh; position: relative; }
+        .innov-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; }
+        .innov-left { width: 40%; flex-shrink: 0; position: relative; overflow: hidden; }
+        .innov-left-bg { position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease; }
+        .innov-left-bg.active { opacity: 1; }
+        .innov-left-bg img { width: 100%; height: 100%; object-fit: cover; }
+        .innov-left-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.45); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; text-align: center; }
+        .innov-right { flex: 1; min-width: 0; padding: 60px 0; background: #f5f7fa; display: flex; flex-direction: column; justify-content: center; overflow: hidden; position: relative; z-index: 2; }
+        /* Progress line — spans full panel width, edge to edge */
+        .innov-progress-bg { position: absolute; left: 0; right: 0; height: 3px; background: #e8e8f0; z-index: 0; pointer-events: none; }
+        .innov-progress-fill { position: absolute; left: 0; height: 3px; width: 0; background: linear-gradient(90deg, #3E31D5, #6C5CE7); z-index: 1; pointer-events: none; transition: width .5s cubic-bezier(.4,0,.2,1); }
+        /* Combined dot + card in one scroll container */
+        .innov-timeline-wrap { overflow: hidden; position: relative; z-index: 2; }
+        .innov-timeline { display: flex; gap: 60px; transition: transform .6s cubic-bezier(.4,0,.2,1); width: max-content; }
+        .innov-step { min-width: 400px; max-width: 400px; flex-shrink: 0; }
+        .innov-dot-section { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 28px; cursor: pointer; position: relative; z-index: 2; }
+        .innov-dot-label { font-size: 14px; font-weight: 800; line-height: 1; color: #9e9ea8; transition: color .4s; white-space: nowrap; letter-spacing: -.02em; }
+        .innov-step.active .innov-dot-label { color: #3E31D5; }
+        .innov-dot-circle { width: 18px; height: 18px; border-radius: 50%; background: #c8c8d0; border: 3px solid #fff; box-shadow: 0 0 0 2px #c0c0c8; transition: all .4s; }
+        .innov-step.passed .innov-dot-circle { background: #c4bff5; box-shadow: 0 0 0 2px #c4bff5; }
+        .innov-step.passed .innov-dot-label { color: #a09bd4; }
+        .innov-step.active .innov-dot-circle { background: #3E31D5; border-color: #fff; box-shadow: 0 0 0 4px rgba(62,49,213,0.25), 0 0 20px rgba(62,49,213,0.3); animation: innov-dot-pulse 2s ease-in-out infinite; }
+        @keyframes innov-dot-pulse {
+            0%, 100% { box-shadow: 0 0 0 4px rgba(62,49,213,0.25), 0 0 20px rgba(62,49,213,0.3); }
+            50% { box-shadow: 0 0 0 8px rgba(62,49,213,0.12), 0 0 28px rgba(62,49,213,0.2); }
+        }
+        .innov-card-section { opacity: 0.4; transition: opacity .5s; }
+        .innov-step.active .innov-card-section { opacity: 1; }
+        .innov-card-img { width: 100%; aspect-ratio: 5/3; border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+        .innov-card-img img { width: 100%; height: 100%; object-fit: cover; }
+        .innov-step h3 { font-size: 21px; font-weight: 700; line-height: 1.5; margin-bottom: 8px; color: #171719; letter-spacing: -0.42px; }
+        .innov-step .innov-card-label { font-size: 14px; font-weight: 700; color: #3E31D5; margin-bottom: 4px; letter-spacing: .42px; line-height: 1.5; }
+        .innov-step .innov-card-desc { font-size: 16px; font-weight: 400; line-height: 1.8; color: #606068; letter-spacing: -0.32px; }
+        @media (max-width: 1023px) {
+            .innov-sticky { flex-direction: column; }
+            .innov-left { width: 100%; height: 30vh; }
+            .innov-right { margin-left: 0; padding: 24px 0; background: #f5f7fa; }
+            .innov-step { min-width: 280px; max-width: 280px; }
+            .innov-timeline { gap: 40px; }
+            .innov-step h3 { font-size: 18px; }
+        }
+
+        /* Achievement cards */
+        .ach-card { position: relative; overflow: hidden; flex: 1; min-width: 0; aspect-ratio: 1/1; }
+        .ach-card iframe { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 160%; height: 160%; pointer-events: none; }
+        .ach-card .overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.0) 0%, rgba(0,0,0,.55) 100%); }
+        .ach-card .inner-shadow { position: absolute; inset: 0; box-shadow: inset 0 0 30px rgba(0,0,0,.2); pointer-events: none; }
+        .ach-cards-wrap { display: flex; align-items: center; border-radius: 20px; overflow: hidden; opacity: 0; transform: translateY(40px); transition: opacity .8s cubic-bezier(.4,0,.2,1), transform .8s cubic-bezier(.4,0,.2,1); width: 100%; }
+        .ach-cards-wrap.visible { opacity: 1; transform: translateY(0); }
+
+        /* FAQ */
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height .4s ease, padding .3s; }
+        .faq-answer.open { max-height: 500px; }
+        .faq-icon { transition: transform .3s; }
+        .faq-icon.open { transform: rotate(45deg); }
+        @keyframes floatUp { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes floatDown { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+        .faq-logo-float-up { animation: floatUp 2.4s ease-in-out infinite; }
+        .faq-logo-float-down { animation: floatDown 2.4s ease-in-out infinite; }
+
+        /* News */
+        .news-scroll { scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+        .news-card { scroll-snap-align: start; }
+
+        /* Campus */
+        .campus-header-collapsible { max-height: 300px; opacity: 1; overflow: hidden; transition: max-height .5s cubic-bezier(.4,0,.2,1), opacity .4s, margin .5s, padding .5s; }
+        .campus-header-collapsible.collapsed { max-height: 0; opacity: 0; margin: 0 !important; padding: 0 !important; }
+        .campus-tab { cursor: pointer; padding: 8px 20px; border-radius: 1000px; font-weight: 700; font-size: 16px; line-height: 1.6; letter-spacing: -0.32px; transition: all .3s; white-space: nowrap; background: transparent; color: #3e31d5; border: 1px solid #3e31d5; display: inline-flex; align-items: center; gap: 10px; backdrop-filter: blur(4px); }
+        .campus-tab.active { background: #3E31D5; color: #fff; border-color: #3E31D5; }
+        .campus-pin { position: absolute; border-radius: 50%; cursor: pointer; z-index: 5; transform: translate(-50%, -50%); transition: all .4s cubic-bezier(.4,0,.2,1); }
+        .campus-pin.dot-all { width: 10px; height: 10px; background: #3E31D5; opacity: 0.55; }
+        .campus-pin.dot-all:hover { opacity: 1; transform: translate(-50%, -50%) scale(1.8); z-index: 6; }
+        .campus-pin.dot-filtered { width: 16px; height: 16px; background: #3E31D5; opacity: 0.85; border: 2px solid #fff; box-shadow: 0 2px 8px rgba(62,49,213,.25); }
+        .campus-pin.dot-filtered:hover { transform: translate(-50%, -50%) scale(1.3); box-shadow: 0 2px 14px rgba(62,49,213,.4); }
+        .campus-pin.dot-active { width: 32px; height: 32px; background: #fff; border: 3px solid #3E31D5; box-shadow: 0 0 0 6px rgba(62,49,213,.12), 0 4px 20px rgba(62,49,213,.25); z-index: 8; animation: campusPinPulse 2s ease-in-out infinite; }
+        .campus-pin.dot-hidden { opacity: 0; transform: translate(-50%, -50%) scale(0.3); pointer-events: none; }
+        @keyframes campusPinPulse { 0%,100%{ box-shadow: 0 0 0 6px rgba(62,49,213,.12), 0 4px 20px rgba(62,49,213,.25); } 50%{ box-shadow: 0 0 0 10px rgba(62,49,213,.08), 0 4px 24px rgba(62,49,213,.35); } }
+        .campus-popup { position: absolute; z-index: 10; background: #fff; border: 2px solid #3E31D5; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(62,49,213,.12); display: flex; width: 340px; opacity: 0; transform: translateY(10px); transition: all .4s cubic-bezier(.4,0,.2,1); pointer-events: none; }
+        .campus-popup.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .campus-popup .popup-img { width: 120px; min-height: 100px; object-fit: cover; flex-shrink: 0; }
+        .campus-popup .popup-body { padding: 14px; flex: 1; display: flex; flex-direction: column; gap: 4px; }
+        .campus-popup .popup-cat { font-size: 14px; color: #3E31D5; font-weight: 700; letter-spacing: -0.28px; line-height: 1.5; }
+        .campus-popup .popup-title { font-size: 16px; font-weight: 800; color: #3f3f44; letter-spacing: -0.32px; line-height: 1.6; }
+        .campus-popup .popup-loc { font-size: 13px; color: #74747e; letter-spacing: -0.26px; line-height: 1.5; }
+        .campus-list-card { display: flex; gap: 12px; padding: 10px; border-radius: 12px; border: 1px solid #e8e9ed; cursor: pointer; transition: all .3s; background: #fff; }
+        .campus-list-card:hover { border-color: #c0bfe0; background: #fafaff; }
+        .campus-list-card.active { border-color: #3E31D5; background: #f5f4ff; box-shadow: 0 2px 12px rgba(62,49,213,.08); }
+        .campus-list-card .list-thumb { width: 56px; height: 56px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
+        .campus-list-card .list-info { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 2px; }
+        .campus-list-card .list-title { font-size: 14px; font-weight: 700; color: #171719; }
+        .campus-list-card .list-loc { font-size: 12px; color: #9b9bb6; }
+
+        .content-w { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+        @media (min-width: 1024px) { .content-w { padding: 0 40px; } }
+    </style>
+</head>
+<body class="bg-white text-[#171719] font-sans antialiased overflow-x-hidden">
+
+<!-- ═══ HEADER ═══ -->
+<header class="site-header" id="siteHeader">
+    <div class="hdr-inner" id="hdrInner">
+        <div class="hdr-row">
+            <!-- Logo -->
+            <a href="#" class="hdr-logo-wrap">
+                <img src="https://dev-five-git.github.io/donga-dongseo-glocal/icons/header/headerTitle.svg" alt="동아·동서 글로컬 연합대학" class="hdr-logo-desktop">
+                <img src="https://dev-five-git.github.io/donga-dongseo-glocal/icons/header/headerTitleMobile.svg" alt="동아·동서 글로컬" class="hdr-logo-mobile">
+            </a>
+            <!-- Nav — 서브메뉴가 각 아이템 아래에 바로 나옴 -->
+            <nav class="hdr-nav" id="hdrNav">
+                <div class="hdr-menu-col">
+                    <span class="hdr-link"><i>혁신방향</i></span>
+                    <div class="hdr-sub-items">
+                        <a class="hdr-sub-link" href="#">글로컬대학 30</a>
+                        <a class="hdr-sub-link" href="#">비전</a>
+                        <a class="hdr-sub-link" href="#">추진과제</a>
+                        <a class="hdr-sub-link" href="#">조직</a>
+                    </div>
+                </div>
+                <div class="hdr-menu-col">
+                    <span class="hdr-link"><i>통합산단</i></span>
+                    <div class="hdr-sub-items">
+                        <a class="hdr-sub-link" href="#">추진전략</a>
+                        <a class="hdr-sub-link" href="#">통합기술플랫폼 <svg class="ext-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg></a>
+                    </div>
+                </div>
+                <div class="hdr-menu-col">
+                    <span class="hdr-link"><i>연합전공</i></span>
+                    <div class="hdr-sub-items">
+                        <a class="hdr-sub-link" href="#">학습관리모듈 <svg class="ext-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg></a>
+                        <a class="hdr-sub-link" href="#">원격교육시스템 <svg class="ext-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg></a>
+                        <a class="hdr-sub-link" href="#">연합전공소개</a>
+                        <a class="hdr-sub-link" href="#">교과과정표</a>
+                        <a class="hdr-sub-link" href="#">커뮤니티</a>
+                    </div>
+                </div>
+                <div class="hdr-menu-col">
+                    <span class="hdr-link"><i>Field 캠퍼스</i></span>
+                    <div class="hdr-sub-items">
+                        <a class="hdr-sub-link" href="#">소개</a>
+                        <a class="hdr-sub-link" href="#">구축현황</a>
+                    </div>
+                </div>
+            </nav>
+            <!-- Right -->
+            <div class="hdr-right">
+                <a href="#news" class="hdr-dinsight">
+                    <img src="https://dev-five-git.github.io/donga-dongseo-glocal/icons/header/dinsight.svg" alt="D-insight" style="height:36px;">
+                </a>
+                <img src="https://dev-five-git.github.io/donga-dongseo-glocal/icons/header/hamburger.svg" alt="메뉴" class="hdr-hamburger" id="mobileMenuOpen">
+            </div>
+        </div>
+        <!-- 학생성공센터 (dropdown 열릴 때만 표시) -->
+        <div class="hdr-success-card">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3E31D5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m8 16l2-6l6-2l-2 6z"/><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0m9-9v2m0 14v2m-9-9h2m14 0h2"/></svg>
+            <span class="card-label">학생성공센터</span>
+            <a href="#" class="card-link">바로가기 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg></a>
+        </div>
+    </div>
+</header>
+
+<!-- ═══ MOBILE MENU PANEL ═══ -->
+<div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+        <a href="#">
+            <img src="https://dev-five-git.github.io/donga-dongseo-glocal/icons/header/headerTitle.svg" alt="동아·동서 글로컬 연합대학" style="height:28px;">
+        </a>
+        <div class="mobile-menu-close" id="mobileMenuClose">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#171719" stroke-width="2"><path stroke-linecap="round" d="M18 6L6 18M6 6l12 12"/></svg>
+        </div>
+    </div>
+    <div class="mobile-menu-body">
+        <!-- 혁신방향 -->
+        <div class="mobile-menu-section">
+            <span class="mobile-menu-section-title">혁신방향</span>
+            <div class="mobile-menu-section-items">
+                <a class="mobile-sub-link" href="#">글로컬대학30</a>
+                <a class="mobile-sub-link" href="#">비전</a>
+                <a class="mobile-sub-link" href="#">추진과제</a>
+                <a class="mobile-sub-link" href="#">조직</a>
+            </div>
+        </div>
+        <!-- 통합산단 -->
+        <div class="mobile-menu-section">
+            <span class="mobile-menu-section-title">통합산단</span>
+            <div class="mobile-menu-section-items">
+                <a class="mobile-sub-link" href="#">추진전략</a>
+                <a class="mobile-sub-link" href="#">통합기술플랫폼<svg class="ext-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg></a>
+            </div>
+        </div>
+        <!-- 연합전공 -->
+        <div class="mobile-menu-section">
+            <span class="mobile-menu-section-title">연합전공</span>
+            <div class="mobile-menu-section-items">
+                <a class="mobile-sub-link" href="#">연합전공소개</a>
+                <a class="mobile-sub-link" href="#">교과과정표</a>
+                <a class="mobile-sub-link" href="#">커뮤니티</a>
+                <a class="mobile-sub-link" href="#">학습관리모듈<svg class="ext-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg></a>
+                <a class="mobile-sub-link" href="#">원격교육시스템<svg class="ext-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg></a>
+            </div>
+        </div>
+        <!-- Field 캠퍼스 -->
+        <div class="mobile-menu-section">
+            <span class="mobile-menu-section-title">Field 캠퍼스</span>
+            <div class="mobile-menu-section-items">
+                <a class="mobile-sub-link" href="#">소개</a>
+                <a class="mobile-sub-link" href="#">구축현황</a>
+            </div>
+        </div>
+    </div>
+    <div class="mobile-menu-footer">
+        <div class="mobile-success-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3E31D5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m8 16l2-6l6-2l-2 6z"/><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0m9-9v2m0 14v2m-9-9h2m14 0h2"/></svg>
+            <span class="btn-label">학생성공센터</span>
+            <a href="#" class="btn-link">바로가기 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg></a>
+        </div>
+        <div class="mobile-menu-dinsight">
+            <span class="label">GLOCAL WEBZINE</span>
+            <span class="title">D-insight</span>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ 1. HERO — 피그마 시안 분할 레이아웃 ═══ -->
+<section class="relative hero-fullscreen-section" id="hero" style="height:250vh;">
+    <div class="sticky top-0 h-screen overflow-hidden" id="heroSticky" style="background:#000;">
+    <!-- Ultrawide: blurred video backdrop (fades in during fullscreen) -->
+    <div class="hero-blur-backdrop" id="heroBlurBackdrop">
+        <video autoplay muted loop playsinline>
+            <source src="videos/president.mov" type="video/quicktime">
+            <source src="videos/president.mov" type="video/mp4">
+        </video>
+    </div>
+    <!-- Background (fades on scroll) -->
+    <div class="absolute inset-0 bg-brand-herobg" id="heroBgLayer"></div>
+    <!-- Accent shape (fades on scroll) -->
+    <div class="absolute top-[28%] bottom-[14%] right-0 left-[42%] bg-brand-heroaccent rounded-l-[30px]" id="heroAccentLayer"></div>
+
+    <div class="relative z-10 flex flex-col h-full pt-[100px] lg:pt-[130px] pb-8 lg:pb-12 px-6 lg:px-[80px] xl:px-[120px]" style="max-width:1920px;margin:0 auto;" id="heroContent">
+        <!-- Main split layout -->
+        <div class="flex-1 flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-[72px]">
+            <!-- Left: Text (changes per slide) -->
+            <div class="w-full lg:flex-1 lg:max-w-[500px] py-4 lg:py-0 hero-text-area" id="heroTextCol">
+                <!-- Slide 1: 총장님 인터뷰 -->
+                <div class="hero-text-panel active" data-hero-text="0">
+                    <p class="text-brand-indigo font-extrabold text-sm lg:text-base tracking-wide uppercase mb-1">VISION · INTERVIEW</p>
+                    <p class="text-[#606068] text-xs lg:text-sm tracking-tight mb-4">총장 인터뷰</p>
+                    <h1 class="text-[28px] md:text-[42px] lg:text-[64px] font-extrabold leading-[1.3] tracking-[-2px] mb-6">
+                        <span class="text-[#171719]">경계를 넘어,</span><br>
+                        <span class="hero-gradient-text">내일을 열다.</span>
+                    </h1>
+                    <p class="text-[#606068] text-[15px] lg:text-[18px] leading-[1.6] tracking-tight">
+                        대학의 벽을 허물고 지역과 함께 성장하는<br>
+                        글로컬 연합대학의 새로운 도약
+                    </p>
+                </div>
+                <!-- Slide 2: 수소에너지전공 -->
+                <div class="hero-text-panel" data-hero-text="1">
+                    <p class="text-brand-indigo font-extrabold text-sm lg:text-base tracking-wide uppercase mb-1">FIELD · HYDROGEN</p>
+                    <p class="text-[#606068] text-xs lg:text-sm tracking-tight mb-4">수소에너지전공</p>
+                    <h1 class="text-[28px] md:text-[42px] lg:text-[64px] font-extrabold leading-[1.3] tracking-[-2px] mb-6">
+                        <span class="text-[#171719]">가장 가벼운 원소,</span><br>
+                        <span class="hero-gradient-text">세상을 움직이다.</span>
+                    </h1>
+                    <p class="text-[#606068] text-[15px] lg:text-[18px] leading-[1.6] tracking-tight">
+                        수소에너지 생산·저장·활용 전 주기를 현장에서<br>
+                        배우는 차세대 에너지 특화 전공
+                    </p>
+                </div>
+                <!-- Slide 3: 전력반도체전공 -->
+                <div class="hero-text-panel" data-hero-text="2">
+                    <p class="text-brand-indigo font-extrabold text-sm lg:text-base tracking-wide uppercase mb-1">FIELD · SEMICONDUCTOR</p>
+                    <p class="text-[#606068] text-xs lg:text-sm tracking-tight mb-4">전력반도체전공</p>
+                    <h1 class="text-[28px] md:text-[42px] lg:text-[64px] font-extrabold leading-[1.3] tracking-[-2px] mb-6">
+                        <span class="text-[#171719]">SiC와 GaN,</span><br>
+                        <span class="hero-gradient-text">한계에 도전하다.</span>
+                    </h1>
+                    <p class="text-[#606068] text-[15px] lg:text-[18px] leading-[1.6] tracking-tight">
+                        전력반도체 설계부터 공정까지<br>
+                        현장 중심 교육과 연구의 최전선
+                    </p>
+                </div>
+                <!-- Slide 4: 첨단콘텐츠전공 -->
+                <div class="hero-text-panel" data-hero-text="3">
+                    <p class="text-brand-indigo font-extrabold text-sm lg:text-base tracking-wide uppercase mb-1">FIELD · CONTENTS</p>
+                    <p class="text-[#606068] text-xs lg:text-sm tracking-tight mb-4">첨단콘텐츠전공</p>
+                    <h1 class="text-[28px] md:text-[42px] lg:text-[64px] font-extrabold leading-[1.3] tracking-[-2px] mb-6">
+                        <span class="text-[#171719]">또 하나의 세상,</span><br>
+                        <span class="hero-gradient-text">눈앞에 펼치다.</span>
+                    </h1>
+                    <p class="text-[#606068] text-[15px] lg:text-[18px] leading-[1.6] tracking-tight">
+                        BIFF 연계 XR·VR, AI 서사창작까지<br>
+                        엔터테인먼트 엔지니어링의 새 지평
+                    </p>
+                </div>
+                <!-- Slide 5: AI융합디자인전공 -->
+                <div class="hero-text-panel" data-hero-text="4">
+                    <p class="text-brand-indigo font-extrabold text-sm lg:text-base tracking-wide uppercase mb-1">FIELD · DESIGN</p>
+                    <p class="text-[#606068] text-xs lg:text-sm tracking-tight mb-4">AI융합디자인전공</p>
+                    <h1 class="text-[28px] md:text-[42px] lg:text-[64px] font-extrabold leading-[1.3] tracking-[-2px] mb-6">
+                        <span class="text-[#171719]">알고리즘이 입히는,</span><br>
+                        <span class="hero-gradient-text">새로운 경험.</span>
+                    </h1>
+                    <p class="text-[#606068] text-[15px] lg:text-[18px] leading-[1.6] tracking-tight">
+                        AI-UX부터 미래 라이프스타일 디자인까지<br>
+                        데이터와 감각이 만나는 융합 디자인 전공
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right: Video + controls -->
+            <div class="lg:flex-[1.1] flex flex-col items-end gap-5 w-full" id="heroVideoCol">
+                <!-- Video container -->
+                <div class="hero-video-wrap w-full relative" id="heroVideoWrap">
+                    <!-- Video slides -->
+                    <div class="hero-vslide opacity-100 transition-opacity duration-[800ms]" data-idx="0">
+                        <video autoplay muted loop playsinline>
+                            <source src="videos/president.mov" type="video/quicktime">
+                            <source src="videos/president.mov" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="hero-vslide opacity-0 transition-opacity duration-[800ms]" data-idx="1">
+                        <video autoplay muted loop playsinline>
+                            <source src="videos/hydrogen.mov" type="video/quicktime">
+                            <source src="videos/hydrogen.mov" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="hero-vslide opacity-0 transition-opacity duration-[800ms]" data-idx="2">
+                        <video autoplay muted loop playsinline>
+                            <source src="videos/semiconductor.mov" type="video/quicktime">
+                            <source src="videos/semiconductor.mov" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="hero-vslide opacity-0 transition-opacity duration-[800ms]" data-idx="3">
+                        <video autoplay muted loop playsinline>
+                            <source src="videos/contents.mov" type="video/quicktime">
+                            <source src="videos/contents.mov" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="hero-vslide opacity-0 transition-opacity duration-[800ms]" data-idx="4">
+                        <video autoplay muted loop playsinline>
+                            <source src="videos/design.mov" type="video/quicktime">
+                            <source src="videos/design.mov" type="video/mp4">
+                        </video>
+                    </div>
+
+                    <!-- Video overlay controls (top-right) -->
+                    <div class="absolute top-5 right-5 flex gap-3 z-20" id="heroOverlayCtrl">
+                        <button class="hero-ctrl-btn" id="heroPauseBtn" title="일시정지/재생">
+                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24" id="heroPauseIcon">
+                                <rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>
+                            </svg>
+                            <svg class="w-4 h-4 text-white hidden" fill="currentColor" viewBox="0 0 24 24" id="heroPlayIcon">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
+                        <button class="hero-ctrl-btn" id="heroMuteBtn" title="음소거 해제">
+                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24" id="heroMuteIcon">
+                                <path d="M16.5 12A4.5 4.5 0 0014 7.97v2.21l2.45 2.45c.03-.21.05-.43.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.796 8.796 0 0021 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06a8.99 8.99 0 003.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+                            </svg>
+                            <svg class="w-4 h-4 text-white hidden" fill="currentColor" viewBox="0 0 24 24" id="heroUnmuteIcon">
+                                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 7.97v8.05c1.48-.73 2.5-2.25 2.5-3.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress bar + nav -->
+                <div class="flex items-center gap-5 px-2 lg:px-0 w-full justify-end" id="heroControlsBar">
+                    <span class="text-[16px] font-black text-[#3f3f44] tracking-tight" id="heroSlideNum">01</span>
+                    <div class="hero-progress-track">
+                        <div class="hero-progress-fill" id="heroProgressFill" style="width:0%"></div>
+                    </div>
+                    <span class="text-[16px] font-black text-[#3f3f44] tracking-tight">05</span>
+                    <div class="flex gap-1 items-center">
+                        <button class="hero-nav-btn" id="heroPrev" title="이전">
+                            <svg class="w-4 h-4 text-[#3f3f44]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+                        </button>
+                        <button class="hero-nav-btn" id="heroNext" title="다음">
+                            <svg class="w-4 h-4 text-[#3f3f44]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Down (bottom center) -->
+        <div class="scroll-bounce flex flex-col items-center gap-2 text-[#606068] text-[16px] font-black select-none mt-6 lg:mt-0 cursor-pointer" id="scrollDownBtn">
+            <span class="tracking-tight">SCROLL DOWN</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7"/></svg>
+        </div>
+    </div>
+    </div>
+</section>
+
+<!-- ═══ 2. INNOVATION STRATEGY — 좌측 이미지 + 우측 도트 타임라인 ═══ -->
+<section class="innov-section" id="innovation">
+    <div class="innov-sticky">
+        <!-- LEFT: Image area with cross-fade -->
+        <div class="innov-left" id="innovLeft">
+            <div class="innov-left-bg active" data-innov-bg="0">
+                <img src="../pictures/동서대주례.jpg" alt="동서대 주례캠퍼스">
+            </div>
+            <div class="innov-left-bg" data-innov-bg="1">
+                <img src="../pictures/동아대승학.jpg" alt="동아대 승학캠퍼스">
+            </div>
+            <div class="innov-left-bg" data-innov-bg="2">
+                <img src="../pictures/동아대부민.jpg" alt="동아대 부민캠퍼스">
+            </div>
+            <div class="innov-left-bg" data-innov-bg="3">
+                <img src="../pictures/동서대센텀.jpg" alt="동서대 센텀캠퍼스">
+            </div>
+            <div class="innov-left-overlay">
+                <p class="text-white/70 text-[14px] font-bold tracking-[0.42px] uppercase">Dong-A, DongSeo Glocal University</p>
+                <h2 class="text-white text-[36px] lg:text-[48px] font-extrabold leading-[1.4] tracking-[-1.44px] drop-shadow-lg">동아·동서<br>글로컬 연합대학</h2>
+            </div>
+        </div>
+
+        <!-- RIGHT: Title + Fixed Dots + Sliding Cards -->
+        <div class="innov-right" id="innovRight">
+            <!-- Progress line (absolute, full panel width — positioned via JS) -->
+            <div class="innov-progress-bg" id="innovProgressBg"></div>
+            <div class="innov-progress-fill" id="innovLineFill"></div>
+
+            <!-- Section title -->
+            <div class="mb-8" style="padding: 0 60px;">
+                <p class="text-brand-indigo text-[21px] font-bold tracking-tight mb-3">INNOVATION STRATEGY</p>
+                <h2 class="text-[36px] lg:text-[48px] font-extrabold text-[#3f3f44] leading-[1.4] tracking-tight">새로운 방향, 새로운 내일.</h2>
+            </div>
+
+            <!-- Combined dot + card timeline (slides to center) -->
+            <div class="innov-timeline-wrap">
+                <div class="innov-timeline" id="innovTimeline">
+                    <div class="innov-step active" data-step="0">
+                        <div class="innov-dot-section"><span class="innov-dot-label">혁신방향 01</span><div class="innov-dot-circle"></div></div>
+                        <div class="innov-card-section">
+                            <div class="innov-card-img"><img src="../pictures/승학캠퍼스 정문.jpg" alt="글로벌 개방형 사학연합"></div>
+                            <p class="innov-card-label">Global Alliance Model</p>
+                            <h3>글로벌 기준의 개방형 사학연합 모델</h3>
+                            <p class="innov-card-desc">시스템 오피스 기반 통합 거버넌스를 구축, DX 플랫폼으로 새로운 대학 연합의 표준을 만듭니다.</p>
+                        </div>
+                    </div>
+                    <div class="innov-step" data-step="1">
+                        <div class="innov-dot-section"><span class="innov-dot-label">혁신방향 02</span><div class="innov-dot-circle"></div></div>
+                        <div class="innov-card-section">
+                            <div class="innov-card-img"><img src="../pictures/수소시험.jpg" alt="Field Campus"></div>
+                            <p class="innov-card-label">Field Campus & R&D</p>
+                            <h3>특화 Field 캠퍼스 교육-연구 혁신</h3>
+                            <p class="innov-card-desc">산업단지를 산업 캠퍼스로, 통합산단 매출 2,000억 원과 QS Asia 100위 도약을 목표합니다.</p>
+                        </div>
+                    </div>
+                    <div class="innov-step" data-step="2">
+                        <div class="innov-dot-section"><span class="innov-dot-label">혁신방향 03</span><div class="innov-dot-circle"></div></div>
+                        <div class="innov-card-section">
+                            <div class="innov-card-img"><img src="../pictures/광안대교.jpg" alt="지역 정주"></div>
+                            <p class="innov-card-label">Settlement & Urban Branding</p>
+                            <h3>지역 정주 및 도시 브랜드화</h3>
+                            <p class="innov-card-desc">지역 정주율 50%, 우수 외국인 유학생 7,000명 이상을 부산의 새 시민으로 만들어갑니다.</p>
+                        </div>
+                    </div>
+                    <div class="innov-step" data-step="3">
+                        <div class="innov-dot-section"><span class="innov-dot-label">지향점</span><div class="innov-dot-circle"></div></div>
+                        <div class="innov-card-section">
+                            <div class="innov-card-img"><img src="../pictures/공동전략협의체.jpg" alt="개방형 사학연합"></div>
+                            <p class="innov-card-label">The Open Alliance University</p>
+                            <h3>개방형 사학연합 대학 완성</h3>
+                            <p class="innov-card-desc">통합 산단 인프라를 완성하여 GRDP 향상에 기여, 공립형 민간대학 모델을 실현합니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ 3. FIELD CAMPUS ═══ -->
+<section class="relative bg-brand-light" id="campus" style="height:250vh;">
+    <div class="sticky top-0 h-screen overflow-hidden">
+        <div class="h-full flex flex-col">
+            <div class="campus-header-collapsible content-w pt-14" id="campusHeaderCol">
+                <div class="flex flex-col items-center text-center gap-[20px]">
+                    <p class="font-bold text-[21px] text-[#3e31d5] tracking-[-0.42px] leading-[1.5]">FIELD CAMPUS</p>
+                    <h2 class="text-[36px] lg:text-[48px] font-extrabold leading-[1.4] tracking-[-1.44px] text-[#3f3f44]">캠퍼스를 넘어, 현장으로.</h2>
+                    <p class="text-[16px] lg:text-[18px] text-[#3f3f44] leading-[1.6] tracking-[-0.36px] max-w-[700px]">전력반도체, 수소에너지, 첨단콘텐츠 등 부산의 6대 전략 산업 거점에 강의실을 마련했습니다.<br>현장에서 배우고 즉시 투입되는 실무형 인재를 키웁니다.</p>
+                </div>
+            </div>
+            <div class="content-w mt-8 mb-3">
+                <div class="flex gap-[12px] justify-center overflow-x-auto no-scrollbar pb-2" id="campusTabs">
+                    <div class="campus-tab active" data-cat="-1">전체</div>
+                    <div class="campus-tab" data-cat="0">전력반도체</div>
+                    <div class="campus-tab" data-cat="1">수소에너지</div>
+                    <div class="campus-tab" data-cat="2">첨단콘텐츠</div>
+                    <div class="campus-tab" data-cat="3">융합디자인</div>
+                    <div class="campus-tab" data-cat="4">휴먼메타케어</div>
+                    <div class="campus-tab" data-cat="5">B-Heritage</div>
+                </div>
+            </div>
+            <div class="flex-1 content-w flex flex-col lg:flex-row gap-5 pb-6 min-h-0">
+                <!-- Map (65%) -->
+                <div class="relative flex-[1.8] rounded-3xl overflow-hidden border border-[#d5d6e3]" id="campusMap" style="background: linear-gradient(135deg, #f0f1f8 0%, #e8e9f4 100%);">
+                    <svg id="busanSvg" viewBox="0 0 500 580" class="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid meet">
+                        <!-- Busan landmass -->
+                        <path d="M80,280 C70,240 75,190 100,150 C125,110 160,90 200,80 C240,70 280,65 320,60 C360,58 390,65 420,85 C445,100 460,130 465,170 C470,210 465,250 455,285 C445,320 430,350 410,375 C390,400 370,415 350,425 C330,435 310,442 290,448 C270,452 250,453 230,450 C210,447 190,438 175,425 C160,410 145,390 132,365 C120,340 108,315 95,295Z" fill="#e2e3f0" stroke="#d0d1e0" stroke-width="1.5"/>
+                        <!-- 영도 island -->
+                        <path d="M245,470 C270,465 300,465 330,472 C350,478 360,495 355,515 C350,530 335,540 310,545 C285,548 265,545 248,535 C235,525 228,510 232,495 C236,480 240,473 245,470Z" fill="#e2e3f0" stroke="#d0d1e0" stroke-width="1.5"/>
+                        <!-- Region dividers -->
+                        <path d="M170,120 L180,300 L170,420" fill="none" stroke="#d8d9e8" stroke-width="0.7" stroke-dasharray="4,4"/>
+                        <path d="M320,62 L310,300 L325,440" fill="none" stroke="#d8d9e8" stroke-width="0.7" stroke-dasharray="4,4"/>
+                        <path d="M85,260 L458,270" fill="none" stroke="#d8d9e8" stroke-width="0.7" stroke-dasharray="4,4"/>
+                        <text x="250" y="560" text-anchor="middle" font-size="42" fill="#d5d6e3" font-weight="900" letter-spacing="8">BUSAN</text>
+                    </svg>
+                    <div id="campusPins" class="absolute inset-0 pointer-events-none"></div>
+                    <div id="campusPopup" class="campus-popup">
+                        <img class="popup-img" id="popupImg" src="" alt="">
+                        <div class="popup-body">
+                            <span class="popup-cat" id="popupCat"></span>
+                            <span class="popup-title" id="popupTitle"></span>
+                            <span class="popup-loc" id="popupLoc"></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right panel (35%) -->
+                <div class="lg:w-[300px] shrink-0 flex flex-col min-h-0" id="campusRight">
+                    <div id="campusAllView" class="flex-1 flex flex-col items-center justify-center text-center px-4">
+                        <div class="w-20 h-20 rounded-full bg-brand-indigo/10 flex items-center justify-center mb-5">
+                            <span class="text-3xl font-black text-brand-indigo">23</span>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2">부산 전역 필드캠퍼스</h3>
+                        <p class="text-sm text-brand-gray leading-relaxed">6개 특화분야에 걸친<br>거점 캠퍼스를 탐색하세요.</p>
+                        <div class="flex flex-wrap justify-center gap-2 mt-5">
+                            <span class="text-xs bg-white rounded-full px-3 py-1 text-brand-gray border border-gray-200">전력반도체 <b class="text-brand-indigo">4</b></span>
+                            <span class="text-xs bg-white rounded-full px-3 py-1 text-brand-gray border border-gray-200">수소에너지 <b class="text-brand-indigo">4</b></span>
+                            <span class="text-xs bg-white rounded-full px-3 py-1 text-brand-gray border border-gray-200">첨단콘텐츠 <b class="text-brand-indigo">4</b></span>
+                            <span class="text-xs bg-white rounded-full px-3 py-1 text-brand-gray border border-gray-200">융합디자인 <b class="text-brand-indigo">3</b></span>
+                            <span class="text-xs bg-white rounded-full px-3 py-1 text-brand-gray border border-gray-200">휴먼메타케어 <b class="text-brand-indigo">4</b></span>
+                            <span class="text-xs bg-white rounded-full px-3 py-1 text-brand-gray border border-gray-200">B-Heritage <b class="text-brand-indigo">4</b></span>
+                        </div>
+                    </div>
+                    <div id="campusListView" class="flex-1 overflow-y-auto flex flex-col gap-2 pr-1" style="display:none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ 4. CORE ACHIEVEMENTS ═══ -->
+<section class="relative" id="achievement" style="height:200vh; background: linear-gradient(180deg, rgba(62,49,213,0.92) 0%, rgba(45,35,153,0.92) 100%), url('../pictures/혁신성과bg.jpg') center/cover no-repeat; background-blend-mode: normal, soft-light;">
+    <div class="sticky top-0 h-screen overflow-hidden flex flex-col">
+        <div class="content-w pt-28 lg:pt-32 flex-shrink-0">
+            <div class="flex flex-col items-center text-center gap-[14px]">
+                <p class="font-bold text-[21px] text-white/80 tracking-[-0.42px] leading-[1.5]">CORE ACHIEVEMENTS</p>
+                <h2 class="text-[32px] lg:text-[44px] font-extrabold leading-[1.3] tracking-[-1.44px] text-white">혁신, 미래를 앞당기는 중.</h2>
+                <p class="text-[15px] lg:text-[17px] text-white/60 leading-[1.6] tracking-[-0.36px]">수치로 증명하는 변화, 부산을 넘어 세계로 도약하는 글로컬 연합대학의 성과입니다.</p>
+            </div>
+        </div>
+        <div class="flex-1 content-w flex items-center pb-8 lg:pb-12">
+            <div class="ach-cards-wrap w-full" id="achCards">
+                <div class="ach-card">
+                    <div class="bg-gray-800 w-full h-full">
+                        <iframe src="https://www.youtube.com/embed/xapPVgDGyJA?autoplay=1&mute=1&loop=1&playlist=xapPVgDGyJA&controls=0&showinfo=0&modestbranding=1&playsinline=1&rel=0&disablekb=1"
+                                frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+                    <div class="overlay"></div>
+                    <div class="inner-shadow"></div>
+                    <div class="absolute inset-0 flex flex-col justify-end z-10 text-white p-8 lg:p-10" style="text-shadow: 0 2px 12px rgba(0,0,0,0.6);">
+                        <span class="text-[15px] lg:text-[17px] font-semibold tracking-[-0.34px] leading-[1.5] mb-2 opacity-90">연합전공 수강생</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-[40px] lg:text-[52px] font-extrabold leading-[1.2] tracking-[-1.5px] count-up" data-target="15000" data-format="comma" data-suffix="+">0</span>
+                            <span class="text-[22px] lg:text-[28px] font-bold leading-[1.5] tracking-[-0.56px]">명</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ach-card">
+                    <div class="bg-gray-800 w-full h-full">
+                        <iframe src="https://www.youtube.com/embed/UqHDRjsLW1c?autoplay=1&mute=1&loop=1&playlist=UqHDRjsLW1c&controls=0&showinfo=0&modestbranding=1&playsinline=1&rel=0&disablekb=1"
+                                frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+                    <div class="overlay"></div>
+                    <div class="inner-shadow"></div>
+                    <div class="absolute inset-0 flex flex-col justify-end z-10 text-white p-8 lg:p-10" style="text-shadow: 0 2px 12px rgba(0,0,0,0.6);">
+                        <span class="text-[15px] lg:text-[17px] font-semibold tracking-[-0.34px] leading-[1.5] mb-2 opacity-90">통합산단 매출액</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-[40px] lg:text-[52px] font-extrabold leading-[1.2] tracking-[-1.5px] count-up" data-target="2000" data-format="comma" data-suffix="억+">0</span>
+                            <span class="text-[22px] lg:text-[28px] font-bold leading-[1.5] tracking-[-0.56px]">원</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ach-card">
+                    <div class="bg-gray-800 w-full h-full">
+                        <iframe src="https://www.youtube.com/embed/geKN1EOZIN4?autoplay=1&mute=1&loop=1&playlist=geKN1EOZIN4&controls=0&showinfo=0&modestbranding=1&playsinline=1&rel=0&disablekb=1"
+                                frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+                    <div class="overlay"></div>
+                    <div class="inner-shadow"></div>
+                    <div class="absolute inset-0 flex flex-col justify-end z-10 text-white p-8 lg:p-10" style="text-shadow: 0 2px 12px rgba(0,0,0,0.6);">
+                        <span class="text-[15px] lg:text-[17px] font-semibold tracking-[-0.34px] leading-[1.5] mb-2 opacity-90">외국인 유학생 유치 실적</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-[40px] lg:text-[52px] font-extrabold leading-[1.2] tracking-[-1.5px] count-up" data-target="7000" data-format="comma" data-suffix="+">0</span>
+                            <span class="text-[22px] lg:text-[28px] font-bold leading-[1.5] tracking-[-0.56px]">명</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ 5. GLOCAL NOW ═══ -->
+<section class="relative" id="news" style="height:250vh; background: linear-gradient(180deg, #f5f7fa 0%, #ffffff 100%);">
+    <div class="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+        <div class="content-w flex flex-col gap-[48px]">
+            <!-- Header -->
+            <div class="flex items-end justify-between">
+                <div class="flex flex-col gap-[24px]">
+                    <p class="font-bold text-[21px] text-[#3e31d5] tracking-[-0.42px] leading-[1.5]">GLOCAL NOW</p>
+                    <h2 class="text-[36px] lg:text-[48px] font-extrabold text-[#3f3f44] tracking-[-1.44px] leading-[1.4]">연합대학은 지금</h2>
+                    <p class="text-[16px] lg:text-[18px] text-[#3f3f44] tracking-[-0.36px] leading-[1.6]">동아·동서 글로컬 연합대학의 새로운 소식과 이야기를 전해드립니다.</p>
+                </div>
+                <a href="#" class="flex items-center gap-[8px] text-[16px] font-bold text-[#3428b0] tracking-[-0.32px] leading-[1.6] shrink-0 hover:opacity-80 transition-opacity">
+                    더 많은 소식 확인하기 <span class="text-[20px]">&rarr;</span>
+                </a>
+            </div>
+            <!-- Cards (scroll-driven horizontal) -->
+            <div class="overflow-hidden">
+                <div class="flex gap-[30px] transition-none" id="newsTrack" style="will-change: transform;">
+                    <div class="news-card shrink-0 w-[345px] group cursor-pointer">
+                        <div class="h-[240px] rounded-[20px] overflow-hidden bg-gray-100 group-hover:shadow-lg transition-shadow">
+                            <img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/home/innovate1.webp" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132250.472.jpg'">
+                        </div>
+                        <div class="flex flex-col gap-[12px] px-[12px] py-[16px]">
+                            <span class="text-[14px] font-bold text-[#3e31d5] tracking-[0.42px] leading-[1.5]">NOTICE</span>
+                            <h3 class="text-[21px] font-bold text-[#171719] tracking-[-0.42px] leading-[1.5] group-hover:text-[#3e31d5] transition-colors">2026학년도 1학기 Field 캠퍼스 수강신청 변경 안내</h3>
+                            <span class="text-[13px] text-[#74747e] tracking-[-0.26px] leading-[1.5]">2026. 01. 02</span>
+                        </div>
+                    </div>
+                    <div class="news-card shrink-0 w-[345px] group cursor-pointer">
+                        <div class="h-[240px] rounded-[20px] overflow-hidden bg-gray-100 group-hover:shadow-lg transition-shadow">
+                            <img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/home/innovate2.webp" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132240.683.jpg'">
+                        </div>
+                        <div class="flex flex-col gap-[12px] px-[12px] py-[16px]">
+                            <span class="text-[14px] font-bold text-[#3e31d5] tracking-[0.42px] leading-[1.5]">NEWS</span>
+                            <h3 class="text-[21px] font-bold text-[#171719] tracking-[-0.42px] leading-[1.5] group-hover:text-[#3e31d5] transition-colors">글로컬대학30 2025년 제4차 산학협력 혁신 정책 포럼 개최</h3>
+                            <span class="text-[13px] text-[#74747e] tracking-[-0.26px] leading-[1.5]">2025. 11. 24</span>
+                        </div>
+                    </div>
+                    <div class="news-card shrink-0 w-[345px] group cursor-pointer">
+                        <div class="h-[240px] rounded-[20px] overflow-hidden bg-gray-100 group-hover:shadow-lg transition-shadow">
+                            <img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/home/innovate3.webp" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132234.075.jpg'">
+                        </div>
+                        <div class="flex flex-col gap-[12px] px-[12px] py-[16px]">
+                            <span class="text-[14px] font-bold text-[#3e31d5] tracking-[0.42px] leading-[1.5]">INTERVIEW</span>
+                            <h3 class="text-[21px] font-bold text-[#171719] tracking-[-0.42px] leading-[1.5] group-hover:text-[#3e31d5] transition-colors">"현장이 곧 강의실" 재학생 인터뷰</h3>
+                            <span class="text-[13px] text-[#74747e] tracking-[-0.26px] leading-[1.5]">2025. 11. 24</span>
+                        </div>
+                    </div>
+                    <div class="news-card shrink-0 w-[345px] group cursor-pointer">
+                        <div class="h-[240px] rounded-[20px] overflow-hidden bg-gray-100 group-hover:shadow-lg transition-shadow">
+                            <img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/home/innovate4.webp" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='../pictures/DJI_0465 복사.jpg'">
+                        </div>
+                        <div class="flex flex-col gap-[12px] px-[12px] py-[16px]">
+                            <span class="text-[14px] font-bold text-[#3e31d5] tracking-[0.42px] leading-[1.5]">NEWS</span>
+                            <h3 class="text-[21px] font-bold text-[#171719] tracking-[-0.42px] leading-[1.5] group-hover:text-[#3e31d5] transition-colors">부산 글로컬대학 30 프로젝트 선정장 MOU체결 및 기자간담회 개최</h3>
+                            <span class="text-[13px] text-[#74747e] tracking-[-0.26px] leading-[1.5]">2025. 10. 15</span>
+                        </div>
+                    </div>
+                    <div class="news-card shrink-0 w-[345px] group cursor-pointer">
+                        <div class="h-[240px] rounded-[20px] overflow-hidden bg-gray-100 group-hover:shadow-lg transition-shadow">
+                            <img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/home/innovate1.webp" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="flex flex-col gap-[12px] px-[12px] py-[16px]">
+                            <span class="text-[14px] font-bold text-[#3e31d5] tracking-[0.42px] leading-[1.5]">NEWS</span>
+                            <h3 class="text-[21px] font-bold text-[#171719] tracking-[-0.42px] leading-[1.5] group-hover:text-[#3e31d5] transition-colors">부산 수소에너지 R&D 허브 착공식 개최</h3>
+                            <span class="text-[13px] text-[#74747e] tracking-[-0.26px] leading-[1.5]">2025. 09. 30</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Nav arrows -->
+            <div class="flex items-center justify-end gap-[10px]">
+                <button id="newsPrev" class="w-[48px] h-[48px] rounded-full border border-[#d0d1e0] flex items-center justify-center hover:bg-[#f0f0f5] transition-colors">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="#3f3f44" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <button id="newsNext" class="w-[48px] h-[48px] rounded-full border border-[#d0d1e0] flex items-center justify-center hover:bg-[#f0f0f5] transition-colors">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.5 5L12.5 10L7.5 15" stroke="#3f3f44" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ 6. FAQ ═══ -->
+<section class="bg-white py-[80px] px-[40px]" id="faq">
+    <div class="max-w-[1440px] mx-auto bg-[#f5f7fa] rounded-[40px] p-[72px] flex gap-[40px] items-start relative overflow-hidden">
+        <!-- Floating logos -->
+        <img src="https://dev-five-git.github.io/donga-dongseo-glocal/icons/logo/dongseo-logo2.svg" alt="" class="faq-logo-float-up absolute pointer-events-none" style="width:400px; height:400px; top:-100px; right:-80px; opacity:0.06;">
+        <img src="https://dev-five-git.github.io/donga-dongseo-glocal/icons/logo/donga-logo2.svg" alt="" class="faq-logo-float-down absolute pointer-events-none" style="width:400px; height:400px; bottom:-120px; left:-60px; opacity:0.06;">
+        <!-- Left column -->
+        <div class="w-[480px] shrink-0 flex flex-col gap-[60px] relative z-10">
+            <div class="flex flex-col gap-[24px]">
+                <p class="font-bold text-[21px] text-[#3e31d5] tracking-[-0.42px] leading-[1.5]">FAQ</p>
+                <h2 class="text-[36px] lg:text-[48px] font-extrabold text-[#3f3f44] tracking-[-1.44px] leading-[1.4]">궁금한 점이 있으신가요?</h2>
+                <p class="text-[16px] lg:text-[18px] text-[#3f3f44] tracking-[-0.36px] leading-[1.6]">경계 없는 대학, 새로운 학사 제도에 대한 주요 문의사항을 확인하세요.</p>
+            </div>
+            <a href="#" class="flex items-center gap-[8px] text-[16px] font-bold text-[#3428b0] tracking-[-0.32px] leading-[1.6] hover:opacity-80 transition-opacity w-fit">
+                더 많은 질문 보기 <span class="text-[20px]">&rarr;</span>
+            </a>
+        </div>
+        <!-- Right column: FAQ cards -->
+        <div class="flex-1 flex flex-col gap-[24px] relative z-10" id="faqList">
+            <div class="faq-item bg-white rounded-[20px] overflow-hidden">
+                <button class="w-full flex gap-[12px] items-start p-[30px] text-left" onclick="toggleFaq(this)">
+                    <span class="text-[21px] font-bold text-[#3e31d5] tracking-[-0.42px] leading-[1.5] shrink-0">Q.</span>
+                    <span class="flex-1 text-[21px] font-bold text-[#171719] tracking-[-0.42px] leading-[1.5]">연합전공을 이수하면 어떤 혜택이 있나요?</span>
+                    <span class="faq-icon text-[20px] text-[#74747e] shrink-0 leading-none mt-1">+</span>
+                </button>
+                <div class="faq-answer px-[30px]"><div class="pb-[30px] pl-[34px] text-[18px] text-[#3f3f44] tracking-[-0.36px] leading-[1.6]">동아대와 동서대의 강점을 결합한 특화 교육과정을 이수하게 되며, 해당 내역은 성적 증명서 및 학적부에 '연합전공 이수'로 공식 표기됩니다. 또한 6대 특화 분야의 실무 역량을 인정받아, 관련 기업 취업 시 글로컬 인재로서의 가산점과 우선 추천 기회를 얻을 수 있습니다.</div></div>
+            </div>
+            <div class="faq-item bg-white rounded-[20px] overflow-hidden">
+                <button class="w-full flex gap-[12px] items-start p-[30px] text-left" onclick="toggleFaq(this)">
+                    <span class="text-[21px] font-bold text-[#3e31d5] tracking-[-0.42px] leading-[1.5] shrink-0">Q.</span>
+                    <span class="flex-1 text-[21px] font-bold text-[#171719] tracking-[-0.42px] leading-[1.5]">Field 캠퍼스 수업은 어디서 듣게 되나요?</span>
+                    <span class="faq-icon text-[20px] text-[#74747e] shrink-0 leading-none mt-1">+</span>
+                </button>
+                <div class="faq-answer px-[30px]"><div class="pb-[30px] pl-[34px] text-[18px] text-[#3f3f44] tracking-[-0.36px] leading-[1.6]">부산 전역 16개 산업 거점에 위치한 Field 캠퍼스에서 수업이 진행됩니다. 각 캠퍼스는 전력반도체, 수소에너지, 첨단콘텐츠, 융합디자인, 휴먼메타케어, B-Heritage 등 6개 특화분야에 맞춰 전문 시설을 갖추고 있습니다.</div></div>
+            </div>
+            <div class="faq-item bg-white rounded-[20px] overflow-hidden">
+                <button class="w-full flex gap-[12px] items-start p-[30px] text-left" onclick="toggleFaq(this)">
+                    <span class="text-[21px] font-bold text-[#3e31d5] tracking-[-0.42px] leading-[1.5] shrink-0">Q.</span>
+                    <span class="flex-1 text-[21px] font-bold text-[#171719] tracking-[-0.42px] leading-[1.5]">타 대학의 수업도 자유롭게 수강할 수 있나요?</span>
+                    <span class="faq-icon text-[20px] text-[#74747e] shrink-0 leading-none mt-1">+</span>
+                </button>
+                <div class="faq-answer px-[30px]"><div class="pb-[30px] pl-[34px] text-[18px] text-[#3f3f44] tracking-[-0.36px] leading-[1.6]">네, 글로컬 연합대학 체제에서는 동아대학교와 동서대학교 간 자유로운 교차 수강이 가능합니다. 통합 학사 시스템을 통해 별도의 복잡한 절차 없이 양교의 우수한 강좌를 수강할 수 있습니다.</div></div>
+            </div>
+            <div class="faq-item bg-white rounded-[20px] overflow-hidden">
+                <button class="w-full flex gap-[12px] items-start p-[30px] text-left" onclick="toggleFaq(this)">
+                    <span class="text-[21px] font-bold text-[#3e31d5] tracking-[-0.42px] leading-[1.5] shrink-0">Q.</span>
+                    <span class="flex-1 text-[21px] font-bold text-[#171719] tracking-[-0.42px] leading-[1.5]">글로컬 대학 학생들을 위한 장학 혜택이 있나요?</span>
+                    <span class="faq-icon text-[20px] text-[#74747e] shrink-0 leading-none mt-1">+</span>
+                </button>
+                <div class="faq-answer px-[30px]"><div class="pb-[30px] pl-[34px] text-[18px] text-[#3f3f44] tracking-[-0.36px] leading-[1.6]">글로컬 연합전공 이수 학생에게는 별도의 장학금 프로그램이 운영됩니다. 성적 우수 장학금 외에도 현장 실습 참여 장학금, 지역 정주 장려 장학금 등 다양한 지원을 받으실 수 있습니다.</div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="bg-brand-light border-t border-gray-200 py-16">
+    <div class="content-w">
+        <div class="flex flex-col md:flex-row justify-between items-start gap-8">
+            <div>
+                <h2 class="text-lg font-bold mb-1">동아·동서 글로컬 연합대학</h2>
+                <p class="text-xs text-brand-gray">Dong-A · DongSeo Glocal University</p>
+            </div>
+            <div class="flex flex-col md:flex-row gap-6 text-xs text-brand-gray">
+                <div><p class="font-semibold text-[#171719] mb-1">동아대학교</p><p>부산 사하구 낙동대로550번길 37 · TEL 051-200-5922</p></div>
+                <div><p class="font-semibold text-[#171719] mb-1">동서대학교</p><p>부산 사상구 주례로 47 · TEL 051-320-4258</p></div>
+            </div>
+        </div>
+        <div class="mt-8 pt-6 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex gap-6 text-xs font-medium text-brand-gray"><a href="#" class="hover:text-[#171719]">개인정보처리방침</a><a href="#" class="hover:text-[#171719]">이용약관</a></div>
+            <p class="text-xs text-brand-gray">&copy; 2026 동아·동서 글로컬 연합대학</p>
+        </div>
+    </div>
+</footer>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script>
+(function() {
+    'use strict';
+
+    /* ── Header — scroll hide/show ── */
+    const header = document.getElementById('siteHeader');
+    const hdrInner = document.getElementById('hdrInner');
+    let lastScrollY = 0;
+    function updateHeader() {
+        const y = window.scrollY;
+        if (y > 200 && y > lastScrollY) header.classList.add('hidden-up');
+        else header.classList.remove('hidden-up');
+        lastScrollY = y;
+    }
+
+    /* ── Desktop Dropdown Menu (서브메뉴가 각 메뉴 아이템 안에 내장) ── */
+    const hdrNav = document.getElementById('hdrNav');
+    let dropdownTimeout;
+    function openDropdown() { clearTimeout(dropdownTimeout); hdrInner.classList.add('dropdown-open'); }
+    function closeDropdown() { dropdownTimeout = setTimeout(() => hdrInner.classList.remove('dropdown-open'), 150); }
+    if (hdrNav) hdrNav.addEventListener('mouseenter', openDropdown);
+    if (hdrInner) hdrInner.addEventListener('mouseleave', closeDropdown);
+
+    /* ── Mobile Menu ── */
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileOpenBtn = document.getElementById('mobileMenuOpen');
+    const mobileCloseBtn = document.getElementById('mobileMenuClose');
+    if (mobileOpenBtn) mobileOpenBtn.addEventListener('click', () => { mobileMenu.classList.add('open'); document.body.style.overflow = 'hidden'; });
+    if (mobileCloseBtn) mobileCloseBtn.addEventListener('click', () => { mobileMenu.classList.remove('open'); document.body.style.overflow = ''; });
+    // Close mobile menu when clicking sub-links
+    document.querySelectorAll('.mobile-sub-link').forEach(l => l.addEventListener('click', () => { mobileMenu.classList.remove('open'); document.body.style.overflow = ''; }));
+
+    /* ── Scroll Down → next section ── */
+    document.getElementById('scrollDownBtn').addEventListener('click', () => {
+        document.getElementById('innovation').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    /* ── Hero Fullscreen Scroll Effect (desktop only) ── */
+    const heroSection = document.getElementById('hero');
+    const heroSticky = document.getElementById('heroSticky');
+    const heroBgLayer = document.getElementById('heroBgLayer');
+    const heroAccentLayer = document.getElementById('heroAccentLayer');
+    const heroTextCol = document.getElementById('heroTextCol');
+    const heroControlsBar = document.getElementById('heroControlsBar');
+    const heroScrollDown = document.getElementById('scrollDownBtn');
+    const heroVideoWrap = document.getElementById('heroVideoWrap');
+
+    // Cache initial video rect (desktop only)
+    let heroVideoInitRect = null;
+    let heroStickyInitRect = null;
+    function cacheHeroRects() {
+        if (window.innerWidth < 1024 || !heroVideoWrap) return;
+        heroVideoWrap.style.transform = '';
+        heroVideoInitRect = heroVideoWrap.getBoundingClientRect();
+        heroStickyInitRect = heroSticky.getBoundingClientRect();
+    }
+    window.addEventListener('load', cacheHeroRects);
+    window.addEventListener('resize', cacheHeroRects);
+    setTimeout(cacheHeroRects, 500);
+
+    function handleHeroFullscreen() {
+        if (window.innerWidth < 1024 || !heroVideoInitRect || !heroStickyInitRect) return;
+        const rect = heroSection.getBoundingClientRect();
+        const totalH = heroSection.offsetHeight - window.innerHeight;
+        const scrolled = Math.max(0, -rect.top);
+        const rawP = Math.min(scrolled / totalH, 1);
+
+        // Phase: 0→0.15 normal, 0.15→0.6 transition, 0.6→1 hold
+        const p = Math.max(0, Math.min((rawP - 0.15) / 0.45, 1));
+        const ease = p < 1 ? 1 - Math.pow(1 - p, 3) : 1;
+
+        // Fade elements
+        const fadeP = Math.max(0, Math.min((rawP - 0.1) / 0.3, 1));
+        heroTextCol.style.opacity = 1 - fadeP;
+        heroAccentLayer.style.opacity = 1 - fadeP;
+        heroControlsBar.style.opacity = 1 - fadeP;
+        heroScrollDown.style.opacity = 1 - Math.min(fadeP * 2, 1);
+        heroBgLayer.style.opacity = 1 - ease;
+
+        // Expand video: calculate transform to fill sticky container (capped for ultrawide & tall monitors)
+        const vw = Math.min(heroStickyInitRect.width, 1920);
+        const vh = Math.min(heroStickyInitRect.height, vw * 9 / 16);
+        const vRect = heroVideoInitRect;
+        const scaleX = vw / vRect.width;
+        const scaleY = vh / vRect.height;
+        const scale = Math.max(scaleX, scaleY);
+        const cx = vRect.left + vRect.width / 2;
+        const cy = vRect.top + vRect.height / 2;
+        const tcx = heroStickyInitRect.left + heroStickyInitRect.width / 2;
+        const tcy = heroStickyInitRect.top + heroStickyInitRect.height / 2;
+        const tx = (tcx - cx) * ease;
+        const ty = (tcy - cy) * ease;
+        const s = 1 + (scale - 1) * ease;
+
+        heroVideoWrap.style.transform = `translate(${tx}px, ${ty}px) scale(${s})`;
+        heroVideoWrap.style.borderRadius = (30 * (1 - ease)) + 'px';
+        if (ease > 0.1) heroVideoWrap.style.zIndex = '30';
+        else heroVideoWrap.style.zIndex = '';
+
+        // Fade and counter-scale overlay controls
+        const overlayCtrl = document.getElementById('heroOverlayCtrl');
+        if (overlayCtrl) overlayCtrl.style.opacity = 1 - fadeP;
+
+        // Ultrawide: show blurred backdrop when fullscreen
+        const blurBg = document.getElementById('heroBlurBackdrop');
+        if (blurBg) blurBg.style.opacity = ease > 0.3 ? Math.min((ease - 0.3) / 0.4, 1) : 0;
+    }
+
+    /* ── Hero Video Slideshow ── */
+    const heroSlides = document.querySelectorAll('.hero-vslide');
+    const heroTexts = document.querySelectorAll('.hero-text-panel');
+    const heroNum = document.getElementById('heroSlideNum');
+    const heroProgressFill = document.getElementById('heroProgressFill');
+    let hIdx = 0, hStart = Date.now(), hPaused = false;
+    const hDur = 8000;
+    const totalSlides = heroSlides.length;
+
+    function goToSlide(idx) {
+        heroSlides[hIdx].classList.replace('opacity-100', 'opacity-0');
+        heroTexts[hIdx].classList.remove('active');
+        hIdx = ((idx % totalSlides) + totalSlides) % totalSlides;
+        heroSlides[hIdx].classList.replace('opacity-0', 'opacity-100');
+        heroTexts[hIdx].classList.add('active');
+        heroNum.textContent = String(hIdx + 1).padStart(2, '0');
+        hStart = Date.now();
+        // Sync blur backdrop video
+        const blurVid = document.querySelector('#heroBlurBackdrop video');
+        const activeVid = heroSlides[hIdx].querySelector('video');
+        if (blurVid && activeVid && blurVid.src !== activeVid.currentSrc) {
+            blurVid.src = activeVid.currentSrc;
+        }
+    }
+
+    function heroTick() {
+        if (!hPaused) {
+            const pct = Math.min((Date.now() - hStart) / hDur, 1);
+            heroProgressFill.style.width = (pct * 100) + '%';
+            if (pct >= 1) goToSlide(hIdx + 1);
+        }
+        requestAnimationFrame(heroTick);
+    }
+    heroTick();
+
+    // Prev / Next buttons
+    document.getElementById('heroPrev').addEventListener('click', () => goToSlide(hIdx - 1));
+    document.getElementById('heroNext').addEventListener('click', () => goToSlide(hIdx + 1));
+
+    // Pause / Play button
+    const pauseBtn = document.getElementById('heroPauseBtn');
+    const pauseIcon = document.getElementById('heroPauseIcon');
+    const playIcon = document.getElementById('heroPlayIcon');
+    pauseBtn.addEventListener('click', () => {
+        hPaused = !hPaused;
+        pauseIcon.classList.toggle('hidden', hPaused);
+        playIcon.classList.toggle('hidden', !hPaused);
+        // Pause/resume all videos
+        document.querySelectorAll('.hero-vslide video').forEach(v => hPaused ? v.pause() : v.play());
+        if (!hPaused) hStart = Date.now() - (hDur * (parseFloat(heroProgressFill.style.width) / 100));
+    });
+
+    // Mute / Unmute button
+    const muteBtn = document.getElementById('heroMuteBtn');
+    const muteIcon = document.getElementById('heroMuteIcon');
+    const unmuteIcon = document.getElementById('heroUnmuteIcon');
+    let isMuted = true;
+    muteBtn.addEventListener('click', () => {
+        isMuted = !isMuted;
+        document.querySelectorAll('.hero-vslide video').forEach(v => v.muted = isMuted);
+        muteIcon.classList.toggle('hidden', !isMuted);
+        unmuteIcon.classList.toggle('hidden', isMuted);
+    });
+
+    /* ── Innovation — Dot+Card Combined, Center-aligned (scroll-driven) ── */
+    const innovSection = document.getElementById('innovation');
+    const innovBgs = document.querySelectorAll('.innov-left-bg');
+    const innovSteps = document.querySelectorAll('.innov-step');
+    const innovTimeline = document.getElementById('innovTimeline');
+    const innovLineFill = document.getElementById('innovLineFill');
+    const innovProgressBg = document.getElementById('innovProgressBg');
+    const innovRight = document.getElementById('innovRight');
+    let currentInnov = -1;
+    let innovFill100 = false;
+
+    // Position progress line at dot-circle center height
+    function positionInnovLine() {
+        const firstDot = innovSteps[0]?.querySelector('.innov-dot-circle');
+        if (!firstDot || !innovRight) return;
+        const dotRect = firstDot.getBoundingClientRect();
+        const panelRect = innovRight.getBoundingClientRect();
+        const top = (dotRect.top + dotRect.height / 2 - panelRect.top) + 'px';
+        innovProgressBg.style.top = top;
+        innovLineFill.style.top = top;
+    }
+
+    // Center step in panel via translateX (all steps centered, dot always at 50%)
+    function getStepTX(idx) {
+        const stepW = innovSteps[0]?.offsetWidth || 400;
+        const gap = parseInt(getComputedStyle(innovTimeline).gap) || 60;
+        const panelW = innovRight.offsetWidth;
+        const stepCenter = idx * (stepW + gap) + stepW / 2;
+        return panelW / 2 - stepCenter;
+    }
+
+    requestAnimationFrame(() => {
+        positionInnovLine();
+        innovTimeline.style.transform = `translateX(${getStepTX(0)}px)`;
+    });
+
+    function setInnov(idx, fillFull) {
+        const changed = idx !== currentInnov || fillFull !== innovFill100;
+        if (!changed) return;
+        currentInnov = idx;
+        innovFill100 = fillFull;
+
+        // Background crossfade
+        innovBgs.forEach((bg, i) => bg.classList.toggle('active', i === idx));
+        // Step states
+        innovSteps.forEach((step, i) => {
+            step.classList.toggle('active', i === idx);
+            step.classList.toggle('passed', i < idx);
+        });
+        // Slide to center
+        innovTimeline.style.transform = `translateX(${getStepTX(idx)}px)`;
+
+        // Progress fill — dot is always at center (50%)
+        // Cards 0-3: fill to 50%, after 지향점: fill to 100%
+        innovLineFill.style.transition = 'width .5s cubic-bezier(.4,0,.2,1)';
+        innovLineFill.style.width = fillFull ? '100%' : '50%';
+    }
+
+    function handleInnovScroll() {
+        if (!innovSection) return;
+        const rect = innovSection.getBoundingClientRect();
+
+        // Phase 1: Entering viewport — fill 0% → 50% (center)
+        if (rect.top > 0) {
+            const enterProgress = Math.max(0, 1 - rect.top / window.innerHeight);
+            innovLineFill.style.transition = 'none';
+            innovLineFill.style.width = (enterProgress * 50) + '%';
+            if (currentInnov !== -1) {
+                currentInnov = -1;
+                innovFill100 = false;
+                innovTimeline.style.transform = `translateX(${getStepTX(0)}px)`;
+            }
+            innovBgs.forEach((bg, i) => bg.classList.toggle('active', i === 0));
+            innovSteps.forEach((step, i) => step.classList.toggle('active', i === 0));
+            return;
+        }
+
+        // Phase 2: Sticky — 5 segments: card0, card1, card2, card3(지향점), fill-100%
+        const totalH = innovSection.offsetHeight - window.innerHeight;
+        const scrolled = -rect.top;
+        const progress = Math.max(0, Math.min(scrolled / totalH, 1));
+        const segment = progress * 5;
+        const seg = Math.min(Math.floor(segment), 4);
+
+        if (seg <= 3) {
+            setInnov(seg, false);
+        } else {
+            setInnov(3, true); // fill to 100%
+        }
+    }
+
+    // Click on dots
+    innovSteps.forEach(step => {
+        step.querySelector('.innov-dot-section')?.addEventListener('click', () => {
+            setInnov(parseInt(step.dataset.step), false);
+        });
+    });
+
+    /* ── Field Campus (Redesigned) ── */
+    const CAMPUS_CATS = [
+        { id: 0, title: '전력반도체', label: 'Power Semiconductor' },
+        { id: 1, title: '수소에너지', label: 'Hydrogen Energy' },
+        { id: 2, title: '첨단콘텐츠', label: 'Advanced Contents' },
+        { id: 3, title: '융합디자인', label: 'Convergence Design' },
+        { id: 4, title: '휴먼메타케어', label: 'Human Meta-Care' },
+        { id: 5, title: 'B-Heritage', label: 'B-Heritage' }
+    ];
+    const campusData = [
+        { id:0, cat:0, title:'부산테크노파크', loc:'금정구 장전동', fac:'반도체 설계·패키징 센터', pin:{top:22,left:50}, img:'https://dev-five-git.github.io/donga-dongseo-glocal/images/home/electronic-card.webp' },
+        { id:1, cat:0, title:'동서대 센텀캠퍼스', loc:'해운대구 센텀로', fac:'반도체 연구동', pin:{top:40,left:70}, img:'https://dev-five-git.github.io/donga-dongseo-glocal/images/home/electronic-card.webp' },
+        { id:2, cat:0, title:'한국전자기술연구원', loc:'금정구 부산대학로', fac:'부산센터', pin:{top:18,left:55}, img:'https://dev-five-git.github.io/donga-dongseo-glocal/images/home/electronic-card.webp' },
+        { id:3, cat:0, title:'동아대 공학관', loc:'사하구 낙동대로', fac:'반도체실험실', pin:{top:56,left:22}, img:'https://dev-five-git.github.io/donga-dongseo-glocal/images/home/electronic-card.webp' },
+        { id:4, cat:1, title:'고기능성밸브기술지원센터', loc:'사하구 낙동대로', fac:'수소밸브 시험동', pin:{top:60,left:25}, img:'https://dev-five-git.github.io/donga-dongseo-glocal/images/home/suso-card.webp' },
+        { id:5, cat:1, title:'부산수소에너지실증센터', loc:'강서구 명지동', fac:'수소 생산·저장 실증', pin:{top:48,left:14}, img:'https://dev-five-git.github.io/donga-dongseo-glocal/images/home/suso-card.webp' },
+        { id:6, cat:1, title:'동서대 에너지융합연구센터', loc:'사상구 주례동', fac:'에너지 연구동', pin:{top:44,left:32}, img:'https://dev-five-git.github.io/donga-dongseo-glocal/images/home/suso-card.webp' },
+        { id:7, cat:1, title:'한국에너지기술연구원', loc:'북구 만덕동', fac:'부산분원', pin:{top:32,left:28}, img:'https://dev-five-git.github.io/donga-dongseo-glocal/images/home/suso-card.webp' },
+        { id:8, cat:2, title:'BIFF 커뮤니티', loc:'해운대구 수영강변대로', fac:'영상콘텐츠 제작동', pin:{top:38,left:74}, img:'https://dev-five-git.github.io/donga-dongseo-glocal/images/home/content-card.webp' },
+        { id:9, cat:2, title:'영화의전당 콘텐츠랩', loc:'해운대구 APEC로', fac:'XR 콘텐츠 스튜디오', pin:{top:44,left:68}, img:'https://dev-five-git.github.io/donga-dongseo-glocal/images/home/content-card.webp' },
+        { id:10, cat:2, title:'부산콘텐츠마켓', loc:'해운대구 센텀서로', fac:'콘텐츠 마켓 센텀', pin:{top:36,left:78}, img:'https://dev-five-git.github.io/donga-dongseo-glocal/images/home/content-card.webp' },
+        { id:11, cat:2, title:'동서대 뉴미디어센터', loc:'사상구 주례동', fac:'뉴미디어 연구동', pin:{top:42,left:30}, img:'https://dev-five-git.github.io/donga-dongseo-glocal/images/home/content-card.webp' },
+        { id:12, cat:3, title:'부산패션비즈센터', loc:'동구 망양로', fac:'패션디자인 스튜디오', pin:{top:54,left:44}, img:'https://dev-five-git.github.io/donga-dongseo-glocal/images/home/mixdesign-card.webp' },
+        { id:13, cat:3, title:'부산디자인센터', loc:'남구 전포대로', fac:'공간디자인 랩', pin:{top:60,left:56}, img:'https://dev-five-git.github.io/donga-dongseo-glocal/images/home/mixdesign-card.webp' },
+        { id:14, cat:3, title:'동아대 산업디자인연구소', loc:'사하구 하단동', fac:'산업디자인 연구동', pin:{top:62,left:24}, img:'https://dev-five-git.github.io/donga-dongseo-glocal/images/home/mixdesign-card.webp' },
+        { id:15, cat:4, title:'프레스티지 바이오파마', loc:'강서구 명지동', fac:'R&D 센터', pin:{top:46,left:12}, img:'https://dev-five-git.github.io/donga-dongseo-glocal/images/home/humanmeta-card.webp' },
+        { id:16, cat:4, title:'바이오헬스 혁신융합센터', loc:'금정구 부산대학로', fac:'혁신융합 센터', pin:{top:20,left:52}, img:'https://dev-five-git.github.io/donga-dongseo-glocal/images/home/humanmeta-card.webp' },
+        { id:17, cat:4, title:'동서대 메타버스헬스랩', loc:'해운대구 센텀로', fac:'메타버스 헬스 연구', pin:{top:42,left:72}, img:'https://dev-five-git.github.io/donga-dongseo-glocal/images/home/humanmeta-card.webp' },
+        { id:18, cat:4, title:'부산의료원 임상연구센터', loc:'연제구 양정동', fac:'임상연구 센터', pin:{top:48,left:54}, img:'https://dev-five-git.github.io/donga-dongseo-glocal/images/home/humanmeta-card.webp' },
+        { id:19, cat:5, title:'동아대 석당뮤지엄', loc:'서구 구덕로', fac:'석당뮤지엄', pin:{top:58,left:34}, img:'https://dev-five-git.github.io/donga-dongseo-glocal/images/home/heritage-card.webp' },
+        { id:20, cat:5, title:'부산박물관 헤리티지랩', loc:'남구 유엔평화로', fac:'헤리티지 연구소', pin:{top:62,left:54}, img:'https://dev-five-git.github.io/donga-dongseo-glocal/images/home/heritage-card.webp' },
+        { id:21, cat:5, title:'국립해양문화재연구소', loc:'영도구 해양로', fac:'해양문화재 연구동', pin:{top:78,left:50}, img:'https://dev-five-git.github.io/donga-dongseo-glocal/images/home/heritage-card.webp' },
+        { id:22, cat:5, title:'임시수도기념관', loc:'서구 부민동', fac:'부산 역사관', pin:{top:56,left:32}, img:'https://dev-five-git.github.io/donga-dongseo-glocal/images/home/heritage-card.webp' }
+    ];
+    const campusPinsEl = document.getElementById('campusPins');
+    const campusPopup = document.getElementById('campusPopup');
+    const campusAllView = document.getElementById('campusAllView');
+    const campusListView = document.getElementById('campusListView');
+    const campusTabs = document.querySelectorAll('.campus-tab');
+    const campusSec = document.getElementById('campus');
+    let campusState = { cat: -1, selected: null, userClicked: false };
+
+    function renderCampusPins() {
+        campusPinsEl.innerHTML = '';
+        campusData.forEach(c => {
+            const pin = document.createElement('div');
+            pin.className = 'campus-pin dot-all';
+            pin.style.cssText = `top:${c.pin.top}%;left:${c.pin.left}%;pointer-events:auto;`;
+            pin.dataset.id = c.id;
+            pin.dataset.cat = c.cat;
+            pin.title = c.title;
+            pin.addEventListener('click', () => { campusState.userClicked = true; selectCampusById(c.id); });
+            pin.addEventListener('mouseenter', () => {
+                showCampusPopup(c, pin);
+                // Highlight list card on hover
+                document.querySelectorAll('.campus-list-card').forEach(card => {
+                    card.classList.toggle('active', +card.dataset.id === c.id);
+                });
+            });
+            pin.addEventListener('mouseleave', () => {
+                if (campusState.selected !== c.id) {
+                    hideCampusPopup();
+                    // Restore list highlight to selected or none
+                    document.querySelectorAll('.campus-list-card').forEach(card => {
+                        card.classList.toggle('active', campusState.selected !== null && +card.dataset.id === campusState.selected);
+                    });
+                }
+            });
+            campusPinsEl.appendChild(pin);
+        });
+    }
+
+    function selectCategory(catId) {
+        campusState.cat = catId;
+        campusState.selected = null;
+        hideCampusPopup();
+        campusTabs.forEach(t => t.classList.toggle('active', +t.dataset.cat === catId));
+        document.querySelectorAll('.campus-pin').forEach(pin => {
+            const pCat = +pin.dataset.cat;
+            if (catId === -1) { pin.className = 'campus-pin dot-all'; }
+            else if (pCat === catId) { pin.className = 'campus-pin dot-filtered'; }
+            else { pin.className = 'campus-pin dot-hidden'; }
+        });
+        if (catId === -1) {
+            campusAllView.style.display = 'flex';
+            campusListView.style.display = 'none';
+        } else {
+            campusAllView.style.display = 'none';
+            campusListView.style.display = 'flex';
+            renderCampusList(catId);
+        }
+    }
+
+    function selectCampusById(id) {
+        const c = campusData.find(d => d.id === id);
+        if (!c) return;
+        if (campusState.cat !== c.cat) selectCategory(c.cat);
+        campusState.selected = id;
+        document.querySelectorAll('.campus-pin').forEach(pin => {
+            const pId = +pin.dataset.id, pCat = +pin.dataset.cat;
+            if (pId === id) pin.className = 'campus-pin dot-active';
+            else if (pCat === c.cat) pin.className = 'campus-pin dot-filtered';
+            else pin.className = 'campus-pin dot-hidden';
+        });
+        const pinEl = campusPinsEl.querySelector(`[data-id="${id}"]`);
+        if (pinEl) showCampusPopup(c, pinEl);
+        document.querySelectorAll('.campus-list-card').forEach(card => {
+            card.classList.toggle('active', +card.dataset.id === id);
+        });
+        const activeCard = campusListView.querySelector('.campus-list-card.active');
+        if (activeCard) activeCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function showCampusPopup(campus, pinEl) {
+        document.getElementById('popupImg').src = campus.img;
+        document.getElementById('popupCat').textContent = CAMPUS_CATS[campus.cat].label;
+        document.getElementById('popupTitle').textContent = campus.title;
+        document.getElementById('popupLoc').textContent = campus.loc + ' · ' + campus.fac;
+        const mapRect = document.getElementById('campusMap').getBoundingClientRect();
+        const pinRect = pinEl.getBoundingClientRect();
+        const pinCX = pinRect.left + pinRect.width / 2 - mapRect.left;
+        const pinCY = pinRect.top + pinRect.height / 2 - mapRect.top;
+        let popLeft = pinCX + 20, popTop = pinCY - 60;
+        if (popLeft + 340 > mapRect.width) popLeft = pinCX - 360;
+        if (popTop < 10) popTop = 10;
+        if (popTop + 120 > mapRect.height) popTop = mapRect.height - 130;
+        campusPopup.style.left = popLeft + 'px';
+        campusPopup.style.top = popTop + 'px';
+        campusPopup.classList.add('show');
+    }
+
+    function hideCampusPopup() { campusPopup.classList.remove('show'); }
+
+    function renderCampusList(catId) {
+        const items = campusData.filter(c => c.cat === catId);
+        campusListView.innerHTML = items.map(c => `
+            <div class="campus-list-card${campusState.selected === c.id ? ' active' : ''}" data-id="${c.id}">
+                <img class="list-thumb" src="${c.img}" alt="${c.title}" onerror="this.style.background='#e8e9f2'">
+                <div class="list-info">
+                    <span class="list-title">${c.title}</span>
+                    <span class="list-loc">${c.loc} · ${c.fac}</span>
+                </div>
+            </div>
+        `).join('');
+        campusListView.querySelectorAll('.campus-list-card').forEach(card => {
+            card.addEventListener('click', () => { campusState.userClicked = true; selectCampusById(+card.dataset.id); });
+            card.addEventListener('mouseenter', () => {
+                const cId = +card.dataset.id;
+                const campus = campusData.find(d => d.id === cId);
+                const pinEl = campusPinsEl.querySelector(`[data-id="${cId}"]`);
+                if (campus && pinEl) showCampusPopup(campus, pinEl);
+                // Highlight this card + enlarge pin
+                card.classList.add('active');
+                if (pinEl) pinEl.className = 'campus-pin dot-active';
+            });
+            card.addEventListener('mouseleave', () => {
+                const cId = +card.dataset.id;
+                const pinEl = campusPinsEl.querySelector(`[data-id="${cId}"]`);
+                if (campusState.selected !== cId) {
+                    hideCampusPopup();
+                    card.classList.remove('active');
+                    if (pinEl) pinEl.className = 'campus-pin dot-filtered';
+                }
+                // Restore selected state
+                if (campusState.selected !== null && campusState.selected !== cId) {
+                    const selPin = campusPinsEl.querySelector(`[data-id="${campusState.selected}"]`);
+                    if (selPin) selPin.className = 'campus-pin dot-active';
+                    const selCard = campusListView.querySelector(`[data-id="${campusState.selected}"]`);
+                    if (selCard) selCard.classList.add('active');
+                    const selCampus = campusData.find(d => d.id === campusState.selected);
+                    if (selCampus && selPin) showCampusPopup(selCampus, selPin);
+                }
+            });
+        });
+    }
+
+    campusTabs.forEach(t => t.addEventListener('click', () => {
+        campusState.userClicked = true;
+        selectCategory(+t.dataset.cat);
+    }));
+    renderCampusPins();
+
+    const campusHeaderCol = document.getElementById('campusHeaderCol');
+    function handleCampusScroll() {
+        if (!campusSec) return;
+        const r = campusSec.getBoundingClientRect();
+        const total = campusSec.offsetHeight - window.innerHeight;
+        if (total <= 0) return;
+        const p = Math.max(0, Math.min(-r.top / total, 0.999));
+        // Collapse header once scrolled into sticky
+        if (campusHeaderCol) {
+            campusHeaderCol.classList.toggle('collapsed', r.top < -20);
+        }
+        if (campusState.userClicked) return;
+        if (p < 0.15) {
+            if (campusState.cat !== -1) selectCategory(-1);
+        } else {
+            const catIdx = Math.min(Math.floor((p - 0.15) / 0.85 * 6), 5);
+            if (campusState.cat !== catIdx) selectCategory(catIdx);
+            const firstInCat = campusData.find(c => c.cat === catIdx);
+            if (firstInCat && campusState.selected !== firstInCat.id) selectCampusById(firstInCat.id);
+        }
+    }
+
+    /* ── Achievements (scroll-driven) ── */
+    let countRunning = false;
+    function animateCount(el) {
+        const target = +el.dataset.target, dur = 2000, start = performance.now();
+        const suffix = el.dataset.suffix || '';
+        const useComma = el.dataset.format === 'comma';
+        function fmt(n) {
+            let s = useComma ? n.toLocaleString() : String(n);
+            return s + suffix;
+        }
+        (function step(now) {
+            const p = Math.min((now - start) / dur, 1), ease = 1 - Math.pow(1 - p, 3);
+            el.textContent = fmt(Math.floor(ease * target));
+            if (p < 1) requestAnimationFrame(step); else el.textContent = fmt(target);
+        })(performance.now());
+    }
+    function resetCounts() {
+        document.querySelectorAll('.count-up').forEach(el => { el.textContent = '0'; });
+    }
+    const achSec = document.getElementById('achievement');
+    const achCards = document.getElementById('achCards');
+    function handleAchScroll() {
+        if (!achSec) return;
+        const r = achSec.getBoundingClientRect();
+        const total = achSec.offsetHeight - window.innerHeight;
+        if (total <= 0) return;
+        const p = Math.max(0, Math.min(-r.top / total, 1));
+        const cardsVisible = p > 0.08;
+        if (achCards) achCards.classList.toggle('visible', cardsVisible);
+        if (p > 0.25 && !countRunning) {
+            countRunning = true;
+            document.querySelectorAll('.count-up').forEach(animateCount);
+        }
+        if (p <= 0.02 && countRunning) {
+            countRunning = false;
+            resetCounts();
+        }
+    }
+
+    /* ── News (scroll-driven horizontal) ── */
+    const newsSec = document.getElementById('news');
+    const newsTrack = document.getElementById('newsTrack');
+    function handleNewsScroll() {
+        if (!newsSec || !newsTrack) return;
+        const r = newsSec.getBoundingClientRect();
+        const total = newsSec.offsetHeight - window.innerHeight;
+        if (total <= 0) return;
+        const p = Math.max(0, Math.min(-r.top / total, 1));
+        const trackW = newsTrack.scrollWidth;
+        const viewW = newsTrack.parentElement.offsetWidth;
+        const maxShift = trackW - viewW;
+        if (maxShift > 0) {
+            newsTrack.style.transform = 'translateX(' + (-p * maxShift) + 'px)';
+        }
+    }
+
+    /* ── FAQ ── */
+    window.toggleFaq = function(btn) {
+        const ans = btn.nextElementSibling, icon = btn.querySelector('.faq-icon');
+        ans.classList.toggle('open');
+        icon.classList.toggle('open');
+    };
+
+    /* ── Global scroll ── */
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) { requestAnimationFrame(() => { updateHeader(); handleHeroFullscreen(); handleInnovScroll(); handleCampusScroll(); handleAchScroll(); handleNewsScroll(); ticking = false; }); ticking = true; }
+    }, { passive: true });
+    updateHeader();
+})();
+</script>
+</body>
+</html>
