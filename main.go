@@ -26,6 +26,10 @@ func main() {
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
+	// Serve landing page
+	landingFs := http.FileServer(http.Dir("./landing_20260223"))
+	http.Handle("/landing/", http.StripPrefix("/landing/", landingFs))
+
 	// Preview Dashboard
 	http.HandleFunc("/preview", previewHandler)
 
