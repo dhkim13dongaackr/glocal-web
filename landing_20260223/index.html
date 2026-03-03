@@ -731,82 +731,80 @@
 <!-- ═══ 5. GLOCAL NOW ═══ -->
 <section class="relative" id="news" style="height:250vh; background: linear-gradient(180deg, #f5f7fa 0%, #ffffff 100%);">
     <div class="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
-        <div class="content-w flex flex-col gap-[48px]">
-            <!-- Header -->
-            <div class="flex items-end justify-between">
-                <div class="flex flex-col gap-[24px]">
-                    <p class="font-bold text-[21px] text-[#3e31d5] tracking-[-0.42px] leading-[1.5]">GLOCAL NOW</p>
-                    <h2 class="text-[36px] lg:text-[48px] font-extrabold text-[#3f3f44] tracking-[-1.44px] leading-[1.4]">연합대학은 지금</h2>
-                    <p class="text-[16px] lg:text-[18px] text-[#3f3f44] tracking-[-0.36px] leading-[1.6]">동아·동서 글로컬 연합대학의 새로운 소식과 이야기를 전해드립니다.</p>
-                </div>
-                <a href="#" class="flex items-center gap-[8px] text-[16px] font-bold text-[#3428b0] tracking-[-0.32px] leading-[1.6] shrink-0 hover:opacity-80 transition-opacity">
-                    더 많은 소식 확인하기 <span class="text-[20px]">&rarr;</span>
-                </a>
+        <!-- Header: content-w 내부에 제한 -->
+        <div class="content-w flex items-end justify-between mb-[48px]">
+            <div class="flex flex-col gap-[24px]">
+                <p class="font-bold text-[21px] text-[#3e31d5] tracking-[-0.42px] leading-[1.5]">GLOCAL NOW</p>
+                <h2 class="text-[36px] lg:text-[48px] font-extrabold text-[#3f3f44] tracking-[-1.44px] leading-[1.4]">연합대학은 지금</h2>
+                <p class="text-[16px] lg:text-[18px] text-[#3f3f44] tracking-[-0.36px] leading-[1.6]">동아·동서 글로컬 연합대학의 새로운 소식과 이야기를 전해드립니다.</p>
             </div>
-            <!-- Cards (scroll-driven horizontal) -->
-            <div class="overflow-hidden">
-                <div class="flex gap-[30px] transition-none" id="newsTrack" style="will-change: transform;">
-                    <div class="news-card shrink-0 w-[345px] group cursor-pointer">
-                        <div class="h-[240px] rounded-[20px] overflow-hidden bg-gray-100 group-hover:shadow-lg transition-shadow">
-                            <img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/home/innovate1.webp" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132250.472.jpg'">
-                        </div>
-                        <div class="flex flex-col gap-[12px] px-[12px] py-[16px]">
-                            <span class="text-[14px] font-bold text-[#3e31d5] tracking-[0.42px] leading-[1.5]">NOTICE</span>
-                            <h3 class="text-[21px] font-bold text-[#171719] tracking-[-0.42px] leading-[1.5] group-hover:text-[#3e31d5] transition-colors">2026학년도 1학기 Field 캠퍼스 수강신청 변경 안내</h3>
-                            <span class="text-[13px] text-[#74747e] tracking-[-0.26px] leading-[1.5]">2026. 01. 02</span>
-                        </div>
+            <a href="#" class="flex items-center gap-[8px] text-[16px] font-bold text-[#3428b0] tracking-[-0.32px] leading-[1.6] shrink-0 hover:opacity-80 transition-opacity">
+                더 많은 소식 확인하기 <span class="text-[20px]">&rarr;</span>
+            </a>
+        </div>
+        <!-- Cards: 왼쪽은 content-w 기준으로 시작, 오른쪽은 화면 끝까지 -->
+        <div class="overflow-hidden" style="padding-left: max(24px, calc((100vw - 1280px) / 2 + 40px));">
+            <div class="flex gap-[30px] transition-none" id="newsTrack" style="will-change: transform;">
+                <div class="news-card shrink-0 w-[345px] group cursor-pointer">
+                    <div class="h-[240px] rounded-[20px] overflow-hidden bg-gray-100 group-hover:shadow-lg transition-shadow">
+                        <img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/home/innovate1.webp" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132250.472.jpg'">
                     </div>
-                    <div class="news-card shrink-0 w-[345px] group cursor-pointer">
-                        <div class="h-[240px] rounded-[20px] overflow-hidden bg-gray-100 group-hover:shadow-lg transition-shadow">
-                            <img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/home/innovate2.webp" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132240.683.jpg'">
-                        </div>
-                        <div class="flex flex-col gap-[12px] px-[12px] py-[16px]">
-                            <span class="text-[14px] font-bold text-[#3e31d5] tracking-[0.42px] leading-[1.5]">NEWS</span>
-                            <h3 class="text-[21px] font-bold text-[#171719] tracking-[-0.42px] leading-[1.5] group-hover:text-[#3e31d5] transition-colors">글로컬대학30 2025년 제4차 산학협력 혁신 정책 포럼 개최</h3>
-                            <span class="text-[13px] text-[#74747e] tracking-[-0.26px] leading-[1.5]">2025. 11. 24</span>
-                        </div>
+                    <div class="flex flex-col gap-[12px] px-[12px] py-[16px]">
+                        <span class="text-[14px] font-bold text-[#3e31d5] tracking-[0.42px] leading-[1.5]">NOTICE</span>
+                        <h3 class="text-[21px] font-bold text-[#171719] tracking-[-0.42px] leading-[1.5] group-hover:text-[#3e31d5] transition-colors">2026학년도 1학기 Field 캠퍼스 수강신청 변경 안내</h3>
+                        <span class="text-[13px] text-[#74747e] tracking-[-0.26px] leading-[1.5]">2026. 01. 02</span>
                     </div>
-                    <div class="news-card shrink-0 w-[345px] group cursor-pointer">
-                        <div class="h-[240px] rounded-[20px] overflow-hidden bg-gray-100 group-hover:shadow-lg transition-shadow">
-                            <img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/home/innovate3.webp" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132234.075.jpg'">
-                        </div>
-                        <div class="flex flex-col gap-[12px] px-[12px] py-[16px]">
-                            <span class="text-[14px] font-bold text-[#3e31d5] tracking-[0.42px] leading-[1.5]">INTERVIEW</span>
-                            <h3 class="text-[21px] font-bold text-[#171719] tracking-[-0.42px] leading-[1.5] group-hover:text-[#3e31d5] transition-colors">"현장이 곧 강의실" 재학생 인터뷰</h3>
-                            <span class="text-[13px] text-[#74747e] tracking-[-0.26px] leading-[1.5]">2025. 11. 24</span>
-                        </div>
+                </div>
+                <div class="news-card shrink-0 w-[345px] group cursor-pointer">
+                    <div class="h-[240px] rounded-[20px] overflow-hidden bg-gray-100 group-hover:shadow-lg transition-shadow">
+                        <img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/home/innovate2.webp" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132240.683.jpg'">
                     </div>
-                    <div class="news-card shrink-0 w-[345px] group cursor-pointer">
-                        <div class="h-[240px] rounded-[20px] overflow-hidden bg-gray-100 group-hover:shadow-lg transition-shadow">
-                            <img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/home/innovate4.webp" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='../pictures/DJI_0465 복사.jpg'">
-                        </div>
-                        <div class="flex flex-col gap-[12px] px-[12px] py-[16px]">
-                            <span class="text-[14px] font-bold text-[#3e31d5] tracking-[0.42px] leading-[1.5]">NEWS</span>
-                            <h3 class="text-[21px] font-bold text-[#171719] tracking-[-0.42px] leading-[1.5] group-hover:text-[#3e31d5] transition-colors">부산 글로컬대학 30 프로젝트 선정장 MOU체결 및 기자간담회 개최</h3>
-                            <span class="text-[13px] text-[#74747e] tracking-[-0.26px] leading-[1.5]">2025. 10. 15</span>
-                        </div>
+                    <div class="flex flex-col gap-[12px] px-[12px] py-[16px]">
+                        <span class="text-[14px] font-bold text-[#3e31d5] tracking-[0.42px] leading-[1.5]">NEWS</span>
+                        <h3 class="text-[21px] font-bold text-[#171719] tracking-[-0.42px] leading-[1.5] group-hover:text-[#3e31d5] transition-colors">글로컬대학30 2025년 제4차 산학협력 혁신 정책 포럼 개최</h3>
+                        <span class="text-[13px] text-[#74747e] tracking-[-0.26px] leading-[1.5]">2025. 11. 24</span>
                     </div>
-                    <div class="news-card shrink-0 w-[345px] group cursor-pointer">
-                        <div class="h-[240px] rounded-[20px] overflow-hidden bg-gray-100 group-hover:shadow-lg transition-shadow">
-                            <img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/home/innovate1.webp" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        </div>
-                        <div class="flex flex-col gap-[12px] px-[12px] py-[16px]">
-                            <span class="text-[14px] font-bold text-[#3e31d5] tracking-[0.42px] leading-[1.5]">NEWS</span>
-                            <h3 class="text-[21px] font-bold text-[#171719] tracking-[-0.42px] leading-[1.5] group-hover:text-[#3e31d5] transition-colors">부산 수소에너지 R&D 허브 착공식 개최</h3>
-                            <span class="text-[13px] text-[#74747e] tracking-[-0.26px] leading-[1.5]">2025. 09. 30</span>
-                        </div>
+                </div>
+                <div class="news-card shrink-0 w-[345px] group cursor-pointer">
+                    <div class="h-[240px] rounded-[20px] overflow-hidden bg-gray-100 group-hover:shadow-lg transition-shadow">
+                        <img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/home/innovate3.webp" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='../pictures/Field 캠퍼스 연합전공 홍보영상 HIGH-MASTER 250915.mov_20260202_132234.075.jpg'">
+                    </div>
+                    <div class="flex flex-col gap-[12px] px-[12px] py-[16px]">
+                        <span class="text-[14px] font-bold text-[#3e31d5] tracking-[0.42px] leading-[1.5]">INTERVIEW</span>
+                        <h3 class="text-[21px] font-bold text-[#171719] tracking-[-0.42px] leading-[1.5] group-hover:text-[#3e31d5] transition-colors">"현장이 곧 강의실" 재학생 인터뷰</h3>
+                        <span class="text-[13px] text-[#74747e] tracking-[-0.26px] leading-[1.5]">2025. 11. 24</span>
+                    </div>
+                </div>
+                <div class="news-card shrink-0 w-[345px] group cursor-pointer">
+                    <div class="h-[240px] rounded-[20px] overflow-hidden bg-gray-100 group-hover:shadow-lg transition-shadow">
+                        <img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/home/innovate4.webp" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='../pictures/DJI_0465 복사.jpg'">
+                    </div>
+                    <div class="flex flex-col gap-[12px] px-[12px] py-[16px]">
+                        <span class="text-[14px] font-bold text-[#3e31d5] tracking-[0.42px] leading-[1.5]">NEWS</span>
+                        <h3 class="text-[21px] font-bold text-[#171719] tracking-[-0.42px] leading-[1.5] group-hover:text-[#3e31d5] transition-colors">부산 글로컬대학 30 프로젝트 선정장 MOU체결 및 기자간담회 개최</h3>
+                        <span class="text-[13px] text-[#74747e] tracking-[-0.26px] leading-[1.5]">2025. 10. 15</span>
+                    </div>
+                </div>
+                <div class="news-card shrink-0 w-[345px] group cursor-pointer">
+                    <div class="h-[240px] rounded-[20px] overflow-hidden bg-gray-100 group-hover:shadow-lg transition-shadow">
+                        <img src="https://dev-five-git.github.io/donga-dongseo-glocal/images/home/innovate1.webp" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="flex flex-col gap-[12px] px-[12px] py-[16px]">
+                        <span class="text-[14px] font-bold text-[#3e31d5] tracking-[0.42px] leading-[1.5]">NEWS</span>
+                        <h3 class="text-[21px] font-bold text-[#171719] tracking-[-0.42px] leading-[1.5] group-hover:text-[#3e31d5] transition-colors">부산 수소에너지 R&D 허브 착공식 개최</h3>
+                        <span class="text-[13px] text-[#74747e] tracking-[-0.26px] leading-[1.5]">2025. 09. 30</span>
                     </div>
                 </div>
             </div>
-            <!-- Nav arrows -->
-            <div class="flex items-center justify-end gap-[10px]">
-                <button id="newsPrev" class="w-[48px] h-[48px] rounded-full border border-[#d0d1e0] flex items-center justify-center hover:bg-[#f0f0f5] transition-colors">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="#3f3f44" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </button>
-                <button id="newsNext" class="w-[48px] h-[48px] rounded-full border border-[#d0d1e0] flex items-center justify-center hover:bg-[#f0f0f5] transition-colors">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.5 5L12.5 10L7.5 15" stroke="#3f3f44" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </button>
-            </div>
+        </div>
+        <!-- Nav arrows: content-w 내부 -->
+        <div class="content-w flex items-center justify-end gap-[10px] mt-[48px]">
+            <button id="newsPrev" class="w-[48px] h-[48px] rounded-full border border-[#d0d1e0] flex items-center justify-center hover:bg-[#f0f0f5] transition-colors">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="#3f3f44" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button id="newsNext" class="w-[48px] h-[48px] rounded-full border border-[#d0d1e0] flex items-center justify-center hover:bg-[#f0f0f5] transition-colors">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.5 5L12.5 10L7.5 15" stroke="#3f3f44" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
         </div>
     </div>
 </section>
