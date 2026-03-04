@@ -730,7 +730,7 @@
 
 <!-- ═══ 5. GLOCAL NOW ═══ -->
 <section class="relative" id="news" style="height:250vh; background: linear-gradient(180deg, #f5f7fa 0%, #ffffff 100%);">
-    <div class="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+    <div class="sticky top-0 h-screen flex flex-col justify-center" style="overflow-x: clip; overflow-y: hidden;">
         <!-- Header: content-w 내부에 제한 -->
         <div class="content-w flex items-end justify-between mb-[48px]">
             <div class="flex flex-col gap-[24px]">
@@ -743,7 +743,7 @@
             </a>
         </div>
         <!-- Cards: 왼쪽은 content-w 기준으로 시작, 오른쪽은 화면 끝까지 -->
-        <div class="overflow-hidden" style="padding-left: max(24px, calc((100vw - 1280px) / 2 + 40px));">
+        <div style="padding-left: max(24px, calc((100vw - 1280px) / 2 + 40px));">
             <div class="flex gap-[30px] transition-none" id="newsTrack" style="will-change: transform;">
                 <div class="news-card shrink-0 w-[345px] group cursor-pointer">
                     <div class="h-[240px] rounded-[20px] overflow-hidden bg-gray-100 group-hover:shadow-lg transition-shadow">
