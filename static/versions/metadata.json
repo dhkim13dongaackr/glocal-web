@@ -1,5 +1,101 @@
 [
   {
+    "id": "tonghap_v4",
+    "title": "통합산단 2.0 — v4 (구조개편+네비게이션 통일)",
+    "description": "v3 기반 2차 구조개편. S1(통합산단이란 집중)→S2(수익모델 라이트)→S3(추진전략 다크 캐러셀)→S4(추진성과 3카드)→S5(언론보도). 플로팅 캡슐 네비게이션 바 추가, BM 스켈레톤 이미지, PDF 정합성 보완.",
+    "path": "/static/versions/tonghap_v4/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-03-04 18:00"
+  },
+  {
+    "id": "tonghap_v3",
+    "title": "통합산단 2.0 — 3문서 통합 풀페이지 v3 (tonghap_v3)",
+    "description": "통합산단·통합산단2·통합산단3 PDF 3개 문서 통합. 9섹션: S1(글로컬대학30&통합산단)→S2(배경+패러다임)→S3(수익모델심화)→S4(3대전략비전)→S5(캐러셀)→S6(특화분야×부산)→S7(조직&성과)→S8(로드맵+KPI6종)→S9(언론보도8건). 수익구조·참여기업·전문경영인·능률협회 추가.",
+    "path": "/static/versions/tonghap_v3/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-03-04 12:00"
+  },
+  {
+    "id": "tonghap_v2",
+    "title": "통합산단 2.0 — overview 디자인 풀페이지 v2 (tonghap_v2)",
+    "description": "preview_tonghap/overview_scroll 디자인 시스템 기반. S1(배경+패러다임+수익모델)+S2(비전 다크포토)+S3(6장 캐러셀: 3대전략+조직혁신+추진경과+브랜치)+S4(로드맵+조직). PDF 전체 반영, 긍정적 톤.",
+    "path": "/static/versions/tonghap_v2/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-03-03 12:00"
+  },
+  {
+    "id": "tonghap_full",
+    "title": "통합산단 2.0 — PDF 충실 반영 풀페이지 (tonghap_full)",
+    "description": "통합산단.pdf 19페이지 전체를 충실히 반영한 풀스토리 페이지. 추진배경→추진경과→수익모델→조직혁신→패러다임전환→3대전략→로드맵. 긍정적 톤, overview_scroll 디자인 시스템 기반.",
+    "path": "/static/versions/tonghap_full/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-27 12:00"
+  },
+  {
+    "id": "tonghap_preview",
+    "title": "통합산단 2.0 — 요약 프리뷰 (tonghap_preview)",
+    "description": "통합산단 2.0 핵심 요약 프리뷰. overview_scroll 디자인 결 유지. 4섹션(개요+전략+캐러셀+로드맵) + 비주얼 강화(이미지 그리드, 뉴스 썸네일, 캠퍼스 스트립).",
+    "path": "/static/v_proposal_11/preview_tonghap.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-27 10:00"
+  },
+  {
+    "id": "overview_scroll",
+    "title": "글로컬연합대학 Overview — 가로스크롤 (overview_scroll)",
+    "description": "3섹션(글로컬대학30 + 비전 + 8대 추진과제) 단일 스크롤 페이지. 8대 추진과제를 700px 대형 카드 가로스크롤 캐러셀로 구성. 목표·필요성·세부과제 모두 포함. 피그마 기하학적 일러스트 적용.",
+    "path": "/static/versions/overview_scroll/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-24 01:00"
+  },
+  {
+    "id": "overview",
+    "title": "글로컬연합대학 Overview — 세로카드 (overview)",
+    "description": "3섹션(글로컬대학30 + 비전 + 8대 추진과제) 단일 스크롤 페이지. 8대 추진과제를 세로 카드 레이아웃으로 나열. 목표·필요성·세부과제 모두 포함.",
+    "path": "/static/versions/overview/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-24 00:30"
+  },
+  {
+    "id": "sub_page_24",
+    "title": "교과과정 쨍한 개별색상 원본 (sub_page_24)",
+    "description": "sub_page_22 기반. 원래 쨍한 개별 테마색상 그대로 (보라/파랑/청록/빨강/초록/갈색). 솔리드 카드헤더 + 서브네비 개별색상. 인스타그램식 선명한 톤.",
+    "path": "/static/versions/sub_page_24/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-22 22:00"
+  },
+  {
+    "id": "sub_page_23",
+    "title": "교과과정 보라 단일 컬러 (sub_page_23)",
+    "description": "sub_page_22 기반. 카드 헤더를 브랜드 보라(#3e31d5) 단일 컬러로 통일. 서브네비 탭만 섹션별 색상 유지. 깔끔한 통일감 + 브랜드 아이덴티티 강화.",
+    "path": "/static/versions/sub_page_23/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-22 21:30"
+  },
+  {
+    "id": "sub_page_22",
+    "title": "교과과정 Deep Muted 개별색상 (sub_page_22)",
+    "description": "sub_page_21 기반. 카뱅 스크롤 헤더, 카드 폰트 16px, 솔리드 카드헤더 + 채도 15-20% 낮춘 Deep & Muted 개별 테마색상. 6개 섹션 각각 차분한 고유색.",
+    "path": "/static/versions/sub_page_22/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-22 21:00"
+  },
+  {
+    "id": "webzine_content",
+    "title": "웹진 본문 페이지 — D-insight 기사 상세 (webzine-content)",
+    "description": "피그마 시안 기반 웹진 본문(상세보기) 페이지. 히어로(카테고리 뱃지 + ELAND Nice 타이틀 + 서브타이틀 + 대표 이미지) + 본문 섹션(초록 악센트바 + 소제목 + 본문) + 인라인 이미지·캡션 + More Insights 관련기사 카드 + Credit + 풋터. 스크롤 시 헤더에 기사 제목 + 프로그레스바 표시. 데스크톱·모바일 반응형.",
+    "path": "/static/webzine_01/webzine-content.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-22 17:00"
+  },
+  {
+    "id": "webzine_01",
+    "title": "웹진 Vol.03 — D-insight 메인 (webzine_01)",
+    "description": "피그마 시안 기반 웹진 메인 페이지. 히어로(Bridging Local to Global) + 카테고리 탭(ALL/DEEP DIVE/SPOTLIGHT/DISCOVER) + 2컬럼 아티클 그리드 + Glocal Now 뉴스 섹션 + Explore Other Issues 지난호 캐러셀 + 풋터. 데스크톱·모바일 반응형.",
+    "path": "/static/webzine_01/index.html",
+    "snapshot": "/static/versions/v2/preview.jpg",
+    "date": "2026-02-22 12:00"
+  },
+  {
     "id": "v_proposal_11",
     "title": "피그마 시안 히어로 — 분할 레이아웃 + YouTube (v_proposal_11)",
     "description": "피그마 원안대로 히어로 구현: 연보라(#f1f2ff) 배경 + 좌측 텍스트(그라디언트 타이틀) + 우측 YouTube 영상(라운드 30px). 일시정지/음소거 컨트롤, 프로그레스바(01─03), 이전/다음 화살표. 나머지 섹션(혁신방향 수평타임라인, Field캠퍼스, 성과 카드, 뉴스, FAQ)은 v_proposal_10 동일.",
