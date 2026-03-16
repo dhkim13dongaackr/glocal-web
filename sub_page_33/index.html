@@ -376,38 +376,6 @@
         .major-scroll-hint svg { width: 16px; height: 16px; animation: hint-slide 1.5s ease-in-out infinite; }
         @keyframes hint-slide { 0%,100% { transform: translateX(0); } 50% { transform: translateX(6px); } }
 
-        /* ===== 대표 캠퍼스 — 4카드 그리드 ===== */
-        .campus-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 28px; }
-        .campus-item {
-            background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
-            overflow: hidden; display: flex; flex-direction: column;
-            transition: transform .4s cubic-bezier(.22,.61,.36,1), box-shadow .4s;
-        }
-        .campus-item:hover { transform: translateY(-6px); box-shadow: 0 16px 36px rgba(62,49,213,.08); }
-        .campus-item-photo { height: 160px; overflow: hidden; background: var(--surface); }
-        .campus-item-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .campus-item-icon {
-            height: 160px; display: grid; place-items: center; background: var(--surface);
-        }
-        .campus-item-icon svg { width: 48px; height: 48px; color: var(--caption); opacity: .4; }
-        .campus-item-body { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
-        .campus-item-cat { font-size: 11px; font-weight: 800; color: var(--primary); letter-spacing: 0.5px; }
-        .campus-item-name { font-size: 17px; font-weight: 900; color: var(--title); letter-spacing: -0.3px; }
-        .campus-item-type { font-size: 12px; color: var(--caption); }
-        .campus-item-desc { font-size: 13px; color: var(--text); line-height: 1.5; margin-top: 4px; }
-        .campus-more {
-            display: inline-flex; align-items: center; gap: 6px;
-            padding: 14px 28px; border-radius: 100px; border: 1px solid var(--border);
-            background: #fff; color: var(--primary); font-size: 15px; font-weight: 700;
-            cursor: pointer; transition: all .25s; text-decoration: none; width: fit-content;
-        }
-        .campus-more:hover { background: rgba(255,255,255,0.18); color: #fff; border-color: rgba(255,255,255,0.35); }
-        .campus-more svg { width: 16px; height: 16px; transition: transform .2s; }
-        .campus-more:hover svg { transform: translateX(3px); }
-        @media (max-width: 768px) {
-            .campus-grid { grid-template-columns: 1fr 1fr; }
-        }
-
         /* ===== 수강신청 — placeholder ===== */
         .enroll-placeholder {
             background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
@@ -430,57 +398,6 @@
             background: var(--primary-light); border: 1px solid rgba(62,49,213,0.06);
             font-size: 13px; color: var(--primary); font-weight: 600;
         }
-
-        /* ===== 협력기관 다크 밴드 ===== */
-        .partner-band {
-            background: linear-gradient(135deg, #1e1b4b 0%, #2e2470 50%, #3e31d5 100%);
-            padding: 100px 0; position: relative; overflow: hidden;
-        }
-        .partner-band::before {
-            content: ''; position: absolute; inset: 0;
-            background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
-            background-size: 24px 24px;
-            pointer-events: none;
-        }
-        .partner-band::after {
-            content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
-            width: 600px; height: 300px;
-            background: radial-gradient(ellipse, rgba(165,180,252,0.10) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .partner-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 40px; }
-        .partner-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 40px; }
-        .partner-stat {
-            text-align: center; padding: 32px 16px; border-radius: 20px;
-            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
-            backdrop-filter: blur(8px); position: relative; overflow: hidden;
-        }
-        .partner-stat::before {
-            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            width: 80px; height: 80px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(165,180,252,0.15) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .partner-stat-num {
-            font-size: clamp(36px, 5vw, 52px); font-weight: 900; color: #fff;
-            margin-bottom: 8px; position: relative;
-        }
-        .partner-stat-unit {
-            font-size: 16px; font-weight: 600; color: rgba(255,255,255,0.5); margin-left: 2px;
-        }
-        .partner-stat-label { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.5; }
-        .partner-cats { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 36px; }
-        .partner-cat {
-            padding: 8px 18px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.8); font-size: 14px; font-weight: 600;
-        }
-        @media (max-width: 768px) {
-            .partner-band { padding: 64px 0; }
-            .partner-inner { padding: 0 20px; }
-            .partner-stats { grid-template-columns: repeat(2, 1fr); gap: 16px; }
-        }
-
-        /* (성과 지표 — 협력기관 다크밴드에 통합) */
 
         /* (CTA — 제거됨) */
 
@@ -556,7 +473,6 @@
         <button class="sub-nav-btn active" data-target="sec-purpose">소개</button>
         <button class="sub-nav-btn" data-target="sec-faculty">JA교원</button>
         <button class="sub-nav-btn" data-target="sec-edu">교육방식</button>
-        <button class="sub-nav-btn" data-target="sec-stats">성과</button>
         <button class="sub-nav-btn" data-target="sec-major">연합전공</button>
     </nav>
 </div>
@@ -753,85 +669,6 @@
 
 
 <!-- ═══════════════════════════════════════════
-     S4. 성과 + 대표 Field 캠퍼스
-     ═══════════════════════════════════════════ -->
-<section class="partner-band" id="sec-stats">
-    <div class="partner-inner">
-        <!-- 상단: ACHIEVEMENTS 가운데 정렬 -->
-        <div style="text-align:center; margin-bottom:48px;">
-            <p class="sec-label" data-reveal style="color:var(--accent)">Achievements</p>
-            <h2 class="sec-title" data-reveal style="color:#fff">성과</h2>
-        </div>
-
-        <!-- 숫자 통계 4열 -->
-        <div class="partner-stats" data-reveal>
-            <div class="partner-stat"><p class="partner-stat-num" data-count="21">0<span class="partner-stat-unit">개소</span></p><p class="partner-stat-label">Field 캠퍼스 구축</p></div>
-            <div class="partner-stat"><p class="partner-stat-num" data-count="29">0<span class="partner-stat-unit">개</span></p><p class="partner-stat-label">Field 교과목 개설</p></div>
-            <div class="partner-stat"><p class="partner-stat-num" data-count="506">0<span class="partner-stat-unit">명</span></p><p class="partner-stat-label">교과목 이수학생</p></div>
-            <div class="partner-stat"><p class="partner-stat-num" data-count="15">0<span class="partner-stat-unit">개</span></p><p class="partner-stat-label">MOU 체결 기관</p></div>
-        </div>
-        <p data-reveal style="margin-top:16px; font-size:12px; color:rgba(255,255,255,0.35); text-align:center;">※ 2025학년도 2학기 기준</p>
-
-        <!-- 구분선 -->
-        <hr data-reveal style="border:none; border-top:1px solid rgba(255,255,255,0.10); margin:56px 0 48px;">
-
-        <!-- 하단: 대표 캠퍼스 — 왼쪽 정렬 -->
-        <h3 data-reveal style="font-size:clamp(22px, 3vw, 28px); font-weight:800; color:#fff; letter-spacing:-0.6px; margin-bottom:8px;">부산 전역, 21개 Field 캠퍼스 거점</h3>
-        <p data-reveal style="font-size:15px; color:rgba(255,255,255,0.55); margin-bottom:36px; max-width:600px;">산업체·연구소·공공기관이 Field 캠퍼스로 참여하여 현장 중심 교육 혁신을 이끌고 있습니다.</p>
-
-        <div class="campus-grid" data-reveal>
-            <div class="campus-item">
-                <div class="campus-item-photo">
-                    <img src="/static/pictures/field/4. 부산테크노파크 전력반도체센터 후공정 장비실.jpg" alt="부산테크노파크 전력반도체센터" loading="lazy">
-                </div>
-                <div class="campus-item-body">
-                    <p class="campus-item-cat">에너지테크</p>
-                    <p class="campus-item-name">부산테크노파크 전력반도체센터</p>
-                    <p class="campus-item-type">On-site Field · 전력반도체</p>
-                    <p class="campus-item-desc">소자설계부터 제조공정·신뢰성 분석까지 원스톱 교육</p>
-                </div>
-            </div>
-            <div class="campus-item">
-                <div class="campus-item-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                </div>
-                <div class="campus-item-body">
-                    <p class="campus-item-cat">휴먼케어</p>
-                    <p class="campus-item-name" style="color:var(--caption);">추후 업데이트</p>
-                    <p class="campus-item-type">Pre-Field · 휴먼메타케어</p>
-                </div>
-            </div>
-            <div class="campus-item">
-                <div class="campus-item-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                </div>
-                <div class="campus-item-body">
-                    <p class="campus-item-cat">문화콘텐츠</p>
-                    <p class="campus-item-name" style="color:var(--caption);">추후 업데이트</p>
-                    <p class="campus-item-type">현장 Field · 첨단콘텐츠</p>
-                </div>
-            </div>
-            <div class="campus-item">
-                <div class="campus-item-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/><path d="M9 9v.01M9 12v.01M9 15v.01M9 18v.01"/></svg>
-                </div>
-                <div class="campus-item-body">
-                    <p class="campus-item-cat">B-헤리티지</p>
-                    <p class="campus-item-name">석당뮤지엄</p>
-                    <p class="campus-item-type">현장 Field · 헤리티지콘텐츠</p>
-                    <p class="campus-item-desc">국보 2점·보물 18점 포함 23,418점 유물, CGI·버추얼프로덕션</p>
-                </div>
-            </div>
-        </div>
-
-        <a class="campus-more" href="#" data-reveal style="border-color:rgba(255,255,255,0.2); background:rgba(255,255,255,0.08); color:#fff;">
-            전체 구축현황 보기
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-    </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
      S5. 6개 연합전공 — 가로 스크롤 + 교과과정 링크
      ═══════════════════════════════════════════ -->
 <section class="sec" id="sec-major" style="padding-right:0; max-width:none; padding-top:40px;">
@@ -909,23 +746,6 @@
         }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
         revealEls.forEach(el => io.observe(el));
     } else { revealEls.forEach(el => el.classList.add('is-visible')); }
-
-    const nums = document.querySelectorAll('[data-count]');
-    const cio = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-            if (!e.isIntersecting) return;
-            const el = e.target, target = +el.dataset.count, dur = 1200, t0 = performance.now();
-            const unitSpan = el.querySelector('.partner-stat-unit');
-            const unitHTML = unitSpan ? unitSpan.outerHTML : '';
-            (function tick(now) {
-                const p = Math.min((now - t0) / dur, 1), v = Math.round(target * (1 - Math.pow(1 - p, 3)));
-                el.innerHTML = v.toLocaleString() + unitHTML;
-                if (p < 1) requestAnimationFrame(tick);
-            })(t0);
-            cio.unobserve(el);
-        });
-    }, { threshold: 0.5 });
-    nums.forEach(el => cio.observe(el));
 
     const header = document.getElementById('siteHeader'), subNav = document.getElementById('subNavWrap');
     let lastY = 0;
