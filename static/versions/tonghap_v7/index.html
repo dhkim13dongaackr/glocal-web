@@ -54,7 +54,12 @@
         }
         .hero-label { font-size: 13px; font-weight: 800; color: var(--primary); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 16px; position: relative; }
         .hero-keyword { font-size: clamp(36px, 5.5vw, 56px); font-weight: 800; color: var(--title); letter-spacing: -1.5px; line-height: 1.2; margin-bottom: 16px; position: relative; }
-        .hero-keyword .hl { color: var(--primary); }
+        .hero-keyword .hl {
+            background: linear-gradient(90deg, #6b3eff 0%, #0acacf 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
         .hero-sub { font-size: 16px; color: var(--caption); line-height: 1.7; max-width: 540px; margin: 0 auto 40px; position: relative; }
         .hero-video-wrap { width: 100%; max-width: 860px; margin: 0 auto; position: relative; }
         .hero-video-wrap video { width: 100%; display: block; border-radius: 16px; box-shadow: 0 8px 40px rgba(0,0,0,0.10); }
