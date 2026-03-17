@@ -1,4 +1,4 @@
-# D-insight 웹진 상세페이지 — devfive 제시안 vs 변경요청안
+# D-insight 웹진 상세페이지 — devfive 제시안과 변경요청안 비교
 
 > **devfive 제시안**: [magazine/8/1](https://dev-five-git.github.io/donga-dongseo-glocal/magazine/8/1)
 > **변경요청안**: [webzine-content](https://dhkim13dongaackr.github.io/glocal-web/webzine-content/)
@@ -10,13 +10,12 @@
 
 | 영역 | devfive 제시안 (magazine/8/1) | 변경요청안 (webzine-content) |
 |------|------------------------------|---------------------------|
+| **폰트** | SUIT Variable 전체 사용 | · 타이틀: Noto Serif KR 900<br>· D-insight 로고: Rakkas 서체<br>· 본문: SUIT Variable 유지 |
 | **헤더** | 고정 흰색 배경 | · 초기 투명 → 스크롤 시 솔리드 전환<br>· 읽기 진행률 바 추가<br>· 스크롤 시 본문 타이틀이 헤더로 흡수 |
-| **D-insight 로고** | 기본 서체 | Rakkas 서체, 좌측 고정 배치 |
-| **히어로 구조** | 배경 이미지 위 타이틀 오버레이 | 타이틀과 이미지를 독립 블록으로 분리 배치, 스크롤 시 이미지 전체화면 확장 + 줌아웃 효과 |
-| **본문 레이아웃** | 컨테이너 기준 폭 | 680px 중앙 정렬, 섹션별 accent bar 애니메이션, 패럴렉스 인라인 이미지 |
+| **Standfirst (도입부)** | 별도 스타일 없음 | 연한 틸색 음영 배경 밴드로 도입부 강조 |
+| **소제목 구분** | 전용 타이포 클래스로 처리 | · 틸색 accent bar 애니메이션<br>· 소제목: 틸색 + 넓은 자간<br>· 중제목: 고딕 extrabold |
+| **본문 영역** | 컨테이너 기준 폭 | · 본문 텍스트: 680px 중앙 정렬<br>· 사진 영역: 본문보다 넓게 확장 |
 | **추천 콘텐츠** | 2×2 카드 그리드 | 리스트형 (좌 썸네일 + 우 텍스트) |
-| **Credit 섹션** | — | 기고자 크레딧 추가 |
-| **타이틀 폰트** | SUIT Variable | Noto Serif KR 900 |
 
 ---
 
@@ -24,6 +23,13 @@
 
 - 전체 색상 시스템 (틸 `#2ca39c` 계열)
 - DEEP DIVE / SPOTLIGHT / DISCOVER 카테고리 체계
+- 기고자 크레딧 섹션
 - 푸터 구조 (동아대/동서대 캠퍼스 정보 + 로고 링크)
 - 반응형 레이아웃
-- IntersectionObserver 기반 reveal 애니메이션
+
+---
+
+## 별도 논의 필요
+
+- **히어로 이미지 구조**: 현재 시안은 타이틀-이미지 분리 + 스크롤 확장 방식. 원본 방식(배경 오버레이)과 어느 쪽이 적합한지 논의 필요
+- **본문 내 사진 라운드 처리**: 사진 모서리를 라운드로 처리할지 여부 검토

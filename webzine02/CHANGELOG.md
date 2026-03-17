@@ -1,4 +1,4 @@
-# D-insight 웹진 메인 — devfive 제시안 vs 변경요청안
+# D-insight 웹진 메인 — devfive 제시안과 변경요청안 비교
 
 > **devfive 제시안**: [magazine](https://dev-five-git.github.io/donga-dongseo-glocal/magazine)
 > **변경요청안**: [webzine02](https://dhkim13dongaackr.github.io/glocal-web/webzine02/)
@@ -25,4 +25,3 @@
 - 카테고리 체계 (ALL / DEEP DIVE / SPOTLIGHT / DISCOVER)
 - 푸터 구조 (동아대/동서대 캠퍼스 정보 + 로고 링크)
 - 모바일 반응형 레이아웃
-- IntersectionObserver 기반 reveal 애니메이션
