@@ -822,12 +822,16 @@
     </div>
 </section>
 
-<!-- ===== 캠퍼스 탐색 (지도 중심) — 2단 스냅 ===== -->
-<section class="sec" id="sec-campus" style="padding-top:60px; scroll-snap-align: start;">
+<!-- ===== 캠퍼스 네트워크 타이틀 (1단 스냅) ===== -->
+<section class="sec" id="sec-campus" style="padding-top:60px; min-height:100vh; scroll-snap-align: start; display:flex; flex-direction:column; justify-content:center;">
     <p class="sec-label" data-reveal>Field Network</p>
     <h2 class="sec-title" data-reveal>캠퍼스 네트워크</h2>
     <p class="sec-desc" data-reveal>부산 전역 21개 산업 거점에서 Field 교육이 이루어지고 있습니다.</p>
-    <div class="map-explorer" data-reveal>
+</section>
+
+<!-- ===== 캠퍼스 지도 (2단 스냅) ===== -->
+<section id="sec-campus-map" style="scroll-snap-align: start;">
+    <div class="map-explorer" data-reveal style="max-width: var(--max-w); margin: 0 auto;">
         <!-- 지도 래퍼 (전폭) -->
         <div class="explorer-map-wrap">
             <!-- 필터 탭 오버레이 (지도 위 상단 중앙) -->
