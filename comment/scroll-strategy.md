@@ -17,7 +17,7 @@
 
 > **2단 스냅 예시** (Field Campus Status 캠퍼스 네트워크 참고): 타이틀과 지도가 함께 보이는 상태에서 스크롤하면 지도가 전체 화면으로 전환.
 >
-> ![2단 스냅 — 지도 전체화면 전환](../static/scroll-demos/ss_two_stage_snap.png)
+> ![2단 스냅 — 지도 전체화면 전환](ss_two_stage_snap.png)
 
 ### 3. IACF 통합산단 (`/iacf`)
 
@@ -31,7 +31,11 @@
 
 ### 4. Field Campus (`/field-campus`)
 
-인트로 배너, ABOUT, EDUCATION에 섹션 스냅. 6개 연합전공, JA교원은 자유 스크롤. 페이지 하단에 구축현황(`/field-campus/status`)으로 유도하는 CTA 필요 — sub_page_35의 대표 캠퍼스 이미지를 캡처하여 프리뷰로 노출.
+인트로 배너, ABOUT, EDUCATION에 섹션 스냅. 6개 연합전공, JA교원은 자유 스크롤. 페이지 하단에 구축현황(`/field-campus/status`)으로 유도하는 CTA 필요.
+
+> **CTA 참고** (sub_page_35 구현):
+>
+> ![CTA 밴드 — Field 캠퍼스에 대해 더 알아보세요](ss_cta_band.png)
 
 ### 5. Field Campus Status (`/field-campus/status`)
 
