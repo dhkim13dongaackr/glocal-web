@@ -31,7 +31,7 @@
             --cat-heritage: #d97706;
         }
 
-        html { overflow-x: clip; scroll-behavior: smooth; scroll-padding-top: 160px; scroll-snap-type: y proximity; }
+        html { overflow-x: clip; scroll-behavior: smooth; scroll-padding-top: 160px; }
         body {
             font-family: 'SUIT Variable', 'SUIT', -apple-system, BlinkMacSystemFont, sans-serif;
             background: #fff; color: var(--title);
@@ -598,7 +598,7 @@
         /* ===== CTA Band ===== */
         .cta-band {
             background: linear-gradient(135deg, #1e1b4b 0%, #2e2470 50%, #3e31d5 100%);
-            padding: 80px 0; position: relative; overflow: hidden;
+            padding: 80px 0; margin-top: 40px; position: relative; overflow: hidden;
         }
         .cta-band::before {
             content: ''; position: absolute; inset: 0;
@@ -822,16 +822,12 @@
     </div>
 </section>
 
-<!-- ===== 캠퍼스 네트워크 타이틀 (1단 스냅) ===== -->
-<section class="sec" id="sec-campus" style="padding-top:60px; min-height:100vh; scroll-snap-align: start; display:flex; flex-direction:column; justify-content:center;">
+<!-- ===== 캠퍼스 탐색 (지도 중심) ===== -->
+<section class="sec" id="sec-campus" style="padding-top:60px;">
     <p class="sec-label" data-reveal>Field Network</p>
     <h2 class="sec-title" data-reveal>캠퍼스 네트워크</h2>
     <p class="sec-desc" data-reveal>부산 전역 21개 산업 거점에서 Field 교육이 이루어지고 있습니다.</p>
-</section>
-
-<!-- ===== 캠퍼스 지도 (2단 스냅) ===== -->
-<section id="sec-campus-map" style="scroll-snap-align: start;">
-    <div class="map-explorer" data-reveal style="max-width: var(--max-w); margin: 0 auto;">
+    <div class="map-explorer" data-reveal>
         <!-- 지도 래퍼 (전폭) -->
         <div class="explorer-map-wrap">
             <!-- 필터 탭 오버레이 (지도 위 상단 중앙) -->
