@@ -33,9 +33,10 @@
 
 인트로 배너, ABOUT, EDUCATION에 섹션 스냅. 6개 연합전공, JA교원은 자유 스크롤. 페이지 하단에 구축현황(`/field-campus/status`)으로 유도하는 CTA 필요.
 
-> **CTA 참고** (sub_page_35 구현). 텍스트·방향(소개→구축현황 / 구축현황→소개 / 양방향)은 추가 검토 필요.
+> **CTA** (소개 → 구축현황, 단방향): "부산 전역이 캠퍼스입니다 — 21개 거점에서 506명이 현장을 배우고 있습니다" + [거점 지도 보기 →]
+> 구축현황→소개 CTA는 제거. 상단 네비로 복귀 가능하며, 양방향 CTA는 왕복 감각을 유발.
 >
-> ![CTA 밴드 참고](ss_cta_band.png)
+> ![CTA 밴드](ss_cta_band.png)
 
 ### 5. Field Campus Status (`/field-campus/status`)
 
