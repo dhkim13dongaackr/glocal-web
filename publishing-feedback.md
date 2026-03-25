@@ -68,7 +68,7 @@
 
 > **CTA**: "부산 전역이 캠퍼스입니다 — 21개 산업 거점에서 실무 중심 교육이 이루어지고 있습니다" + [거점 지도 보기 →] [연합전공 소개 보기 →]
 >
-> ![CTA 밴드](ss_cta_band.png)
+> ![CTA 밴드](comment/ss_cta_band.png)
 
 ### 7. Field Campus Status (`/field-campus/status`)
 
