@@ -1,4 +1,4 @@
-# 글로컬 연합대학 퍼블리싱 피드백
+# 글로컬 연합대학 홈페이지 퍼블리싱 피드백
 
 > 작성일: 2026-03-25
 > 대상: https://dev-five-git.github.io/donga-dongseo-glocal/
